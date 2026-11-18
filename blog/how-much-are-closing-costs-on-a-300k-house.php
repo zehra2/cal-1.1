@@ -1,0 +1,311 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "How Much Are Closing Costs on a \$300k House in $currentYear? | AmericaCalculator";
+$metaDescription = "Typical buyer closing costs on a \$300,000 home range from \$6,000 to \$15,000 in $currentYear. See the full itemized breakdown, state differences, and ways to save.";
+$metaKeywords    = "closing costs on 300k house, how much closing costs on 300000 home, 300k home buyer closing fees 2026, closing costs breakdown 300k mortgage, average closing costs 300k";
+
+$schemaData = [
+  '@context' => 'https://schema.org',
+  '@graph'   => [
+    [
+      '@type' => 'Article',
+      'headline' => "How Much Are Closing Costs on a \$300,000 House in $currentYear?",
+      'description' => "Complete breakdown of buyer closing costs on a \$300k home in $currentYear, including lender origination, appraisal, title insurance, transfer taxes, and prepaids.",
+      'url' => 'https://americacalculator.com/blog/how-much-are-closing-costs-on-a-300k-house',
+      'datePublished' => '2026-10-02',
+      'dateModified'  => '2026-10-02',
+      'author' => ['@type' => 'Person', 'name' => 'Sarah Mitchell', 'jobTitle' => 'Real Estate Investment Analyst'],
+      'publisher' => ['@type' => 'Organization', 'name' => 'AmericaCalculator.com', 'url' => 'https://americacalculator.com/'],
+      'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => 'https://americacalculator.com/blog/how-much-are-closing-costs-on-a-300k-house'],
+    ],
+    [
+      '@type' => 'BreadcrumbList',
+      'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => 'https://americacalculator.com/blog/'],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => "Closing Costs on \$300k House", 'item' => 'https://americacalculator.com/blog/how-much-are-closing-costs-on-a-300k-house'],
+      ]
+    ],
+    [
+      '@type' => 'FAQPage',
+      'mainEntity' => [
+        [
+          '@type' => 'Question',
+          'name' => 'Can closing costs on a $300,000 house be rolled into the loan?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'On purchase mortgages, standard conventional and FHA guidelines do not permit rolling closing costs directly into the loan amount unless you are using specific down payment assistance grant programs or doing a refinance. However, you can negotiate lender credits (in exchange for a slightly higher interest rate) or ask the seller for closing cost concessions.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'How much seller concession can I ask for on a $300,000 home?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'On Conventional loans with less than 10% down, sellers can contribute up to 3% ($9,000). With 10% to 25% down, sellers can contribute up to 6% ($18,000). FHA loans permit up to 6% seller concessions ($18,000), and VA loans allow up to 4% plus standard closing costs.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'Why do closing costs vary so much by state?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'State and municipal transfer taxes, mortgage recording taxes, and title insurance regulations create huge regional disparities. In Pennsylvania, state and local transfer taxes can reach 2% ($6,000 on a $300k home). In Texas, there is zero transfer tax, but title insurance rates are set by the state insurance commissioner.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'What is the difference between closing costs and prepaid items?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'Closing costs are transactional fees paid to third parties for services rendered (lender underwriting, appraisal, title search, recording). Prepaid items are future ownership costs collected in advance to establish your escrow account (12 months of homeowners insurance, 2 to 6 months of property taxes, and daily prorated per diem interest).'
+          ]
+        ]
+      ]
+    ]
+  ]
+];
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+<style>
+*{box-sizing:border-box;}body{background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;margin:0;}
+a{color:#0369a1;text-decoration:none;}a:hover{text-decoration:underline;}
+.blog-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.blog-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}
+.blog-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.blog-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}
+.blog-meta span{font-size:.82rem;color:#64748b;}
+.blog-badge{background:#dbeafe;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.blog-cat{background:#f0fdf4;color:#166534;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bbf7d0;}
+.blog-intro{font-size:1.03rem;color:#334155;line-height:1.75;margin:0;border-left:4px solid #0369a1;padding:.9rem 1rem .9rem 1.25rem;background:#f0f9ff;border-radius:0 8px 8px 0;}
+.snippet-box{background:linear-gradient(135deg,#0369a1,#0284c7);border-radius:12px;padding:1.5rem;margin:1.5rem 0;color:#fff;}
+.snippet-box .sq{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.8);margin-bottom:.5rem;}
+.snippet-box .sa{font-size:1.02rem;font-weight:600;line-height:1.65;margin:0;}
+.blog-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.blog-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #e0f2fe;}
+.blog-section h3{font-size:1.05rem;color:#1e293b;margin:1.35rem 0 .55rem;font-weight:700;}
+.blog-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}
+.blog-section p:last-child{margin-bottom:0;}
+.blog-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;}
+.blog-table th{background:#0369a1;color:#fff;padding:10px 14px;text-align:left;}
+.blog-table td{padding:9px 14px;border-bottom:1px solid #e2e8f0;color:#334155;}
+.blog-table tr:nth-child(even) td{background:#f8fafc;}
+.blog-cta{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:13px;padding:1.75rem;margin:2rem 0;text-align:center;}
+.blog-cta h3{color:#fff;font-size:1.2rem;font-weight:800;margin:0 0 .5rem;}
+.blog-cta p{color:#94a3b8;font-size:.92rem;margin:0 0 1.25rem;line-height:1.6;}
+.blog-cta a{display:inline-block;background:#0284c7;color:#fff;padding:11px 24px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;transition:background .2s;}
+.blog-cta a:hover{background:#0369a1;}
+.blog-faq-item{border-bottom:1px solid #f1f5f9;padding:.85rem 0;}
+.blog-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.blog-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.blog-faq-q::after{content:'+';color:#0369a1;font-size:1.2rem;flex-shrink:0;}
+.blog-faq-item.open .blog-faq-q::after{content:'−';}
+.blog-faq-a{display:none;color:#475569;font-size:.91rem;line-height:1.7;padding-top:.5rem;}
+.blog-faq-item.open .blog-faq-a{display:block;}
+.blog-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.25rem;}
+.blog-card-box{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;}
+.blog-card-box-head{background:#0369a1;color:#fff;padding:.85rem 1.25rem;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.blog-card-box ul{list-style:none;padding:.5rem 0;margin:0;}
+.blog-card-box ul li a{display:block;padding:.5rem 1.25rem;font-size:.84rem;color:#475569;text-decoration:none;transition:all .15s;}
+.blog-card-box ul li a:hover{color:#0369a1;background:#f0f9ff;padding-left:1.45rem;}
+@media(max-width:900px){.blog-wrap{grid-template-columns:1fr;}.blog-sidebar{position:static;}}
+</style>
+
+<main id="main-content">
+<div class="blog-wrap">
+<article>
+  <div class="blog-bc"><a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; Closing Costs on $300k House</div>
+
+  <div class="blog-header">
+    <h1>How Much Are Closing Costs on a $300,000 House in <?php echo $currentYear; ?>?</h1>
+    <div class="blog-meta">
+      <span>By <strong>Sarah Mitchell</strong>, Real Estate Analyst</span>
+      <span class="blog-badge">✓ Audited for <?php echo $currentYear; ?> Guidelines</span>
+      <span class="blog-cat">🧾 Closing Costs</span>
+    </div>
+    <p class="blog-intro">
+      When buying a $300,000 home, the purchase price is only the beginning. In the United States, homebuyer closing costs typically average between <strong>2% and 5% of the purchase price</strong>. On a $300,000 house, this equates to <strong>$6,000 to $15,000</strong> in mandatory lender fees, title insurance, recording taxes, and prepaid escrow reserves.
+    </p>
+  </div>
+
+  <div class="snippet-box">
+    <div class="sq">Estimated Closing Costs — $300,000 Home Purchase</div>
+    <p class="sa">
+      &bull; <strong>Average Closing Cost Range (2% – 5%):</strong> $6,000 – $15,000<br>
+      &bull; <strong>National Average Baseline (3%):</strong> ~$9,000<br>
+      &bull; <strong>Lender &amp; Origination Charges:</strong> $1,000 – $3,000<br>
+      &bull; <strong>Title Insurance &amp; Settlement:</strong> $1,500 – $3,500<br>
+      &bull; <strong>Prepaid Property Taxes &amp; Insurance:</strong> $1,500 – $3,500
+    </p>
+  </div>
+
+  <div class="blog-section">
+    <h2>Itemized Closing Cost Breakdown on a $300k Home</h2>
+    <p>
+      Closing costs fall into two primary buckets: <strong>Non-Recurring Closing Costs</strong> (one-time service and legal fees) and <strong>Prepaids / Escrows</strong> (funds collected to pay future insurance and property taxes).
+    </p>
+    <table class="blog-table">
+      <thead>
+        <tr>
+          <th>Fee Category</th>
+          <th>Estimated Cost</th>
+          <th>Who It Goes To</th>
+          <th>Is It Negotiable?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lender Origination / Processing</strong></td>
+          <td>$1,000 – $2,500</td>
+          <td>Mortgage Lender</td>
+          <td>Yes (Shop multiple lenders)</td>
+        </tr>
+        <tr>
+          <td><strong>Home Appraisal</strong></td>
+          <td>$450 – $750</td>
+          <td>Appraisal Management Co.</td>
+          <td>No (Required by lender)</td>
+        </tr>
+        <tr>
+          <td><strong>Credit Report &amp; Flood Cert</strong></td>
+          <td>$50 – $120</td>
+          <td>Credit Bureaus / FEMA</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><strong>Lender Title Insurance Policy</strong></td>
+          <td>$1,000 – $1,800</td>
+          <td>Title Insurance Underwriter</td>
+          <td>Yes (Can shop title providers)</td>
+        </tr>
+        <tr>
+          <td><strong>Owner's Title Insurance Policy</strong></td>
+          <td>$800 – $1,500</td>
+          <td>Title Company</td>
+          <td>Optional (Highly recommended)</td>
+        </tr>
+        <tr>
+          <td><strong>Escrow Settlement / Closing Fee</strong></td>
+          <td>$600 – $1,200</td>
+          <td>Escrow Agent / Attorney</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td><strong>Government Recording Fees</strong></td>
+          <td>$125 – $350</td>
+          <td>County Recorder of Deeds</td>
+          <td>No (Government set)</td>
+        </tr>
+        <tr>
+          <td><strong>Transfer Taxes / Doc Stamps</strong></td>
+          <td>$0 – $3,000+</td>
+          <td>City, County &amp; State Gov</td>
+          <td>No (State law determined)</td>
+        </tr>
+        <tr>
+          <td><strong>Prepaid Homeowners Insurance (1 Year)</strong></td>
+          <td>$1,200 – $2,200</td>
+          <td>Insurance Carrier</td>
+          <td>Yes (Shop 3+ quotes)</td>
+        </tr>
+        <tr>
+          <td><strong>Prepaid Property Tax Escrow (2–6 mos)</strong></td>
+          <td>$800 – $2,400</td>
+          <td>Lender Escrow Account</td>
+          <td>No (Based on county bill)</td>
+        </tr>
+        <tr>
+          <td><strong>Per Diem Daily Interest (15 days avg)</strong></td>
+          <td>$400 – $800</td>
+          <td>Mortgage Servicer</td>
+          <td>Close near end of month</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="blog-section">
+    <h2>Closing Costs by State: Why Location Matters</h2>
+    <p>
+      On a $300,000 house, closing costs vary widely across the United States due to state transfer tax structures and municipal recording fees:
+    </p>
+    <ul>
+      <li><strong>Low Closing Cost States (1.8% – 2.5%):</strong> In states like <em>Texas, Arizona, and Oregon</em> with zero state transfer tax, buyer closing costs on $300k average around $6,000 to $7,500.</li>
+      <li><strong>Moderate States (2.5% – 3.5%):</strong> In states like <em>Ohio, California, and North Carolina</em>, costs average between $7,500 and $10,500.</li>
+      <li><strong>High Closing Cost States (3.5% – 5%+):</strong> In states like <em>Pennsylvania (2% transfer tax), Florida (documentary stamps + intangible tax), New York, and Maryland</em>, closing costs on $300,000 frequently exceed $12,000 to $15,000.</li>
+    </ul>
+  </div>
+
+  <div class="blog-section">
+    <h2>5 Proven Ways to Reduce Closing Costs on a $300k Purchase</h2>
+    <ol style="color:#475569;line-height:1.75;padding-left:1.4rem;">
+      <li><strong>Request Seller Concessions:</strong> Ask the seller to contribute 2% to 3% ($6,000 to $9,000) toward your closing costs in your initial purchase offer.</li>
+      <li><strong>Schedule Closing at Month-End:</strong> Closing on the 28th instead of the 2nd reduces your per diem prepaid interest from 28 days down to 2 days, saving $600 to $900 in upfront cash.</li>
+      <li><strong>Compare Loan Estimates (LEs):</strong> Under CFPB regulations, lenders must give you a Loan Estimate within 3 days. Getting 3 competing quotes often eliminates origination fees or earns you $1,500 in lender credits.</li>
+      <li><strong>Shop Your Own Title Company:</strong> You are legally entitled under RESPA Section 9 to choose your title insurance and closing settlement company. Shopping title services can save $500 to $1,000.</li>
+      <li><strong>Compare Homeowners Insurance:</strong> Getting quotes from multiple carriers can lower your annual premium by $400 to $700, directly reducing your prepaid escrow requirement at closing.</li>
+    </ol>
+  </div>
+
+  <div class="blog-cta">
+    <h3>Estimate Your Exact Closing Costs Instantly</h3>
+    <p>Get a state-specific itemized breakdown for buyer and seller settlement costs.</p>
+    <a href="/real-estate/closing-cost-calculator">Open Closing Cost Calculator &rarr;</a>
+  </div>
+
+  <div class="blog-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="blog-faq-list">
+      <div class="blog-faq-item open">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">Can closing costs on a $300,000 house be rolled into the loan?</div>
+        <div class="blog-faq-a">On purchase mortgages, standard conventional and FHA guidelines do not permit rolling closing costs directly into the loan amount unless you are using specific down payment assistance grant programs or doing a refinance. However, you can negotiate lender credits (in exchange for a slightly higher interest rate) or ask the seller for closing cost concessions.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">How much seller concession can I ask for on a $300,000 home?</div>
+        <div class="blog-faq-a">On Conventional loans with less than 10% down, sellers can contribute up to 3% ($9,000). With 10% to 25% down, sellers can contribute up to 6% ($18,000). FHA loans permit up to 6% seller concessions ($18,000), and VA loans allow up to 4% plus standard closing costs.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">Why do closing costs vary so much by state?</div>
+        <div class="blog-faq-a">State and municipal transfer taxes, mortgage recording taxes, and title insurance regulations create huge regional disparities. In Pennsylvania, state and local transfer taxes can reach 2% ($6,000 on a $300k home). In Texas, there is zero transfer tax, but title insurance rates are set by the state insurance commissioner.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">What is the difference between closing costs and prepaid items?</div>
+        <div class="blog-faq-a">Closing costs are transactional fees paid to third parties for services rendered (lender underwriting, appraisal, title search, recording). Prepaid items are future ownership costs collected in advance to establish your escrow account (12 months of homeowners insurance, 2 to 6 months of property taxes, and daily prorated per diem interest).</div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- SIDEBAR -->
+<aside class="blog-sidebar">
+  <div class="blog-card-box">
+    <div class="blog-card-box-head">Interactive Tools</div>
+    <ul>
+      <li><a href="/real-estate/closing-cost-calculator">🧾 Closing Cost Calculator</a></li>
+      <li><a href="/real-estate/investment-property-closing-cost-calculator">📑 Investor Closing Costs</a></li>
+      <li><a href="/real-estate/down-payment-calculator">⬇️ Down Payment Calculator</a></li>
+      <li><a href="/real-estate/home-affordability-calculator">🏠 Home Affordability Tool</a></li>
+      <li><a href="/real-estate/mortgage-calculator">🏦 Mortgage Calculator</a></li>
+    </ul>
+  </div>
+
+  <div class="blog-card-box">
+    <div class="blog-card-box-head">State Closing Guides</div>
+    <ul>
+      <li><a href="/real-estate/closing-cost-calculator-texas">Texas Closing Costs</a></li>
+      <li><a href="/real-estate/closing-cost-calculator-florida">Florida Closing Costs</a></li>
+      <li><a href="/real-estate/closing-cost-calculator-california">California Closing Costs</a></li>
+      <li><a href="/real-estate/closing-cost-calculator-ohio">Ohio Closing Costs</a></li>
+    </ul>
+  </div>
+</aside>
+</div>
+</main>
+
+<script>
+function toggleFaq(el){
+  el.parentElement.classList.toggle('open');
+}
+</script>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

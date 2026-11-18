@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOA Fee & Buying Power Impact Calculator (2026) | AmericaCalculator</title>
+  <meta name="description" content="Calculate how HOA and condo dues reduce your mortgage borrowing power. Model 10-year fee inflation and compare total PITI plus HOA monthly housing costs.">
+  <link rel="canonical" href="https://americacalculator.com/real-estate/hoa-fee-calculator">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "HOA Fee & Buying Power Calculator",
+        "url": "https://americacalculator.com/real-estate/hoa-fee-calculator",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Calculate how monthly condo and HOA fees reduce mortgage purchasing power and model 10-year fee inflation."
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-hover: #047857;
+      --primary-light: #ecfdf5;
+      --danger: #ef4444;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --white: #ffffff;
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+    header { background: var(--white); border-bottom: 1px solid var(--slate-200); padding: 1rem 2rem; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: var(--slate-900); text-decoration: none; }
+    .logo span { color: var(--primary); }
+
+    .main-wrapper { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+    .page-title-area { text-align: center; margin-bottom: 2.5rem; }
+    .page-title-area h1 { font-size: 2.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 0.75rem; }
+    .page-title-area p { color: var(--slate-600); font-size: 1.1rem; max-width: 720px; margin: 0 auto; }
+
+    .calculator-container {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--slate-200);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .form-panel { padding: 2.25rem; }
+    .results-panel {
+      background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
+      color: var(--white);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .input-group { margin-bottom: 1.25rem; }
+    .input-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--slate-700); margin-bottom: 0.4rem; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-prefix { position: absolute; left: 1rem; color: var(--slate-600); font-weight: 600; }
+    .input-suffix { position: absolute; right: 1rem; color: var(--slate-600); font-weight: 600; }
+    .input-wrapper input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.25rem;
+      border: 1.5px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .input-wrapper input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1); }
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* Results */
+    .lost-power-banner {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .lost-power-banner .label { font-size: 0.85rem; color: #fca5a5; font-weight: 700; text-transform: uppercase; }
+    .lost-power-banner .amount { font-size: 2.25rem; font-weight: 800; color: #fecaca; margin-top: 0.25rem; }
+
+    .breakdown-row { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-row span:first-child { color: #cbd5e1; }
+    .breakdown-row span:last-child { font-weight: 700; color: #34d399; }
+
+    .content-article { background: var(--white); border-radius: var(--radius); padding: 2.5rem; border: 1px solid var(--slate-200); }
+    .quick-summary-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
+    
+    @media (max-width: 860px) {
+      .calculator-container { grid-template-columns: 1fr; }
+      .grid-2-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">🇺🇸 America<span>Calculator</span></a>
+      <nav>
+        <a href="/real-estate/" style="color: var(--slate-700); font-weight: 600; text-decoration: none;">← Real Estate Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="page-title-area">
+      <h1>HOA Fee & Buying Power Impact Calculator</h1>
+      <p>Discover exactly how much monthly condo or HOA dues reduce your mortgage borrowing power. Model 10-year fee inflation and calculate true all-in monthly housing costs.</p>
+    </div>
+
+    <div class="calculator-container">
+      <div class="form-panel">
+        <div class="section-subtitle">🏢 1. HOA & Association Dues</div>
+        <div class="input-group">
+          <label for="monthlyHOA">Monthly HOA / Condo Fee</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="monthlyHOA" value="350" min="0" step="25">
+          </div>
+        </div>
+
+        <div class="section-subtitle" style="margin-top: 1.75rem;">📈 2. Mortgage Financing Assumptions</div>
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="interestRate">Mortgage Interest Rate</label>
+            <div class="input-wrapper">
+              <input type="number" id="interestRate" value="6.50" min="1" max="15" step="0.125" style="padding-left: 1rem;">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="loanTerm">Loan Term</label>
+            <select id="loanTerm" style="width: 100%; padding: 0.75rem; border: 1.5px solid var(--slate-200); border-radius: 10px; font-weight: 600;">
+              <option value="30" selected>30 Years Fixed</option>
+              <option value="15">15 Years Fixed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="homePrice">Target Purchase Price</label>
+            <div class="input-wrapper">
+              <span class="input-prefix">$</span>
+              <input type="number" id="homePrice" value="425000" step="5000">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="hoaInflation">Est. Annual HOA Escalation</label>
+            <div class="input-wrapper">
+              <input type="number" id="hoaInflation" value="4.0" step="0.5" style="padding-left: 1rem;">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-panel">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem;">Affordability Impact</h3>
+          
+          <div class="lost-power-banner">
+            <div class="label">Lost Mortgage Purchasing Power</div>
+            <div class="amount" id="lostPowerDisplay">–$55,300</div>
+            <div style="font-size: 0.8rem; color: #fca5a5; margin-top: 0.25rem;">Equivalence in home price loan capacity</div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1.25rem;">
+            <div class="breakdown-row">
+              <span>Equivalent Loan Capacity:</span>
+              <span id="loanEquivalent">$369,700</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Projected Dues in 5 Years:</span>
+              <span id="dues5Yrs">$426 / mo</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Projected Dues in 10 Years:</span>
+              <span id="dues10Yrs">$518 / mo</span>
+            </div>
+            <div class="breakdown-row">
+              <span>10-Year Cumulative HOA Paid:</span>
+              <span id="total10Yrs" style="color: #fbbf24;">$50,425</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+          <div style="font-size: 0.85rem; color: #94a3b8;">Monthly HOA Expense:</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #38bdf8;" id="monthlyDisplay">$350 / mo</div>
+        </div>
+      </div>
+    </div>
+
+    <article class="content-article">
+      <div class="quick-summary-box">
+        <h3 style="color: #065f46;">💡 Quick Answer: How Much Do HOA Fees Reduce Affordability?</h3>
+        <p style="color: #047857;">Under standard 30-year mortgage underwriting at 6.5% interest, <strong>every $100 per month in HOA dues reduces your mortgage loan qualification by roughly $15,800</strong>. A $350 monthly HOA fee reduces your purchasing power by more than <strong>$55,000</strong> compared to a home with no HOA dues.</p>
+      </div>
+      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">Why Lenders Care About HOA Fees</h2>
+      <p>Mortgage lenders add 100% of your monthly HOA dues directly into your debt-to-income (DTI) ratio. Because the dues are a mandatory legal encumbrance on the property deed, failing to pay them can result in an association lien or foreclosure, making it a primary risk factor in underwriting.</p>
+    </article>
+  </main>
+
+  <script>
+    function calculateHOA() {
+      const hoa = parseFloat(document.getElementById('monthlyHOA').value) || 0;
+      const rate = parseFloat(document.getElementById('interestRate').value) || 6.5;
+      const termYears = parseFloat(document.getElementById('loanTerm').value) || 30;
+      const price = parseFloat(document.getElementById('homePrice').value) || 400000;
+      const inflation = (parseFloat(document.getElementById('hoaInflation').value) || 4.0) / 100;
+
+      const monthlyRate = (rate / 100) / 12;
+      const nMonths = termYears * 12;
+
+      // Present value of the HOA monthly annuity at mortgage interest rate
+      // PV = PMT * [ (1 - (1+r)^-n) / r ]
+      let pv = 0;
+      if (monthlyRate > 0) {
+        pv = hoa * ( (1 - Math.pow(1 + monthlyRate, -nMonths)) / monthlyRate );
+      } else {
+        pv = hoa * nMonths;
+      }
+
+      document.getElementById('lostPowerDisplay').innerText = '–$' + Math.round(pv).toLocaleString();
+      document.getElementById('loanEquivalent').innerText = '$' + Math.max(0, Math.round(price - pv)).toLocaleString();
+      document.getElementById('monthlyDisplay').innerText = '$' + Math.round(hoa).toLocaleString() + ' / mo';
+
+      // 5-year and 10-year projections
+      const dues5 = hoa * Math.pow(1 + inflation, 5);
+      const dues10 = hoa * Math.pow(1 + inflation, 10);
+      document.getElementById('dues5Yrs').innerText = '$' + Math.round(dues5).toLocaleString() + ' / mo';
+      document.getElementById('dues10Yrs').innerText = '$' + Math.round(dues10).toLocaleString() + ' / mo';
+
+      // 10-year cumulative sum
+      let cumulative10 = 0;
+      for (let y = 0; y < 10; y++) {
+        cumulative10 += (hoa * Math.pow(1 + inflation, y)) * 12;
+      }
+      document.getElementById('total10Yrs').innerText = '$' + Math.round(cumulative10).toLocaleString();
+    }
+
+    document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', calculateHOA));
+    calculateHOA();
+  </script>
+</body>
+</html>

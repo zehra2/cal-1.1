@@ -1,0 +1,512 @@
+<?php
+$currentYear = date('Y');
+$pageTitle = "Georgia Closing Cost Calculator ({$currentYear}) – Atlanta & State Intangible Tax";
+$metaDescription = "Free Georgia closing cost calculator for {$currentYear}. Calculate buyer & seller settlement costs, GA Intangible Recording Tax ($1.50/$500), State Transfer Tax ($1/$1k), and attorney fees.";
+$metaKeywords = "georgia closing cost calculator, atlanta closing costs, georgia transfer tax calculator, georgia intangible recording tax, ga buyer closing costs, ga seller closing costs {$currentYear}";
+
+$schemaData = json_decode(<<<'EOD'
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://americacalculator.com/real-estate/closing-cost-calculator-georgia",
+      "url": "https://americacalculator.com/real-estate/closing-cost-calculator-georgia",
+      "name": "Georgia Closing Cost Calculator (2026) – Atlanta & State Intangible Tax",
+      "description": "Calculate Georgia buyer and seller closing costs, Georgia Intangible Recording Tax ($1.50 per $500), Real Estate Transfer Tax ($1.00 per $1,000), and settlement attorney fees.",
+      "inLanguage": "en-US",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://americacalculator.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Real Estate",
+            "item": "https://americacalculator.com/real-estate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Georgia Closing Cost Calculator",
+            "item": "https://americacalculator.com/real-estate/closing-cost-calculator-georgia"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebApplication",
+      "name": "Georgia Closing Cost Calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "url": "https://americacalculator.com/real-estate/closing-cost-calculator-georgia",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Georgia Real Estate Transfer Tax ($1.00 per $1,000 paid by seller)",
+        "Georgia Intangible Recording Tax ($1.50 per $500 of loan amount paid by buyer)",
+        "Mandatory Georgia closing attorney settlement fees",
+        "Title insurance premium calculation (promulgated tiers)",
+        "Itemized Buyer vs Seller net proceeds & cash to close",
+        "County property tax escrow proration modeling"
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to Calculate Georgia Real Estate Closing Costs",
+      "description": "Step-by-step instructions for calculating buyer and seller closing costs in Georgia.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Enter Purchase Price",
+          "text": "Input the agreed purchase price of the Georgia home."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Choose Buyer or Seller Role",
+          "text": "Select your transaction role to calculate specific statutory obligations for taxes, title policies, and commissions."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Configure Financing & Intangible Tax",
+          "text": "Set your down payment percentage to calculate the Georgia Intangible Recording Tax ($1.50 per $500 of loan principal)."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Review State Transfer Tax & Legal Fees",
+          "text": "Factor in the Georgia Transfer Tax ($1 per $1,000 paid by seller) and settlement attorney fees."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Evaluate Total Settlement Balance",
+          "text": "Review your total cash needed at closing (for buyers) or net proceeds check (for sellers)."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much are closing costs in Georgia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In Georgia, buyer closing costs typically range from 2.0% to 3.5% of the purchase price when financing. Seller closing costs typically range from 6.0% to 8.0%, driven by real estate broker commissions (5% to 6%), Georgia real estate transfer tax ($1/$1,000), and owner title insurance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Georgia Intangible Recording Tax and who pays it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Georgia Intangible Recording Tax is a state tax of $1.50 per $500 of loan amount (0.30%) imposed on long-term notes (mortgages with terms over 3 years). By law and standard contract practice, the buyer pays this tax at closing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Georgia Real Estate Transfer Tax rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Georgia Real Estate Transfer Tax is $1.00 for the first $1,000 of value plus $0.10 for each additional $100 (or fraction thereof), equaling an effective rate of 0.10% ($1.00 per $1,000). This tax is customarily paid entirely by the seller."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an attorney required to close real estate in Georgia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Georgia is an attorney closing state by law. A licensed Georgia real estate attorney must conduct the title search, prepare legal conveyance documents, and preside over the settlement closing table."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who pays for title insurance in Georgia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In Georgia (GAR standard contract), the buyer pays for their Lender Title Insurance Policy, while the Owner Title Insurance Policy is negotiable but customarily purchased by the buyer to protect their equity, though sellers often provide concessions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much are closing costs on a $400,000 home in Georgia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On a $400,000 home with 20% down ($320,000 loan): Buyer closing costs total ~$9,850 (including $960 Intangible Tax, $1,850 title insurance, $850 attorney fee, $1,400 lender fees, and $4,500 escrow prepaids). Seller closing costs total ~$24,800 (including $20,000 commission, $400 transfer tax, and deed recording fees)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are there municipal transfer taxes in Georgia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Unlike New York, Illinois, or Pennsylvania, cities and counties in Georgia do not impose separate local municipal real estate transfer taxes beyond the statewide transfer and intangible recording taxes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the maximum intangible recording tax cap in Georgia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Georgia caps the maximum intangible recording tax at $25,000 per transaction, which applies to mortgage loan amounts exceeding $8,333,333."
+          }
+        }
+      ]
+    }
+  ]
+}
+EOD
+, true);
+
+require_once '../includes/header.php';
+require_once '../includes/helpers.php';
+?>
+
+<main id="main-content" class="container">
+  <div class="calculator-header">
+    <h1>Georgia Closing Cost Calculator (<?php echo $currentYear; ?>)</h1>
+    <p class="lead-description">
+      Calculate buyer and seller settlement costs in Georgia. Accurately factors the <strong>Georgia Intangible Recording Tax ($1.50 per $500)</strong>, State Real Estate Transfer Tax ($1 per $1,000), mandatory closing attorney fees, and title insurance rates.
+    </p>
+  </div>
+
+  <div class="calculator-layout">
+    <!-- LEFT INPUT PANEL -->
+    <div class="calculator-panel">
+      <h2 class="panel-title">Georgia Transaction Inputs</h2>
+
+      <div class="form-group">
+        <label for="gaPrice">Home Purchase Price ($):</label>
+        <input type="number" id="gaPrice" class="form-control" value="410000" min="20000" step="5000">
+        <span class="field-hint">Atlanta &amp; Georgia median residential price benchmark.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="gaRole">Your Transaction Role:</label>
+        <select id="gaRole" class="form-control">
+          <option value="buyer" selected>Buyer (Purchasing Home)</option>
+          <option value="seller">Seller (Selling Home)</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="groupGaDown">
+        <label for="gaDownPct">Buyer Down Payment (%):</label>
+        <select id="gaDownPct" class="form-control">
+          <option value="5">5% Down Payment</option>
+          <option value="10">10% Down Payment</option>
+          <option value="20" selected>20% Down Payment (Standard)</option>
+          <option value="0">Cash Purchase (0% Financing &ndash; No Intangible Tax)</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="groupGaComm" style="display:none;">
+        <label for="gaAgentComm">Real Estate Broker Commission (%):</label>
+        <input type="number" id="gaAgentComm" class="form-control" value="5.0" min="0" max="8.0" step="0.5">
+      </div>
+
+      <div class="form-group">
+        <label for="gaAttorney">Closing Attorney Fee ($):</label>
+        <input type="number" id="gaAttorney" class="form-control" value="850" min="0" step="50">
+        <span class="field-hint">Mandatory closing attorney in GA ($700&ndash;$1,100).</span>
+      </div>
+
+      <div class="form-group">
+        <label for="gaAnnualTax">Annual Property Taxes ($):</label>
+        <input type="number" id="gaAnnualTax" class="form-control" value="3850" min="0" step="100">
+        <span class="field-hint">Average GA effective property tax rate (~0.90%&ndash;1.10%).</span>
+      </div>
+    </div>
+
+    <!-- RIGHT RESULTS PANEL -->
+    <div class="calculator-panel results-panel">
+      <h2 class="panel-title">Your Estimated Georgia Settlement Summary</h2>
+
+      <div class="highlight-metric">
+        <div class="metric-label" id="resGaRoleLabel">Total Buyer Closing Costs</div>
+        <div class="metric-value primary-value" id="resGaTotalCost">$0</div>
+        <div class="metric-sub" id="resGaBottomLine">Estimated Cash Needed at Settlement: $0</div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-title" id="resGaCard1Title">GA Intangible Tax ($1.50/$500)</div>
+          <div class="result-number" id="resGaCard1Val">$0</div>
+          <div class="result-desc" id="resGaCard1Desc">0.30% of mortgage loan amount</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title">Title Insurance (Lender/Owner)</div>
+          <div class="result-number" id="resGaTitleFees">$0</div>
+          <div class="result-desc">Comprehensive title protection</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title">Closing Attorney &amp; Recording</div>
+          <div class="result-number" id="resGaAttorneyRecording">$0</div>
+          <div class="result-desc">Closing counsel + County deed stamps</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title" id="resGaCard4Title">Lender &amp; Escrow Prepaids</div>
+          <div class="result-number" id="resGaCard4Val">$0</div>
+          <div class="result-desc" id="resGaCard4Desc">Taxes &amp; Insurance Buffer</div>
+        </div>
+      </div>
+
+      <div class="summary-breakdown">
+        <h3>Itemized Georgia Settlement Statement</h3>
+        <table class="summary-table">
+          <tr><td>Home Purchase Price:</td><td id="resSumGaPrice">$0</td></tr>
+          <tr id="rowGaDown"><td>Buyer Down Payment:</td><td id="resSumGaDown">$0</td></tr>
+          <tr id="rowGaComm" style="display:none;"><td>Broker Commission (5%):</td><td id="resSumGaComm">$0</td></tr>
+          <tr><td>GA State Transfer Tax ($1.00/$1k):</td><td id="resSumGaTransferTax">$0</td></tr>
+          <tr id="rowGaIntangible"><td>GA Intangible Recording Tax ($1.50/$500):</td><td id="resSumGaIntangible">$0</td></tr>
+          <tr><td>Title Insurance Policy:</td><td id="resSumGaTitle">$0</td></tr>
+          <tr><td>Closing Attorney Legal Fee:</td><td id="resSumGaAttorney">$0</td></tr>
+          <tr id="rowGaEscrow"><td>Escrow Prepaids (Taxes &amp; Insurance):</td><td id="resSumGaEscrow">$0</td></tr>
+          <tr class="highlight-row"><td><strong id="resSumGaFinalLabel">Total Estimated Cash to Close:</strong></td><td><strong id="resSumGaFinalVal">$0</strong></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT & GUIDES -->
+  <div class="calculator-content-body">
+    <div class="quick-answer-card">
+      <h2>Understanding Georgia Real Estate Closing Costs in <?php echo $currentYear; ?></h2>
+      <p>
+        Georgia is an <strong>attorney closing state</strong> where closing costs average <strong>2.0% to 3.5%</strong> for buyers and <strong>6.0% to 8.0%</strong> for sellers. Georgia features two unique state statutory fees: the <strong>Real Estate Transfer Tax ($1.00 per $1,000 paid by the seller)</strong> and the <strong>Intangible Recording Tax ($1.50 per $500 of mortgage balance paid by the buyer)</strong>.
+      </p>
+    </div>
+
+    <h2>Georgia Real Estate Statutory Taxes Breakdown</h2>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tax Type</th>
+            <th>Statutory Rate</th>
+            <th>Formula Basis</th>
+            <th>Customary Payer</th>
+            <th>Cost on $410,000 Home ($328k Loan)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Georgia Real Estate Transfer Tax</strong></td>
+            <td>$1.00 / $1,000 (0.10%)</td>
+            <td>Total Purchase Price</td>
+            <td><strong>Seller</strong></td>
+            <td><strong>$410.00</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Georgia Intangible Recording Tax</strong></td>
+            <td>$1.50 / $500 (0.30%)</td>
+            <td>Mortgage Loan Amount</td>
+            <td><strong>Buyer</strong></td>
+            <td><strong>$984.00</strong></td>
+          </tr>
+          <tr>
+            <td><strong>County Deed &amp; Mortgage Recording</strong></td>
+            <td>Flat $25 &ndash; $50</td>
+            <td>Per document filed</td>
+            <td>Buyer / Seller split</td>
+            <td>~$75.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Attorney Closing State Requirements in Georgia</h2>
+    <p>
+      Under Georgia Supreme Court precedent (Formal Advisory Opinion 86-2), real estate settlements must be witnessed and supervised by a licensed Georgia attorney. The closing attorney represents the <em>lender</em> (or transaction), performs the 50-year title examination, issues the title commitment, prepares the deed and settlement statement, and disburses all escrow funds.
+    </p>
+
+    <h2>Itemized Buyer vs. Seller Closing Cost Allocation in Georgia</h2>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Closing Line Item</th>
+            <th>Buyer Pays</th>
+            <th>Seller Pays</th>
+            <th>Typical Amount Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GA Real Estate Transfer Tax</strong></td><td>No</td><td><strong>Yes</strong></td><td>$1.00 per $1,000 of sales price</td></tr>
+          <tr><td><strong>GA Intangible Recording Tax</strong></td><td><strong>Yes</strong></td><td>No</td><td>$1.50 per $500 of new loan amount</td></tr>
+          <tr><td><strong>Closing Attorney Settlement Fee</strong></td><td><strong>Yes (~$850)</strong></td><td>No</td><td>Covers settlement and document prep</td></tr>
+          <tr><td><strong>Title Insurance (Lender Policy)</strong></td><td><strong>Yes</strong></td><td>No</td><td>~$1,200 &ndash; $1,800 based on loan size</td></tr>
+          <tr><td><strong>Broker Commission</strong></td><td>No</td><td><strong>Yes</strong></td><td>5.0% to 6.0% of purchase price</td></tr>
+          <tr><td><strong>Property Tax Escrow Prepaids</strong></td><td><strong>Yes</strong></td><td>No</td><td>3 to 5 months property tax cushion</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+        <h2>The 50-Year Title Search Requirement in Georgia Real Estate</h2>
+    <p>Under Title Standard 2.1 of the State Bar of Georgia, real estate attorneys must conduct a formal <strong>50-year title examination</strong> of county deed records before issuing clear title:</p>
+    <ul>
+      <li><strong>Chain of Title Verification:</strong> Traces all warranty deeds, quitclaim deeds, and estate probates back five decades to ensure no unreleased security deeds (mortgages) or break in chain of title exist.</li>
+      <li><strong>Judgment &amp; Lien Searches:</strong> Examines county superior court records for outstanding state tax fi. fas. (fieri facias), federal tax liens, mechanic's liens, and municipal water/sewer assessments.</li>
+      <li><strong>Municipal Ad Valorem Certificates:</strong> Obtains certified tax payoff letters from the county tax commissioner and city clerk to confirm current ad valorem property taxes are paid in full.</li>
+    </ul>
+
+    <h2>Negotiating Seller Paid Closing Costs in Georgia (GAR Contract Rules)</h2>
+    <p>Under standard Georgia Association of REALTORS (GAR) Purchase and Sale Agreements (Form F201), buyers can request a specific dollar amount or percentage in <strong>Seller's Contribution at Closing</strong> (typically 2% to 3% of purchase price). These funds can cover loan origination fees, appraisal, credit reports, discount points, upfront mortgage insurance, and the GA Intangible Recording Tax.</p>
+
+    <h2>Georgia Homestead Exemptions: Lowering Property Taxes Post-Closing</h2>
+    <p>After closing on a Georgia primary residence, new homeowners should file for their county <strong>Homestead Exemption</strong> before the annual April 1 deadline:</p>
+    <ul>
+      <li><strong>Standard County Exemption:</strong> Deducts $2,000 to $10,000+ from the assessed 40% taxable value of the property for county and school ad valorem taxes.</li>
+      <li><strong>Fulton &amp; DeKalb County Assessment Freezes:</strong> Certain metro Atlanta counties provide floating homestead exemptions that cap annual increases in taxable assessed value at the rate of CPI inflation, shielding homeowners from rapid reassessment spikes.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+    <div class="faq-item">
+      <h4>How much are closing costs in Georgia?</h4>
+      <p>In Georgia, buyer closing costs typically range from 2.0% to 3.5% of the purchase price when financing. Seller closing costs typically range from 6.0% to 8.0%, driven by real estate broker commissions (5% to 6%), Georgia real estate transfer tax ($1/$1,000), and owner title insurance.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the Georgia Intangible Recording Tax and who pays it?</h4>
+      <p>The Georgia Intangible Recording Tax is a state tax of $1.50 per $500 of loan amount (0.30%) imposed on long-term notes (mortgages with terms over 3 years). By law and standard contract practice, the buyer pays this tax at closing.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the Georgia Real Estate Transfer Tax rate?</h4>
+      <p>The Georgia Real Estate Transfer Tax is $1.00 for the first $1,000 of value plus $0.10 for each additional $100 (or fraction thereof), equaling an effective rate of 0.10% ($1.00 per $1,000). This tax is customarily paid entirely by the seller.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Is an attorney required to close real estate in Georgia?</h4>
+      <p>Yes. Georgia is an attorney closing state by law. A licensed Georgia real estate attorney must conduct the title search, prepare legal conveyance documents, and preside over the settlement closing table.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Who pays for title insurance in Georgia?</h4>
+      <p>In Georgia (GAR standard contract), the buyer pays for their Lender Title Insurance Policy, while the Owner Title Insurance Policy is negotiable but customarily purchased by the buyer to protect their equity, though sellers often provide concessions.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How much are closing costs on a $400,000 home in Georgia?</h4>
+      <p>On a $400,000 home with 20% down ($320,000 loan): Buyer closing costs total ~$9,850 (including $960 Intangible Tax, $1,850 title insurance, $850 attorney fee, $1,400 lender fees, and $4,500 escrow prepaids). Seller closing costs total ~$24,800 (including $20,000 commission, $400 transfer tax, and deed recording fees).</p>
+    </div>
+    <div class="faq-item">
+      <h4>Are there municipal transfer taxes in Georgia?</h4>
+      <p>No. Unlike New York, Illinois, or Pennsylvania, cities and counties in Georgia do not impose separate local municipal real estate transfer taxes beyond the statewide transfer and intangible recording taxes.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the maximum intangible recording tax cap in Georgia?</h4>
+      <p>Georgia caps the maximum intangible recording tax at $25,000 per transaction, which applies to mortgage loan amounts exceeding $8,333,333.</p>
+    </div>
+
+    <h2>Explore Related State Closing Cost &amp; Mortgage Calculators</h2>
+    <ul>
+      <li><a href="/real-estate/closing-cost-calculator-florida">Florida Closing Cost Calculator</a> &mdash; Calculate FL documentary stamps and intangible taxes.</li>
+      <li><a href="/real-estate/closing-cost-calculator-north-carolina">North Carolina Closing Cost Calculator</a> &mdash; Calculate NC excise stamps and due diligence fees.</li>
+      <li><a href="/real-estate/property-tax-calculator">Property Tax Calculator</a> &mdash; Compare Georgia's ~0.95% effective property tax rate against other states.</li>
+      <li><a href="/real-estate/seller-closing-cost-calculator">Seller Closing Cost Calculator</a> &mdash; Estimate net seller proceeds after broker fees and deed taxes.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+function calculateGaCosts() {
+  var price = parseFloat(document.getElementById('gaPrice').value) || 0;
+  var role = document.getElementById('gaRole').value;
+  var downPct = (parseFloat(document.getElementById('gaDownPct').value) || 20) / 100;
+  var commPct = (parseFloat(document.getElementById('gaAgentComm').value) || 5.0) / 100;
+  var attorney = parseFloat(document.getElementById('gaAttorney').value) || 850;
+  var annualTax = parseFloat(document.getElementById('gaAnnualTax').value) || 3850;
+
+  var isBuyer = (role === 'buyer');
+  document.getElementById('groupGaDown').style.display = isBuyer ? 'block' : 'none';
+  document.getElementById('groupGaComm').style.display = isBuyer ? 'none' : 'block';
+  document.getElementById('rowGaDown').style.display = isBuyer ? 'table-row' : 'none';
+  document.getElementById('rowGaComm').style.display = isBuyer ? 'none' : 'table-row';
+  document.getElementById('rowGaIntangible').style.display = isBuyer ? 'table-row' : 'none';
+  document.getElementById('rowGaEscrow').style.display = isBuyer ? 'table-row' : 'none';
+
+  var downPayment = isBuyer ? (price * downPct) : 0;
+  var loanAmount = isBuyer ? Math.max(0, price - downPayment) : 0;
+
+  // 1. GA Transfer Tax ($1.00 per $1,000) - Seller
+  var stateTransferTax = (price / 1000) * 1.00;
+
+  // 2. GA Intangible Tax ($1.50 per $500) - Buyer on loan > 3 yrs, max $25,000
+  var intangibleTax = 0;
+  if (loanAmount > 0) {
+    intangibleTax = Math.min(25000, (loanAmount / 500) * 1.50);
+  }
+
+  // 3. Title Insurance
+  var titleInsurance = Math.max(650, (price * 0.0048) + 200);
+
+  // 4. Broker Commission
+  var commission = isBuyer ? 0 : (price * commPct);
+
+  // 5. Lender & Escrow Prepaids
+  var lenderOrig = loanAmount > 0 ? 1450 : 0;
+  var escrowPrepaids = isBuyer && (loanAmount > 0) ? (annualTax / 12 * 4) + 1200 : 0;
+  var recording = 75;
+
+  var totalCost = 0;
+  var bottomLine = 0;
+
+  if (isBuyer) {
+    totalCost = intangibleTax + titleInsurance + attorney + recording + lenderOrig + escrowPrepaids;
+    bottomLine = downPayment + totalCost;
+
+    document.getElementById('resGaRoleLabel').textContent = 'Total Buyer Closing Costs';
+    document.getElementById('resGaBottomLine').textContent = 'Estimated Cash Needed at Settlement: $' + Math.round(bottomLine).toLocaleString();
+    document.getElementById('resGaCard1Title').textContent = 'GA Intangible Tax ($1.50/$500)';
+    document.getElementById('resGaCard1Val').textContent = '$' + Math.round(intangibleTax).toLocaleString();
+    document.getElementById('resGaCard1Desc').textContent = '0.30% on $' + Math.round(loanAmount).toLocaleString() + ' loan';
+    document.getElementById('resGaTitleFees').textContent = '$' + Math.round(titleInsurance).toLocaleString();
+    document.getElementById('resGaAttorneyRecording').textContent = '$' + Math.round(attorney + recording).toLocaleString();
+    document.getElementById('resGaCard4Title').textContent = 'Lender & Escrow Prepaids';
+    document.getElementById('resGaCard4Val').textContent = '$' + Math.round(lenderOrig + escrowPrepaids).toLocaleString();
+    document.getElementById('resGaCard4Desc').textContent = 'Origination + Tax/Ins Buffer';
+    document.getElementById('resSumGaFinalLabel').textContent = 'Total Estimated Cash to Close:';
+    document.getElementById('resSumGaFinalVal').textContent = '$' + Math.round(bottomLine).toLocaleString();
+  } else {
+    totalCost = commission + stateTransferTax + attorney + recording;
+    var netProceeds = price - totalCost;
+
+    document.getElementById('resGaRoleLabel').textContent = 'Total Seller Closing Costs';
+    document.getElementById('resGaBottomLine').textContent = 'Estimated Net Sale Proceeds: $' + Math.round(netProceeds).toLocaleString();
+    document.getElementById('resGaCard1Title').textContent = 'GA Transfer Tax ($1/$1k)';
+    document.getElementById('resGaCard1Val').textContent = '$' + Math.round(stateTransferTax).toLocaleString();
+    document.getElementById('resGaCard1Desc').textContent = '0.10% State Real Estate Tax';
+    document.getElementById('resGaTitleFees').textContent = '$0 (Paid by Buyer)';
+    document.getElementById('resGaAttorneyRecording').textContent = '$' + Math.round(attorney + recording).toLocaleString();
+    document.getElementById('resGaCard4Title').textContent = 'Broker Commission';
+    document.getElementById('resGaCard4Val').textContent = '$' + Math.round(commission).toLocaleString();
+    document.getElementById('resGaCard4Desc').textContent = (commPct * 100).toFixed(1) + '% Real Estate Commission';
+    document.getElementById('resSumGaFinalLabel').textContent = 'Estimated Net Seller Proceeds:';
+    document.getElementById('resSumGaFinalVal').textContent = '$' + Math.round(netProceeds).toLocaleString();
+  }
+
+  document.getElementById('resGaTotalCost').textContent = '$' + Math.round(totalCost).toLocaleString();
+  document.getElementById('resSumGaPrice').textContent = '$' + Math.round(price).toLocaleString();
+  document.getElementById('resSumGaDown').textContent = '$' + Math.round(downPayment).toLocaleString() + ' (' + (downPct * 100).toFixed(0) + '%)';
+  document.getElementById('resSumGaComm').textContent = '$' + Math.round(commission).toLocaleString();
+  document.getElementById('resSumGaTransferTax').textContent = '$' + Math.round(isBuyer ? 0 : stateTransferTax).toLocaleString();
+  document.getElementById('resSumGaIntangible').textContent = '$' + Math.round(intangibleTax).toLocaleString();
+  document.getElementById('resSumGaTitle').textContent = '$' + Math.round(isBuyer ? titleInsurance : 0).toLocaleString();
+  document.getElementById('resSumGaAttorney').textContent = '$' + Math.round(attorney).toLocaleString();
+  document.getElementById('resSumGaEscrow').textContent = '$' + Math.round(escrowPrepaids).toLocaleString();
+}
+
+document.querySelectorAll('#gaPrice, #gaRole, #gaDownPct, #gaAgentComm, #gaAttorney, #gaAnnualTax').forEach(function(el) {
+  el.addEventListener('input', calculateGaCosts);
+  el.addEventListener('change', calculateGaCosts);
+});
+
+calculateGaCosts();
+</script>
+
+<?php require_once '../includes/footer.php'; ?>

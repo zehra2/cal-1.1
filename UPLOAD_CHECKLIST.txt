@@ -1,0 +1,113 @@
+============================================================
+FILES TO UPLOAD TO LIVE SERVER — americacalculator.com
+============================================================
+Upload ALL files below via cPanel File Manager or FTP.
+Remote path = public_html/ (your live server document root)
+============================================================
+
+ROOT FILES (upload to public_html/)
+------------------------------------
+.htaccess                          ← CRITICAL — upload this first
+sitemap.xml
+llms.txt
+index.php
+about.php
+contact.php
+privacy-policy.php
+terms-and-conditions.php
+
+INCLUDES FOLDER (upload to public_html/includes/)
+---------------------------------------------------
+includes/header.php
+includes/footer.php
+
+BUSINESS FOLDER (upload to public_html/business/)
+---------------------------------------------------
+business/roi-calculator.php
+business/real-estate-roi-calculator.php
+business/rental-property-roi-calculator.php
+business/marketing-roi-calculator.php
+business/solar-roi-calculator.php
+business/amazon-roi-calculator.php
+business/automation-roi-calculator.php
+business/project-roi-calculator.php
+business/index.php
+
+OHIO FOLDER (upload to public_html/ohio/)
+------------------------------------------
+ohio/index.php
+ohio/paycheck-calculator.php
+ohio/hourly-paycheck-calculator.php
+ohio/salary-paycheck-calculator.php
+ohio/overtime-calculator.php
+ohio/bonus-tax-calculator.php
+ohio/payroll-tax-calculator.php
+
+REAL ESTATE FOLDER (upload to public_html/real-estate/)
+---------------------------------------------------------
+real-estate/index.php
+real-estate/cap-rate-calculator.php
+real-estate/rental-yield-calculator.php
+real-estate/cash-on-cash-return-calculator.php
+real-estate/mortgage-calculator.php
+real-estate/cash-flow-calculator.php
+real-estate/roi-calculator.php
+real-estate/rental-property-calculator.php
+real-estate/closing-cost-calculator.php
+real-estate/down-payment-calculator.php
+real-estate/dscr-calculator.php
+real-estate/rent-vs-buy-calculator.php
+real-estate/1031-exchange-calculator.php
+
+LOAN CALCULATORS FOLDER (upload to public_html/loan-calculators/)
+------------------------------------------------------------------
+loan-calculators/index.php
+loan-calculators/sba-loan-calculator.php
+loan-calculators/sba-loan-payment-calculator.php
+loan-calculators/business-loan-calculator.php
+loan-calculators/auto-loan-calculator.php
+loan-calculators/personal-loan-calculator.php
+loan-calculators/land-loan-calculator.php
+loan-calculators/rv-loan-calculator.php
+loan-calculators/interest-only-loan-calculator.php
+
+CONSTRUCTION FOLDER (upload to public_html/construction/)
+----------------------------------------------------------
+construction/concrete-calculator.php
+construction/concrete-slab-calculator.php
+construction/concrete-bag-calculator.php
+construction/concrete-yardage-calculator.php
+construction/concrete-footing-calculator.php
+construction/home-addition-cost-calculator.php
+
+TECHNOLOGY FOLDER (upload to public_html/technology/)
+------------------------------------------------------
+technology/index.php
+technology/bottleneck-calculator.php
+technology/voltage-drop-calculator.php
+
+VENDOR FOLDER (for PHPMailer — contact form)
+---------------------------------------------
+vendor/autoload.php
+vendor/phpmailer/  (entire folder)
+
+BLOG FOLDER (upload to public_html/blog/)
+-----------------------------------------
+blog/cap-rate-vs-cash-on-cash-return.php
+blog/cost-to-add-second-story-to-house.php
+blog/debt-to-income-ratio-explained.php
+blog/how-much-are-closing-costs-in-california.php
+blog/how-much-are-closing-costs-in-florida.php
+blog/how-much-are-closing-costs-in-texas.php
+blog/rv-financing-101-guide.php
+blog/sba-7a-vs-504-loan-calculator-guide.php
+
+============================================================
+AFTER UPLOADING — TEST THESE URLS:
+============================================================
+https://americacalculator.com/business/roi-calculator
+https://americacalculator.com/about
+https://americacalculator.com/contact
+https://americacalculator.com/ohio/paycheck-calculator
+https://americacalculator.com/real-estate/mortgage-calculator
+============================================================

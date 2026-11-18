@@ -1,0 +1,371 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "1031 Exchange Calculator ($currentYear) | Tax Deferral";
+$metaDescription = "Free 1031 exchange calculator $currentYear. Calculate capital gains tax owed vs deferred, boot amount, and minimum replacement property value for a like-kind exchange.";
+$metaKeywords    = '1031 exchange calculator, 1031 exchange capital gains, like kind exchange calculator, 1031 calculator real estate, 1031 exchange tax savings, capital gains deferral calculator';
+$schemaData = ['@context'=>'https://schema.org','@graph'=>[
+  ['@type'=>'HowTo','name'=>'How to Calculate Capital Gains Deferred in a 1031 Exchange','step'=>[
+    ['@type'=>'HowToStep','name'=>'Enter relinquished property sales price','text'=>'Input the contracted selling price and closing costs for the property being sold.'],
+    ['@type'=>'HowToStep','name'=>'Enter original cost basis & depreciation','text'=>'Provide initial purchase price, capital improvements, and accumulated depreciation deductions.'],
+    ['@type'=>'HowToStep','name'=>'Input replacement property purchase price','text'=>'Enter the purchase price and new mortgage debt for the replacement property.'],
+    ['@type'=>'HowToStep','name'=>'Check for boot and taxable gain','text'=>'Review any cash boot or mortgage relief boot that may trigger partial capital gains taxes.'],
+    ['@type'=>'HowToStep','name'=>'Calculate total deferred tax liability','text'=>'View federal capital gains, state taxes, and depreciation recapture tax successfully deferred.']
+  ]],
+  ['@type'=>'WebApplication','name'=>'1031 Exchange Calculator',
+   'url'=>'https://americacalculator.com/real-estate/1031-exchange-calculator',
+   'description'=>'Calculate capital gains tax deferred through a 1031 like-kind exchange and minimum replacement property value.',
+   'applicationCategory'=>'FinanceApplication','operatingSystem'=>'All',
+   'offers'=>['@type'=>'Offer','price'=>'0','priceCurrency'=>'USD']],
+  ['@type'=>'BreadcrumbList','itemListElement'=>[
+    ['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>'https://americacalculator.com/'],
+    ['@type'=>'ListItem','position'=>2,'name'=>'Real Estate','item'=>'https://americacalculator.com/real-estate/'],
+    ['@type'=>'ListItem','position'=>3,'name'=>'1031 Exchange Calculator','item'=>'https://americacalculator.com/real-estate/1031-exchange-calculator'],
+  ]],
+  ['@type'=>'FAQPage','mainEntity'=>[
+    ['@type'=>'Question','name'=>'What is a 1031 exchange?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'A 1031 exchange (named after IRS Section 1031) allows real estate investors to defer capital gains taxes when selling an investment property by reinvesting the proceeds into a like-kind replacement property. To fully defer all taxes, the replacement property must be of equal or greater value and the investor must take on equal or greater debt. Taxes are deferred — not eliminated — until the replacement property is eventually sold without another exchange.']],
+    ['@type'=>'Question','name'=>'What is boot in a 1031 exchange?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Boot is any non-like-kind value received in a 1031 exchange — most commonly cash kept from the sale proceeds, or a net reduction in mortgage balance. Boot is taxable in the year of the exchange, with depreciation recapture recognized first. To avoid boot entirely, reinvest all net equity into the replacement property and take on equal or greater debt.']],
+    ['@type'=>'Question','name'=>'What are the 1031 exchange deadlines?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'You have 45 days from the sale of the relinquished property to identify up to three potential replacement properties in writing to your Qualified Intermediary. You then have 180 days from the sale (not from identification) to close on the replacement property. Both deadlines run concurrently and are strictly enforced — missing either one disqualifies the entire exchange, with no extensions except in federally declared disaster areas.']],
+    ['@type'=>'Question','name'=>'What qualifies for a 1031 exchange?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Properties must be held for investment or productive use in a trade or business. Eligible properties include rental homes, commercial buildings, vacant land, and industrial property. Personal residences do not qualify. Since 2018, only real property qualifies — personal property (equipment, vehicles) no longer qualifies under Section 1031.']],
+    ['@type'=>'Question','name'=>'Can I do a 1031 exchange on my primary residence?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'No. Section 1031 applies only to property held for investment or business use. Primary residences qualify for the Section 121 exclusion instead ($250,000 single / $500,000 married filing jointly capital gains exclusion). Some investors convert a rental to primary residence before selling, but specific holding-period rules apply — consult a tax professional first.']],
+    ['@type'=>'Question','name'=>'What happens if I miss the 45-day or 180-day deadline?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'The exchange is disqualified retroactively and the sale is treated as a normal taxable sale — you owe capital gains and depreciation recapture tax on the full realized gain, generally in the tax year the relinquished property sold. There is no partial credit for progress made. The only common exception is a federally declared disaster affecting the transaction, which can extend the deadlines. This is why experienced investors identify backup properties well before day 45.']],
+    ['@type'=>'Question','name'=>'Can I convert the replacement property into my primary residence later?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>"Yes, but not immediately, and specific rules apply. The IRS generally expects the replacement property to be held for investment for a meaningful period (many practitioners use a 1-2 year rule of thumb) before converting it to personal use. If you later sell that former rental after living in it, Section 121's home-sale exclusion may only apply to the portion of ownership and gain attributable to personal use. This is a commonly discussed strategy, but get advice from a CPA before relying on it."]],
+    ['@type'=>'Question','name'=>'What happens to the deferred tax if I never sell, or pass the property to my heirs?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>"This is the strategy often called \"swap until you drop.\" If you keep exchanging properties for the rest of your life and never sell outright, your heirs typically inherit the final property with a stepped-up basis equal to its fair market value at your death — potentially eliminating the deferred capital gains and depreciation recapture entirely, rather than just postponing it. This makes 1031 exchanges a common estate-planning tool for long-term investors, not just a short-term tax deferral trick."]],
+    ['@type'=>'Question','name'=>'Can I exchange one property for multiple replacement properties, or combine several into one?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Yes. You can exchange a single relinquished property into up to three replacement properties (or more, under specific identification rules), or combine multiple relinquished properties into a single larger replacement property. The same 45-day identification and 180-day closing deadlines apply to the entire exchange, and the combined replacement value must still meet or exceed your total net sale proceeds to defer all tax.']],
+    ['@type'=>'Question','name'=>'Does the replacement property have to be titled in the same name as the relinquished property?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>"Yes — this is one of the most common ways exchanges accidentally fail. The same taxpayer who sold the relinquished property must take title to the replacement property. If you owned the property personally, you generally can't take title in an LLC or a different entity, and vice versa, without risking disqualification. Single-member LLCs treated as \"disregarded entities\" for tax purposes are typically fine since they're treated as the same taxpayer, but always confirm with your Qualified Intermediary and CPA before closing."]],
+  ]],
+]];
+require_once '../includes/header.php';
+require_once '../includes/helpers.php';
+?>
+<style>
+body{background:#f8fafc;}
+.rc-wrap{max-width:960px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+.rc-bc{font-size:.8rem;color:#94a3b8;margin-bottom:.75rem;}.rc-bc a{color:#64748b;text-decoration:none;}
+.rc-hero h1{font-size:1.85rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.rc-hero p{font-size:.97rem;color:#64748b;line-height:1.65;margin:0 0 1.75rem;border-left:3px solid #b45309;padding-left:.9rem;}
+.rc-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden;margin-bottom:1.75rem;}
+.rc-card-head{background:#92400e;color:#fff;padding:1rem 1.5rem;font-size:1rem;font-weight:700;}
+.rc-body{padding:1.5rem;}
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.rc-field{margin-bottom:1rem;}
+.rc-field label{display:block;font-size:.85rem;font-weight:600;color:#1e293b;margin-bottom:.35rem;}
+.rc-field input,.rc-field select{width:100%;padding:10px 13px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:.94rem;color:#0f172a;outline:none;box-sizing:border-box;background:#fff;transition:border-color .2s;}
+.rc-field input:focus,.rc-field select:focus{border-color:#b45309;}
+.rc-field .hint{font-size:.73rem;color:#94a3b8;margin-top:.25rem;}
+.rc-sec-lbl{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:1.2rem 0 .7rem;padding-bottom:.3rem;border-bottom:1px solid #f1f5f9;}
+.rc-sec-lbl:first-child{margin-top:0;}
+.rc-btn{width:100%;background:#92400e;color:#fff;padding:13px;border:none;border-radius:8px;font-size:.97rem;font-weight:700;cursor:pointer;margin-top:.5rem;}
+.rc-btn:hover{background:#b45309;}
+/* Result */
+.ex-result{background:#fffbeb;border:1.5px solid #fde68a;border-radius:12px;padding:1.5rem;margin-top:1.25rem;}
+.ex-top{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;}
+.ex-big{background:#fff;border-radius:10px;padding:1.1rem;text-align:center;border:2px solid;}
+.ex-big.saved{border-color:#bbf7d0;}
+.ex-big.owed{border-color:#fca5a5;}
+.ex-big .ev{display:block;font-size:1.8rem;font-weight:800;line-height:1;margin-bottom:.2rem;}
+.ex-big .el{font-size:.78rem;color:#64748b;font-weight:600;}
+.ex-lines{background:#fff;border-radius:10px;border:1px solid #fde68a;padding:.85rem 1.1rem;margin-bottom:.85rem;}
+.ex-line{display:flex;justify-content:space-between;padding:.32rem 0;border-bottom:1px solid #fffbeb;font-size:.86rem;}
+.ex-line:last-child{border-bottom:none;padding-top:.5rem;font-weight:700;}
+.ex-line .ll{color:#64748b;}.ex-line .lv{font-weight:600;color:#1e293b;}
+.ex-timeline{background:#fff;border-radius:10px;border:1px solid #fde68a;padding:.85rem 1.1rem;}
+.ex-timeline h4{font-size:.77rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#92400e;margin:0 0 .75rem;}
+.ex-step{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.7rem;}
+.ex-step:last-child{margin-bottom:0;}
+.ex-step-num{width:24px;height:24px;background:#92400e;color:#fff;border-radius:50%;font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem;}
+.ex-step-text{font-size:.84rem;color:#475569;line-height:1.5;}
+.ex-step-text strong{color:#0f172a;}
+/* Content */
+.rc-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:1.75rem;margin-bottom:1.5rem;}
+.rc-section h2{font-size:1.3rem;color:#0f172a;margin:0 0 .85rem;padding-bottom:.6rem;border-bottom:2px solid #fffbeb;}
+.rc-section p{color:#475569;line-height:1.72;font-size:.95rem;margin-bottom:.9rem;}
+.rc-section p:last-child{margin-bottom:0;}
+.rc-section a{color:#b45309;font-weight:600;}
+.rc-section ul{color:#475569;line-height:1.75;padding-left:1.4rem;margin-bottom:.9rem;font-size:.95rem;}
+.rc-section li{margin-bottom:.35rem;}
+.rc-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}
+.rc-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.rc-faq-q{font-size:.94rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.rc-faq-q::after{content:'+';color:#b45309;font-size:1.2rem;flex-shrink:0;}
+.rc-faq-item.open .rc-faq-q::after{content:'−';}
+.rc-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.rc-faq-item.open .rc-faq-a{display:block;}
+.rc-related{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.75rem;margin-top:.75rem;}
+.rc-rel-link{display:block;background:#fffbeb;border:1.5px solid #fde68a;border-radius:8px;padding:.75rem 1rem;font-size:.85rem;font-weight:600;color:#92400e;text-decoration:none;text-align:center;}
+.rc-rel-link:hover{background:#fef3c7;}
+@media(max-width:640px){.rc-grid,.ex-top{grid-template-columns:1fr;}.rc-hero h1{font-size:1.5rem;}}
+</style>
+<main id="main-content">
+<div class="rc-wrap">
+  <div class="rc-bc"><a href="/">Home</a> › <a href="/real-estate/">Real Estate</a> › 1031 Exchange Calculator</div>
+  <div class="rc-hero">
+    <h1>1031 Exchange Calculator (<?php echo $currentYear;?>)</h1>
+    <p>Calculate capital gains tax deferred through a 1031 like-kind exchange, determine if you have boot, and find the minimum replacement property value required to defer all taxes.</p>
+  </div>
+
+  <div class="rc-card">
+    <div class="rc-card-head">🔄 1031 Exchange Calculator</div>
+    <div class="rc-body">
+
+      <div class="rc-sec-lbl">Relinquished Property (Property You Are Selling)</div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>Sale Price ($)</label>
+          <input type="number" id="ex-sale" value="500000" min="0" step="1000">
+        </div>
+        <div class="rc-field"><label>Original Purchase Price ($)</label>
+          <input type="number" id="ex-basi" value="200000" min="0" step="1000">
+          <div class="hint">Your original cost basis</div>
+        </div>
+      </div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>Accumulated Depreciation ($)</label>
+          <input type="number" id="ex-depr" value="30000" min="0" step="1000">
+          <div class="hint">Total depreciation taken over ownership</div>
+        </div>
+        <div class="rc-field"><label>Selling Costs ($)</label>
+          <input type="number" id="ex-sellcost" value="30000" min="0" step="1000">
+          <div class="hint">Agent commissions, closing costs ~6%</div>
+        </div>
+      </div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>Existing Mortgage on Property ($)</label>
+          <input type="number" id="ex-oldmort" value="150000" min="0" step="1000">
+        </div>
+        <div class="rc-field"><label>Federal Capital Gains Tax Rate (%)</label>
+          <select id="ex-ltcg">
+            <option value="0">0% (income under $49,450 single)</option>
+            <option value="15" selected>15% (income $49,450–$545,500 single)</option>
+            <option value="20">20% (income above $545,500 single)</option>
+          </select>
+        </div>
+      </div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>State Capital Gains Rate (%)</label>
+          <input type="number" id="ex-state" value="5" min="0" max="15" step="0.5">
+          <div class="hint">0% for TX, FL, NV, WA (no state income tax)</div>
+        </div>
+        <div class="rc-field"><label>Depreciation Recapture Rate (%)</label>
+          <input type="number" id="ex-recap" value="25" min="0" max="25" step="1">
+          <div class="hint">IRS rate is 25% on recaptured depreciation</div>
+        </div>
+      </div>
+
+      <div class="rc-sec-lbl">Replacement Property (Property You Are Buying)</div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>Replacement Property Price ($)</label>
+          <input type="number" id="ex-new" value="600000" min="0" step="1000">
+          <div class="hint">Must be ≥ relinquished property sale price to defer all gains</div>
+        </div>
+        <div class="rc-field"><label>New Mortgage Amount ($)</label>
+          <input type="number" id="ex-newmort" value="300000" min="0" step="1000">
+          <div class="hint">Must be ≥ old mortgage to avoid mortgage boot</div>
+        </div>
+      </div>
+
+      <button class="rc-btn" onclick="calc1031()">⚡ Calculate 1031 Exchange</button>
+
+      <div class="ex-result" id="ex-result" style="display:none;">
+        <div class="ex-top">
+          <div class="ex-big saved">
+            <span class="ev" style="color:#059669;" id="ex-saved">$0</span>
+            <span class="el">Tax Deferred (1031 Exchange)</span>
+          </div>
+          <div class="ex-big owed">
+            <span class="ev" style="color:#dc2626;" id="ex-boot-tax">$0</span>
+            <span class="el">Tax Owed Now (Boot)</span>
+          </div>
+        </div>
+
+        <div class="ex-line">
+          <div class="ex-line"><span class="ll">Sale Price</span><span class="lv" id="xl-sale">—</span></div>
+          <div class="ex-line"><span class="ll">Adjusted Basis (cost − depreciation)</span><span class="lv" id="xl-adj">—</span></div>
+          <div class="ex-line"><span class="ll">Selling Costs</span><span class="lv" id="xl-cost">—</span></div>
+          <div class="ex-line"><span class="ll">Net Realized Gain</span><span class="lv" id="xl-gain">—</span></div>
+          <div class="ex-line"><span class="ll">Depreciation Recapture (25%)</span><span class="lv" id="xl-recap">—</span></div>
+          <div class="ex-line"><span class="ll">Long-Term Capital Gain</span><span class="lv" id="xl-ltcg">—</span></div>
+          <div class="ex-line"><span class="ll">Cash Boot (if any)</span><span class="lv" id="xl-cashboot">—</span></div>
+          <div class="ex-line"><span class="ll">Mortgage Boot (if any)</span><span class="lv" id="xl-mortboot">—</span></div>
+          <div class="ex-line"><span class="ll">Total Boot</span><span class="lv" id="xl-totalboot">—</span></div>
+          <div class="ex-line"><span class="ll">Recognized (Taxable) Gain</span><span class="lv" id="xl-recognized">—</span></div>
+          <div class="ex-line"><span class="ll">Tax Owed on Boot</span><span class="lv" id="xl-boottax">—</span></div>
+          <div class="ex-line"><span class="ll">Minimum Replacement Value to Defer All Tax</span><span class="lv" id="xl-minval">—</span></div>
+        </div>
+
+        <div class="ex-timeline">
+          <h4>📅 Key Deadlines</h4>
+          <div class="ex-step">
+            <div class="ex-step-num">1</div>
+            <div class="ex-step-text"><strong>Day 0:</strong> Close sale of relinquished property. Proceeds go directly to a Qualified Intermediary (QI) — you cannot touch the funds.</div>
+          </div>
+          <div class="ex-step">
+            <div class="ex-step-num">2</div>
+            <div class="ex-step-text"><strong>Day 45:</strong> Identification deadline — you must identify up to 3 replacement properties in writing to your QI.</div>
+          </div>
+          <div class="ex-step">
+            <div class="ex-step-num">3</div>
+            <div class="ex-step-text"><strong>Day 180:</strong> Exchange completion deadline — you must close on the replacement property within 180 days of selling the relinquished property.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rc-section">
+    <h2>How a 1031 Exchange Works</h2>
+    <p>Under IRS Section 1031, when you sell an investment property and reinvest the proceeds into a like-kind replacement property, you can defer all capital gains taxes and depreciation recapture. Taxes are not eliminated — they are deferred until you eventually sell the replacement property without doing another 1031 exchange.</p>
+    <p><strong>To defer 100% of taxes:</strong></p>
+    <ul>
+      <li>Replacement property value must equal or exceed the relinquished property's <em>sale price</em></li>
+      <li>All net equity must be reinvested (no cash kept = no cash boot)</li>
+      <li>New mortgage must equal or exceed old mortgage (no mortgage boot)</li>
+      <li>Use a Qualified Intermediary (QI) — you cannot handle the proceeds yourself</li>
+      <li>Meet the 45-day identification and 180-day closing deadlines</li>
+    </ul>
+    <p><strong>Boot</strong> is any portion of the exchange that is not like-kind — cash kept or net mortgage reduction. Boot is taxable in the exchange year at ordinary or capital gains rates.</p>
+    <p>Importantly, under <strong>IRC §1031(b)</strong>, the taxable ("recognized") gain in a partial exchange is the <em>lesser of your total realized gain or the total boot received</em> — not a proportional slice of your gain across the full sale price. Depreciation recapture is recognized first (up to the recognized-gain amount), with any remainder taxed as long-term capital gain. This calculator applies that rule directly.</p>
+  </div>
+
+  <div class="rc-section">
+    <h2>Qualified Intermediary (QI) &amp; Identification Rules</h2>
+    <p>Executing a valid IRS Section 1031 like-kind exchange mandates strict adherence to statutory safe-harbor rules:</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1.25rem 0;">
+      <div style="background:#f8fafc;padding:1.15rem;border-radius:8px;border-left:4px solid #ef4444;">
+        <strong style="color:#0f172a;display:block;margin-bottom:0.35rem;">Constructive Receipt Disqualification</strong>
+        <span style="font-size:0.88rem;color:#475569;line-height:1.55;display:block;">Under Treasury Reg. § 1.1031(k)-1, the seller cannot take constructive receipt of sale funds. All net proceeds must flow directly into a segregated escrow account managed by an independent Qualified Intermediary (QI). If seller or seller's agent touches the funds, the exchange is invalid.</span>
+      </div>
+      <div style="background:#f8fafc;padding:1.15rem;border-radius:8px;border-left:4px solid #2563eb;">
+        <strong style="color:#0f172a;display:block;margin-bottom:0.35rem;">The 3-Property vs. 200% Rule</strong>
+        <span style="font-size:0.88rem;color:#475569;line-height:1.55;display:block;">Within the 45-day identification window, you must identify replacement properties in writing. You may either identify up to 3 properties regardless of value (3-Property Rule) or any number of properties whose aggregate fair market value does not exceed 200% of the relinquished property (200% Rule).</span>
+      </div>
+    </div>
+
+    <h3>Reverse Exchanges &amp; Delaware Statutory Trusts (DSTs)</h3>
+    <p>When finding the right replacement property before selling your current asset, IRS Revenue Procedure 2000-37 allows a <strong>Reverse 1031 Exchange</strong>, where an Exchange Accommodation Titleholder (EAT) takes temporary title to the replacement property. For passive investors seeking to eliminate landlord duties without triggering tax, proceeds may also be exchanged into fractional, institutional-grade properties via a <strong>Delaware Statutory Trust (DST)</strong> under IRS Revenue Ruling 2004-86.</p>
+  </div>
+
+  <div class="rc-section">
+    <h2>Frequently Asked Questions</h2>
+    <?php $faqs=[
+      ['What is a 1031 exchange?','A 1031 exchange lets you defer capital gains and depreciation recapture taxes when selling investment real estate by reinvesting into a like-kind replacement property. Taxes are deferred — not eliminated — until you sell the replacement property without another exchange.'],
+      ['What is boot in a 1031 exchange?','Boot is any non-like-kind value received — most commonly cash you keep from the sale, or a net reduction in mortgage balance. Boot is taxable immediately, with depreciation recapture recognized first. To avoid boot entirely, reinvest all proceeds and take on equal or greater debt on the replacement property.'],
+      ['What are the 1031 exchange deadlines?','Day 45: Identify up to 3 replacement properties in writing. Day 180: Close on the replacement property. Both deadlines run from the sale closing date and are strictly enforced — no extensions are granted except in federally declared disaster areas.'],
+      ['What qualifies for a 1031 exchange?','Properties must be held for investment or productive use in a trade or business. Eligible properties include rental homes, commercial buildings, vacant land, and industrial property. Personal residences do not qualify. Since 2018, only real property qualifies — personal property (equipment, vehicles) no longer qualifies under Section 1031.'],
+      ['Can I do a 1031 exchange on my primary residence?','No. Section 1031 applies only to property held for investment or business use. Primary residences qualify for the Section 121 exclusion instead ($250,000/$500,000 capital gains exclusion). Some investors convert a rental to primary residence before selling, but specific rules apply.'],
+      ['What happens if I miss the 45-day or 180-day deadline?','The exchange is disqualified retroactively, and the sale is treated as a normal taxable sale — you owe capital gains and depreciation recapture tax on the full realized gain, generally in the year the relinquished property sold. There is no partial credit for progress made. The only common exception is a federally declared disaster affecting the transaction. This is why experienced investors identify backup properties well before day 45.'],
+      ['Can I convert the replacement property into my primary residence later?','Yes, but not immediately, and specific rules apply. The IRS generally expects the replacement property held for investment for a meaningful period (many practitioners use a 1-2 year rule of thumb) before converting it to personal use. If you later sell after living in it, Section 121\'s home-sale exclusion may only apply to the portion of ownership and gain attributable to personal use. Get advice from a CPA before relying on this strategy.'],
+      ['What happens to the deferred tax if I never sell, or pass the property to my heirs?','This is the strategy often called "swap until you drop." If you keep exchanging properties for life and never sell outright, your heirs typically inherit the final property with a stepped-up basis equal to its fair market value at your death — potentially eliminating the deferred capital gains and depreciation recapture entirely. This makes 1031 exchanges a common estate-planning tool, not just a short-term tax deferral trick.'],
+      ['Can I exchange one property for multiple replacement properties, or combine several into one?','Yes. You can exchange a single relinquished property into up to three replacement properties (or more, under specific identification rules), or combine multiple relinquished properties into one larger replacement property. The same 45-day identification and 180-day closing deadlines apply, and the combined replacement value must still meet or exceed your total net sale proceeds to defer all tax.'],
+      ['Does the replacement property have to be titled in the same name as the relinquished property?','Yes — this is one of the most common ways exchanges accidentally fail. The same taxpayer who sold must take title to the replacement property. If you owned it personally, you generally can\'t take title in an LLC or different entity without risking disqualification. Single-member LLCs treated as "disregarded entitie" are typically fine, but always confirm with your Qualified Intermediary and CPA before closing.'],
+    ];
+    foreach($faqs as $f):?>
+    <div class="rc-faq-item"><div class="rc-faq-q"><?php echo $f[0];?></div><div class="rc-faq-a"><?php echo $f[1];?></div></div>
+    <?php endforeach;?>
+  </div>
+
+  <div class="rc-section">
+    <h2>Related Real Estate Calculators</h2>
+    <div class="rc-related">
+      <a href="/real-estate/roi-calculator" class="rc-rel-link">📈 ROI Calculator</a>
+      <a href="/real-estate/rental-property-calculator" class="rc-rel-link">🏘️ Rental Property Calculator</a>
+      <a href="/real-estate/cash-flow-calculator" class="rc-rel-link">💵 Cash Flow Calculator</a>
+      <a href="/real-estate/cap-rate-calculator" class="rc-rel-link">📊 Cap Rate Calculator</a>
+      <a href="/real-estate/closing-cost-calculator" class="rc-rel-link">🧾 Closing Cost Calculator</a>
+      <a href="/real-estate/" class="rc-rel-link">🏘️ All Real Estate Tools</a>
+    </div>
+  </div>
+</div>
+</main>
+<script>
+(function(){
+  var $ = function(id){return document.getElementById(id);};
+  var fmtC = function(v){return (v<0?'−':'')+'$'+Math.round(Math.abs(v)).toLocaleString();};
+
+  window.calc1031 = function(){
+    var sale     = parseFloat($('ex-sale').value)||0;
+    var basis    = parseFloat($('ex-basis').value)||0;
+    var depr     = parseFloat($('ex-depr').value)||0;
+    var sellcost = parseFloat($('ex-sellcost').value)||0;
+    var oldmort  = parseFloat($('ex-oldmort').value)||0;
+    var ltcgRate = parseFloat($('ex-ltcg').value)/100;
+    var stateRate= parseFloat($('ex-state').value)/100;
+    var recapRate= parseFloat($('ex-recap').value)/100;
+    var newPrice = parseFloat($('ex-new').value)||0;
+    var newmort  = parseFloat($('ex-newmort').value)||0;
+
+    var adjBasis     = basis - depr;
+    var netProceeds  = sale - sellcost;
+    var realizedGain = netProceeds - adjBasis;
+
+    // Depreciation recapture is taxed first at 25% (up to the amount of depreciation)
+    var recaptureGain = Math.min(depr, Math.max(0, realizedGain));
+    var ltcgGain      = Math.max(0, realizedGain - recaptureGain);
+
+    // Boot calculations
+    var netEquity = sale - sellcost - oldmort; // cash available after paying off old mortgage
+    var cashBoot  = Math.max(0, netEquity - (newPrice - newmort)); // cash not reinvested
+    var mortBoot  = Math.max(0, oldmort - newmort);                // net debt reduction
+    var totalBoot = cashBoot + mortBoot;
+
+    // Tax on boot — per IRC §1031(b), recognized (taxable) gain is the LESSER
+    // of realized gain or total boot received. Depreciation recapture is
+    // recognized first (up to the recognized-gain amount), with any
+    // remainder recognized as long-term capital gain.
+    var recognizedGain = Math.min(Math.max(0, realizedGain), totalBoot);
+    var recognizedRecap = Math.min(recaptureGain, recognizedGain);
+    var recognizedLTCG  = recognizedGain - recognizedRecap;
+    var bootTax = recognizedRecap * recapRate + recognizedLTCG * (ltcgRate + stateRate);
+
+    // Full tax if no exchange
+    var fullTax = recaptureGain * recapRate + ltcgGain * (ltcgRate + stateRate);
+    var taxSaved = fullTax - bootTax;
+
+    // Minimum replacement value to defer all tax
+    var minReplacement = netProceeds; // sale - selling costs = min reinvestment needed
+
+    $('ex-saved').textContent    = fmtC(Math.max(0,taxSaved));
+    $('ex-boot-tax').textContent = fmtC(bootTax);
+    $('xl-sale').textContent     = fmtC(sale);
+    $('xl-adj').textContent      = fmtC(adjBasis);
+    $('xl-costs').textContent    = fmtC(sellcost);
+    $('xl-gain').textContent     = fmtC(realizedGain);
+    $('xl-recap').textContent    = fmtC(recaptureGain);
+    $('xl-ltcg').textContent     = fmtC(ltcgGain);
+    $('xl-cashboot').textContent = fmtC(cashBoot);
+    $('xl-mortboot').textContent = fmtC(mortBoot);
+    $('xl-totalboot').textContent= fmtC(totalBoot);
+    $('xl-recognized').textContent = fmtC(recognizedGain);
+    $('xl-boottax').textContent  = fmtC(bootTax);
+    $('xl-minval').textContent   = fmtC(minReplacement);
+
+    $('ex-result').style.display='block';
+  };
+
+  ['ex-sale','ex-basis','ex-depr','ex-sellcost','ex-oldmort','ex-ltcg',
+   'ex-state','ex-recap','ex-new','ex-newmort']
+    .forEach(function(id){
+      $(id).addEventListener('input',  window.calc1031);
+      $(id).addEventListener('change', window.calc1031);
+    });
+  window.calc1031();
+
+  document.querySelectorAll('.rc-faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var i=this.closest('.rc-faq-item'), w=i.classList.contains('open');
+      document.querySelectorAll('.rc-faq-item').forEach(function(x){x.classList.remove('open');});
+      if(!w) i.classList.add('open');
+    });
+  });
+})();
+</script>
+<?php require_once '../includes/footer.php'; ?>

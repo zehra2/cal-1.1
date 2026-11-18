@@ -1,0 +1,3 @@
+# Visualization verification notes
+
+The daily_search_performance.png chart clearly shows daily impressions fluctuating between 435 and 840 from 2026-08-06 through 2026-08-12, with clicks occurring only on 2026-08-09, 2026-08-10, and 2026-08-11. The zero_click_pages.png chart is readable and shows the largest zero-click impression opportunities as `/real-estate/closing-cost-calculator` (711 impressions), `/loan-calculators/sba-loan-calculator` (460), `/loan-calculators/rv-loan-calculator` (391), `/construction/home-addition-cost-calculator` (388), and `/loan-calculators/interest-only-loan-calculator` (348). The page labels are truncated for some long URLs in the chart but remain identifiable; the CSV/markdown report is the authoritative detail source.

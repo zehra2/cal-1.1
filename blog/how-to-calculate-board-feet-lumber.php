@@ -1,0 +1,324 @@
+<?php
+$pageTitle       = 'How to Calculate Board Foot Measure: Lumber Formula and Examples';
+$metaDescription = 'Learn how to calculate board feet of lumber using thickness, width, and length. Includes formulas, examples, nominal vs actual dimensions, and a free board foot calculator.';
+$metaKeywords    = 'how to calculate board foot measure, how do I calculate board feet of lumber, how do you calculate bd ft, board foot formula, lumber board feet';
+$schemaData = [
+  '@context' => 'https://schema.org',
+  '@graph'   => [
+    ['@type' => 'Article',
+     'headline' => 'How to Calculate Board Foot Measure: Lumber Formula and Examples',
+     'description' => 'Step-by-step guide to calculating board feet of lumber using the thickness × width × length / 12 formula, with examples, nominal vs actual dimensions, and common mistakes.',
+     'url' => 'https://americacalculator.com/blog/how-to-calculate-board-feet-lumber',
+     'datePublished' => '2026-07-14',
+     'dateModified'  => '2026-07-14',
+     'author' => ['@type' => 'Person', 'name' => 'James Carter', 'jobTitle' => 'Construction & Home Improvement Specialist'],
+     'publisher' => ['@type' => 'Organization', 'name' => 'AmericaCalculator.com', 'url' => 'https://americacalculator.com/'],
+     'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => 'https://americacalculator.com/blog/how-to-calculate-board-feet-lumber'],
+    ],
+    ['@type' => 'BreadcrumbList', 'itemListElement' => [
+      ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+      ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog',  'item' => 'https://americacalculator.com/blog/'],
+      ['@type' => 'ListItem', 'position' => 3, 'name' => 'How to Calculate Board Feet of Lumber', 'item' => 'https://americacalculator.com/blog/how-to-calculate-board-feet-lumber'],
+    ]],
+    ['@type' => 'FAQPage', 'mainEntity' => [
+      ['@type' => 'Question', 'name' => 'How do I calculate board feet of lumber?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Multiply thickness (inches) × width (inches) × length (feet) then divide by 12. Example: a 2×8×10 board = 2 × 8 × 10 / 12 = 13.33 board feet.']],
+      ['@type' => 'Question', 'name' => 'How do you calculate bd ft?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Bd ft means board feet. Use: Thickness (in) × Width (in) × Length (ft) A 12. Or if all measurements are in inches: T × W × L / 144.']],
+      ['@type' => 'Question', 'name' => 'How many board feet are in a 2x6x10 board?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Using nominal dimensions: 2 × 6 × 10 / 12 = 10 board feet.']],
+      ['@type' => 'Question', 'name' => 'Is a board foot the same as a cubic foot?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'No. One board foot equals 144 cubic inches, while one cubic foot equals 1,728 cubic inches. Therefore 1 cubic foot = 12 board feet.']],
+      ['@type' => 'Question', 'name' => 'What is the difference between nominal and actual lumber dimensions?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'A nominal 2×4 typically measures 1.5 inches × 3.5 inches after drying and surfacing. Always confirm with your supplier whether board-foot pricing uses nominal or actual dimensions.']],
+    ]],
+  ],
+];
+require_once '../includes/header.php';
+?>
+<style>
+*{box-sizing:border-box;}body{background:#f8fafc;}
+.blog-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.blog-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}.blog-bc a{color:#64748b;text-decoration:none;}.blog-bc a:hover{color:#1d4ed8;}
+.blog-header{margin-bottom:1.75rem;}.blog-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.blog-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}.blog-meta span{font-size:.82rem;color:#64748b;}.blog-meta strong{color:#1e293b;}
+.blog-badge{background:#dbeafe;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.blog-cat{background:#fef3c7;color:#92400e;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #fde68a;}
+.blog-header .intro{font-size:1.05rem;color:#475569;line-height:1.75;border-left:4px solid #1d4ed8;padding:.9rem 1rem .9rem 1.25rem;background:#f8fbff;border-radius:0 8px 8px 0;margin:0;}
+.snippet-box{background:linear-gradient(135deg,#1d4ed8,#1e40af);border-radius:12px;padding:1.5rem;margin-bottom:1.75rem;color:#fff;}
+.snippet-box .sq{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.7);margin-bottom:.5rem;}
+.snippet-box .sa{font-size:1.02rem;font-weight:600;line-height:1.65;margin:0;}
+.blog-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.blog-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #eff6ff;}
+.blog-section h3{font-size:1.02rem;color:#1e293b;margin:1.35rem 0 .55rem;font-weight:700;}
+.blog-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}.blog-section p:last-child{margin-bottom:0;}
+.blog-section a{color:#1d4ed8;font-weight:600;text-decoration:none;}.blog-section a:hover{text-decoration:underline;}
+.blog-section strong{color:#1e293b;}
+.blog-section ul,.blog-section ol{color:#475569;padding-left:1.4rem;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}.blog-section li{margin-bottom:.45rem;}
+.formula-box{background:#f0fdf4;border:2px solid #16a34a;border-radius:10px;padding:1.1rem 1.35rem;margin:1rem 0;font-family:monospace;font-size:1.05rem;color:#065f46;font-weight:700;line-height:1.6;}
+.blog-table{width:100%;border-collapse:collapse;border-radius:9px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:1.1rem;}
+.blog-table th{background:#1d4ed8;color:#fff;padding:9px 13px;font-size:.84rem;font-weight:600;text-align:left;}
+.blog-table td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:.88rem;color:#334155;}
+.blog-table tr:last-child td{border-bottom:none;}.blog-table tr:nth-child(even) td{background:#f8fafc;}
+.blog-table .hl{color:#1d4ed8;font-weight:700;}.blog-table .g{color:#16a34a;font-weight:700;}
+.blog-info{background:#eff6ff;border-left:4px solid #1d4ed8;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#1e3a8a;line-height:1.65;}
+.blog-warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#92400e;line-height:1.65;}
+.blog-cta{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:13px;padding:1.75rem;margin-bottom:1.5rem;text-align:center;}
+.blog-cta h3{color:#fff;font-size:1.15rem;font-weight:800;margin:0 0 .5rem;}.blog-cta p{color:#94a3b8;font-size:.9rem;margin:0 0 1rem;line-height:1.55;}
+.blog-cta-btns{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;}
+.blog-cta-btns a{display:inline-block;background:#1d4ed8;color:#fff;padding:9px 20px;border-radius:7px;font-weight:700;font-size:.85rem;text-decoration:none;}
+.blog-cta-btns a:hover{background:#1e40af;}.blog-cta-btns a.sec{background:#334155;}
+.blog-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}.blog-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.blog-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.blog-faq-q::after{content:'+';color:#1d4ed8;font-size:1.2rem;flex-shrink:0;}.blog-faq-item.open .blog-faq-q::after{content:'−';}
+.blog-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}.blog-faq-item.open .blog-faq-a{display:block;}
+.blog-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.1rem;}
+.blog-toc{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;}
+.blog-toc-head{background:#1d4ed8;color:#fff;padding:.9rem 1.25rem;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.blog-toc ul{list-style:none;padding:.5rem 0;margin:0;}
+.blog-toc ul li a{display:block;padding:.5rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+.blog-toc ul li a:hover{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+.blog-related{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;}
+.blog-related-head{padding:.8rem 1.25rem;background:#f8fafc;border-bottom:1px solid #f1f5f9;font-size:.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em;}
+.blog-related ul{list-style:none;padding:.4rem 0;margin:0;}
+.blog-related ul li a{display:block;padding:.55rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.blog-related ul li a:hover{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+@media(max-width:900px){.blog-wrap{grid-template-columns:1fr;}.blog-sidebar{position:static;display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.blog-sidebar{grid-template-columns:1fr;}.blog-header h1{font-size:1.6rem;}}
+</style>
+
+<main id="main-content">
+<div class="blog-wrap">
+<article>
+
+  <div class="blog-bc"><a href="/">Home</a> › <a href="/blog/">Blog</a> › How to Calculate Board Feet of Lumber</div>
+
+  <div class="blog-header">
+    <h1>How to Calculate Board Feet of Lumber: Formula, Examples &amp; Calculator</h1>
+    <div class="blog-meta">
+      <span>By <strong>James Carter</strong> | Construction &amp; Home Improvement Specialist</span>
+      <span class="blog-badge">🕐 Last Updated: July 2026</span>
+      <span class="blog-cat">🪵 Construction &amp; Lumber</span>
+    </div>
+    <p class="intro">A <strong>board foot</strong> is a unit of lumber volume equal to 144 cubic inches — the equivalent of a piece of wood 12 inches long, 12 inches wide, and 1 inch thick. The formula is: <strong>Thickness (in) × Width (in) × Length (ft) A 12</strong>. This guide covers both formulas, worked examples, nominal vs actual dimensions, and how to price a lumber order for any project in the US.</p>
+  </div>
+
+  <div class="snippet-box" id="quick-answer">
+    <div class="sq">Quick Answer — Board Foot Formula</div>
+    <p class="sa">Board Feet = Thickness (in) × Width (in) × Length (ft) A 12<br>
+    Example: 2 in × 8 in × 10 ft / 12 = <strong>13.33 board feet</strong><br>
+    All measurements in inches? Divide by 144 instead of 12.</p>
+  </div>
+
+  <div class="blog-section" id="what-i">
+    <h2>What Is a Board Foot?</h2>
+    <p>A board foot is a <strong>volume measurement</strong>, not a surface area or length measurement. One board foot equals <strong>144 cubic inches</strong> — roughly one square foot of wood that is 1 inch thick.</p>
+    <p>The term is used by hardwood dealers, sawmills, woodworkers, and lumber suppliers across the United States. A supplier in Portland, Oregon may price rough hardwood by the board foot, while a home-improvement store in Dallas, Texas may sell standard construction lumber by the piece or by the linear foot. Knowing how to calculate board feet lets you compare pricing across suppliers and estimate the true cost of any lumber order.</p>
+    <div class="blog-info">💡 <strong>Board foot vs linear foot:</strong> Linear feet measure length only. Board feet measure volume (thickness × width × length). A thicker or wider board of the same length contains more board feet.</div>
+  </div>
+
+  <div class="blog-section" id="formula">
+    <h2>Board Foot Formula</h2>
+    <p>There are two versions depending on how you measure length.</p>
+    <h3>When length is in feet (most common)</h3>
+    <div class="formula-box">Board Feet = Thickness (in) × Width (in) × Length (ft) A 12</div>
+    <h3>When all measurements are in inches</h3>
+    <div class="formula-box">Board Feet = Thickness (in) × Width (in) × Length (in) A 144</div>
+    <p>The divisor changes from <strong>12</strong> to <strong>144</strong> because one board foot contains 144 cubic inches. Both formulas give identical results — use whichever matches your measurements.</p>
+    <div class="blog-warn">⚠️ <strong>Most common mistake:</strong> Using the wrong divisor. If your length is in feet, divide by 12. If your length is in inches, divide by 144. Mixing these up doubles or halves your answer.</div>
+  </div>
+
+  <div class="blog-section" id="example1">
+    <h2>Example 1: One Lumber Board</h2>
+    <p>A single board with these dimensions:</p>
+    <ul>
+      <li>Thickness: <strong>2 inches</strong></li>
+      <li>Width: <strong>8 inches</strong></li>
+      <li>Length: <strong>10 feet</strong></li>
+    </ul>
+    <div class="formula-box">2 × 8 × 10 / 12 = <strong>13.33 board feet</strong></div>
+    <h3>Pricing the board</h3>
+    <p>If the lumber costs <strong>$6.00 per board foot</strong>:</p>
+    <div class="formula-box">13.33 × $6.00 = <strong>$79.98</strong></div>
+    <p>The estimated cost is approximately <strong>$79.98</strong>, before taxes, delivery, or supplier-specific charges.</p>
+  </div>
+
+  <div class="blog-section" id="example2">
+    <h2>Example 2: Multiple Boards</h2>
+    <p>You need <strong>six boards</strong>, each measuring 1 inch thick, 6 inches wide, and 8 feet long.</p>
+    <h3>Step 1: Calculate one board</h3>
+    <div class="formula-box">1 × 6 × 8 / 12 = 4 board feet</div>
+    <h3>Step 2: Multiply by quantity</h3>
+    <div class="formula-box">4 × 6 boards = <strong>24 board feet total</strong></div>
+    <p>This approach lets you compare lumber costs between suppliers in cities such as Cleveland, Pittsburgh, Indianapolis, or Kansas City — simply multiply the total board feet by each supplier's price per board foot.</p>
+
+    <h3>Using the all-inches formula</h3>
+    <p>If the same board's length is given as 96 inches instead of 8 feet:</p>
+    <div class="formula-box">1 × 6 × 96 / 144 = 4 board feet</div>
+    <p>Same answer, different divisor — because 96 in / 12 = 8 ft.</p>
+  </div>
+
+  <div class="blog-section" id="nominal">
+    <h2>Nominal vs Actual Lumber Dimensions</h2>
+    <p>One of the most common pricing errors comes from using the size printed on a lumber label rather than the board's actual dimensions.</p>
+    <table class="blog-table">
+      <thead><tr><th>Nominal Size</th><th>Actual Size (approx.)</th><th>Board Feet (10 ft, nominal)</th><th>Board Feet (10 ft, actual)</th></tr></thead>
+      <tbody>
+        <tr><td>1 × 4</td><td>0.75 in × 3.5 in</td><td class="g">3.33 bf</td><td>2.19 bf</td></tr>
+        <tr><td>1 × 6</td><td>0.75 in × 5.5 in</td><td class="g">5.00 bf</td><td>3.44 bf</td></tr>
+        <tr><td>2 × 4</td><td>1.5 in × 3.5 in</td><td class="g">6.67 bf</td><td>4.38 bf</td></tr>
+        <tr><td>2 × 6</td><td>1.5 in × 5.5 in</td><td class="g">10.00 bf</td><td>6.88 bf</td></tr>
+        <tr><td>2 × 8</td><td>1.5 in × 7.25 in</td><td class="g">13.33 bf</td><td>9.06 bf</td></tr>
+        <tr><td>4 × 4</td><td>3.5 in × 3.5 in</td><td class="g">13.33 bf</td><td>10.21 bf</td></tr>
+      </tbody>
+    </table>
+    <div class="blog-info">💡 <strong>Ask your supplier:</strong> For rough-sawn hardwood or specialty lumber, confirm whether pricing is based on nominal, actual, rough-sawn, or surfaced (S4S) dimensions. Hardwood dealers typically use rough-sawn measurements; home improvement stores typically use nominal sizes.</div>
+  </div>
+
+  <div class="blog-section" id="v">
+    <h2>Board Feet vs Square Feet vs Linear Feet</h2>
+    <p>These three measurements are frequently confused, but they describe completely different things.</p>
+    <table class="blog-table">
+      <thead><tr><th>Measurement</th><th>What It Measures</th><th>Common Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Board feet</strong></td><td>Lumber volume (T × W × L)</td><td>Hardwood pricing, sawmill sales, woodworking</td></tr>
+        <tr><td><strong>Square feet</strong></td><td>Surface area (L × W)</td><td>Flooring, walls, countertops, paneling</td></tr>
+        <tr><td><strong>Linear feet</strong></td><td>Length only</td><td>Trim, molding, fencing, long boards</td></tr>
+      </tbody>
+    </table>
+    <p>A board's square footage does not equal its board footage unless you also know its thickness. A 2-inch thick board has <em>twice</em> the board feet of a 1-inch board with the same face dimensions.</p>
+  </div>
+
+  <div class="blog-section" id="waste">
+    <h2>Should You Add Extra Lumber?</h2>
+    <p>For most projects, order more lumber than the calculated board feet. The right amount depends on the project type and lumber quality.</p>
+    <table class="blog-table">
+      <thead><tr><th>Project Type</th><th>Suggested Extra</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Simple framing / dimensional lumber</td><td>5–10%</td><td>Cuts, cracked ends, minor warping</td></tr>
+        <tr><td>Decking</td><td>10–15%</td><td>Spacing, end trimming, crown cuts</td></tr>
+        <tr><td>Hardwood flooring</td><td>10–15%</td><td>Pattern matching, grading defects</td></tr>
+        <tr><td>Custom cabinetry / fine woodworking</td><td>15–20%</td><td>High-grade selection, figure matching, errors</td></tr>
+        <tr><td>Rough-sawn hardwood</td><td>15–25%</td><td>Defects, checks, unusable sections</td></tr>
+      </tbody>
+    </table>
+    <p>This waste allowance is calculated on top of the board-foot total, separate from the formula itself. Always confirm the final quantity with your lumber dealer or contractor.</p>
+  </div>
+
+  <div class="blog-cta">
+    <h3>Calculate Board Feet Instantly</h3>
+    <p>Use the AmericaCalculator Board Foot Calculator to estimate lumber for decks, furniture, framing, cabinets, or any woodworking project.</p>
+    <div class="blog-cta-btn">
+      <a href="/calculators/board-foot.php">🪵 Board Foot Calculator</a>
+      <a href="/construction/concrete-calculator" class="sec">🧱 Concrete Calculator</a>
+      <a href="/blog/how-to-calculate-square-feet-of-a-room" class="sec">📐 Room Square Footage</a>
+    </div>
+  </div>
+
+  <div class="blog-section" id="mistake">
+    <h2>Common Board Foot Mistakes</h2>
+    <ul>
+      <li>Dividing by 12 when length is in inches (should divide by 144).</li>
+      <li>Using nominal dimensions when the supplier prices by actual dimensions, or vice versa.</li>
+      <li>Forgetting to multiply the per-board result by the number of boards in the order.</li>
+      <li>Confusing board feet (volume) with square feet (area) or linear feet (length).</li>
+      <li>Not adding a waste allowance before placing the lumber order.</li>
+      <li>Assuming all suppliers measure the same way — always confirm the measurement standard.</li>
+    </ul>
+  </div>
+
+  <div class="blog-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <?php $faqs = [
+      ['How do I calculate board feet of lumber?',
+       'Multiply thickness (inches) × width (inches) × length (feet), then divide by 12.<br><strong>Formula: T × W × L / 12 = Board Feet</strong>'],
+      ['How do you calculate bd ft?',
+       '"Bd ft" is the abbreviation for board feet. The formula is the same: T (in) × W (in) × L (ft) A 12. If measuring length in inches, use / 144.'],
+      ['How many board feet are in a 2×6×10 board?',
+       'Using nominal dimensions: 2 × 6 × 10 / 12 = <strong>10 board feet</strong>.'],
+      ['Is a board foot the same as a cubic foot?',
+       'No. One board foot = 144 cubic inches. One cubic foot = 1,728 cubic inches. Therefore <strong>1 cubic foot = 12 board feet</strong>.'],
+      ['Does board-foot pricing include waste?',
+       'Usually, board-foot pricing refers only to the measured volume of lumber. Waste, defects, unusable sections, delivery fees, and cutting loss are typically handled separately — either by the supplier or as a project allowance you add yourself.'],
+      ['What is the difference between nominal and actual lumber dimensions?',
+       'A nominal 2×4 actually measures about 1.5 in × 3.5 in after drying and surfacing. Always confirm with your supplier whether board-foot pricing uses nominal or actual dimensions — this significantly affects the true price per board.'],
+    ]; foreach($faqs as $f): ?>
+    <div class="blog-faq-item">
+      <div class="blog-faq-q"><?php echo $f[0]; ?></div>
+      <div class="blog-faq-a"><?php echo $f[1]; ?></div>
+    </div>
+    <?php endforeach; ?>
+  </div>
+
+  <div class="blog-section">
+    <h2>Related Articles &amp; Calculators</h2>
+    <ul>
+      <li><a href="/calculators/board-foot.php">Board Foot Calculator</a> — calculate board feet instantly without doing the math</li>
+      <li><a href="/blog/how-to-calculate-square-feet-of-a-room">How to Calculate Square Feet of a Room</a> — for flooring and surface area estimates</li>
+      <li><a href="/blog/how-to-calculate-square-footage-of-a-building">How to Calculate Square Footage of a Building</a> — for framing and whole-building material estimates</li>
+      <li><a href="/blog/how-to-calculate-roof-square-footage">How to Calculate Roof Square Footage</a> — pitch factors and roofing material estimates</li>
+      <li><a href="/construction/concrete-calculator">Concrete Calculator</a> — estimate concrete for foundations, slabs, and footings</li>
+      <li><a href="/calculators/cubic-yard.php">Cubic Yard Calculator</a> — convert volume for bulk material orders</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:.85rem;color:#94a3b8;"><strong>Disclaimer:</strong> This article is for general educational purposes. Lumber dimensions, grading practices, pricing methods, and acceptable measurement standards can vary by supplier and project. Confirm final quantities with your lumber dealer, contractor, or project plans.</p>
+  </div>
+
+</article>
+
+<aside class="blog-sidebar">
+  <div class="blog-toc">
+    <div class="blog-toc-head">📋 On This Page</div>
+    <ul>
+      <li><a href="#quick-answer">Quick Answer</a></li>
+      <li><a href="#what-i">What Is a Board Foot?</a></li>
+      <li><a href="#formula">Board Foot Formula</a></li>
+      <li><a href="#example1">Example 1: One Board</a></li>
+      <li><a href="#example2">Example 2: Multiple Boards</a></li>
+      <li><a href="#nominal">Nominal vs Actual Dimensions</a></li>
+      <li><a href="#v">Board Feet vs Sq Ft vs Linear Ft</a></li>
+      <li><a href="#waste">Waste Allowances</a></li>
+      <li><a href="#mistake">Common Mistakes</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🪵 Lumber Calculator</div>
+    <ul>
+      <li><a href="/calculators/board-foot.php">Board Foot Calculator</a></li>
+      <li><a href="/calculators/cubic-yard.php">Cubic Yard Calculator</a></li>
+      <li><a href="/calculators/asphalt.php">Asphalt Calculator</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🔗 Related Articles</div>
+    <ul>
+      <li><a href="/blog/how-to-calculate-square-feet-of-a-room">🏠 Room Square Footage</a></li>
+      <li><a href="/blog/how-to-calculate-square-footage-of-a-building">🏗️ Building Square Footage</a></li>
+      <li><a href="/blog/how-to-calculate-roof-square-footage">🏠 Roof Square Footage</a></li>
+      <li><a href="/blog/ohio-state-income-tax">📋 Ohio Income Tax</a></li>
+      <li><a href="/blog/how-to-calculate-cap-rate">🏘️ Cap Rate Guide</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🧱 Construction Tools</div>
+    <ul>
+      <li><a href="/construction/concrete-calculator">Concrete Calculator</a></li>
+      <li><a href="/construction/concrete-slab-calculator">Concrete Slab</a></li>
+      <li><a href="/construction/home-addition-cost-calculator">Home Addition Cost</a></li>
+      <li><a href="/calculators/stair.php">Stair Calculator</a></li>
+    </ul>
+  </div>
+</aside>
+</div>
+</main>
+
+<script>
+document.querySelectorAll('.blog-faq-q').forEach(function(q){
+  q.addEventListener('click',function(){
+    var item=this.closest('.blog-faq-item'),was=item.classList.contains('open');
+    document.querySelectorAll('.blog-faq-item').forEach(function(x){x.classList.remove('open');});
+    if(!was)item.classList.add('open');
+  });
+});
+</script>
+<?php require_once '../includes/footer.php'; ?>

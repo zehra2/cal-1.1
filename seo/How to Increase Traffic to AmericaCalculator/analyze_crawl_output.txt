@@ -1,0 +1,43 @@
+SECTION_SUMMARY
+about	urls=1	200=1	avg_words=1529	min_words=1529	max_words=1529
+blog	urls=8	200=8	avg_words=1794	min_words=786	max_words=2818
+business	urls=12	200=12	avg_words=1520	min_words=931	max_words=3204
+calculators	urls=10	200=10	avg_words=552	min_words=415	max_words=967
+construction	urls=7	200=6	avg_words=1670	min_words=1082	max_words=2710
+contact	urls=1	200=1	avg_words=529	min_words=529	max_words=529
+home	urls=1	200=1	avg_words=1282	min_words=1282	max_words=1282
+loan-calculators	urls=9	200=9	avg_words=2353	min_words=1144	max_words=3729
+ohio	urls=7	200=7	avg_words=1259	min_words=976	max_words=2183
+privacy-policy	urls=1	200=1	avg_words=1613	min_words=1613	max_words=1613
+real-estate	urls=13	200=13	avg_words=1507	min_words=747	max_words=3590
+technology	urls=1	200=1	avg_words=2954	min_words=2954	max_words=2954
+terms-and-conditions	urls=1	200=1	avg_words=1869	min_words=1869	max_words=1869
+
+LOW_WORD_200
+415	https://americacalculator.com/calculators/freight-class.php	Freight Class Calculator — AmericaCalculator.com
+416	https://americacalculator.com/calculators/board-foot.php	Board Foot Calculator — AmericaCalculator.com
+421	https://americacalculator.com/calculators/cd-interest.php	CD Interest Calculator — AmericaCalculator.com
+422	https://americacalculator.com/calculators/asphalt.php	Asphalt Calculator — AmericaCalculator.com
+426	https://americacalculator.com/calculators/calculadora-de-horas.php	Calculadora de Horas — AmericaCalculator.com
+427	https://americacalculator.com/calculators/cubic-yard.php	Cubic Yard Calculator — AmericaCalculator.com
+433	https://americacalculator.com/calculators/stair.php	Stair Calculator — AmericaCalculator.com
+529	https://americacalculator.com/contact	Contact Us — AmericaCalculator.com — AmericaCalculator.com
+
+UNREACHABLE
+https://americacalculator.com/blog/
+https://americacalculator.com/loan-calculators/
+https://americacalculator.com/real-estate/
+https://americacalculator.com/ohio/
+https://americacalculator.com/business/
+https://americacalculator.com/construction/
+https://americacalculator.com/calculators/calculadora-de-horas.php
+https://americacalculator.com/calculators/calculo-da-hora.php
+
+META_DESCRIPTION_REUSE
+count=6	Free online calculators for finance, loans, real estate, construction, math, health, and more.
+  https://americacalculator.com/calculators/cd-interest.php
+  https://americacalculator.com/calculators/calculadora-de-horas.php
+  https://americacalculator.com/calculators/cubic-yard.php
+  https://americacalculator.com/calculators/board-foot.php
+  https://americacalculator.com/calculators/stair.php
+  https://americacalculator.com/calculators/asphalt.php

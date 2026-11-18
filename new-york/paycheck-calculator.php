@@ -1,0 +1,359 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "New York Paycheck Calculator ($currentYear) — Net Pay";
+$metaDescription = "Free New York paycheck calculator for $currentYear. Calculate take-home pay with NY state tax brackets, NYC local tax, federal withholding, FICA deductions.";
+$metaKeywords    = 'New York paycheck calculator, NY paycheck calculator 2026, New York take home pay, NYC paycheck calculator, New York salary calculator';
+$schemaData = ['@context'=>'https://schema.org','@graph'=>[
+  ['@type'=>'WebApplication','name'=>'New York Paycheck Calculator',
+   'url'=>'https://americacalculator.com/new-york/paycheck-calculator',
+   'applicationCategory'=>'FinanceApplication','operatingSystem'=>'All',
+   'description'=>'Calculate take-home pay for New York employees with state income tax, optional NYC local tax, federal withholding, and FICA.',
+   'offers'=>['@type'=>'Offer','price'=>'0','priceCurrency'=>'USD']],
+  ['@type'=>'BreadcrumbList','itemListElement'=>[
+    ['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>'https://americacalculator.com/'],
+    ['@type'=>'ListItem','position'=>2,'name'=>'New York','item'=>'https://americacalculator.com/new-york/'],
+    ['@type'=>'ListItem','position'=>3,'name'=>'New York Paycheck Calculator','item'=>'https://americacalculator.com/new-york/paycheck-calculator'],
+  ]],
+  ['@type'=>'HowTo','name'=>'How to Calculate Your New York Take-Home Pay','totalTime'=>'PT2M','step'=>[
+    ['@type'=>'HowToStep','position'=>1,'name'=>'Enter income','text'=>'Input your gross annual salary or hourly rate with hours per week.'],
+    ['@type'=>'HowToStep','position'=>2,'name'=>'Select location','text'=>'Choose whether you live and work in New York City (additional 3-3.9% local tax) or elsewhere in New York State.'],
+    ['@type'=>'HowToStep','position'=>3,'name'=>'Choose filing status','text'=>'Select Single or Married. This affects federal and NY state bracket calculations.'],
+    ['@type'=>'HowToStep','position'=>4,'name'=>'Add deductions','text'=>'Enter 401(k), HSA, or other pre-tax contributions.'],
+    ['@type'=>'HowToStep','position'=>5,'name'=>'Review results','text'=>'See itemized breakdown of federal, NY state, NYC local, Social Security, and Medicare withholdings.'],
+  ]],
+  ['@type'=>'FAQPage','mainEntity'=>[
+    ['@type'=>'Question','name'=>'What is the New York state income tax rate?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'New York has a progressive state income tax with rates from 4% to 10.9%. The top rate of 10.9% applies to income over $25 million. For most earners, the effective rate ranges from 5% to 7%. NYC residents face an additional local income tax of 3.078% to 3.876%.']],
+    ['@type'=>'Question','name'=>'How much do NYC residents pay in local income tax?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'New York City imposes a local income tax ranging from 3.078% to 3.876% on all NYC residents, regardless of where they work. Combined with NY state tax, a NYC resident can pay up to 14.8% in state + local income tax — making it one of the highest-taxed cities in the US. Yonkers residents pay a Yonkers surcharge of 16.75% of their NY state tax liability.']],
+    ['@type'=>'Question','name'=>'How much take-home pay on $100K in New York?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'On $100,000 (single, bi-weekly, NYC resident, no pre-tax deductions): federal tax ~$13,142, NY state tax ~$5,450, NYC local tax ~$3,200, Social Security ~$6,200, Medicare ~$1,450. Estimated net: ~$70,558 (outside NYC) or ~$67,358 (NYC resident) per year.']],
+    ['@type'=>'Question','name'=>'Does New York tax remote workers?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'New York applies the "convenience of the employer" rule: if your employer is based in NY and you work remotely from another state for your own convenience (not employer necessity), NY may still tax your income. This is one of the most aggressive remote work tax policies in the US and has been subject to legal challenges.']],
+    ['@type'=>'Question','name'=>'What pre-tax deductions reduce NY state tax?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Traditional 401(k), 403(b), and 457(b) contributions reduce NY state taxable income. HSA contributions also reduce NY state taxes (unlike California). Section 125 cafeteria plan deductions for health insurance premiums are excluded from both federal and NY state income. NY has its own standard deduction of $8,000 (single) / $16,050 (married).']],
+    ['@type'=>'Question','name'=>'Is the NY MCTMT taken from my paycheck?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'The Metropolitan Commuter Transportation Mobility Tax (MCTMT) is an employer-paid tax, not deducted from your paycheck. It applies to employers in the MTA region (NYC, Rockland, Nassau, Suffolk, Orange, Putnam, Dutchess, Westchester counties). Self-employed individuals earning over $50,000 in the MTA region do pay MCTMT directly.']],
+    ['@type'=>'Question','name'=>'What is the Yonkers income tax?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Yonkers residents pay a surcharge equal to 16.75% of their New York State tax liability. Non-residents who work in Yonkers pay 0.50% of wages earned in Yonkers. This is separate from and in addition to NY state income tax.']],
+    ['@type'=>'Question','name'=>'How does New York compare to Florida or Texas?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'On $100K salary (single), a NYC resident takes home ~$67,400 vs. ~$78,100 in Florida/Texas — a difference of ~$10,700/year or $411 per bi-weekly paycheck. Even outside NYC, a NY worker takes home ~$70,600 vs. ~$78,100 in zero-tax states. This is the primary driver of migration from NY to FL and TX in recent years.']],
+  ]],
+]];
+require_once __DIR__ . '/../includes/header.php';
+?>
+<style>
+:root{--primary:#7c3aed;--primary-hover:#6d28d9;--primary-light:#f5f3ff;--slate-900:#0f172a;--slate-800:#1e293b;--slate-700:#334155;--slate-600:#475569;--slate-200:#e2e8f0;--slate-100:#f1f5f9;--slate-50:#f8fafc;--white:#fff;--shadow-xl:0 20px 25px -5px rgb(0 0 0/.1);--radius:16px;}
+body{background:var(--slate-50);color:var(--slate-800);line-height:1.6;}
+.main-wrapper{max-width:1100px;margin:2rem auto;padding:0 1.5rem;}
+.page-title-area{text-align:center;margin-bottom:2.5rem;}
+.page-title-area h1{font-size:2.1rem;font-weight:800;color:var(--slate-900);margin-bottom:.75rem;line-height:1.25;}
+.page-title-area p{color:var(--slate-600);font-size:1.02rem;max-width:760px;margin:0 auto;line-height:1.72;}
+.rc-badges{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:1.5rem;}
+.rc-badge{display:inline-flex;align-items:center;gap:.35rem;padding:5px 12px;border-radius:20px;font-size:.73rem;font-weight:700;}
+.rc-badge-purple{background:#ede9fe;color:#5b21b6;border:1px solid #c4b5fd;}
+.rc-badge-amber{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+.rc-badge-green{background:#dcfce7;color:#166534;border:1px solid #86efac;}
+
+.calculator-container{display:grid;grid-template-columns:1.2fr 1fr;gap:0;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-xl);border:1px solid var(--slate-200);overflow:hidden;margin-bottom:2rem;}
+.form-panel{padding:2.25rem;}
+.results-panel{background:linear-gradient(135deg,#4c1d95 0%,#1e293b 100%);color:var(--white);padding:2.25rem;display:flex;flex-direction:column;justify-content:space-between;}
+.section-subtitle{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--primary);margin-bottom:1rem;border-bottom:1px solid #ede9fe;padding-bottom:.4rem;}
+.input-group{margin-bottom:1.15rem;}
+.input-group label{display:block;font-size:.88rem;font-weight:600;color:var(--slate-700);margin-bottom:.35rem;}
+.input-wrapper{position:relative;display:flex;align-items:center;}
+.input-prefix{position:absolute;left:1rem;color:var(--slate-600);font-weight:600;pointer-events:none;}
+.input-wrapper input,.input-wrapper select{width:100%;padding:.7rem 1rem .7rem 2.1rem;border:1.5px solid var(--slate-200);border-radius:8px;font-size:.95rem;font-weight:600;color:var(--slate-900);background:var(--white);outline:none;transition:border-color .2s,box-shadow .2s;}
+.input-wrapper select{padding-left:1rem;}
+.input-wrapper input:focus,.input-wrapper select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,.1);}
+.grid-2-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.hint{font-size:.72rem;color:#94a3b8;margin-top:.2rem;}
+
+.hero-paycheck{background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);border-radius:14px;padding:1.75rem;text-align:center;margin-bottom:1.5rem;}
+.hero-paycheck .label{font-size:.82rem;color:#c4b5fd;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.hero-paycheck .val-main{font-size:2.75rem;font-weight:800;color:#a78bfa;margin:.25rem 0;}
+.hero-paycheck .val-sub{font-size:.9rem;color:#cbd5e1;}
+
+.breakdown-row{display:flex;justify-content:space-between;font-size:.92rem;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.07);}
+.breakdown-row:last-child{border-bottom:none;}
+.breakdown-row span:first-child{color:#cbd5e1;}
+.deduction{color:#fca5a5!important;font-weight:700;}
+.neutral{color:#38bdf8!important;font-weight:700;}
+
+.state-highlight{background:#f5f3ff;padding:1rem;border-radius:8px;border:1px solid #ddd6fe;display:flex;align-items:center;gap:.75rem;margin-top:.5rem;}
+.state-highlight .icon{font-size:1.25rem;}
+.state-highlight .text{font-size:.84rem;color:#5b21b6;}
+.state-highlight .text strong{display:block;}
+
+.actions-row{display:flex;gap:.5rem;margin-top:1rem;}
+.actions-row button{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#e2e8f0;padding:8px;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;transition:background .2s;}
+.actions-row button:hover{background:rgba(255,255,255,.2);}
+
+.calculator-content-body{margin-top:2rem;background:#fff;border-radius:16px;border:1px solid #e2e8f0;padding:2.5rem;box-shadow:0 4px 20px rgba(0,0,0,.04);}
+.calculator-content-body h2{font-size:1.5rem;color:#0f172a;margin:2rem 0 1rem;border-bottom:2px solid #ede9fe;padding-bottom:.5rem;}
+.calculator-content-body h2:first-child{margin-top:0;}
+.calculator-content-body h3{font-size:1.15rem;color:#1e293b;margin:1.5rem 0 .75rem;}
+.calculator-content-body p{color:#475569;font-size:.98rem;line-height:1.75;margin-bottom:1.25rem;}
+.calculator-content-body ul,.calculator-content-body ol{margin-left:1.5rem;margin-bottom:1.5rem;color:#475569;line-height:1.75;}
+.calculator-content-body li{margin-bottom:.5rem;}
+.calculator-content-body a{color:#7c3aed;font-weight:600;text-decoration:none;}
+.calculator-content-body a:hover{text-decoration:underline;}
+.table-responsive{overflow-x:auto;margin:1.5rem 0;}
+.data-table{width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;}
+.data-table th{background:#4c1d95;color:#fff;padding:10px 14px;text-align:left;font-size:.85rem;}
+.data-table td{padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;font-size:.9rem;}
+.data-table tr:nth-child(even) td{background:#f8fafc;}
+.data-table tr:last-child td{border-bottom:none;}
+
+.rc-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}.rc-faq-item:last-child{border-bottom:none;}
+.rc-faq-q{font-size:.94rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;user-select:none;}
+.rc-faq-q::after{content:'+';color:#7c3aed;font-size:1.2rem;flex-shrink:0;}
+.rc-faq-item.open .rc-faq-q::after{content:'−';}
+.rc-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.rc-faq-item.open .rc-faq-a{display:block;}
+.rc-related{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.75rem;margin-top:.75rem;}
+.rc-rel-link{display:block;background:#f5f3ff;border:1.5px solid #ddd6fe;border-radius:8px;padding:.75rem 1rem;font-size:.85rem;font-weight:600;color:#7c3aed;text-decoration:none;text-align:center;transition:background .15s;}
+.rc-rel-link:hover{background:#ede9fe;}
+
+.privacy-notice{display:flex;align-items:center;gap:.5rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:.75rem 1rem;font-size:.78rem;color:#166534;margin-bottom:2rem;}
+@media(max-width:860px){.calculator-container{grid-template-columns:1fr;}.grid-2-col{grid-template-columns:1fr;}.page-title-area h1{font-size:1.5rem;}}
+@media print{.site-header,.site-footer,.actions-row,.rc-badges,.privacy-notice{display:none!important;}.calculator-container{box-shadow:none;border:1px solid #ccc;}}
+</style>
+
+<main class="main-wrapper">
+<div style="font-size:.8rem;color:#94a3b8;margin-bottom:.75rem;"><a href="/" style="color:#64748b;text-decoration:none;">Home</a> › <a href="/new-york/" style="color:#64748b;text-decoration:none;">New York</a> › Paycheck Calculator</div>
+
+<div class="page-title-area">
+  <h1>New York Paycheck Calculator (<?php echo $currentYear; ?>)</h1>
+  <p>Calculate your take-home pay in New York with accurate <?php echo $currentYear; ?> federal and NY state income tax brackets. If you live or work in New York City, toggle the NYC local income tax (3.078%–3.876%) to see the combined impact on your paycheck. This calculator handles federal withholding, NY state tax (4%–10.9%), NYC local tax, Social Security, Medicare, and pre-tax deductions like 401(k) contributions.</p>
+</div>
+
+<div class="rc-badges">
+  <span class="rc-badge rc-badge-purple">🗽 NY State Tax: 4% – 10.9%</span>
+  <span class="rc-badge rc-badge-amber">🏙️ NYC Local Tax: +3.08% – 3.88%</span>
+  <span class="rc-badge rc-badge-green">🔒 No Data Stored</span>
+</div>
+
+<div class="calculator-container">
+  <div class="form-panel">
+    <div class="section-subtitle">1. Income &amp; Pay Schedule</div>
+    <div class="grid-2-col">
+      <div class="input-group"><label for="payType">Pay Type</label><div class="input-wrapper"><select id="payType" style="padding-left:1rem;"><option value="salary" selected>Annual Salary</option><option value="hourly">Hourly Rate</option></select></div></div>
+      <div class="input-group"><label for="payFrequency">Pay Frequency</label><div class="input-wrapper"><select id="payFrequency" style="padding-left:1rem;"><option value="26" selected>Bi-Weekly (26/Yr)</option><option value="52">Weekly (52/Yr)</option><option value="24">Semi-Monthly (24/Yr)</option><option value="12">Monthly (12/Yr)</option></select></div></div>
+    </div>
+    <div id="salaryInput"><div class="input-group"><label for="grossSalary">Gross Annual Salary</label><div class="input-wrapper"><span class="input-prefix">$</span><input type="number" id="grossSalary" value="90000" step="1000" min="0"></div></div></div>
+    <div id="hourlyInput" style="display:none;"><div class="grid-2-col"><div class="input-group"><label for="hourlyRate">Hourly Rate</label><div class="input-wrapper"><span class="input-prefix">$</span><input type="number" id="hourlyRate" value="45" step=".50" min="0"></div></div><div class="input-group"><label for="hoursPerWeek">Hours / Week</label><div class="input-wrapper"><span class="input-prefix">#</span><input type="number" id="hoursPerWeek" value="40" step="1" min="1" max="80"></div></div></div></div>
+
+    <div class="section-subtitle" style="margin-top:1.5rem;">2. Filing Status &amp; Location</div>
+    <div class="grid-2-col">
+      <div class="input-group"><label for="filingStatus">Filing Status</label><div class="input-wrapper"><select id="filingStatus" style="padding-left:1rem;"><option value="single" selected>Single Filer</option><option value="married">Married Filing Jointly</option></select></div></div>
+      <div class="input-group"><label for="nycResident">NYC Resident?</label><div class="input-wrapper"><select id="nycResident" style="padding-left:1rem;"><option value="no" selected>No — NY State only</option><option value="yes">Yes — NYC local tax applies</option></select></div><div class="hint">NYC residents pay 3.08%–3.88% additional</div></div>
+    </div>
+
+    <div class="section-subtitle" style="margin-top:1.5rem;">3. Pre-Tax Deductions (Optional)</div>
+    <div class="grid-2-col">
+      <div class="input-group"><label for="retirement">401(k) / 403(b) per Year</label><div class="input-wrapper"><span class="input-prefix">$</span><input type="number" id="retirement" value="0" step="500" min="0"></div><div class="hint">Max $23,500 ($31,000 if 50+)</div></div>
+      <div class="input-group"><label for="hsa">HSA per Year</label><div class="input-wrapper"><span class="input-prefix">$</span><input type="number" id="hsa" value="0" step="250" min="0"></div><div class="hint">Deductible for both fed &amp; NY state</div></div>
+    </div>
+
+    <div class="state-highlight">
+      <span class="icon">🗽</span>
+      <div class="text"><strong>New York State + City Tax Warning</strong>NYC residents can face combined state + local income tax rates up to 14.8%. This is among the highest in the nation, second only to California's 13.3% (which has no local income tax).</div>
+    </div>
+  </div>
+
+  <div class="results-panel">
+    <div>
+      <h3 style="font-size:1.2rem;font-weight:800;margin-bottom:1.25rem;">Take-Home Paycheck</h3>
+      <div class="hero-paycheck">
+        <div class="label">Net Pay Per Paycheck</div>
+        <div class="val-main" id="netPaycheckDisplay">$0</div>
+        <div class="val-sub" id="netAnnualDisplay">$0 / year net take-home</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:1.15rem;">
+        <div class="breakdown-row"><span>Gross Paycheck:</span><span class="neutral" id="grossCheckDisplay">$0</span></div>
+        <div class="breakdown-row"><span>Federal Income Tax:</span><span class="deduction" id="fedTaxDisplay">−$0</span></div>
+        <div class="breakdown-row"><span>NY State Income Tax:</span><span class="deduction" id="stateTaxDisplay">−$0</span></div>
+        <div class="breakdown-row" id="nycRow"><span>NYC Local Income Tax:</span><span class="deduction" id="nycTaxDisplay">$0</span></div>
+        <div class="breakdown-row"><span>Social Security (6.2%):</span><span class="deduction" id="ssTaxDisplay">−$0</span></div>
+        <div class="breakdown-row"><span>Medicare (1.45%):</span><span class="deduction" id="medTaxDisplay">−$0</span></div>
+        <div class="breakdown-row" id="retirementRow" style="display:none;"><span>401(k) Contribution:</span><span class="deduction" id="retDisplay">−$0</span></div>
+      </div>
+    </div>
+    <div style="text-align:center;border-top:1px solid rgba(255,255,255,.1);padding-top:1rem;margin-top:1rem;">
+      <div style="font-size:.82rem;color:#94a3b8;">Total Effective Deduction Rate:</div>
+      <div style="font-size:1.3rem;font-weight:800;color:#a78bfa;" id="effectiveTaxRate">0% Withheld</div>
+    </div>
+    <div class="actions-row"><button onclick="window.print()">🖨️ Print</button><button onclick="downloadNY()">⬇️ CSV</button></div>
+  </div>
+</div>
+
+<div class="privacy-notice"><span>🔒</span><span>All calculations run locally in your browser. No personal or financial data is stored, transmitted, or shared.</span></div>
+
+<article class="calculator-content-body">
+  <h2>New York Paycheck Taxes Explained (<?php echo $currentYear; ?>)</h2>
+  <p>New York has a <strong>progressive state income tax with rates from 4% to 10.9%</strong>, making it one of the highest-taxed states in the US. If you live in New York City, you face an additional local income tax of 3.078% to 3.876%, pushing the combined state + local rate to nearly 14.8% at the top bracket. This is in addition to federal income tax (10%–37%), Social Security (6.2%), and Medicare (1.45%).</p>
+  <p>The result: a New York City resident earning $100,000 takes home roughly $10,700 less per year than an identical earner in Florida or Texas. This tax burden is the single biggest driver of the population migration from New York to zero-tax states in recent years.</p>
+
+  <h2><?php echo $currentYear; ?> New York State Income Tax Brackets (Single)</h2>
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead><tr><th>Taxable Income</th><th>Rate</th></tr></thead>
+      <tbody>
+        <tr><td>$0 – $8,500</td><td>4.00%</td></tr>
+        <tr><td>$8,501 – $11,700</td><td>4.50%</td></tr>
+        <tr><td>$11,701 – $13,900</td><td>5.25%</td></tr>
+        <tr><td>$13,901 – $80,650</td><td>5.50%</td></tr>
+        <tr><td>$80,651 – $215,400</td><td>6.00%</td></tr>
+        <tr><td>$215,401 – $1,077,550</td><td>6.85%</td></tr>
+        <tr><td>$1,077,551 – $5,000,000</td><td>9.65%</td></tr>
+        <tr><td>$5,000,001 – $25,000,000</td><td>10.30%</td></tr>
+        <tr><td>$25,000,000+</td><td>10.90%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>NYC Local Income Tax Brackets (<?php echo $currentYear; ?>)</h2>
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead><tr><th>Taxable Income</th><th>NYC Rate</th></tr></thead>
+      <tbody>
+        <tr><td>$0 – $12,000</td><td>3.078%</td></tr>
+        <tr><td>$12,001 – $25,000</td><td>3.762%</td></tr>
+        <tr><td>$25,001 – $50,000</td><td>3.819%</td></tr>
+        <tr><td>$50,001+</td><td>3.876%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>New York vs. Zero-Tax States: Annual Take-Home Comparison</h2>
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead><tr><th>Location</th><th>Gross</th><th>State + Local Tax</th><th>Est. Annual Net</th><th>vs. FL/TX</th></tr></thead>
+      <tbody>
+        <tr><td><strong>NYC Resident</strong></td><td>$100,000</td><td>~$8,650</td><td>~$67,400</td><td style="color:#dc2626;font-weight:700;">−$10,700</td></tr>
+        <tr><td><strong>NY State (non-NYC)</strong></td><td>$100,000</td><td>~$5,450</td><td>~$70,600</td><td style="color:#dc2626;font-weight:700;">−$7,500</td></tr>
+        <tr><td>Florida / Texas</td><td>$100,000</td><td>$0</td><td>~$78,100</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>How to Reduce Your New York Tax Burden</h2>
+  <ul>
+    <li><strong>Max your 401(k):</strong> At a combined 30%+ marginal rate (federal + NY + NYC), every $1,000 in pre-tax contributions saves $300+ in taxes.</li>
+    <li><strong>Contribute to HSA:</strong> Unlike California, New York recognizes HSA deductions at the state level — reducing both federal and NY state taxable income.</li>
+    <li><strong>Consider NY 529 Plan:</strong> New York allows up to $5,000 ($10,000 married) deduction for contributions to a NY 529 college savings plan.</li>
+    <li><strong>Review your W-4 and IT-2104:</strong> Ensure both federal and NY state withholding forms accurately reflect your situation to avoid over-withholding.</li>
+    <li><strong>Evaluate residency:</strong> If you spend significant time outside NYC, you may qualify as a non-resident — potentially avoiding NYC local tax entirely.</li>
+  </ul>
+
+  <h2>Frequently Asked Questions</h2>
+  <?php $faqs=[
+    ['What is the New York state income tax rate?','New York has progressive rates from 4% to 10.9%. The top rate applies to income over $25 million. For typical earners ($50K-$150K), the effective rate is 5-6.5%. NYC residents add 3.08-3.88% local tax on top.'],
+    ['How much do NYC residents pay in local tax?','NYC local income tax ranges from 3.078% to 3.876%. On a $100K salary, this adds approximately $3,200/year in additional taxes beyond NY state tax. Combined state + local can reach 14.8%.'],
+    ['How much take-home on $100K in New York?','NYC resident: ~$67,400/year net. NY state (non-NYC): ~$70,600/year net. Compared to Florida/Texas: ~$78,100/year net.'],
+    ['Does New York tax remote workers?','NY applies the "convenience of employer" rule — if your employer is NY-based and you work remotely elsewhere for convenience (not necessity), NY may still tax your income. This is highly controversial and subject to legal challenges.'],
+    ['What is the NY standard deduction?','NY standard deduction is $8,000 (single) / $16,050 (married filing jointly). This is separate from and lower than the federal standard deduction.'],
+    ['Is the NY MCTMT taken from my paycheck?','No. MCTMT is employer-paid. Self-employed individuals in the MTA region earning over $50,000 pay it directly.'],
+    ['What is the Yonkers income tax?','Yonkers residents pay a 16.75% surcharge on their NY state tax liability. Non-residents working in Yonkers pay 0.50% of Yonkers wages.'],
+    ['How does NY compare to Florida for take-home?','On $100K (single, NYC resident), you net ~$67,400 vs. ~$78,100 in Florida — $10,700/year less. Even non-NYC NY workers net ~$7,500/year less than Florida workers.'],
+  ];
+  foreach($faqs as $f):?><div class="rc-faq-item"><div class="rc-faq-q"><?php echo $f[0];?></div><div class="rc-faq-a"><?php echo $f[1];?></div></div><?php endforeach;?>
+
+  <h2 style="margin-top:2.5rem;">Related Paycheck &amp; Tax Calculators</h2>
+  <div class="rc-related">
+    <a href="/california/paycheck-calculator" class="rc-rel-link">☀️ California Paycheck</a>
+    <a href="/texas/paycheck-calculator" class="rc-rel-link">🤠 Texas Paycheck</a>
+    <a href="/florida/paycheck-calculator" class="rc-rel-link">🌴 Florida Paycheck</a>
+    <a href="/pennsylvania/paycheck-calculator" class="rc-rel-link">🔔 Pennsylvania Paycheck</a>
+    <a href="/ohio/paycheck-calculator" class="rc-rel-link">🏈 Ohio Paycheck</a>
+    <a href="/loan-calculators/debt-to-income-calculator" class="rc-rel-link">📊 Debt-to-Income</a>
+  </div>
+</article>
+</main>
+
+<script>
+(function(){
+  // NY State brackets (single)
+  var NY_S=[{min:0,max:8500,rate:.04},{min:8500,max:11700,rate:.045},{min:11700,max:13900,rate:.0525},{min:13900,max:80650,rate:.055},{min:80650,max:215400,rate:.06},{min:215400,max:1077550,rate:.0685},{min:1077550,max:5000000,rate:.0965},{min:5000000,max:25000000,rate:.103},{min:25000000,max:Infinity,rate:.109}];
+  var NY_M=[{min:0,max:17150,rate:.04},{min:17150,max:23600,rate:.045},{min:23600,max:27900,rate:.0525},{min:27900,max:161550,rate:.055},{min:161550,max:323200,rate:.06},{min:323200,max:2155350,rate:.0685},{min:2155350,max:5000000,rate:.0965},{min:5000000,max:25000000,rate:.103},{min:25000000,max:Infinity,rate:.109}];
+  // NYC local brackets (simplified)
+  var NYC_B=[{min:0,max:12000,rate:.03078},{min:12000,max:25000,rate:.03762},{min:25000,max:50000,rate:.03819},{min:50000,max:Infinity,rate:.03876}];
+  // NY standard deduction
+  var NY_STD_S=8000, NY_STD_M=16050;
+
+  var FED_S=[{min:0,max:11600,rate:.10},{min:11600,max:47150,rate:.12},{min:47150,max:100525,rate:.22},{min:100525,max:191950,rate:.24},{min:191950,max:243725,rate:.32},{min:243725,max:609350,rate:.35},{min:609350,max:Infinity,rate:.37}];
+  var FED_M=[{min:0,max:23200,rate:.10},{min:23200,max:94300,rate:.12},{min:94300,max:201050,rate:.22},{min:201050,max:383900,rate:.24},{min:383900,max:487450,rate:.32},{min:487450,max:731200,rate:.35},{min:731200,max:Infinity,rate:.37}];
+  var FED_STD_S=15000,FED_STD_M=30000,SS_BASE=174900,SS_R=.062,MED_R=.0145,MED_ADD=.009;
+
+  function cb(t,b){var x=0;for(var i=0;i<b.length;i++){if(t<=b[i].min)break;x+=(Math.min(t,b[i].max)-b[i].min)*b[i].rate;}return x;}
+
+  function calc(){
+    var pt=document.getElementById('payType').value,gross;
+    if(pt==='hourly'){gross=(parseFloat(document.getElementById('hourlyRate').value)||0)*(parseFloat(document.getElementById('hoursPerWeek').value)||40)*52;}
+    else{gross=parseFloat(document.getElementById('grossSalary').value)||0;}
+    var freq=parseFloat(document.getElementById('payFrequency').value)||26;
+    var f=document.getElementById('filingStatus').value;
+    var nyc=document.getElementById('nycResident').value==='yes';
+    var ret=parseFloat(document.getElementById('retirement').value)||0;
+    var hsa=parseFloat(document.getElementById('hsa').value)||0;
+
+    // Federal
+    var fedTaxable=Math.max(0,gross-ret-hsa-(f==='single'?FED_STD_S:FED_STD_M));
+    var fedTax=cb(fedTaxable,f==='single'?FED_S:FED_M);
+
+    // NY State (401k and HSA both deductible)
+    var nyTaxable=Math.max(0,gross-ret-hsa-(f==='single'?NY_STD_S:NY_STD_M));
+    var nyTax=cb(nyTaxable,f==='single'?NY_S:NY_M);
+
+    // NYC local
+    var nycTax=0;
+    if(nyc) nycTax=cb(nyTaxable,NYC_B);
+
+    // FICA
+    var ss=Math.min(gross,SS_BASE)*SS_R;
+    var med=gross*MED_R;
+    if(gross>(f==='single'?200000:250000)) med+=(gross-(f==='single'?200000:250000))*MED_ADD;
+
+    var totalD=fedTax+nyTax+nycTax+ss+med+ret;
+    var netA=gross-totalD,netC=netA/freq;
+    var gpc=gross/freq;
+    var eff=gross>0?((gross-netA)/gross*100):0;
+
+    document.getElementById('netPaycheckDisplay').innerText='$'+Math.round(netC).toLocaleString();
+    document.getElementById('netAnnualDisplay').innerText='$'+Math.round(netA).toLocaleString()+' / year net take-home';
+    document.getElementById('grossCheckDisplay').innerText='$'+Math.round(gpc).toLocaleString();
+    document.getElementById('fedTaxDisplay').innerText='−$'+Math.round(fedTax/freq).toLocaleString();
+    document.getElementById('stateTaxDisplay').innerText='−$'+Math.round(nyTax/freq).toLocaleString();
+    document.getElementById('nycTaxDisplay').innerText=nyc?'−$'+Math.round(nycTax/freq).toLocaleString():'$0 (N/A)';
+    document.getElementById('nycRow').style.opacity=nyc?'1':'0.5';
+    document.getElementById('ssTaxDisplay').innerText='−$'+Math.round(ss/freq).toLocaleString();
+    document.getElementById('medTaxDisplay').innerText='−$'+Math.round(med/freq).toLocaleString();
+    document.getElementById('effectiveTaxRate').innerText=eff.toFixed(1)+'% Withheld';
+    var rr=document.getElementById('retirementRow');
+    if(ret>0){rr.style.display='flex';document.getElementById('retDisplay').innerText='−$'+Math.round(ret/freq).toLocaleString();}else{rr.style.display='none';}
+  }
+
+  document.getElementById('payType').addEventListener('change',function(){
+    document.getElementById('salaryInput').style.display=this.value==='salary'?'block':'none';
+    document.getElementById('hourlyInput').style.display=this.value==='hourly'?'block':'none';calc();
+  });
+  document.querySelectorAll('#grossSalary,#hourlyRate,#hoursPerWeek,#payFrequency,#filingStatus,#nycResident,#retirement,#hsa,#payType').forEach(function(el){el.addEventListener('input',calc);el.addEventListener('change',calc);});
+  document.querySelectorAll('.rc-faq-q').forEach(function(q){q.addEventListener('click',function(){var i=this.closest('.rc-faq-item'),w=i.classList.contains('open');document.querySelectorAll('.rc-faq-item').forEach(function(x){x.classList.remove('open');});if(!w)i.classList.add('open');});});
+  window.downloadNY=function(){
+    var csv='New York Paycheck Calculator - AmericaCalculator.com\nGenerated,'+new Date().toLocaleDateString()+'\n\n';
+    csv+='Net/Paycheck,'+document.getElementById('netPaycheckDisplay').innerText+'\n';
+    csv+='Net Annual,'+document.getElementById('netAnnualDisplay').innerText+'\n';
+    csv+='Gross/Paycheck,'+document.getElementById('grossCheckDisplay').innerText+'\n';
+    csv+='Federal Tax,'+document.getElementById('fedTaxDisplay').innerText+'\n';
+    csv+='NY State Tax,'+document.getElementById('stateTaxDisplay').innerText+'\n';
+    csv+='NYC Local Tax,'+document.getElementById('nycTaxDisplay').innerText+'\n';
+    csv+='Social Security,'+document.getElementById('ssTaxDisplay').innerText+'\n';
+    csv+='Medicare,'+document.getElementById('medTaxDisplay').innerText+'\n';
+    csv+='Effective Rate,'+document.getElementById('effectiveTaxRate').innerText+'\n';
+    var b=new Blob([csv],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='new-york-paycheck-results.csv';a.click();URL.revokeObjectURL(a.href);
+  };
+  calc();
+})();
+</script>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

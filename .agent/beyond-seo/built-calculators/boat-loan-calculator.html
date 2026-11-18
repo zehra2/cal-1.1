@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boat Loan Calculator (2026) — Monthly Marine Financing | AmericaCalculator</title>
+  <meta name="description" content="Calculate monthly payments for powerboats, sailboats, and yachts. Compare marine loan interest rates, terms up to 20 years, down payments, and survey fees.">
+  <link rel="canonical" href="https://americacalculator.com/loan-calculators/boat-loan-calculator">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #f0f9ff;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --white: #ffffff;
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+    header { background: var(--white); border-bottom: 1px solid var(--slate-200); padding: 1rem 2rem; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: var(--slate-900); text-decoration: none; }
+    .logo span { color: var(--primary); }
+
+    .main-wrapper { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+    .page-title-area { text-align: center; margin-bottom: 2.5rem; }
+    .page-title-area h1 { font-size: 2.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 0.75rem; }
+    .page-title-area p { color: var(--slate-600); font-size: 1.1rem; max-width: 720px; margin: 0 auto; }
+
+    .calculator-container {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--slate-200);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .form-panel { padding: 2.25rem; }
+    .results-panel {
+      background: linear-gradient(135deg, #075985 0%, #0f172a 100%);
+      color: var(--white);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .input-group { margin-bottom: 1.25rem; }
+    .input-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--slate-700); margin-bottom: 0.4rem; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-prefix { position: absolute; left: 1rem; color: var(--slate-600); font-weight: 600; }
+    .input-suffix { position: absolute; right: 1rem; color: var(--slate-600); font-weight: 600; }
+    .input-wrapper input, .input-wrapper select {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.25rem;
+      border: 1.5px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .input-wrapper input:focus, .input-wrapper select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1); }
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .boat-hero {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 14px;
+      padding: 1.75rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .boat-hero .label { font-size: 0.85rem; color: #bae6fd; font-weight: 700; text-transform: uppercase; }
+    .boat-hero .val-main { font-size: 2.75rem; font-weight: 800; color: #38bdf8; margin: 0.25rem 0; }
+    .boat-hero .val-sub { font-size: 0.95rem; color: #cbd5e1; }
+
+    .breakdown-row { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-row span:first-child { color: #cbd5e1; }
+    .breakdown-row span:last-child { font-weight: 700; color: #34d399; }
+
+    .content-article { background: var(--white); border-radius: var(--radius); padding: 2.5rem; border: 1px solid var(--slate-200); }
+    .quick-summary-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
+
+    @media (max-width: 860px) {
+      .calculator-container { grid-template-columns: 1fr; }
+      .grid-2-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">⛵ America<span>Calculator</span></a>
+      <nav>
+        <a href="/loan-calculators/" style="color: var(--slate-700); font-weight: 600; text-decoration: none;">← Loan Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="page-title-area">
+      <h1>Boat Loan Payment Calculator</h1>
+      <p>Calculate monthly financing payments for powerboats, center consoles, sailboats, and yachts. Compare terms up to 20 years, marine survey fees, and down payments.</p>
+    </div>
+
+    <div class="calculator-container">
+      <div class="form-panel">
+        <div class="section-subtitle">🚤 1. Vessel Price & Down Payment</div>
+        
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="boatPrice">Boat Purchase Price</label>
+            <div class="input-wrapper">
+              <span class="input-prefix">$</span>
+              <input type="number" id="boatPrice" value="65000" step="2500">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="downPaymentPct">Down Payment (%)</label>
+            <div class="input-wrapper">
+              <input type="number" id="downPaymentPct" value="15" min="0" max="80" step="1" style="padding-left: 1rem;">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-subtitle" style="margin-top: 1.75rem;">⚓ 2. Marine Financing Terms</div>
+
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="interestRate">Annual Interest Rate (APR)</label>
+            <div class="input-wrapper">
+              <input type="number" id="interestRate" value="7.74" step="0.125" style="padding-left: 1rem;">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="loanTermYears">Loan Term</label>
+            <div class="input-wrapper" style="padding-left: 0;">
+              <select id="loanTermYears" style="padding-left: 1rem;">
+                <option value="20">20 Years (240 Months)</option>
+                <option value="15" selected>15 Years (180 Months)</option>
+                <option value="10">10 Years (120 Months)</option>
+                <option value="7">7 Years (84 Months)</option>
+                <option value="5">5 Years (60 Months)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="boatLength">Vessel Length (Feet — For Marine Survey Est.)</label>
+          <input type="number" id="boatLength" value="26" style="padding: 0.75rem 1rem; border: 1.5px solid var(--slate-200); border-radius: 10px; font-weight: 600;">
+        </div>
+      </div>
+
+      <div class="results-panel">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem;">Marine Payment Summary</h3>
+
+          <div class="boat-hero">
+            <div class="label">Estimated Monthly Payment</div>
+            <div class="val-main" id="monthlyPmtDisplay">$519 / mo</div>
+            <div class="val-sub" id="termNote">180 Monthly Payments</div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1.25rem;">
+            <div class="breakdown-row">
+              <span>Amount Financed (Principal):</span>
+              <span id="financedAmtDisplay">$55,250</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Down Payment Amount:</span>
+              <span id="downAmtDisplay">$9,750</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Est. Marine Survey Fee (~$25/ft):</span>
+              <span id="surveyFeeDisplay" style="color: #fbbf24;">$650</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Total Interest Paid Over Term:</span>
+              <span id="totalInterestDisplay">$38,170</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+          <div style="font-size: 0.85rem; color: #94a3b8;">Total Out-of-Pocket Financing Cost:</div>
+          <div style="font-size: 1.35rem; font-weight: 800; color: #38bdf8;" id="totalCostDisplay">$93,420</div>
+        </div>
+      </div>
+    </div>
+
+    <article class="content-article">
+      <div class="quick-summary-box">
+        <h3 style="color: #0369a1;">💡 Quick Answer: What Are Typical Boat Loan Terms in 2026?</h3>
+        <p style="color: #0c4a6e;">Boat loans range from <strong>5 to 20 years</strong>. On a $65,000 boat with 15% down ($9,750), a 15-year loan at 7.74% APR results in a monthly payment of <strong>$519/month</strong>. Most marine lenders require a 10% to 20% down payment and a licensed marine survey for pre-owned vessels over 20 feet.</p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    function calculateBoatLoan() {
+      const price = parseFloat(document.getElementById('boatPrice').value) || 0;
+      const downPct = (parseFloat(document.getElementById('downPaymentPct').value) || 0) / 100;
+      const rate = (parseFloat(document.getElementById('interestRate').value) || 0) / 100 / 12;
+      const termYears = parseFloat(document.getElementById('loanTermYears').value) || 15;
+      const length = parseFloat(document.getElementById('boatLength').value) || 0;
+
+      const downAmt = price * downPct;
+      const principal = Math.max(0, price - downAmt);
+      const nMonths = termYears * 12;
+
+      let monthlyPmt = 0;
+      if (rate > 0) {
+        monthlyPmt = (principal * (rate * Math.pow(1 + rate, nMonths))) / (Math.pow(1 + rate, nMonths) - 1);
+      } else {
+        monthlyPmt = principal / nMonths;
+      }
+
+      const totalInterest = (monthlyPmt * nMonths) - principal;
+      const surveyFee = length * 25; // $25/ft industry average
+      const totalCost = (monthlyPmt * nMonths) + downAmt + surveyFee;
+
+      document.getElementById('monthlyPmtDisplay').innerText = '$' + Math.round(monthlyPmt).toLocaleString() + ' / mo';
+      document.getElementById('termNote').innerText = nMonths + ' Monthly Payments (' + termYears + ' Years)';
+      document.getElementById('financedAmtDisplay').innerText = '$' + Math.round(principal).toLocaleString();
+      document.getElementById('downAmtDisplay').innerText = '$' + Math.round(downAmt).toLocaleString();
+      document.getElementById('surveyFeeDisplay').innerText = '$' + Math.round(surveyFee).toLocaleString();
+      document.getElementById('totalInterestDisplay').innerText = '$' + Math.round(totalInterest).toLocaleString();
+      document.getElementById('totalCostDisplay').innerText = '$' + Math.round(totalCost).toLocaleString();
+    }
+
+    document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', calculateBoatLoan));
+    calculateBoatLoan();
+  </script>
+</body>
+</html>

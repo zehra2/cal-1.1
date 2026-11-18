@@ -1,0 +1,537 @@
+<?php
+$currentYear = date('Y');
+$pageTitle = "BRRRR Calculator ({$currentYear}) – Buy, Rehab, Rent, Refinance, Repeat";
+$metaDescription = "Free BRRRR calculator for {$currentYear}. Model all 5 phases of real estate investing: calculate cash invested, ARV, cash-out refi proceeds, capital recycled %, and infinite ROI.";
+$metaKeywords = "brrrr calculator, buy rehab rent refinance repeat calculator, real estate investment calculator, arv calculator, cash out refi calculator, infinite return real estate {$currentYear}";
+
+$schemaData = json_decode(<<<'EOD'
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://americacalculator.com/real-estate/brrrr-calculator",
+      "url": "https://americacalculator.com/real-estate/brrrr-calculator",
+      "name": "BRRRR Calculator (2026) – Buy, Rehab, Rent, Refinance, Repeat",
+      "description": "Calculate your total cash invested, cash-out refinance capital recovery, capital recycled %, net monthly cash flow, and infinite cash-on-cash ROI across all 5 BRRRR phases.",
+      "inLanguage": "en-US",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://americacalculator.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Real Estate",
+            "item": "https://americacalculator.com/real-estate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "BRRRR Calculator",
+            "item": "https://americacalculator.com/real-estate/brrrr-calculator"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebApplication",
+      "name": "BRRRR Calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "url": "https://americacalculator.com/real-estate/brrrr-calculator",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Full 5-phase BRRRR real estate workflow modeling",
+        "All-in cash capital tracking (Purchase + Rehab + Holding Costs + Initial Closing Fees)",
+        "After Repair Value (ARV) appraisal & 75%-80% cash-out refinance modeling",
+        "Capital Recycled % and Net Cash Left in Deal calculation",
+        "Long-term rental cash flow & DSCR estimation",
+        "Infinite Cash-on-Cash ROI indicator when 100%+ capital is recovered"
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to Analyze a Real Estate Deal Using the BRRRR Method",
+      "description": "Step-by-step instructions for modeling a Buy, Rehab, Rent, Refinance, Repeat property investment.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Phase 1: Buy & Rehab Acquisition",
+          "text": "Input the distressed property purchase price, total renovation budget, estimated rehab duration, and holding costs."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Phase 2: Rent & Establish Operational Cash Flow",
+          "text": "Project the stabilized monthly market rent and factor in operating expenses (property taxes, insurance, property management, and vacancy reserves)."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Phase 3: Refinance at After Repair Value (ARV)",
+          "text": "Input the post-renovation appraised market value (ARV) and select your long-term cash-out refinance LTV (typically 75% to 80%)."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Phase 4: Analyze Capital Recycled and Remaining Equity",
+          "text": "Determine if the cash-out mortgage proceeds fully repay your initial purchase and rehab capital."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Phase 5: Repeat with Velocity of Money",
+          "text": "Deploy your returned cash into the next distressed property acquisition to build an expanding portfolio without depleting savings."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does BRRRR stand for in real estate investing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BRRRR stands for Buy, Rehab, Rent, Refinance, Repeat. It is a real estate wealth-building strategy where an investor buys a distressed property below market value, renovates it to force appreciation, rents it to tenants for cash flow, refinances into a long-term mortgage to pull all initial capital out, and repeats the process with the recycled funds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is considered a 'Perfect BRRRR' deal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 'Perfect BRRRR' occurs when the cash-out refinance proceeds equal or exceed 100% of your total acquisition, rehab, and holding capital—leaving $0 of your personal money trapped in the property while generating positive monthly cash flow and generating an 'infinite' cash-on-cash return."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the standard cash-out refinance LTV on a BRRRR deal in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most conventional lenders (Fannie Mae/Freddie Mac) and private DSCR lenders offer cash-out refinances at 75% to 80% of the newly appraised After Repair Value (ARV) for single-family residential investment properties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the seasoning period required before refinancing a BRRRR property?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under standard Fannie Mae conventional rules, a minimum seasoning period of 6 to 12 months is required to refinance based on the new appraised value rather than original purchase price. However, many private DSCR lenders allow cash-out refinancing based on full ARV with only 3 to 6 months (or even 0 days) of seasoning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you calculate After Repair Value (ARV)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ARV is calculated by analyzing recent closed comparable sales (comps) of similar-sized, fully renovated properties within a 0.5 to 1-mile radius sold in the past 3 to 6 months."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the 70% rule in BRRRR and fix-and-flip investing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 70% Rule states that your maximum purchase price should not exceed 70% of the After Repair Value (ARV) minus estimated repair costs: Maximum Purchase Price = (ARV * 0.70) - Rehab Costs. This ensures sufficient equity to pull 100% of your cash out during refinance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What holding costs should be included during the rehab phase?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Holding costs include monthly hard money loan interest, builder's risk insurance, property taxes, electric/water utilities, HOA fees, and lawn care incurred between property purchase and tenant occupancy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if a BRRRR property appraises lower than expected?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If the ARV appraisal comes in lower than anticipated, you will be unable to pull out 100% of your initial cash. The remaining balance stays trapped in the property as long-term equity, slightly reducing your cash-on-cash return percentage but maintaining monthly cash flow."
+          }
+        }
+      ]
+    }
+  ]
+}
+EOD
+, true);
+
+require_once '../includes/header.php';
+require_once '../includes/helpers.php';
+?>
+
+<main id="main-content" class="container">
+  <div class="calculator-header">
+    <h1>BRRRR Calculator (<?php echo $currentYear; ?>)</h1>
+    <p class="lead-description">
+      Model the complete <strong>Buy, Rehab, Rent, Refinance, Repeat</strong> real estate strategy. Calculate all-in cash invested, After Repair Value (ARV), cash-out refinance recovery, capital recycled %, and infinite cash-on-cash ROI.
+    </p>
+  </div>
+
+  <div class="calculator-layout">
+    <!-- LEFT INPUT PANEL -->
+    <div class="calculator-panel">
+      <h2 class="panel-title">BRRRR Project Parameters</h2>
+
+      <h3 style="font-size:0.95rem;color:#60a5fa;margin:0 0 10px;text-transform:uppercase;letter-spacing:0.5px;">Phase 1: Buy &amp; Rehab</h3>
+      
+      <div class="form-group">
+        <label for="brrrrBuyPrice">Purchase Price ($):</label>
+        <input type="number" id="brrrrBuyPrice" class="form-control" value="160000" min="10000" step="5000">
+        <span class="field-hint">Agreed distressed property purchase price.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrRehabCost">Estimated Rehab / Renovation Budget ($):</label>
+        <input type="number" id="brrrrRehabCost" class="form-control" value="45000" min="0" step="2500">
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrHoldMonths">Rehab &amp; Lease-Up Duration (Months):</label>
+        <input type="number" id="brrrrHoldMonths" class="form-control" value="4" min="1" max="24" step="1">
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrHoldMonthly">Monthly Holding Costs (Taxes, Ins, Utilities, Loan Int):</label>
+        <input type="number" id="brrrrHoldMonthly" class="form-control" value="1200" min="0" step="100">
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrInitialClosing">Initial Acquisition Closing Costs ($):</label>
+        <input type="number" id="brrrrInitialClosing" class="form-control" value="4000" min="0" step="500">
+      </div>
+
+      <h3 style="font-size:0.95rem;color:#34d399;margin:20px 0 10px;text-transform:uppercase;letter-spacing:0.5px;">Phase 2 &amp; 3: Rent &amp; Refinance</h3>
+
+      <div class="form-group">
+        <label for="brrrrArv">After Repair Value &ndash; ARV ($):</label>
+        <input type="number" id="brrrrArv" class="form-control" value="285000" min="20000" step="5000">
+        <span class="field-hint">Post-renovation appraised market value.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrRefiLtv">Cash-Out Refinance LTV (%):</label>
+        <select id="brrrrRefiLtv" class="form-control">
+          <option value="75" selected>75% LTV (Standard Conventional / DSCR)</option>
+          <option value="80">80% LTV (Maximum Cash-Out)</option>
+          <option value="70">70% LTV (Conservative Cash Flow)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrRefiRate">Refinance Loan Interest Rate (% APR):</label>
+        <input type="number" id="brrrrRefiRate" class="form-control" value="6.85" min="1.0" max="15.0" step="0.05">
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrRefiClosingPct">Refinance Closing Costs (% of New Loan):</label>
+        <input type="number" id="brrrrRefiClosingPct" class="form-control" value="2.5" min="0" max="6.0" step="0.5">
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrMonthlyRent">Projected Monthly Rent ($):</label>
+        <input type="number" id="brrrrMonthlyRent" class="form-control" value="2200" min="100" step="50">
+      </div>
+
+      <div class="form-group">
+        <label for="brrrrMonthlyOpex">Monthly Operating Expenses (Tax, Ins, Mgmt, Vacancy):</label>
+        <input type="number" id="brrrrMonthlyOpex" class="form-control" value="750" min="0" step="50">
+      </div>
+    </div>
+
+    <!-- RIGHT RESULTS PANEL -->
+    <div class="calculator-panel results-panel">
+      <h2 class="panel-title">BRRRR Performance &amp; Capital Velocity</h2>
+
+      <div class="highlight-metric">
+        <div class="metric-label" id="resBrrrrOutcomeLabel">Total Cash Left in the Deal</div>
+        <div class="metric-value primary-value" id="resBrrrrCashLeft">$0</div>
+        <div class="metric-sub" id="resBrrrrRoiLabel">Cash-on-Cash ROI: 0.0%</div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-title">Capital Recycled</div>
+          <div class="result-number" id="resBrrrrRecycledPct">0.0%</div>
+          <div class="result-desc" id="resBrrrrRecycledAmt">Recovered: $0</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title">New Mortgage Principal</div>
+          <div class="result-number" id="resBrrrrNewLoan">$0</div>
+          <div class="result-desc" id="resBrrrrEquityBuilt">Equity Built: $0</div>
+        </div>
+
+        <div class="result-card success-card">
+          <div class="result-title">Monthly Net Cash Flow</div>
+          <div class="result-number text-success" id="resBrrrrNetCashFlow">$0 / mo</div>
+          <div class="result-desc" id="resBrrrrDscrRatio">DSCR Ratio: 0.00x</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title">All-In Project Cost</div>
+          <div class="result-number" id="resBrrrrTotalAllIn">$0</div>
+          <div class="result-desc">Buy + Rehab + Hold + Close</div>
+        </div>
+      </div>
+
+      <div class="summary-breakdown">
+        <h3>Comprehensive 5-Phase Financial Ledger</h3>
+        <table class="summary-table">
+          <tr><td>Purchase Price:</td><td id="resSumBuyPrice">$0</td></tr>
+          <tr><td>Rehab / Renovation Costs:</td><td id="resSumRehab">$0</td></tr>
+          <tr><td>Total Holding Costs (during rehab):</td><td id="resSumHold">$0</td></tr>
+          <tr><td>Initial Closing Costs:</td><td id="resSumInitClose">$0</td></tr>
+          <tr class="highlight-row"><td><strong>Total All-In Cash Outlay:</strong></td><td><strong id="resSumTotalOutlay">$0</strong></td></tr>
+          <tr><td>After Repair Value (Appraised ARV):</td><td id="resSumArv">$0</td></tr>
+          <tr><td>New Cash-Out Loan Amount:</td><td id="resSumNewLoan">$0</td></tr>
+          <tr><td>Refinance Closing Fees:</td><td id="resSumRefiFees">$0</td></tr>
+          <tr><td>Net Cash-Out Proceeds Received:</td><td id="resSumNetProceeds">$0</td></tr>
+          <tr class="highlight-row"><td><strong id="resSumMoneyLeftLabel">Net Cash Trapped in Deal:</strong></td><td><strong id="resSumMoneyLeftVal">$0</strong></td></tr>
+          <tr><td>Monthly Rental Income:</td><td id="resSumRent">$0</td></tr>
+          <tr><td>New Monthly Mortgage Payment (P&amp;I):</td><td id="resSumNewPI">$0</td></tr>
+          <tr><td>Monthly Operating Expenses:</td><td id="resSumOpex">$0</td></tr>
+          <tr class="highlight-row"><td><strong id="resSumCashFlowLabel">Monthly Net Cash Flow:</strong></td><td class="text-success"><strong id="resSumNetMonthlyFlow">$0 / mo</strong></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT & GUIDES -->
+  <div class="calculator-content-body">
+    <div class="quick-answer-card">
+      <h2>Why the BRRRR Method is the Ultimate Real Estate Wealth Multiplier</h2>
+      <p>
+        The <strong>BRRRR Strategy (Buy, Rehab, Rent, Refinance, Repeat)</strong> revolutionizes real estate investing by eliminating the traditional constraint of finite capital. Instead of saving 20% down for every single rental property and running out of cash, the BRRRR investor creates immediate forced appreciation through smart renovations, refinances the property based on the higher <strong>After Repair Value (ARV)</strong>, pulls out all original investment capital tax-free, and re-deploys those identical dollars into the next deal.
+      </p>
+    </div>
+
+    <h2>The 5 Phases of a Successful BRRRR Transaction</h2>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Core Objective</th>
+            <th>Primary Financial Metrics</th>
+            <th>Key Execution Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Buy</strong></td>
+            <td>Purchase a distressed property at a deep discount (off-market, wholesaler, foreclosure).</td>
+            <td>Purchase Price &le; 70% of ARV &minus; Repairs</td>
+            <td>Overpaying or misjudging structural defects</td>
+          </tr>
+          <tr>
+            <td><strong>2. Rehab</strong></td>
+            <td>Renovate strategically to maximize rental appeal and appraisal comps.</td>
+            <td>On-time &amp; on-budget contractor management</td>
+            <td>Unforeseen scope creep &amp; permit delays</td>
+          </tr>
+          <tr>
+            <td><strong>3. Rent</strong></td>
+            <td>Place qualified, high-credit tenants at top-of-market market rent.</td>
+            <td>Rent-to-Price Ratio &ge; 1.0%; High DSCR</td>
+            <td>Extended vacancy during lease-up</td>
+          </tr>
+          <tr>
+            <td><strong>4. Refinance</strong></td>
+            <td>Execute a cash-out refinance at 75%&ndash;80% of new appraised ARV.</td>
+            <td>Cash-Out Proceeds &ge; 100% of All-In Cash</td>
+            <td>Low appraisal or strict seasoning rules</td>
+          </tr>
+          <tr>
+            <td><strong>5. Repeat</strong></td>
+            <td>Roll recovered capital into the next acquisition to achieve infinite compounding.</td>
+            <td>Velocity of Money (Portfolio Growth)</td>
+            <td>Over-leveraging across down cycles</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>The Math of a "Perfect BRRRR" and Infinite Return (0 Cash Left)</h2>
+    <p>Consider this step-by-step financial example illustrating a textbook $0-cash-left BRRRR execution:</p>
+    <ul>
+      <li><strong>Purchase Price:</strong> $160,000 (Purchased from a motivated seller with cash/hard money).</li>
+      <li><strong>Rehab &amp; Holding:</strong> $45,000 in renovations + $4,800 holding costs + $4,000 closing = <strong>$213,800 Total All-In Capital</strong>.</li>
+      <li><strong>After Repair Value (ARV):</strong> Appraises for <strong>$285,000</strong> following full modern kitchen and bath upgrades.</li>
+      <li><strong>75% Cash-Out Refinance:</strong> <code>$285,000 &times; 75% = $213,750 New Mortgage</code>.</li>
+      <li><strong>Capital Recycled:</strong> <code>$213,750 / $213,800 = 100% Capital Returned!</code></li>
+      <li><strong>The Result:</strong> You own a stabilized, cash-flowing asset with <strong>$71,250 in net home equity</strong>, $0 of your personal money left invested, and your full $213,800 cash back in your bank account ready for property #2!</li>
+    </ul>
+
+    <h2>DSCR &amp; Cash Flow Management Post-Refinance</h2>
+    <p>
+      Because you are increasing your loan balance to 75%–80% of ARV, the new monthly mortgage payment will be higher than on an unrenovated property. To ensure safety, calculate the <strong>Debt Service Coverage Ratio (DSCR)</strong>: <code>DSCR = Gross Monthly Rent / Total Monthly Debt Payment</code>. A DSCR of <strong>1.25x or higher</strong> confirms healthy cash flow cushion against future vacancies and maintenance.
+    </p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+    <div class="faq-item">
+      <h4>What does BRRRR stand for in real estate investing?</h4>
+      <p>BRRRR stands for Buy, Rehab, Rent, Refinance, Repeat. It is a real estate wealth-building strategy where an investor buys a distressed property below market value, renovates it to force appreciation, rents it to tenants for cash flow, refinances into a long-term mortgage to pull all initial capital out, and repeats the process with the recycled funds.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is considered a 'Perfect BRRRR' deal?</h4>
+      <p>A 'Perfect BRRRR' occurs when the cash-out refinance proceeds equal or exceed 100% of your total acquisition, rehab, and holding capital—leaving $0 of your personal money trapped in the property while generating positive monthly cash flow and generating an 'infinite' cash-on-cash return.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the standard cash-out refinance LTV on a BRRRR deal in 2026?</h4>
+      <p>Most conventional lenders (Fannie Mae/Freddie Mac) and private DSCR lenders offer cash-out refinances at 75% to 80% of the newly appraised After Repair Value (ARV) for single-family residential investment properties.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the seasoning period required before refinancing a BRRRR property?</h4>
+      <p>Under standard Fannie Mae conventional rules, a minimum seasoning period of 6 to 12 months is required to refinance based on the new appraised value rather than original purchase price. However, many private DSCR lenders allow cash-out refinancing based on full ARV with only 3 to 6 months (or even 0 days) of seasoning.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How do you calculate After Repair Value (ARV)?</h4>
+      <p>ARV is calculated by analyzing recent closed comparable sales (comps) of similar-sized, fully renovated properties within a 0.5 to 1-mile radius sold in the past 3 to 6 months.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the 70% rule in BRRRR and fix-and-flip investing?</h4>
+      <p>The 70% Rule states that your maximum purchase price should not exceed 70% of the After Repair Value (ARV) minus estimated repair costs: Maximum Purchase Price = (ARV * 0.70) - Rehab Costs. This ensures sufficient equity to pull 100% of your cash out during refinance.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What holding costs should be included during the rehab phase?</h4>
+      <p>Holding costs include monthly hard money loan interest, builder's risk insurance, property taxes, electric/water utilities, HOA fees, and lawn care incurred between property purchase and tenant occupancy.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What happens if a BRRRR property appraises lower than expected?</h4>
+      <p>If the ARV appraisal comes in lower than anticipated, you will be unable to pull out 100% of your initial cash. The remaining balance stays trapped in the property as long-term equity, slightly reducing your cash-on-cash return percentage but maintaining monthly cash flow.</p>
+    </div>
+
+    <h2>Explore Related Real Estate &amp; Mortgage Calculators</h2>
+    <ul>
+      <li><a href="/real-estate/dscr-calculator">DSCR Calculator</a> &mdash; Calculate Debt Service Coverage Ratios for BRRRR refinance qualification.</li>
+      <li><a href="/real-estate/cash-on-cash-return-calculator">Cash-on-Cash Return Calculator</a> &mdash; Model levered cash returns and equity buildup.</li>
+      <li><a href="/loan-calculators/hard-money-loan-calculator">Hard Money Loan Calculator</a> &mdash; Calculate short-term rehab bridge loan points and interest.</li>
+      <li><a href="/real-estate/rental-property-calculator">Rental Property Calculator</a> &mdash; Analyze multi-year operational returns and tenant cash flows.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+function calculateBrrrr() {
+  var buyPrice = parseFloat(document.getElementById('brrrrBuyPrice').value) || 0;
+  var rehabCost = parseFloat(document.getElementById('brrrrRehabCost').value) || 0;
+  var holdMonths = parseFloat(document.getElementById('brrrrHoldMonths').value) || 1;
+  var holdMonthly = parseFloat(document.getElementById('brrrrHoldMonthly').value) || 0;
+  var initialClosing = parseFloat(document.getElementById('brrrrInitialClosing').value) || 0;
+
+  var arv = parseFloat(document.getElementById('brrrrArv').value) || 0;
+  var refiLtv = (parseFloat(document.getElementById('brrrrRefiLtv').value) || 75) / 100;
+  var refiRate = (parseFloat(document.getElementById('brrrrRefiRate').value) || 6.85) / 100;
+  var refiClosingPct = (parseFloat(document.getElementById('brrrrRefiClosingPct').value) || 2.5) / 100;
+
+  var monthlyRent = parseFloat(document.getElementById('brrrrMonthlyRent').value) || 0;
+  var monthlyOpex = parseFloat(document.getElementById('brrrrMonthlyOpex').value) || 0;
+
+  // Phase 1: Total All-In Capital
+  var totalHolding = holdMonthly * holdMonths;
+  var totalAllIn = buyPrice + rehabCost + totalHolding + initialClosing;
+
+  // Phase 3: Refinance Proceeds
+  var newLoanAmt = arv * refiLtv;
+  var refiClosingFees = newLoanAmt * refiClosingPct;
+  var netRefiProceeds = newLoanAmt - refiClosingFees;
+
+  // Cash Left & Capital Recycled
+  var cashLeftInDeal = totalAllIn - netRefiProceeds;
+  var recycledPct = totalAllIn > 0 ? (netRefiProceeds / totalAllIn) * 100 : 0;
+  var equityBuilt = arv - newLoanAmt;
+
+  // Long-Term Monthly Payment (P&I)
+  var r = refiRate / 12;
+  var n = 360; // 30-year fixed
+  var newMonthlyPI = 0;
+  if (r > 0 && newLoanAmt > 0) {
+    newMonthlyPI = newLoanAmt * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  }
+
+  var netMonthlyCashFlow = monthlyRent - newMonthlyPI - monthlyOpex;
+  var annualCashFlow = netMonthlyCashFlow * 12;
+
+  // Cash on Cash ROI
+  var cocRoi = 0;
+  var isInfinite = false;
+  if (cashLeftInDeal <= 0) {
+    isInfinite = true;
+  } else if (cashLeftInDeal > 0) {
+    cocRoi = (annualCashFlow / cashLeftInDeal) * 100;
+  }
+
+  var dscr = (newMonthlyPI + monthlyOpex) > 0 ? (monthlyRent / (newMonthlyPI + monthlyOpex)) : 0;
+
+  // Update UI
+  if (isInfinite) {
+    document.getElementById('resBrrrrOutcomeLabel').textContent = 'Perfect BRRRR Achieved! (100%+ Capital Recovered)';
+    document.getElementById('resBrrrrCashLeft').textContent = '$0 (+$' + Math.round(Math.abs(cashLeftInDeal)).toLocaleString() + ' Cash Pulled Out)';
+    document.getElementById('resBrrrrCashLeft').style.color = '#34d399';
+    document.getElementById('resBrrrrRoiLabel').textContent = 'Cash-on-Cash Return: Infinite \u221E';
+    document.getElementById('resSumMoneyLeftLabel').textContent = 'Surplus Cash Pulled Out of Deal:';
+    document.getElementById('resSumMoneyLeftVal').textContent = '+$' + Math.round(Math.abs(cashLeftInDeal)).toLocaleString() + ' (Surplus)';
+    document.getElementById('resSumMoneyLeftVal').style.color = '#34d399';
+  } else {
+    document.getElementById('resBrrrrOutcomeLabel').textContent = 'Total Cash Left in the Deal';
+    document.getElementById('resBrrrrCashLeft').textContent = '$' + Math.round(cashLeftInDeal).toLocaleString();
+    document.getElementById('resBrrrrCashLeft').style.color = 'inherit';
+    document.getElementById('resBrrrrRoiLabel').textContent = 'Cash-on-Cash Return: ' + cocRoi.toFixed(1) + '% / yr';
+    document.getElementById('resSumMoneyLeftLabel').textContent = 'Net Cash Trapped in Deal:';
+    document.getElementById('resSumMoneyLeftVal').textContent = '$' + Math.round(cashLeftInDeal).toLocaleString();
+    document.getElementById('resSumMoneyLeftVal').style.color = 'inherit';
+  }
+
+  document.getElementById('resBrrrrRecycledPct').textContent = recycledPct.toFixed(1) + '%';
+  document.getElementById('resBrrrrRecycledAmt').textContent = '$' + Math.round(netRefiProceeds).toLocaleString() + ' Returned';
+  document.getElementById('resBrrrrNewLoan').textContent = '$' + Math.round(newLoanAmt).toLocaleString();
+  document.getElementById('resBrrrrEquityBuilt').textContent = 'Equity: $' + Math.round(equityBuilt).toLocaleString();
+  
+  if (netMonthlyCashFlow >= 0) {
+    document.getElementById('resBrrrrNetCashFlow').textContent = '+$' + Math.round(netMonthlyCashFlow).toLocaleString() + ' / mo';
+    document.getElementById('resBrrrrNetCashFlow').style.color = '#34d399';
+    document.getElementById('resSumNetMonthlyFlow').textContent = '+$' + Math.round(netMonthlyCashFlow).toLocaleString() + ' / mo';
+    document.getElementById('resSumNetMonthlyFlow').style.color = '#34d399';
+  } else {
+    document.getElementById('resBrrrrNetCashFlow').textContent = '-$' + Math.round(Math.abs(netMonthlyCashFlow)).toLocaleString() + ' / mo';
+    document.getElementById('resBrrrrNetCashFlow').style.color = '#fca5a5';
+    document.getElementById('resSumNetMonthlyFlow').textContent = '-$' + Math.round(Math.abs(netMonthlyCashFlow)).toLocaleString() + ' / mo';
+    document.getElementById('resSumNetMonthlyFlow').style.color = '#fca5a5';
+  }
+
+  document.getElementById('resBrrrrDscrRatio').textContent = 'DSCR: ' + dscr.toFixed(2) + 'x Coverage';
+  document.getElementById('resBrrrrTotalAllIn').textContent = '$' + Math.round(totalAllIn).toLocaleString();
+
+  document.getElementById('resSumBuyPrice').textContent = '$' + Math.round(buyPrice).toLocaleString();
+  document.getElementById('resSumRehab').textContent = '$' + Math.round(rehabCost).toLocaleString();
+  document.getElementById('resSumHold').textContent = '$' + Math.round(totalHolding).toLocaleString() + ' (' + holdMonths + ' mo)';
+  document.getElementById('resSumInitClose').textContent = '$' + Math.round(initialClosing).toLocaleString();
+  document.getElementById('resSumTotalOutlay').textContent = '$' + Math.round(totalAllIn).toLocaleString();
+  document.getElementById('resSumArv').textContent = '$' + Math.round(arv).toLocaleString();
+  document.getElementById('resSumNewLoan').textContent = '$' + Math.round(newLoanAmt).toLocaleString() + ' (' + (refiLtv * 100) + '% LTV)';
+  document.getElementById('resSumRefiFees').textContent = '$' + Math.round(refiClosingFees).toLocaleString();
+  document.getElementById('resSumNetProceeds').textContent = '$' + Math.round(netRefiProceeds).toLocaleString();
+  document.getElementById('resSumRent').textContent = '$' + Math.round(monthlyRent).toLocaleString() + ' / mo';
+  document.getElementById('resSumNewPI').textContent = '$' + Math.round(newMonthlyPI).toLocaleString() + ' / mo';
+  document.getElementById('resSumOpex').textContent = '$' + Math.round(monthlyOpex).toLocaleString() + ' / mo';
+}
+
+document.querySelectorAll('#brrrrBuyPrice, #brrrrRehabCost, #brrrrHoldMonths, #brrrrHoldMonthly, #brrrrInitialClosing, #brrrrArv, #brrrrRefiLtv, #brrrrRefiRate, #brrrrRefiClosingPct, #brrrrMonthlyRent, #brrrrMonthlyOpex').forEach(function(el) {
+  el.addEventListener('input', calculateBrrrr);
+  el.addEventListener('change', calculateBrrrr);
+});
+
+calculateBrrrr();
+</script>
+
+<?php require_once '../includes/footer.php'; ?>

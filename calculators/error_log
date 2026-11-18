@@ -1,0 +1,21 @@
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $pageTitle in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 7
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $metaDescription in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 8
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $metaKeywords in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 9
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $pageTitle in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 12
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $metaDescription in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 13
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $pageUrl in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 15
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $ogImage in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 16
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $siteName in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 18
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $pageTitle in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 22
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $metaDescription in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 23
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $ogImage in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 24
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $twitterHandle in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 25
+[06-Nov-2025 21:57:15 UTC] PHP Warning:  Undefined variable $pageUrl in /home1/digitaln/americacalculator.com/calculators/voltage-drop.php on line 31
+[07-May-2026 10:57:55 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home1/digitaln/americacalculator.com/calculators/bottleneck.php:12
+Stack trace:
+#0 {main}
+  thrown in /home1/digitaln/americacalculator.com/calculators/bottleneck.php on line 12
+[16-May-2026 10:43:22 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home1/digitaln/americacalculator.com/calculators/bottleneck.php:12
+Stack trace:
+#0 {main}
+  thrown in /home1/digitaln/americacalculator.com/calculators/bottleneck.php on line 12

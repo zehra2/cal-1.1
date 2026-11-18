@@ -1,0 +1,309 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "How Much House Can I Afford with a \$100k Salary in $currentYear? | AmericaCalculator";
+$metaDescription = "Find out exactly how much house you can afford with a \$100,000 salary in $currentYear. Includes realistic calculations, DTI limits, down payment scenarios, and monthly payment examples.";
+$metaKeywords    = "how much house can i afford with 100k salary, 100k salary mortgage, how much house can i buy with 100k, 100k income home price 2026, 28 36 rule 100k salary";
+
+$schemaData = [
+  '@context' => 'https://schema.org',
+  '@graph'   => [
+    [
+      '@type' => 'Article',
+      'headline' => "How Much House Can I Afford with a \$100k Salary in $currentYear?",
+      'description' => "Complete breakdown of home affordability on a \$100,000 annual income in $currentYear, including DTI thresholds, down payments, and monthly PITI payments.",
+      'url' => 'https://americacalculator.com/blog/how-much-house-can-i-afford-with-100k-salary',
+      'datePublished' => '2026-10-02',
+      'dateModified'  => '2026-10-02',
+      'author' => ['@type' => 'Person', 'name' => 'Sarah Mitchell', 'jobTitle' => 'Real Estate Investment Analyst'],
+      'publisher' => ['@type' => 'Organization', 'name' => 'AmericaCalculator.com', 'url' => 'https://americacalculator.com/'],
+      'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => 'https://americacalculator.com/blog/how-much-house-can-i-afford-with-100k-salary'],
+    ],
+    [
+      '@type' => 'BreadcrumbList',
+      'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => 'https://americacalculator.com/blog/'],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => "How Much House on \$100k Salary", 'item' => 'https://americacalculator.com/blog/how-much-house-can-i-afford-with-100k-salary'],
+      ]
+    ],
+    [
+      '@type' => 'FAQPage',
+      'mainEntity' => [
+        [
+          '@type' => 'Question',
+          'name' => 'Can I afford a $500,000 house on a $100k salary?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'Buying a $500,000 house on a $100,000 salary is generally not recommended and difficult to qualify for unless you have a substantial down payment (at least 25% to 30%, or $125,000+) and zero existing non-housing debt. At 6.5% interest with 10% down, a $500,000 purchase creates a monthly PITI payment exceeding $3,500, pushing your front-end DTI to 42%, which exceeds conventional guidelines.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'Does a $100k salary include bonuses or commission?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'Mortgage underwriters primarily evaluate your base salary. Overtime, commissions, and bonuses can be counted toward your qualifying income only if you have a documented two-year consecutive history with the same employer or within the same industry.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'How much should I spend on a house if I make $100,000 a year?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'Financial planners recommend aiming for a home priced between $320,000 and $380,000. This ensures your monthly housing payment remains around 25% to 28% of your gross pay ($2,000 to $2,333/month), leaving adequate buffer for retirement investing, emergency savings, and lifestyle spending.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'How much down payment do I need on a $100k salary?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'You do not need 20% down. First-time buyers on a $100k income can use Conventional 97 loans (3% down, or $10,500 on a $350k home) or FHA loans (3.5% down, or $12,250). However, putting down 10% to 20% significantly reduces your monthly payment and eliminates or lowers Private Mortgage Insurance (PMI).'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'How do car loans and student debts affect my purchasing power?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'Every $100 in monthly recurring debt reduces your maximum borrowing limit by approximately $14,000 to $16,000. If you make $100k and pay $500/month for a car payment plus $300/month in student loans, your maximum purchase price drops by nearly $115,000 compared to a debt-free buyer.'
+          ]
+        ]
+      ]
+    ]
+  ]
+];
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+<style>
+*{box-sizing:border-box;}body{background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;margin:0;}
+a{color:#0369a1;text-decoration:none;}a:hover{text-decoration:underline;}
+.blog-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.blog-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}
+.blog-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.blog-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}
+.blog-meta span{font-size:.82rem;color:#64748b;}
+.blog-badge{background:#dbeafe;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.blog-cat{background:#f0fdf4;color:#166534;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bbf7d0;}
+.blog-intro{font-size:1.03rem;color:#334155;line-height:1.75;margin:0;border-left:4px solid #0369a1;padding:.9rem 1rem .9rem 1.25rem;background:#f0f9ff;border-radius:0 8px 8px 0;}
+.snippet-box{background:linear-gradient(135deg,#0369a1,#0284c7);border-radius:12px;padding:1.5rem;margin:1.5rem 0;color:#fff;}
+.snippet-box .sq{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.8);margin-bottom:.5rem;}
+.snippet-box .sa{font-size:1.02rem;font-weight:600;line-height:1.65;margin:0;}
+.blog-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.blog-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #e0f2fe;}
+.blog-section h3{font-size:1.05rem;color:#1e293b;margin:1.35rem 0 .55rem;font-weight:700;}
+.blog-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}
+.blog-section p:last-child{margin-bottom:0;}
+.blog-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;}
+.blog-table th{background:#0369a1;color:#fff;padding:10px 14px;text-align:left;}
+.blog-table td{padding:9px 14px;border-bottom:1px solid #e2e8f0;color:#334155;}
+.blog-table tr:nth-child(even) td{background:#f8fafc;}
+.blog-cta{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:13px;padding:1.75rem;margin:2rem 0;text-align:center;}
+.blog-cta h3{color:#fff;font-size:1.2rem;font-weight:800;margin:0 0 .5rem;}
+.blog-cta p{color:#94a3b8;font-size:.92rem;margin:0 0 1.25rem;line-height:1.6;}
+.blog-cta a{display:inline-block;background:#0284c7;color:#fff;padding:11px 24px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;transition:background .2s;}
+.blog-cta a:hover{background:#0369a1;}
+.blog-faq-item{border-bottom:1px solid #f1f5f9;padding:.85rem 0;}
+.blog-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.blog-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.blog-faq-q::after{content:'+';color:#0369a1;font-size:1.2rem;flex-shrink:0;}
+.blog-faq-item.open .blog-faq-q::after{content:'−';}
+.blog-faq-a{display:none;color:#475569;font-size:.91rem;line-height:1.7;padding-top:.5rem;}
+.blog-faq-item.open .blog-faq-a{display:block;}
+.blog-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.25rem;}
+.blog-card-box{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;}
+.blog-card-box-head{background:#0369a1;color:#fff;padding:.85rem 1.25rem;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.blog-card-box ul{list-style:none;padding:.5rem 0;margin:0;}
+.blog-card-box ul li a{display:block;padding:.5rem 1.25rem;font-size:.84rem;color:#475569;text-decoration:none;transition:all .15s;}
+.blog-card-box ul li a:hover{color:#0369a1;background:#f0f9ff;padding-left:1.45rem;}
+@media(max-width:900px){.blog-wrap{grid-template-columns:1fr;}.blog-sidebar{position:static;}}
+</style>
+
+<main id="main-content">
+<div class="blog-wrap">
+<article>
+  <div class="blog-bc"><a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; How Much House on $100k Salary</div>
+
+  <div class="blog-header">
+    <h1>How Much House Can I Afford with a $100k Salary in <?php echo $currentYear; ?>?</h1>
+    <div class="blog-meta">
+      <span>By <strong>Sarah Mitchell</strong>, Real Estate Analyst</span>
+      <span class="blog-badge">✓ Audited for <?php echo $currentYear; ?> Guidelines</span>
+      <span class="blog-cat">🏠 Home Affordability</span>
+    </div>
+    <p class="blog-intro">
+      With a <strong>$100,000 annual household salary</strong>, most homebuyers in the United States can comfortably purchase a home priced between <strong>$320,000 and $420,000</strong> in <?php echo $currentYear; ?>. Your exact borrowing ceiling depends on your monthly debt commitments, available down payment, local property tax rates, and prevailing mortgage interest rates.
+    </p>
+  </div>
+
+  <div class="snippet-box">
+    <div class="sq">Quick Buying Power Summary — $100,000 Salary</div>
+    <p class="sa">
+      &bull; <strong>Gross Monthly Income:</strong> $8,333 / month<br>
+      &bull; <strong>Conservative Housing Target (28% Front-End):</strong> $2,333 / month<br>
+      &bull; <strong>Maximum Debt Ceiling (36%–43% Back-End):</strong> $3,000 – $3,583 / month<br>
+      &bull; <strong>Target Purchase Price Range:</strong> $320,000 – $420,000
+    </p>
+  </div>
+
+  <div class="blog-section">
+    <h2>How Mortgage Underwriters Evaluate a $100k Salary</h2>
+    <p>
+      Earning a six-figure salary of $100,000 places you well above the US median household income, providing solid qualifications for conventional, FHA, and VA financing. However, mortgage lenders do not write pre-approval letters based on top-line salary alone. They evaluate your financial profile through two mandatory debt-to-income (DTI) metrics:
+    </p>
+    
+    <h3>1. Front-End DTI (The 28% Housing Rule)</h3>
+    <p>
+      The front-end ratio assesses only your prospective housing costs, known as <strong>PITI</strong> (Principal, Interest, Property Taxes, Homeowners Hazard Insurance, plus any mandatory HOA dues and PMI). Lenders generally prefer your total monthly housing cost to stay below <strong>28% of gross income</strong>:
+    </p>
+    <p style="background:#f1f5f9;padding:12px;border-left:4px solid #0369a1;font-family:monospace;font-weight:700;">
+      $100,000 &divide; 12 months = $8,333 / month<br>
+      $8,333 &times; 28% = $2,333 Maximum Monthly Housing Budget
+    </p>
+
+    <h3>2. Back-End DTI (The 36% to 43% Total Debt Rule)</h3>
+    <p>
+      The back-end ratio combines your prospective housing payment with all recurring non-mortgage debt obligations (minimum monthly credit card payments, student loans, auto financing, and personal loans). Conventional Qualified Mortgages (QM) generally cap back-end DTI at <strong>36% to 43%</strong>:
+    </p>
+    <p style="background:#f1f5f9;padding:12px;border-left:4px solid #0369a1;font-family:monospace;font-weight:700;">
+      Conservative (36%): $8,333 &times; 36% = $3,000 total monthly debts<br>
+      Conventional Limit (43%): $8,333 &times; 43% = $3,583 total monthly debts
+    </p>
+    <p>
+      If your non-housing debts total $600/month, your maximum allowable housing payment under a 43% limit becomes <code>$3,583 - $600 = $2,983</code>.
+    </p>
+  </div>
+
+  <div class="blog-section">
+    <h2>Realistic Home Price Scenarios on a $100k Salary (<?php echo $currentYear; ?>)</h2>
+    <p>
+      The table below outlines realistic purchase prices for a buyer making $100,000 per year, assuming standard property tax (1.2%) and homeowners insurance ($1,500/year):
+    </p>
+    <table class="blog-table">
+      <thead>
+        <tr>
+          <th>Down Payment</th>
+          <th>Interest Rate</th>
+          <th>Estimated Home Price</th>
+          <th>Estimated Loan Amount</th>
+          <th>Total Monthly PITI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>20% ($80,000–$84,000)</strong></td>
+          <td>6.50%</td>
+          <td>$400,000 – $420,000</td>
+          <td>$320,000 – $336,000</td>
+          <td>$2,220 – $2,340</td>
+        </tr>
+        <tr>
+          <td><strong>10% ($36,000–$38,000)</strong></td>
+          <td>6.50%</td>
+          <td>$360,000 – $380,000</td>
+          <td>$324,000 – $342,000</td>
+          <td>$2,280 – $2,420*</td>
+        </tr>
+        <tr>
+          <td><strong>5% ($16,500–$17,500)</strong></td>
+          <td>6.75%</td>
+          <td>$330,000 – $350,000</td>
+          <td>$313,500 – $332,500</td>
+          <td>$2,250 – $2,390*</td>
+        </tr>
+        <tr>
+          <td><strong>FHA 3.5% ($12,000–$13,000)</strong></td>
+          <td>6.50%</td>
+          <td>$340,000 – $370,000</td>
+          <td>$328,100 – $357,050</td>
+          <td>$2,290 – $2,460**</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:.82rem;color:#64748b;">
+      *Includes estimated Private Mortgage Insurance (PMI) of 0.6%–0.8% annually.<br>
+      **Includes FHA annual Mortgage Insurance Premium (MIP) of 0.55%.
+    </p>
+  </div>
+
+  <div class="blog-section">
+    <h2>The Impact of Existing Debts on Your Home Buying Power</h2>
+    <p>
+      Existing debt is the #1 factor that shrinks purchasing power on a $100,000 salary. Underwriters deduct monthly debt obligations dollar-for-dollar from your allowable housing payment:
+    </p>
+    <ul>
+      <li><strong>Buyer A (Zero Debt):</strong> Can allocate the full $3,000/mo to PITI, purchasing up to <strong>$430,000</strong>.</li>
+      <li><strong>Buyer B ($500/mo Car Payment):</strong> PITI budget drops to $2,500/mo, reducing purchasing power to <strong>$355,000</strong> (a loss of $75,000 in buying power).</li>
+      <li><strong>Buyer C ($500 Car + $400 Student Loans + $150 Credit Cards):</strong> PITI budget drops to $1,950/mo, capping purchase price at <strong>$280,000</strong> (a loss of $150,000 in buying power).</li>
+    </ul>
+    <p>
+      Paying off high-interest credit cards or refinancing auto loans prior to mortgage pre-approval is often the fastest way to expand your price range.
+    </p>
+  </div>
+
+  <div class="blog-cta">
+    <h3>Calculate Your Exact Purchasing Power</h3>
+    <p>Input your actual income, debts, down payment, and interest rate to see your customized purchasing ceiling.</p>
+    <a href="/real-estate/home-affordability-calculator">Open Home Affordability Calculator &rarr;</a>
+  </div>
+
+  <div class="blog-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="blog-faq-list">
+      <div class="blog-faq-item open">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">Can I afford a $500,000 house on a $100k salary?</div>
+        <div class="blog-faq-a">Buying a $500,000 house on a $100,000 salary is generally not recommended and difficult to qualify for unless you have a substantial down payment (at least 25% to 30%, or $125,000+) and zero existing non-housing debt. At 6.5% interest with 10% down, a $500,000 purchase creates a monthly PITI payment exceeding $3,500, pushing your front-end DTI to 42%, which exceeds conventional guidelines.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">Does a $100k salary include bonuses or commission?</div>
+        <div class="blog-faq-a">Mortgage underwriters primarily evaluate your base salary. Overtime, commissions, and bonuses can be counted toward your qualifying income only if you have a documented two-year consecutive history with the same employer or within the same industry.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">How much should I spend on a house if I make $100,000 a year?</div>
+        <div class="blog-faq-a">Financial planners recommend aiming for a home priced between $320,000 and $380,000. This ensures your monthly housing payment remains around 25% to 28% of your gross pay ($2,000 to $2,333/month), leaving adequate buffer for retirement investing, emergency savings, and lifestyle spending.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">How much down payment do I need on a $100k salary?</div>
+        <div class="blog-faq-a">You do not need 20% down. First-time buyers on a $100k income can use Conventional 97 loans (3% down, or $10,500 on a $350k home) or FHA loans (3.5% down, or $12,250). However, putting down 10% to 20% significantly reduces your monthly payment and eliminates or lowers Private Mortgage Insurance (PMI).</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">How do car loans and student debts affect my purchasing power?</div>
+        <div class="blog-faq-a">Every $100 in monthly recurring debt reduces your maximum borrowing limit by approximately $14,000 to $16,000. If you make $100k and pay $500/month for a car payment plus $300/month in student loans, your maximum purchase price drops by nearly $115,000 compared to a debt-free buyer.</div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- SIDEBAR -->
+<aside class="blog-sidebar">
+  <div class="blog-card-box">
+    <div class="blog-card-box-head">Interactive Tools</div>
+    <ul>
+      <li><a href="/real-estate/home-affordability-calculator">🏠 Home Affordability Tool</a></li>
+      <li><a href="/real-estate/mortgage-calculator">🏦 Fixed-Rate Mortgage</a></li>
+      <li><a href="/real-estate/down-payment-calculator">⬇️ Down Payment Calculator</a></li>
+      <li><a href="/real-estate/closing-cost-calculator">🧾 Closing Cost Calculator</a></li>
+      <li><a href="/loan-calculators/debt-to-income-calculator">⚖️ DTI Ratio Calculator</a></li>
+    </ul>
+  </div>
+
+  <div class="blog-card-box">
+    <div class="blog-card-box-head">Related Guides</div>
+    <ul>
+      <li><a href="/blog/how-much-house-can-i-afford-with-80k-salary">House on $80k Salary</a></li>
+      <li><a href="/blog/how-much-down-payment-for-300k-house">Down Payment on $300k House</a></li>
+      <li><a href="/blog/how-much-are-closing-costs-on-a-300k-house">Closing Costs on $300k House</a></li>
+      <li><a href="/blog/how-to-calculate-closing-costs">Complete Closing Cost Guide</a></li>
+    </ul>
+  </div>
+</aside>
+</div>
+</main>
+
+<script>
+function toggleFaq(el){
+  el.parentElement.classList.toggle('open');
+}
+</script>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -1,0 +1,301 @@
+
+# ============================================================
+# CUSTOM 404 ERROR HANDLER
+# ============================================================
+ErrorDocument 404 /404.php
+RewriteEngine On
+RewriteBase /
+
+# ============================================================
+# FORCE HTTPS
+# ============================================================
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# ============================================================
+# FORCE NON-WWW
+# ============================================================
+RewriteCond %{HTTP_HOST} ^www\.americacalculator\.com [NC]
+RewriteRule ^ https://americacalculator.com%{REQUEST_URI} [R=301,L]
+
+# ============================================================
+# 301 REDIRECTS — Tier 1 deleted pages (off-brand content)
+# Redirect to homepage — preserves any link equity
+# ============================================================
+
+# Romanian / non-US academic (top traffic but wrong audience)
+RewriteRule ^calculators/calculator-bacalaureat\.php$ / [R=301,L]
+RewriteRule ^calculators/racine-carree\.php$          / [R=301,L]
+
+# Gaming calculators (irrelevant to finance/US niche)
+RewriteRule ^calculators/blox-fruits\.php$            / [R=301,L]
+RewriteRule ^calculators/palworld-breeding\.php$      / [R=301,L]
+RewriteRule ^calculators/grow-a-garden\.php$          / [R=301,L]
+RewriteRule ^calculators/terminus\.php$               / [R=301,L]
+
+# Astrology / spiritual (zero relevance)
+RewriteRule ^calculators/saturn-return\.php$          / [R=301,L]
+
+# Health / medical on a finance site (niche confusion)
+RewriteRule ^calculators/rvu\.php$                    / [R=301,L]
+RewriteRule ^calculators/corrected-calcium\.php$      / [R=301,L]
+RewriteRule ^calculators/ffmi\.php$                   / [R=301,L]
+RewriteRule ^calculators/asq\.php$                    / [R=301,L]
+
+# Tech / PC (unrelated niche — bottleneck was Tier 1 candidate)
+RewriteRule ^calculators/bottleneck\.php$             /technology/bottleneck-calculator [R=301,L]
+RewriteRule ^technology/bottleneck-calculator/?$      technology/bottleneck-calculator.php [L]
+
+# Tier 2 random utilities (no purpose on a finance site)
+RewriteRule ^calculators/random-country\.php$         / [R=301,L]
+RewriteRule ^calculators/map\.php$                    / [R=301,L]
+
+# Dave Ramsey — trademark risk: redirect to renamed calculator
+RewriteRule ^calculators/dave-ramsey-investment\.php$ /calculators/investment-growth-calculator [R=301,L]
+RewriteRule ^calculators/investment-growth-calculator/?$ calculators/investment-growth-calculator.php [L]
+RewriteRule ^calculators/retirement-savings/?$        calculators/retirement-savings.php [L]
+
+# ============================================================
+# NOINDEX — Tier 2 pages (academic math, dilutes authority)
+# Keep files alive but tell Google not to index them
+# ============================================================
+<FilesMatch "^(differential-equation|partial-derivative|inverse-matrix|rref|determinant|ap-lang-score|act-score|cumulative-gpa|mixed-fraction|calculator-bacalaureat)\.php$">
+  <IfModule mod_headers.c>
+    Header set X-Robots-Tag "noindex, nofollow"
+  </IfModule>
+</FilesMatch>
+
+# ============================================================
+# CLEAN URLs — static pages
+# ============================================================
+RewriteRule ^about/?$                  about.php [L]
+RewriteRule ^contact/?$                contact.php [L]
+RewriteRule ^privacy-policy/?$         privacy-policy.php [L]
+RewriteRule ^terms-and-conditions/?$   terms-and-conditions.php [L]
+
+# ── Blog articles ──
+RewriteRule ^blog/?$                                    blog/index.php [L]
+RewriteRule ^blog/([a-z0-9-]+)/?$                       blog/$1.php [L]# ── Downloads Hub & Templates ──
+RewriteRule ^downloads/?$ downloads/index.php [L]
+RewriteRule ^downloads/roi-calculator-excel-template-2026-usa\.xlsx/?$ downloads/roi-calculator-excel-template-2026-usa.php [L]
+
+# ============================================================
+# CLEAN URLs — Business ROI cluster
+# ============================================================
+RewriteRule ^business/roi-calculator/?$                 business/roi-calculator.php [L]
+RewriteRule ^business/real-estate-roi-calculator/?$     business/real-estate-roi-calculator.php [L]
+RewriteRule ^business/marketing-roi-calculator/?$       business/marketing-roi-calculator.php [L]
+RewriteRule ^business/solar-roi-calculator/?$           business/solar-roi-calculator.php [L]
+RewriteRule ^business/amazon-roi-calculator/?$          business/amazon-roi-calculator.php [L]
+RewriteRule ^business/automation-roi-calculator/?$      business/automation-roi-calculator.php [L]
+RewriteRule ^business/rental-property-roi-calculator/?$ business/rental-property-roi-calculator.php [L]
+RewriteRule ^business/project-roi-calculator/?$         business/project-roi-calculator.php [L]
+
+# ============================================================
+# CLEAN URLs — existing cluster hubs (slug → slug.php)
+# ============================================================
+
+# Loan calculators
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^loan-calculators/([a-z0-9-]+)/?$   loan-calculators/$1.php [L]
+RewriteRule ^loan-calculators/?$               loan-calculators/index.php [L]
+
+# Real estate
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^real-estate/([a-z0-9-]+)/?$       real-estate/$1.php [L]
+RewriteRule ^real-estate/?$                    real-estate/index.php [L]
+
+# Business
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^business/([a-z0-9-]+)/?$          business/$1.php [L]
+RewriteRule ^business/?$                       business/index.php [L]
+
+# Construction
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^construction/([a-z0-9-]+)/?$      construction/$1.php [L]
+RewriteRule ^construction/?$                   construction/index.php [L]
+
+# Technology
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^technology/([a-z0-9-]+)/?$        technology/$1.php [L]
+RewriteRule ^technology/?$                     technology/index.php [L]
+
+# Ohio payroll
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ohio/([a-z0-9-]+)/?$              ohio/$1.php [L]
+RewriteRule ^ohio/?$                           ohio/index.php [L]
+
+# ============================================================
+# 301 REDIRECTS — old sitemap URLs preserved
+# ============================================================
+RewriteRule ^calculators/ohio-paycheck\.php$         ohio/paycheck-calculator [R=301,L]
+RewriteRule ^calculators/sba-loan\.php$              loan-calculators/sba-loan-calculator [R=301,L]
+RewriteRule ^calculators/rv-loan\.php$               loan-calculators/rv-loan-calculator [R=301,L]
+RewriteRule ^calculators/land-loan\.php$             loan-calculators/land-loan-calculator [R=301,L]
+RewriteRule ^calculators/interest-only-loan\.php$    loan-calculators/interest-only-loan-calculator [R=301,L]
+RewriteRule ^calculators/cap-rate\.php$              real-estate/cap-rate-calculator [R=301,L]
+RewriteRule ^calculators/markup\.php$                business/markup-calculator [R=301,L]
+RewriteRule ^calculators/freelance-rate\.php$        business/freelance-rate-calculator [R=301,L]
+RewriteRule ^calculators/concrete\.php$              construction/concrete-calculator [R=301,L]
+RewriteRule ^calculators/home-addition-cost\.php$    construction/home-addition-cost-calculator [R=301,L]
+RewriteRule ^calculators/voltage-drop\.php$          technology/voltage-drop-calculator [R=301,L]
+RewriteRule ^calculators/bottleneck\.php$            technology/bottleneck-calculator [R=301,L]
+
+# ============================================================
+# 2) 301 REDIRECTS — every old /calculators/*.php URL that
+#    was in the live sitemap. Preserves impressions & clicks.
+#    Must come BEFORE clean-URL rewrites.
+# ============================================================
+
+# --- Finance cluster ---
+RewriteRule ^calculators/ohio-paycheck\.php$         ohio/paycheck-calculator [R=301,L]
+RewriteRule ^calculators/rv-loan\.php$               loan-calculators/rv-loan-calculator [R=301,L]
+RewriteRule ^calculators/interest-only-loan\.php$    loan-calculators/interest-only-loan-calculator [R=301,L]
+RewriteRule ^calculators/cap-rate\.php$              real-estate/cap-rate-calculator [R=301,L]
+RewriteRule ^calculators/markup\.php$                business/markup-calculator [R=301,L]
+RewriteRule ^calculators/freelance-rate\.php$        business/freelance-rate-calculator [R=301,L]
+RewriteRule ^calculators/cd-interest\.php$           calculators/cd-interest.php [L]
+# dental-implant-cost-calculator → 301 to / (handled in deleted pages block above)
+# Dave Ramsey → renamed (trademark cleanup — handled above with 301)
+
+# --- Construction cluster ---
+RewriteRule ^calculators/concrete\.php$              construction/concrete-calculator [R=301,L]
+RewriteRule ^calculators/home-addition-cost\.php$    construction/home-addition-cost-calculator [R=301,L]
+RewriteRule ^calculators/cubic-yard\.php$            calculators/cubic-yard.php [L]
+RewriteRule ^calculators/board-foot\.php$            calculators/board-foot.php [L]
+RewriteRule ^calculators/stair\.php$                 calculators/stair.php [L]
+RewriteRule ^calculators/asphalt\.php$               calculators/asphalt.php [L]
+
+# --- Technology cluster ---
+RewriteRule ^calculators/voltage-drop\.php$          technology/voltage-drop-calculator [R=301,L]
+# bottleneck → handled above
+
+# ============================================================
+# 301 REDIRECTS — Deleted pages (off-brand / duplicate content)
+# ============================================================
+RewriteRule ^calculators/calculadora-de-horas\.php$    / [R=301,L]
+RewriteRule ^calculators/calculo-da-hora\.php$         / [R=301,L]
+RewriteRule ^calculators/overtime\.php$                /ohio/overtime-calculator [R=301,L]
+RewriteRule ^business/pain-and-suffering-calculator/?$ / [R=301,L]
+RewriteRule ^calculators/dental-implant-cost-calculator(\.php)?/?$ / [R=301,L]
+
+# ── Pass-through rules removed for deleted pages above ──
+RewriteRule ^calculators/freight-class\.php$         calculators/freight-class.php [L]
+
+# --- Math (flat — noindexed via FilesMatch above, kept live) ---
+RewriteRule ^calculators/rref\.php$                  calculators/rref.php [L]
+RewriteRule ^calculators/determinant\.php$           calculators/determinant.php [L]
+RewriteRule ^calculators/inverse-matrix\.php$        calculators/inverse-matrix.php [L]
+RewriteRule ^calculators/mixed-fraction\.php$        calculators/mixed-fraction.php [L]
+RewriteRule ^calculators/partial-derivative\.php$    calculators/partial-derivative.php [L]
+RewriteRule ^calculators/differential-equation\.php$ calculators/differential-equation.php [L]
+
+# --- Academic (flat — noindexed, kept live) ---
+RewriteRule ^calculators/cumulative-gpa\.php$        calculators/cumulative-gpa.php [L]
+RewriteRule ^calculators/act-score\.php$             calculators/act-score.php [L]
+RewriteRule ^calculators/ap-lang-score\.php$         calculators/ap-lang-score.php [L]
+# calculator-bacalaureat → 301 to / handled above
+
+# --- Health / Gaming / Other → all 301 to / handled above ---
+
+# ============================================================
+# 3) CLEAN URL REWRITES — /cluster/slug → /cluster/slug.php
+#    Internal rewrite only (no redirect, no address bar change)
+# ============================================================
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^loan-calculators/([a-z0-9-]+)/?$   loan-calculators/$1.php [L,END]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^real-estate/([a-z0-9-]+)/?$        real-estate/$1.php [L,END]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^business/([a-z0-9-]+)/?$           business/$1.php [L,END]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^construction/([a-z0-9-]+)/?$       construction/$1.php [L,END]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^technology/([a-z0-9-]+)/?$         technology/$1.php [L,END]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ohio/([a-z0-9-]+)/?$               ohio/$1.php [L,END]
+
+# ============================================================
+# 4) CLUSTER HUB PAGES  /cluster/ → /cluster/index.php
+# ============================================================
+RewriteRule ^loan-calculators/?$   loan-calculators/index.php [L,END]
+RewriteRule ^real-estate/?$        real-estate/index.php [L,END]
+RewriteRule ^business/?$           business/index.php [L,END]
+RewriteRule ^construction/?$       construction/index.php [L,END]
+RewriteRule ^technology/?$         technology/index.php [L,END]
+RewriteRule ^ohio/?$               ohio/index.php [L,END]
+
+# ============================================================
+# PERFORMANCE: GZIP COMPRESSION (mod_deflate)
+# ============================================================
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ============================================================
+# PERFORMANCE: BROWSER CACHING (mod_expires & Cache-Control)
+# ============================================================
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+  
+  # HTML - dynamic, do not cache indefinitely
+  ExpiresByType text/html "access plus 0 seconds"
+  
+  # CSS and JavaScript
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  
+  # Media and Images (1 year)
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  
+  # Fonts (1 year)
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+</IfModule>
+
+# ============================================================
+# SECURITY HEADERS
+# ============================================================
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

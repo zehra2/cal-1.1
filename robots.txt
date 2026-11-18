@@ -1,0 +1,46 @@
+User-agent: *
+Allow: /
+
+# ── Sitemap ──
+Sitemap: https://americacalculator.com/sitemap.xml
+
+# ── Disallow off-brand / deleted pages ──
+Disallow: /calculators/calculator-bacalaureat.php
+Disallow: /calculators/racine-carree.php
+Disallow: /calculators/blox-fruits.php
+Disallow: /calculators/palworld-breeding.php
+Disallow: /calculators/grow-a-garden.php
+Disallow: /calculators/terminus.php
+Disallow: /calculators/saturn-return.php
+Disallow: /calculators/rvu.php
+Disallow: /calculators/corrected-calcium.php
+Disallow: /calculators/ffmi.php
+Disallow: /calculators/asq.php
+Disallow: /calculators/map.php
+Disallow: /calculators/random-country.php
+Disallow: /calculators/dave-ramsey-investment.php
+
+# ── Disallow Tier 2 noindexed pages ──
+Disallow: /calculators/differential-equation.php
+Disallow: /calculators/partial-derivative.php
+Disallow: /calculators/inverse-matrix.php
+Disallow: /calculators/rref.php
+Disallow: /calculators/determinant.php
+Disallow: /calculators/ap-lang-score.php
+Disallow: /calculators/act-score.php
+Disallow: /calculators/cumulative-gpa.php
+
+# ── Disallow vendor / downloads / internal folders ──
+Disallow: /vendor/
+Disallow: /downloads/roi-calculator-excel-template-2026-usa.php
+Disallow: /UPLOAD_CHECKLIST.txt
+
+# ── Allow all crawlers on core content ──
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /image/
+
+User-agent: AdsBot-Google
+Allow: /

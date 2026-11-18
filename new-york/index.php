@@ -1,0 +1,35 @@
+<?php
+$pageTitle = 'New York Paycheck & Tax Calculators (' . date('Y') . ')';
+$metaDescription = 'Free New York paycheck calculators for ' . date('Y') . '. Calculate take-home pay with NY state tax, NYC local tax, and federal withholding.';
+$metaKeywords = 'New York paycheck calculator, NYC paycheck calculator, NY tax calculator';
+$schemaData = ['@context'=>'https://schema.org','@graph'=>[
+  ['@type'=>'BreadcrumbList','itemListElement'=>[
+    ['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>'https://americacalculator.com/'],
+    ['@type'=>'ListItem','position'=>2,'name'=>'New York Calculators','item'=>'https://americacalculator.com/new-york/'],
+  ]]
+]];
+require_once __DIR__ . '/../includes/header.php';
+?>
+<style>
+body{background:#f8fafc;}.hub-wrap{max-width:800px;margin:2rem auto;padding:0 1.25rem 4rem;}
+.hub-wrap h1{font-size:1.85rem;color:#0f172a;margin-bottom:.75rem;}
+.hub-wrap p{color:#475569;line-height:1.72;margin-bottom:1.5rem;}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;}
+.hub-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:1.5rem;text-decoration:none;transition:border-color .2s,box-shadow .2s;}
+.hub-card:hover{border-color:#7c3aed;box-shadow:0 4px 16px rgba(124,58,237,.12);}
+.hub-card h2{font-size:1.1rem;color:#1e293b;margin:0 0 .5rem;}
+.hub-card p{font-size:.88rem;color:#64748b;margin:0;line-height:1.55;}
+</style>
+<main>
+<div class="hub-wrap">
+  <h1>New York Paycheck &amp; Tax Calculators</h1>
+  <p>Free online calculators for New York employees. Calculate your take-home pay with NY state income tax brackets and NYC local income tax.</p>
+  <div class="hub-grid">
+    <a href="/new-york/paycheck-calculator" class="hub-card">
+      <h2>🗽 New York Paycheck Calculator</h2>
+      <p>Calculate net pay with NY state tax (4%–10.9%), optional NYC local tax (3.08%–3.88%), and federal brackets.</p>
+    </a>
+  </div>
+</div>
+</main>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

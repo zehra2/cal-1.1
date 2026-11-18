@@ -1,0 +1,86 @@
+# AmericaCalculator.com - LLMs & AI Crawler Discovery Manifest (llms.txt)
+
+# Specification: https://llmstxt.org/
+
+# Canonical Domain: https://americacalculator.com/
+
+# Description: Authoritative free online financial, loan, real estate, tax, and remodeling calculators for the United States.
+
+
+
+# Organization
+
+> AmericaCalculator.com provides free, high-accuracy financial, lending, and real estate calculators calibrated against official 2026 guidelines from the IRS, CFPB, HUD, and SBA.
+
+
+
+## Real Estate Calculators (Pillar Hub: /real-estate/)
+
+- [Closing Cost Calculator](https://americacalculator.com/real-estate/closing-cost-calculator): Estimates buyer and seller settlement expenses, lender fees, escrow, title insurance, and state transfer taxes.
+
+- [Investment Property Closing Cost Calculator](https://americacalculator.com/real-estate/investment-property-closing-cost-calculator): Estimates investor settlement expenses, DSCR liquidity reserves, origination points, appraisal with Form 1007 rent comp schedule, and cash to close.
+
+- [How Much House Can I Afford Calculator](https://americacalculator.com/real-estate/home-affordability-calculator): Computes maximum home purchasing price, borrowing limit, and PITI monthly payments using Conservative (28/36), Conventional (36/43), and FHA (50%) DTI models.
+
+- [California Closing Cost Calculator](https://americacalculator.com/real-estate/closing-cost-calculator-california): State-specific escrow split and documentary transfer tax estimator for California home transactions.
+
+- [Texas Closing Cost Calculator](https://americacalculator.com/real-estate/closing-cost-calculator-texas): TDI-regulated title policy rates and tax escrow estimator for Texas home purchases.
+
+- [Florida Closing Cost Calculator](https://americacalculator.com/real-estate/closing-cost-calculator-florida): Florida doc stamps on deeds ($0.70/$100), promissory notes ($0.35/$100), and intangible mortgage tax calculator.
+
+- [HOA Fee & Buying Power Calculator](https://americacalculator.com/real-estate/hoa-fee-calculator): Calculates how monthly condo/HOA dues reduce home mortgage purchasing power and estimates 10-year fee inflation.
+
+- [Property Tax Calculator by State](https://americacalculator.com/real-estate/property-tax-calculator): Estimates annual county property taxes, millage rate formulas, assessment ratios, and homestead exemptions across all 50 states.
+
+- [Mortgage Refinance Break-Even Calculator](https://americacalculator.com/real-estate/mortgage-refinance-calculator): Calculates months to break even on refinance closing costs and models 15-year vs. 30-year amortization interest savings.
+
+- [Home Equity Loan Calculator](https://americacalculator.com/real-estate/home-equity-loan-calculator): Determines borrowing capacity based on 80% to 85% Combined Loan-to-Value (CLTV) ratios and fixed monthly installments.
+
+- [Rent Affordability Calculator](https://americacalculator.com/real-estate/rent-affordability-calculator): Models maximum recommended rent using the 30% gross income rule, 40x rent rule, and 50/30/20 personal budget framework.
+
+- [Monthly Mortgage Calculator](https://americacalculator.com/real-estate/mortgage-calculator): Amortization, principal, interest, hazard insurance, and PMI estimator.
+
+- [Real Estate Cash Flow Calculator](https://americacalculator.com/real-estate/cash-flow-calculator): Net operating income (NOI), cap rates, and monthly cash-on-cash returns for residential rental properties.
+
+
+
+## Loan & Financing Calculators (Pillar Hub: /loan-calculators/)
+
+- [Mortgage Payoff Calculator with Extra Payments](https://americacalculator.com/loan-calculators/mortgage-payoff-calculator): Models accelerated debt-free schedules, interest savings, and time eliminated through extra monthly, annual, or lump-sum principal curtailments.
+
+- [Debt-to-Income (DTI) Calculator](https://americacalculator.com/loan-calculators/debt-to-income-calculator): Determines front-end and back-end debt-to-income ratios against Fannie Mae, FHA (56.9%), VA, and USDA lending thresholds.
+
+- [SBA Loan Calculator](https://americacalculator.com/loan-calculators/sba-loan-calculator): SBA 7(a) and 504 monthly payment estimator with WSJ Prime spreads and upfront SBA guaranty fee tiers.
+
+- [RV Loan Calculator](https://americacalculator.com/loan-calculators/rv-loan-calculator): Motorhome, travel trailer, and camper financing calculator with 5- to 20-year terms and credit tier APR benchmarks.
+
+- [Boat Loan Calculator](https://americacalculator.com/loan-calculators/boat-loan-calculator): Marine financing estimator for new and pre-owned powerboats, sailboats, and yachts with 10- to 20-year terms.
+
+- [HELOC Calculator](https://americacalculator.com/loan-calculators/heloc-calculator): Models 10-year interest-only draw period payments followed by 20-year principal-and-interest repayment shock.
+
+- [Land Loan Calculator](https://americacalculator.com/loan-calculators/land-loan-calculator): Raw land, unimproved lot, and construction lot financing estimator.
+
+- [Auto Loan Calculator](https://americacalculator.com/loan-calculators/auto-loan-calculator): New and used car loan monthly payment estimator with sales tax, trade-in, and interest schedules.
+
+
+
+## State Paycheck & Tax Calculators
+
+- [Ohio Paycheck Hub](https://americacalculator.com/ohio/): Ohio net take-home pay, progressive state income tax (up to 3.50%), and municipal city tax withholdings.
+
+- [Texas Paycheck Calculator](https://americacalculator.com/texas/paycheck-calculator): 0% state income tax take-home pay estimator with FICA, Medicare, and federal tax withholdings.
+
+- [California Paycheck Calculator](https://americacalculator.com/california/paycheck-calculator): California progressive tax brackets (1% to 13.3%), uncapped 1.1% State Disability Insurance (SDI), and federal withholdings.
+
+- [Florida Paycheck Calculator](https://americacalculator.com/florida/paycheck-calculator): 0% state income tax take-home pay estimator for hourly and salaried Florida employees.
+
+
+
+## Construction & Remodeling Calculators (Pillar Hub: /construction/)
+
+- [Home Addition Cost Calculator](https://americacalculator.com/construction/home-addition-cost-calculator): Estimates square-foot construction costs for bedrooms, master suites, bathrooms, second stories, and bump-outs.
+
+- [Concrete Slab Calculator](https://americacalculator.com/construction/concrete-slab-calculator): Square feet to cubic yards and ready-mix concrete bag estimator.
+
+- [Rafter Calculator](https://americacalculator.com/construction/rafter-calculator): Roof pitch, common rafter length, and overhang lumber estimator.
+

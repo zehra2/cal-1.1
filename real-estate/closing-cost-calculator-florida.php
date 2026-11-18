@@ -1,0 +1,478 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "Florida Closing Cost Calculator ($currentYear) | FL Buyer Cost";
+$metaDescription = "Free Florida closing cost calculator $currentYear. Estimate FL buyer closing costs including doc stamps on deed, intangible tax on mortgage, title insurance, and total cash to close.";
+$metaKeywords    = 'florida closing cost calculator, FL closing costs, closing costs florida, florida doc stamps, florida intangible tax, florida title insurance, cash to close florida';
+$schemaData = ['@context'=>'https://schema.org','@graph'=>[
+  ['@type'=>'WebApplication',
+   'name'=>'Florida Closing Cost Calculator',
+   'url'=>'https://americacalculator.com/real-estate/closing-cost-calculator-florida',
+   'description'=>'Estimate Florida home buyer closing costs including documentary stamp tax on the deed, intangible tax on the mortgage, title insurance, and total cash to close.',
+   'applicationCategory'=>'FinanceApplication','operatingSystem'=>'All',
+   'offers'=>['@type'=>'Offer','price'=>'0','priceCurrency'=>'USD']],
+  ['@type'=>'BreadcrumbList','itemListElement'=>[
+    ['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>'https://americacalculator.com/'],
+    ['@type'=>'ListItem','position'=>2,'name'=>'Real Estate','item'=>'https://americacalculator.com/real-estate/'],
+    ['@type'=>'ListItem','position'=>3,'name'=>'Closing Cost Calculator','item'=>'https://americacalculator.com/real-estate/closing-cost-calculator'],
+    ['@type'=>'ListItem','position'=>4,'name'=>'Florida Closing Costs','item'=>'https://americacalculator.com/real-estate/closing-cost-calculator-florida'],
+  ]],
+  ['@type'=>'FAQPage','mainEntity'=>[
+    ['@type'=>'Question','name'=>'What are typical closing costs in Florida?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Florida buyer closing costs typically range from 2% to 4% of the purchase price excluding down payment. On a $400,000 home expect $8,000–$16,000. The Florida-specific items are documentary stamp tax on the deed ($0.70/$100 of purchase price, paid by seller by custom), intangible tax on the mortgage note (0.002 × loan amount, paid by buyer), and title insurance (buyer pays in most FL counties).']],
+    ['@type'=>'Question','name'=>'What is Florida documentary stamp tax?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Florida documentary stamp tax on a deed is $0.70 per $100 of consideration (purchase price) statewide. Miami-Dade County charges $0.60 per $100 plus a surtax of $0.45 per $100 for a total of $1.05 per $100. This tax is customarily paid by the seller in most Florida counties, but buyers pay it in Miami-Dade by local custom.']],
+    ['@type'=>'Question','name'=>'What is the Florida intangible tax on a mortgage?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Florida charges an intangible tax of $0.002 per dollar of the mortgage (note) amount — that is 0.2% of the loan. On a $320,000 mortgage the intangible tax is $640. This is always paid by the buyer/borrower and applies to all new purchase mortgages in Florida.']],
+    ['@type'=>'Question','name'=>'Who pays title insurance in Florida?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'In most Florida counties the buyer pays for title insurance. However, in Sarasota, Collier, Miami-Dade, and Broward counties, the seller customarily pays for the owner title insurance policy. The lender title policy is always paid by the buyer. Florida title insurance rates are promulgated by the Florida Office of Insurance Regulation.']],
+    ['@type'=>'Question','name'=>'Does Florida require an attorney at closing?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'No. Florida is a title company state — an attorney is not required at closing. A licensed title insurance agent handles the closing. Buyers may choose to hire a real estate attorney for contract review or complex transactions, but it is not legally required.']],
+    ['@type'=>'Question','name'=>'What is the Florida doc stamp tax on a mortgage?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'In addition to the intangible tax, Florida charges a documentary stamp tax on the promissory note (mortgage) of $0.35 per $100 of the loan amount. On a $320,000 loan this is $1,120. This is paid by the borrower at closing and is in addition to the 0.2% intangible tax.']],
+    ['@type'=>'Question','name'=>'What is the Florida homestead exemption?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'Florida\'s homestead exemption reduces the assessed value of a primary residence by $25,000 for all tax levies plus an additional $25,000 for non-school levies — a maximum $50,000 reduction. The Save Our Homes (SOH) cap then limits annual increases in assessed value to 3% or the CPI, whichever is lower. Apply with your county property appraiser\'s office.']],
+    ['@type'=>'Question','name'=>'How much are Florida closing costs on a $400,000 home?',
+     'acceptedAnswer'=>['@type'=>'Answer','text'=>'On a $400,000 Florida home with 20% down (loan $320,000): intangible tax $640, doc stamps on mortgage $1,120, title insurance (buyer pays) ~$2,200, lender origination ~$2,400, appraisal $550, recording ~$200. Total buyer closing costs approximately $7,110–$8,500 before prepaids. Add $80,000 down payment for total cash to close of approximately $90,000–$92,000.']],
+  ]],
+  ['@type'=>'HowTo',
+   'name'=>'How to Use the Florida Closing Cost Calculator',
+   'description'=>'Estimate your Florida home buyer closing costs including doc stamps and intangible tax in 4 steps.',
+   'totalTime'=>'PT3M',
+   'step'=>[
+     ['@type'=>'HowToStep','position'=>1,'name'=>'Enter purchase price and loan details',
+      'text'=>'Enter the home purchase price and your down payment percentage. Florida median home price is around $400,000 statewide. The calculator uses the loan amount to compute Florida-specific doc stamps on the mortgage (0.35%) and intangible tax (0.2%).'],
+     ['@type'=>'HowToStep','position'=>2,'name'=>'Select your county for doc stamp custom',
+      'text'=>'Select whether you are in Miami-Dade County or another FL county. In Miami-Dade the documentary stamp rate on the deed is $1.05/$100 (vs $0.70/$100 elsewhere) and the buyer pays the doc stamp on the deed instead of the seller.'],
+     ['@type'=>'HowToStep','position'=>3,'name'=>'Choose title insurance custom for your county',
+      'text'=>'Select who pays title insurance based on your county: Buyer pays in most North and Central Florida counties. Seller pays in Broward, Miami-Dade, Sarasota, and Collier counties. The lender policy is always paid by the buyer.'],
+     ['@type'=>'HowToStep','position'=>4,'name'=>'Review itemized results including FL-specific taxes',
+      'text'=>'Click Estimate. Your breakdown will show: doc stamps on deed, doc stamps on mortgage note (0.35%), intangible tax (0.2% of loan), title insurance, closing/settlement fee, appraisal, and prepaid homeowners insurance (Florida has among the highest insurance costs nationally).'],
+     ['@type'=>'HowToStep','position'=>5,'name'=>'Apply for Florida Homestead Exemption after closing',
+      'text'=>'After purchase, apply for the Florida Homestead Exemption with your county property appraiser. The exemption reduces assessed value by up to $50,000 and caps annual assessment increases (Save Our Homes) at 3% or CPI. Apply by March 1 of the year following your closing.'],
+   ]]
+]];
+require_once '../includes/header.php';
+require_once '../includes/helpers.php';
+?>
+<style>
+body{background:#f8fafc;}
+.cc-wrap{max-width:1060px;margin:0 auto;padding:2rem 1.25rem 5rem;}
+.cc-bc{font-size:.8rem;color:#94a3b8;margin-bottom:.75rem;}.cc-bc a{color:#64748b;text-decoration:none;}
+.cc-hero h1{font-size:1.85rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.cc-hero p{font-size:.97rem;color:#64748b;line-height:1.65;margin:0 0 .5rem;border-left:3px solid #d97706;padding-left:.9rem;}
+.cc-meta{font-size:.78rem;color:#94a3b8;margin-bottom:1.75rem;}
+.cc-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;margin-bottom:1.75rem;}
+.cc-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden;}
+.cc-card-head{background:#b45309;color:#fff;padding:1rem 1.5rem;font-size:1rem;font-weight:700;}
+.cc-body{padding:1.5rem;}
+.cc-field{margin-bottom:1rem;}
+.cc-field label{display:block;font-size:.85rem;font-weight:600;color:#1e293b;margin-bottom:.35rem;}
+.cc-field input,.cc-field select{width:100%;padding:10px 13px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:.94rem;color:#0f172a;outline:none;background:#fff;transition:border-color .2s;}
+.cc-field input:focus,.cc-field select:focus{border-color:#d97706;}
+.cc-field .hint{font-size:.73rem;color:#94a3b8;margin-top:.25rem;}
+.cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.cc-sec-lbl{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:1.2rem 0 .7rem;padding-bottom:.3rem;border-bottom:1px solid #f1f5f9;}
+.cc-btn{width:100%;background:#b45309;color:#fff;padding:13px;border:none;border-radius:8px;font-size:.97rem;font-weight:700;cursor:pointer;margin-top:.5rem;}
+.cc-btn:hover{background:#d97706;}
+.cc-result{background:#fffbeb;border:1.5px solid #fcd34d;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1.25rem;}
+.cc-result-primary{text-align:center;margin-bottom:1rem;}
+.cc-result-primary .val{font-size:2.4rem;font-weight:800;color:#b45309;display:block;line-height:1;}
+.cc-result-primary .lbl{font-size:.83rem;color:#64748b;}
+.cc-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-bottom:.85rem;}
+.cc-stat{background:#fff;border-radius:8px;padding:.75rem;text-align:center;border:1px solid #fcd34d;}
+.cc-stat .sv{display:block;font-size:1rem;font-weight:800;color:#b45309;}
+.cc-stat .sl{font-size:.69rem;color:#64748b;font-weight:600;line-height:1.3;}
+.cc-pct{text-align:center;font-size:.83rem;color:#64748b;margin-bottom:.75rem;}
+.cc-pct strong{color:#b45309;}
+.cc-lines{background:#fff;border:1px solid #fcd34d;border-radius:8px;padding:.75rem 1rem;}
+.cc-line{display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid #fffbeb;font-size:.86rem;}
+.cc-line:last-child{border-bottom:none;font-weight:700;color:#b45309;}
+.cc-line .ll{color:#64748b;}.cc-line .lv{font-weight:600;color:#1e293b;}
+.cc-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:1.75rem;margin-bottom:1.5rem;}
+.cc-section h2{font-size:1.3rem;color:#0f172a;margin:0 0 .85rem;padding-bottom:.6rem;border-bottom:2px solid #fef3c7;}
+.cc-section h3{font-size:1.05rem;color:#0f172a;margin:1.25rem 0 .55rem;}
+.cc-section p{color:#475569;line-height:1.72;font-size:.95rem;margin-bottom:.9rem;}
+.cc-section p:last-child{margin-bottom:0;}
+.cc-section a{color:#b45309;font-weight:600;text-decoration:none;}
+.cc-section a:hover{text-decoration:underline;}
+.cc-table{width:100%;border-collapse:collapse;border-radius:9px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:1rem;}
+.cc-table th{background:#b45309;color:#fff;padding:9px 13px;font-size:.84rem;font-weight:600;text-align:left;}
+.cc-table td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:.87rem;color:#334155;}
+.cc-table tr:last-child td{border-bottom:none;}
+.cc-table tr:nth-child(even) td{background:#f8fafc;}
+.cc-table .hl{color:#b45309;font-weight:700;}
+.cc-table .g{color:#15803d;font-weight:700;}
+.cc-table .r{color:#dc2626;font-weight:700;}
+.cc-info{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.9rem;color:#78350f;line-height:1.65;}
+.cc-warn{background:#fef2f2;border-left:4px solid #dc2626;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.9rem;color:#7f1d1d;line-height:1.65;}
+.cc-good{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.9rem;color:#14532d;line-height:1.65;}
+.cc-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}
+.cc-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.cc-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.cc-faq-q::after{content:'+';color:#d97706;font-size:1.2rem;flex-shrink:0;}
+.cc-faq-item.open .cc-faq-q::after{content:'−';}
+.cc-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.cc-faq-item.open .cc-faq-a{display:block;}
+.cc-related{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.75rem;margin-top:.75rem;}
+.cc-rel{display:block;background:#fffbeb;border:1.5px solid #fcd34d;border-radius:8px;padding:.75rem 1rem;font-size:.85rem;font-weight:600;color:#b45309;text-decoration:none;text-align:center;transition:background .15s;}
+.cc-rel:hover{background:#fef3c7;}
+@media(max-width:760px){.cc-layout{grid-template-columns:1fr;}.cc-grid,.cc-stat-grid{grid-template-columns:1fr;}.cc-hero h1{font-size:1.5rem;}}
+
+.pdf-bar{display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap;}
+.pdf-btn{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:2px solid currentColor;padding:9px 18px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.pdf-btn:hover{opacity:.85;}
+@media print{.cc-btn,.pdf-bar,nav,footer,header,.cc-bc{display:none!important;}.cc-wrap{padding:0!important;}body{background:#fff!important;}}
+</style>
+
+<main id="main-content">
+<div class="cc-wrap">
+  <div class="cc-bc">
+    <a href="/">Home</a> ›
+    <a href="/real-estate/">Real Estate</a> ›
+    <a href="/real-estate/closing-cost-calculator">Closing Cost Calculator</a> ›
+    Florida
+  </div>
+
+  <div class="cc-hero">
+    <h1>Florida Closing Cost Calculator (<?php echo $currentYear;?>)</h1>
+    <p>Florida has two unique state taxes: <strong>documentary stamp tax on the deed</strong> ($0.70/$100 of purchase price) and <strong>intangible tax on the mortgage</strong> (0.2% of loan). Estimate your total cash to close including both FL-specific taxes, title insurance, and prepaids.</p>
+    <div class="cc-meta">✍️ By AmericaCalculator Real Estate Team | Last verified: July <?php echo $currentYear;?> | Sources: Florida Dept. of Revenue, Florida OIR, Florida Realtors</div>
+  </div>
+
+
+  <!-- ─── 2026 FLORIDA CLOSING TAX CALLOUT ────────────────────────────── -->
+  <div style="background:linear-gradient(135deg,#7c2d12 0%,#b45309 60%,#d97706 100%);border-radius:14px;padding:1.4rem 1.75rem;margin-bottom:1.25rem;border:1px solid #92400e;box-shadow:0 4px 24px rgba(180,83,9,.2);" id="fl-tax-box">
+    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem;">
+      <span style="background:#fbbf24;color:#78350f;font-size:.7rem;font-weight:800;padding:2px 9px;border-radius:20px;letter-spacing:.07em;">&#9728; <?php echo $currentYear; ?> FL TAX RATES</span>
+      <span style="color:rgba(255,255,255,.75);font-size:.78rem;">Florida Documentary Stamp &amp; Intangible Tax &mdash; F.S. 201.02 &amp; 199.135</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.85rem;">
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;">Doc Stamps on Deed (most FL)</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#fff;">$0.70 <span style="font-size:.85rem;font-weight:400;">per $100</span></div>
+        <div style="font-size:.74rem;color:rgba(255,255,255,.65);margin-top:.25rem;">Seller pays by custom in most FL counties</div>
+      </div>
+      <div style="background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.4);border-radius:9px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;">Doc Stamps on Deed (Miami-Dade)</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#fca5a5;">$1.05 <span style="font-size:.85rem;font-weight:400;">per $100</span></div>
+        <div style="font-size:.74rem;color:rgba(255,255,255,.65);margin-top:.25rem;">Buyer pays by Miami-Dade custom</div>
+      </div>
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;">Doc Stamps on Mortgage Note</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#fff;">$0.35 <span style="font-size:.85rem;font-weight:400;">per $100</span></div>
+        <div style="font-size:.74rem;color:rgba(255,255,255,.65);margin-top:.25rem;">Buyer pays always &mdash; $1,120 on $320k loan</div>
+      </div>
+      <div style="background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.4);border-radius:9px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;">Intangible Tax on Mortgage</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#fca5a5;">0.20% <span style="font-size:.85rem;font-weight:400;">of loan</span></div>
+        <div style="font-size:.74rem;color:rgba(255,255,255,.65);margin-top:.25rem;">Buyer pays always &mdash; $640 on $320k loan</div>
+      </div>
+    </div>
+    <div style="margin-top:.85rem;background:rgba(0,0,0,.2);border-radius:8px;padding:.75rem 1rem;font-size:.83rem;color:rgba(255,255,255,.85);line-height:1.65;">
+      <strong style="color:#fde68a;">Homestead Exemption:</strong> Apply with your county property appraiser by <strong>March 1</strong> the year after purchase. Reduces assessed value by up to $50,000 and caps annual increases at 3% or CPI under Save Our Homes.
+    </div>
+  </div>
+  <style>@media(max-width:640px){#fl-tax-box{padding:1rem 1.1rem;}}</style>
+
+  <div class="cc-layout">
+    <div class="cc-card">
+      <div class="cc-card-head">🧾 Florida Closing Cost Calculator</div>
+      <div class="cc-body">
+        <div class="cc-sec-lbl">Purchase Details</div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Purchase Price ($)</label><input type="number" id="cc-price" value="400000" min="0" step="5000"></div>
+          <div class="cc-field"><label>Down Payment (%)</label><input type="number" id="cc-down" value="20" min="0" max="100" step="1"></div>
+        </div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Interest Rate (%)</label><input type="number" id="cc-rate" value="7.0" min="0" max="20" step="0.05"></div>
+          <div class="cc-field"><label>Loan Type</label>
+            <select id="cc-type">
+              <option value="conventional">Conventional</option>
+              <option value="fha">FHA Loan (+1.75% MIP)</option>
+              <option value="va">VA Loan (+Funding Fee)</option>
+              <option value="cash">All Cash</option>
+            </select>
+          </div>
+        </div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Florida County</label>
+            <select id="fl-county">
+              <option value="standard">Standard FL county ($0.70/$100)</option>
+              <option value="miamidade">Miami-Dade ($1.05/$100 buyer pays)</option>
+            </select>
+          </div>
+          <div class="cc-field"><label>Title Insurance Payer</label>
+            <select id="fl-title-payer">
+              <option value="buyer">Buyer pays (most FL counties)</option>
+              <option value="seller">Seller pays (Sarasota, Collier, etc.)</option>
+            </select>
+          </div>
+        </div>
+        <div class="cc-sec-lbl">Lender &amp; Third-Party Fees</div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Origination Fee (%)</label><input type="number" id="cc-orig" value="0.75" min="0" max="5" step="0.05"></div>
+          <div class="cc-field"><label>Appraisal Fee ($)</label><input type="number" id="cc-appr" value="550" min="0" step="50"></div>
+        </div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Title Insurance ($)</label><input type="number" id="cc-title" value="2200" min="0" step="100"><div class="hint">FL OIR promulgated rate; buyer or seller pays by county custom</div></div>
+          <div class="cc-field"><label>Closing / Settlement Fee ($)</label><input type="number" id="cc-escrow" value="600" min="0" step="50"></div>
+        </div>
+        <div class="cc-sec-lbl">Prepaid Items</div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Annual Property Tax ($)</label><input type="number" id="cc-tax" value="5200" min="0" step="100"><div class="hint">FL avg ~1.1%–2.2% of assessed value</div></div>
+          <div class="cc-field"><label>Annual Homeowners Insurance ($)</label><input type="number" id="cc-hoi" value="3500" min="0" step="100"><div class="hint">FL among highest nationally; wind/flood extra</div></div>
+        </div>
+        <button class="cc-btn" onclick="calcCC()">⚡ Estimate Florida Closing Costs</button>
+        <div class="cc-result" id="cc-result" style="display:none;">
+          <div class="cc-result-primary">
+            <span class="val" id="cc-total">$0</span>
+            <span class="lbl">Estimated Total Cash to Close</span>
+          </div>
+          <div class="cc-pct" id="cc-pct-line"></div>
+          <div class="cc-stat-grid">
+            <div class="cc-stat"><span class="sv" id="cc-dp">$0</span><span class="sl">Down Payment</span></div>
+            <div class="cc-stat"><span class="sv" id="cc-fee">$0</span><span class="sl">Closing Costs</span></div>
+            <div class="cc-stat"><span class="sv" id="cc-prepaid">$0</span><span class="sl">Prepaids</span></div>
+          </div>
+          <div class="cc-line">
+            <div class="cc-line"><span class="ll">Down Payment</span><span class="lv" id="cl-dp">—</span></div>
+            <div class="cc-line"><span class="ll">Loan Origination Fee</span><span class="lv" id="cl-orig">—</span></div>
+            <div class="cc-line"><span class="ll">Appraisal</span><span class="lv" id="cl-appr">—</span></div>
+            <div class="cc-line"><span class="ll">Title Insurance (buyer's share)</span><span class="lv" id="cl-title">—</span></div>
+            <div class="cc-line"><span class="ll">Closing / Settlement Fee</span><span class="lv" id="cl-escrow">—</span></div>
+            <div class="cc-line"><span class="ll" id="cl-ds-label">Doc Stamps on Deed (buyer's share)</span><span class="lv" id="cl-d">—</span></div>
+            <div class="cc-line"><span class="ll">Doc Stamps on Mortgage Note (0.35%)</span><span class="lv" id="cl-dsm">—</span></div>
+            <div class="cc-line"><span class="ll">Intangible Tax on Mortgage (0.2%)</span><span class="lv" id="cl-int">—</span></div>
+            <div class="cc-line" id="cl-extra-row" style="display:none;"><span class="ll" id="cl-extra-label">FHA MIP / VA Fee</span><span class="lv" id="cl-extra">—</span></div>
+            <div class="cc-line"><span class="ll">Prepaid Property Tax (2 months)</span><span class="lv" id="cl-tax">—</span></div>
+            <div class="cc-line"><span class="ll">Prepaid Insurance (1 year)</span><span class="lv" id="cl-hoi">—</span></div>
+            <div class="cc-line"><span class="ll" style="font-weight:700;color:#0f172a;">Total Cash to Close</span><span class="lv" id="cl-total">—</span></div>
+          </div>
+          <div class="pdf-bar">
+            <button class="pdf-btn" style="color:inherit;" onclick="window.print()">&#128424; Print / Save as PDF</button>
+            <button class="pdf-btn" style="color:inherit;" onclick="copyResults()">&#128203; Copy Results</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="cc-section" style="margin-bottom:1.25rem;">
+        <h2>Florida State Taxes at Closing</h2>
+        <table class="cc-table">
+          <thead><tr><th>Tax</th><th>Rate</th><th>On $400k Purchase / $320k Loan</th><th>Who Pays</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Doc Stamps on Deed</strong></td><td>$0.70/$100</td><td>$2,800</td><td class="hl">Seller (most counties)</td></tr>
+            <tr><td><strong>Doc Stamps — Miami-Dade</strong></td><td>$1.05/$100</td><td>$4,200</td><td class="r">Buyer (Miami-Dade custom)</td></tr>
+            <tr><td><strong>Doc Stamps on Mortgage</strong></td><td>$0.35/$100</td><td>$1,120</td><td class="r">Buyer always</td></tr>
+            <tr><td><strong>Intangible Tax on Mortgage</strong></td><td>0.2% of loan</td><td>$640</td><td class="r">Buyer always</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.82rem;color:#94a3b8;margin:0;">Source: Florida Dept. of Revenue, F.S. 201.02 &amp; 199.135.</p>
+      </div>
+      <div class="cc-section">
+        <h2>Title Insurance Custom by County</h2>
+        <table class="cc-table">
+          <thead><tr><th>County / Region</th><th>Who Pays Owner Title?</th></tr></thead>
+          <tbody>
+            <tr><td>Most of North &amp; Central FL</td><td class="r">Buyer pays</td></tr>
+            <tr><td>Broward County</td><td class="hl">Seller pays</td></tr>
+            <tr><td>Miami-Dade County</td><td class="hl">Seller pays</td></tr>
+            <tr><td>Sarasota County</td><td class="hl">Seller pays</td></tr>
+            <tr><td>Collier County (Naples)</td><td class="hl">Seller pays</td></tr>
+            <tr><td>Palm Beach (varies)</td><td>Negotiable / split</td></tr>
+          </tbody>
+        </table>
+        <div class="cc-info">💡 <strong>Lender title policy</strong> is always paid by the buyer regardless of county. Florida title rates are promulgated (state-set) by the Florida OIR — all title companies charge the same rate.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cc-section">
+    <h2>Florida Closing Costs — Full State-Specific Guide</h2>
+
+    <h3>Documentary Stamp Tax on the Deed (F.S. 201.02)</h3>
+    <p>Florida imposes a documentary stamp tax on every deed transferring real property. The standard rate is <strong>$0.70 per $100 of consideration</strong> (purchase price). Miami-Dade County is the single exception, charging <strong>$0.60 per $100 plus a $0.45 surtax = $1.05 per $100 total</strong>.</p>
+    <p>By custom in most Florida counties, this tax is paid by the <strong>seller</strong> — it appears on the seller's side of the settlement statement. In Miami-Dade, the custom reverses and the buyer typically pays. In all cases, tax responsibility is negotiable in the purchase contract.</p>
+
+    <h3>Documentary Stamp Tax on the Mortgage Note (F.S. 201.08)</h3>
+    <p>A separate documentary stamp tax applies to the mortgage note (promissory note) at <strong>$0.35 per $100 of the loan amount</strong>. This is <strong>always paid by the borrower</strong> — it is not negotiable or transferable to the seller. On a $320,000 loan this equals <strong>$1,120</strong>. Cash purchases have no mortgage note and therefore no note doc stamps.</p>
+
+    <h3>Intangible Tax on the Mortgage (F.S. 199.135)</h3>
+    <p>Florida charges an intangible tax on secured obligations (mortgages) at <strong>$0.002 per dollar of the mortgage</strong> — 0.2% of the loan amount. This is also <strong>always paid by the borrower</strong>. On a $320,000 mortgage this equals <strong>$640</strong>.</p>
+    <div class="cc-warn">⚠️ <strong>Note:</strong> VA loans in Florida are exempt from the intangible tax and have a reduced doc stamp rate on the note. Confirm with your title company or attorney when using VA financing in Florida.</div>
+
+    <h3>Florida Title Insurance — OIR Promulgated Rates</h3>
+    <p>Florida title insurance rates are set by the Florida Office of Insurance Regulation (OIR) — all title companies charge the same rate by law:</p>
+    <table class="cc-table">
+      <thead><tr><th>Purchase Price</th><th>Owner Policy Rate</th><th>Simultaneous Lender Policy</th></tr></thead>
+      <tbody>
+        <tr><td>Up to $100,000</td><td>$5.75 per $1,000</td><td>$25 flat (simultaneous)</td></tr>
+        <tr><td>$100,001 – $1,000,000</td><td>$5.00 per $1,000</td><td>$25 + additional per $1,000</td></tr>
+        <tr><td>Over $1,000,000</td><td>$4.00 per $1,000</td><td>Reduced simultaneous rate</td></tr>
+      </tbody>
+    </table>
+    <p>Example: On a $400,000 purchase, the owner's title premium is approximately <strong>$2,075</strong>. The simultaneous lender's policy adds approximately <strong>$225</strong>.</p>
+
+    <h3>Florida Property Tax Rates by County</h3>
+    <p>Florida property tax rates vary significantly by county and include school district levies, county levies, and special assessments. Miami-Dade and Broward counties have relatively lower millage rates but higher assessed values; rural counties may have lower values but higher millage. The statewide average effective rate is approximately <strong>0.9% – 1.2%</strong> of market value, but urban coastal areas often run higher:</p>
+    <table class="cc-table">
+      <thead><tr><th>County</th><th>Effective Tax Rate</th><th>Annual Tax on $400k Home</th></tr></thead>
+      <tbody>
+        <tr><td>Miami-Dade</td><td>0.97%</td><td>$3,880</td></tr>
+        <tr><td>Broward (Fort Lauderdale)</td><td>1.07%</td><td>$4,280</td></tr>
+        <tr><td>Palm Beach</td><td>1.01%</td><td>$4,040</td></tr>
+        <tr><td>Hillsborough (Tampa)</td><td>1.06%</td><td>$4,240</td></tr>
+        <tr><td>Orange (Orlando)</td><td>1.12%</td><td>$4,480</td></tr>
+        <tr><td>Pinellas (St. Pete)</td><td>0.99%</td><td>$3,960</td></tr>
+        <tr><td>Lee (Fort Myers)</td><td>0.88%</td><td class="g">$3,520</td></tr>
+        <tr><td>Sarasota</td><td>0.89%</td><td class="g">$3,560</td></tr>
+        <tr><td>Duval (Jacksonville)</td><td>1.21%</td><td class="r">$4,840</td></tr>
+      </tbody>
+    </table>
+    <div class="cc-info">💡 <strong>Florida Homestead Exemption:</strong> Reduces assessed value by up to $50,000 for primary residences ($25,000 applies to all levies; additional $25,000 applies to non-school levies). The Save Our Homes cap then limits annual increases in assessed value to 3% or CPI, whichever is lower. Apply with your county property appraiser's office after January 1 of the year following purchase.</div>
+
+    <h3>Florida Homeowners Insurance — Rising Costs in <?php echo $currentYear;?></h3>
+    <p>Florida is experiencing a severe homeowners insurance crisis. Multiple private insurers have exited the state, leaving Citizens Property Insurance Corporation (the state insurer of last resort) as the only option for many homeowners. Average annual premiums by region:</p>
+    <table class="cc-table">
+      <thead><tr><th>Region</th><th>Average Annual HO Premium</th><th>Key Risk</th></tr></thead>
+      <tbody>
+        <tr><td>Miami-Dade / Broward</td><td class="r">$4,000 – $8,000+</td><td>Hurricane, flood</td></tr>
+        <tr><td>Tampa Bay Area</td><td class="r">$3,500 – $6,000</td><td>Hurricane, storm surge</td></tr>
+        <tr><td>Orlando / Central FL</td><td>$2,500 – $4,500</td><td>Wind, sinkholes</td></tr>
+        <tr><td>Jacksonville / NE FL</td><td>$2,000 – $3,500</td><td>Wind, flooding</td></tr>
+        <tr><td>Southwest FL (Naples/Ft Myers)</td><td class="r">$4,000 – $7,000+</td><td>Hurricane (post-Ian)</td></tr>
+        <tr><td>Panhandle / NW FL</td><td class="r">$3,000 – $5,500</td><td>Hurricane, storm surge</td></tr>
+      </tbody>
+    </table>
+    <div class="cc-warn">🚨 <strong>Flood insurance is separate:</strong> Standard Florida homeowners insurance does not cover flood damage. If your property is in a FEMA flood zone (common in coastal and low-lying areas), your lender will require a separate NFIP or private flood insurance policy — budget $800–$5,000+ annually depending on flood zone designation and coverage amount.</div>
+
+    <h3>Worked Example: $400,000 Home, Orange County, Conventional 20% Down</h3>
+    <table class="cc-table">
+      <thead><tr><th>Item</th><th>Amount</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Down Payment (20%)</td><td><strong>$80,000</strong></td><td></td></tr>
+        <tr><td>Loan Origination (0.75% of $320k)</td><td>$2,400</td><td></td></tr>
+        <tr><td>Appraisal</td><td>$550</td><td></td></tr>
+        <tr><td>Title Insurance — Owner Policy</td><td>$2,075</td><td>Buyer pays in Orange County</td></tr>
+        <tr><td>Title Insurance — Lender Policy</td><td>$225</td><td>Simultaneous issue rate</td></tr>
+        <tr><td>Closing / Settlement Fee</td><td>$600</td><td></td></tr>
+        <tr><td>Doc Stamps on Deed ($0.70/$100)</td><td>$0</td><td>Seller pays (non-Miami-Dade)</td></tr>
+        <tr><td>Doc Stamps on Mortgage ($0.35/$100)</td><td>$1,120</td><td>Buyer pays always</td></tr>
+        <tr><td>Intangible Tax (0.2% of $320k)</td><td>$640</td><td>Buyer pays always</td></tr>
+        <tr><td>Recording Fee</td><td>$200</td><td>Orange County</td></tr>
+        <tr><td>Prepaid Property Tax (2 months)</td><td>$747</td><td>Based on $4,480/yr estimate</td></tr>
+        <tr><td>Prepaid HO Insurance (1 year)</td><td>$3,500</td><td>Central FL estimate</td></tr>
+        <tr><td><strong>Estimated Total Cash to Close</strong></td><td><strong>~$92,057</strong></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cc-section">
+    <h2>Frequently Asked Questions — Florida Closing Costs</h2>
+    <?php $faqs=[
+      ['What are typical closing costs in Florida?','Florida buyer closing costs range from 2% to 4% excluding down payment. Key FL-specific items: doc stamps on mortgage (0.35% of loan), intangible tax (0.2% of loan), and title insurance (buyer pays in most counties). On a $400,000 purchase with 20% down, total buyer closing costs typically run $7,000–$9,000 before prepaids.'],
+      ['What is Florida documentary stamp tax?','Doc stamps on the deed are $0.70 per $100 of purchase price (paid by seller by custom in most counties). Doc stamps on the mortgage note are $0.35 per $100 of the loan (always paid by buyer). Miami-Dade uses $1.05/$100 for the deed and the buyer customarily pays it there.'],
+      ['What is the Florida intangible tax on a mortgage?','The intangible tax is 0.002 × loan amount (0.2%). On a $320,000 mortgage it is $640. It is always paid by the borrower. VA loans are generally exempt.'],
+      ['Who pays title insurance in Florida?','In most Florida counties the buyer pays for the owner title policy. Exceptions include Miami-Dade, Broward, Sarasota, and Collier counties where the seller customarily pays. The lender title policy is always paid by the buyer. Florida title rates are state-regulated and the same at all companies.'],
+      ['Is flood insurance required in Florida?','Your lender requires it if the property is in a FEMA Special Flood Hazard Area (SFHA). Even outside mandatory flood zones, purchasing coverage is strongly recommended in Florida given storm surge and heavy rainfall risk. Flood insurance is separate from homeowners insurance and must be purchased from the NFIP or a private flood carrier.'],
+      ['What is the Florida homestead exemption?','The homestead exemption reduces a primary residence assessed value by up to $50,000. The Save Our Homes cap then limits annual assessment increases to 3% or CPI (whichever is lower). Apply with your county property appraiser the year after purchase. This can significantly reduce your property tax bill from year two onward.'],
+      ['How does Miami-Dade differ from other Florida counties at closing?','Miami-Dade has the highest doc stamp rate ($1.05/$100 vs $0.70) and by local custom the buyer pays it instead of the seller. Miami-Dade also has some of the highest homeowners insurance costs nationally due to hurricane exposure. Title insurance in Miami-Dade is paid by the seller by custom.'],
+      ['Can the seller pay my closing costs in Florida?','Yes. Sellers can contribute toward buyer closing costs within limits set by the loan type: 3%–9% for conventional (varies by down payment), 6% for FHA, 4% for VA. Seller concessions are negotiated in the purchase contract and reduce your out-of-pocket cash at closing.'],
+    ]; foreach($faqs as $f):?>
+    <div class="cc-faq-item"><div class="cc-faq-q"><?php echo $f[0];?></div><div class="cc-faq-a"><?php echo $f[1];?></div></div>
+    <?php endforeach;?>
+  </div>
+
+  <div class="cc-section">
+    <h2>Related Calculators</h2>
+    <div class="cc-related">
+      <a href="/real-estate/closing-cost-calculator" class="cc-rel">🇺🇸 National Closing Costs</a>
+      <a href="/real-estate/closing-cost-calculator-california" class="cc-rel">🌅 California Closing Costs</a>
+      <a href="/real-estate/closing-cost-calculator-texa" class="cc-rel">🤠 Texas Closing Costs</a>
+      <a href="/real-estate/mortgage-calculator" class="cc-rel">🏠 Mortgage Calculator</a>
+      <a href="/real-estate/down-payment-calculator" class="cc-rel">⬇️ Down Payment Calculator</a>
+      <a href="/real-estate/cap-rate-calculator" class="cc-rel">📊 Cap Rate Calculator</a>
+      <a href="/real-estate/rent-vs-buy-calculator" class="cc-rel">🆚 Rent vs Buy Calculator</a>
+      <a href="/real-estate/" class="cc-rel">🏘️ All Real Estate Tools</a>
+    </div>
+  </div>
+</div>
+</main>
+
+<script>
+function fmtC(v){return '$'+Math.round(Math.abs(v)).toLocaleString();}
+function calcCC(){
+  var price  =parseFloat(document.getElementById('cc-price').value)||0;
+  var downPct=parseFloat(document.getElementById('cc-down').value)||0;
+  var orig   =parseFloat(document.getElementById('cc-orig').value)||0;
+  var appr   =parseFloat(document.getElementById('cc-appr').value)||0;
+  var titleAmt=parseFloat(document.getElementById('cc-title').value)||0;
+  var escrow =parseFloat(document.getElementById('cc-escrow').value)||0;
+  var tax    =parseFloat(document.getElementById('cc-tax').value)||0;
+  var hoi    =parseFloat(document.getElementById('cc-hoi').value)||0;
+  var loanType=document.getElementById('cc-type').value;
+  var county=document.getElementById('fl-county').value;
+  var titlePayer=document.getElementById('fl-title-payer').value;
+
+  var dp=price*(downPct/100), loan=price-dp;
+  var origFee=loan*(orig/100);
+  var isCash=(loanType==='cash'||loan===0);
+
+  // Doc stamps on deed — buyer's share
+  var dsRate = county==='miamidade' ? 0.0105 : 0.0070;
+  var dsDeed = county==='miamidade' ? price*dsRate : 0; // Miami-Dade buyer pays; elsewhere seller pays
+  var dsDeedLabel = county==='miamidade' ? 'Doc Stamps on Deed — Miami-Dade (buyer pays)' : 'Doc Stamps on Deed ($0 — seller pays)';
+
+  // Doc stamps on mortgage note + intangible tax (buyer always pays, not on cash)
+  var dsNote = isCash ? 0 : loan * 0.0035;
+  var intTax = isCash ? 0 : loan * 0.002;
+
+  // Title
+  var buyerTitle = titlePayer==='buyer' ? titleAmt : 0;
+
+  var extra=0, extraLabel='';
+  if(loanType==='fha'){extra=loan*0.0175;extraLabel='FHA Upfront MIP (1.75%)';}
+  if(loanType==='va'){var r=downPct>=10?0.0125:downPct>=5?0.015:0.023;extra=loan*r;extraLabel='VA Funding Fee';}
+
+  var taxPre=(tax/12)*2, hoiPre=hoi;
+  var cc=origFee+appr+buyerTitle+escrow+dsDeed+dsNote+intTax+extra;
+  var pre=taxPre+hoiPre;
+  var total=dp+cc+pre;
+  var pct=price>0?((cc/price)*100).toFixed(1):0;
+
+  document.getElementById('cc-total').textContent=fmtC(total);
+  document.getElementById('cc-dp').textContent=fmtC(dp);
+  document.getElementById('cc-fees').textContent=fmtC(cc);
+  document.getElementById('cc-prepaid').textContent=fmtC(pre);
+  document.getElementById('cc-pct-line').innerHTML='Closing costs = <strong>'+pct+'%</strong> of purchase price';
+  document.getElementById('cl-dp').textContent=fmtC(dp);
+  document.getElementById('cl-orig').textContent=fmtC(origFee);
+  document.getElementById('cl-appr').textContent=fmtC(appr);
+  document.getElementById('cl-title').textContent=titlePayer==='buyer'?fmtC(buyerTitle):'$0 (seller pays)';
+  document.getElementById('cl-escrow').textContent=fmtC(escrow);
+  document.getElementById('cl-ds').textContent=county==='miamidade'?fmtC(dsDeed):'$0 (seller pays)';
+  document.getElementById('cl-ds-label').textContent=dsDeedLabel;
+  document.getElementById('cl-dsm').textContent=isCash?'N/A (cash)':fmtC(dsNote);
+  document.getElementById('cl-int').textContent=isCash?'N/A (cash)':fmtC(intTax);
+  document.getElementById('cl-tax').textContent=fmtC(taxPre);
+  document.getElementById('cl-hoi').textContent=fmtC(hoiPre);
+  document.getElementById('cl-total').textContent=fmtC(total);
+  var er=document.getElementById('cl-extra-row');
+  if(extra>0){document.getElementById('cl-extra-label').textContent=extraLabel;document.getElementById('cl-extra').textContent=fmtC(extra);er.style.display='flex';}
+  else{er.style.display='none';}
+  document.getElementById('cc-result').style.display='block';
+}
+document.querySelectorAll('#cc-price,#cc-down,#cc-rate,#cc-type,#cc-orig,#cc-appr,#cc-title,#cc-escrow,#fl-county,#fl-title-payer,#cc-tax,#cc-hoi').forEach(function(el){
+  el.addEventListener('input',calcCC);el.addEventListener('change',calcCC);
+});
+document.querySelectorAll('.cc-faq-q').forEach(function(q){
+  q.addEventListener('click',function(){
+    var i=this.closest('.cc-faq-item'),w=i.classList.contains('open');
+    document.querySelectorAll('.cc-faq-item').forEach(function(x){x.classList.remove('open');});
+    if(!w)i.classList.add('open');
+  });
+});
+calcCC();
+</script>
+<?php require_once '../includes/footer.php'; ?>

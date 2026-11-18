@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Texas Paycheck Calculator (2026) — Net Take-Home Pay | AmericaCalculator</title>
+  <meta name="description" content="Calculate your Texas net take-home paycheck with 0% state income tax. Free hourly and salaried calculator factoring in federal withholding, Social Security, and Medicare.">
+  <link rel="canonical" href="https://americacalculator.com/texas/paycheck-calculator">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #dc2626;
+      --primary-hover: #b91c1c;
+      --primary-light: #fef2f2;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --white: #ffffff;
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+    header { background: var(--white); border-bottom: 1px solid var(--slate-200); padding: 1rem 2rem; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: var(--slate-900); text-decoration: none; }
+    .logo span { color: var(--primary); }
+
+    .main-wrapper { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+    .page-title-area { text-align: center; margin-bottom: 2.5rem; }
+    .page-title-area h1 { font-size: 2.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 0.75rem; }
+    .page-title-area p { color: var(--slate-600); font-size: 1.1rem; max-width: 720px; margin: 0 auto; }
+
+    .calculator-container {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--slate-200);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .form-panel { padding: 2.25rem; }
+    .results-panel {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: var(--white);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .input-group { margin-bottom: 1.25rem; }
+    .input-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--slate-700); margin-bottom: 0.4rem; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-prefix { position: absolute; left: 1rem; color: var(--slate-600); font-weight: 600; }
+    .input-wrapper input, .input-wrapper select {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.25rem;
+      border: 1.5px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .input-wrapper input:focus, .input-wrapper select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1); }
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .hero-paycheck {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 14px;
+      padding: 1.75rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .hero-paycheck .label { font-size: 0.85rem; color: #a7f3d0; font-weight: 700; text-transform: uppercase; }
+    .hero-paycheck .val-main { font-size: 2.75rem; font-weight: 800; color: #34d399; margin: 0.25rem 0; }
+    .hero-paycheck .val-sub { font-size: 0.95rem; color: #cbd5e1; }
+
+    .breakdown-row { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-row span:first-child { color: #cbd5e1; }
+    .breakdown-row span:last-child { font-weight: 700; color: #38bdf8; }
+
+    .content-article { background: var(--white); border-radius: var(--radius); padding: 2.5rem; border: 1px solid var(--slate-200); }
+    .quick-summary-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
+
+    @media (max-width: 860px) {
+      .calculator-container { grid-template-columns: 1fr; }
+      .grid-2-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">🇨🇱 Texas<span>Calculator</span></a>
+      <nav>
+        <a href="/texas/paycheck-calculator" style="color: var(--slate-700); font-weight: 600; text-decoration: none; margin-right: 1.5rem;">Texas Hub</a>
+        <a href="/real-estate/closing-cost-calculator-texas" style="color: var(--slate-700); font-weight: 600; text-decoration: none;">Texas Closing Costs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="page-title-area">
+      <h1>Texas Paycheck Calculator (2026)</h1>
+      <p>Calculate your net take-home pay in Texas with 0% state income tax. Model federal income tax withholding, Social Security, and Medicare deductions.</p>
+    </div>
+
+    <div class="calculator-container">
+      <div class="form-panel">
+        <div class="section-subtitle">💵 1. Salary & Pay Schedule</div>
+        
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="grossSalary">Gross Annual Pay</label>
+            <div class="input-wrapper">
+              <span class="input-prefix">$</span>
+              <input type="number" id="grossSalary" value="75000" step="1000">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="payFrequency">Pay Frequency</label>
+            <div class="input-wrapper" style="padding-left: 0;">
+              <select id="payFrequency" style="padding-left: 1rem;">
+                <option value="26" selected>Bi-Weekly (26 Pays/Yr)</option>
+                <option value="52">Weekly (52 Pays/Yr)</option>
+                <option value="24">Semi-Monthly (24 Pays/Yr)</option>
+                <option value="12">Monthly (12 Pays/Yr)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-subtitle" style="margin-top: 1.75rem;">📋 2. Tax Filing Status</div>
+
+        <div class="input-group">
+          <label for="filingStatus">Federal Filing Status</label>
+          <div class="input-wrapper" style="padding-left: 0;">
+            <select id="filingStatus" style="padding-left: 1rem;">
+              <option value="single" selected>Single Filer</option>
+              <option value="married">Married Filing Jointly</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group" style="margin-top: 1rem;">
+          <div style="background: var(--primary-light); padding: 1rem; border-radius: 8px; border: 1px solid #fecaca; display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.25rem;">⭐</span>
+            <div style="font-size: 0.85rem; color: #991b1b;">
+              <strong>Texas State Income Tax: 0.00%</strong><br>
+              The state of Texas does not withhold any state or municipal income taxes from your wages!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-panel">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem;">Take-Home Paycheck</h3>
+
+          <div class="hero-paycheck">
+            <div class="label">Net Pay Per Check</div>
+            <div class="val-main" id="netPaycheckDisplay">$2,267</div>
+            <div class="val-sub" id="netAnnualDisplay">$58,940 / year net take-home</div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1.25rem;">
+            <div class="breakdown-row">
+              <span>Gross Paycheck:</span>
+              <span id="grossCheckDisplay">$2,885</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Federal Income Tax:</span>
+              <span id="fedTaxDisplay" style="color: #fca5a5;">–$397</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Social Security (6.2%):</span>
+              <span id="ssTaxDisplay" style="color: #fca5a5;">–$179</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Medicare (1.45%):</span>
+              <span id="medTaxDisplay" style="color: #fca5a5;">–$42</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Texas State Income Tax:</span>
+              <span style="color: #34d399;">$0.00 (0%)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+          <div style="font-size: 0.85rem; color: #94a3b8;">Total Deductions Rate:</div>
+          <div style="font-size: 1.35rem; font-weight: 800; color: #38bdf8;" id="effectiveTaxRate">21.4% Withheld</div>
+        </div>
+      </div>
+    </div>
+
+    <article class="content-article">
+      <div class="quick-summary-box">
+        <h3 style="color: #991b1b;">💡 Quick Answer: How Much Tax is Taken from a Texas Paycheck?</h3>
+        <p style="color: #7f1d1d;">Texas is one of nine states with <strong>zero personal state income tax</strong>. On a $75,000 salary, you take home approximately <strong>$58,940 per year ($2,267 bi-weekly)</strong>. The only deductions withheld are federal income tax (~$10,322), 6.2% Social Security ($4,650), and 1.45% Medicare ($1,088).</p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    function calculateTexasPaycheck() {
+      const gross = parseFloat(document.getElementById('grossSalary').value) || 0;
+      const freq = parseFloat(document.getElementById('payFrequency').value) || 26;
+      const filing = document.getElementById('filingStatus').value;
+
+      const grossPerCheck = gross / freq;
+      const ssPerCheck = grossPerCheck * 0.062;
+      const medPerCheck = grossPerCheck * 0.0145;
+
+      // 2026 simplified federal bracket approximation
+      const stdDeduction = (filing === 'single') ? 14600 : 29200;
+      const taxableFed = Math.max(0, gross - stdDeduction);
+      
+      let fedTaxAnnual = 0;
+      if (filing === 'single') {
+        if (taxableFed > 100525) fedTaxAnnual = 16290 + (taxableFed - 100525) * 0.24;
+        else if (taxableFed > 47150) fedTaxAnnual = 5426 + (taxableFed - 47150) * 0.22;
+        else if (taxableFed > 11600) fedTaxAnnual = 1160 + (taxableFed - 11600) * 0.12;
+        else fedTaxAnnual = taxableFed * 0.10;
+      } else {
+        if (taxableFed > 201050) fedTaxAnnual = 32580 + (taxableFed - 201050) * 0.24;
+        else if (taxableFed > 94300) fedTaxAnnual = 10852 + (taxableFed - 94300) * 0.22;
+        else if (taxableFed > 23200) fedTaxAnnual = 2320 + (taxableFed - 23200) * 0.12;
+        else fedTaxAnnual = taxableFed * 0.10;
+      }
+
+      const fedPerCheck = fedTaxAnnual / freq;
+      const netCheck = grossPerCheck - fedPerCheck - ssPerCheck - medPerCheck;
+      const netAnnual = netCheck * freq;
+      const effRate = gross > 0 ? ((gross - netAnnual) / gross) * 100 : 0;
+
+      document.getElementById('netPaycheckDisplay').innerText = '$' + Math.round(netCheck).toLocaleString();
+      document.getElementById('netAnnualDisplay').innerText = '$' + Math.round(netAnnual).toLocaleString() + ' / year net take-home';
+      document.getElementById('grossCheckDisplay').innerText = '$' + Math.round(grossPerCheck).toLocaleString();
+      document.getElementById('fedTaxDisplay').innerText = '–$' + Math.round(fedPerCheck).toLocaleString();
+      document.getElementById('ssTaxDisplay').innerText = '–$' + Math.round(ssPerCheck).toLocaleString();
+      document.getElementById('medTaxDisplay').innerText = '–$' + Math.round(medPerCheck).toLocaleString();
+      document.getElementById('effectiveTaxRate').innerText = effRate.toFixed(1) + '% Withheld';
+    }
+
+    document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', calculateTexasPaycheck));
+    calculateTexasPaycheck();
+  </script>
+</body>
+</html>

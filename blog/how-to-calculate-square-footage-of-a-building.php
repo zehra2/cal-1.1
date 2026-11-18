@@ -1,0 +1,291 @@
+<?php
+$pageTitle       = 'How to Easily Calculate Square Footage of a Building';
+$metaDescription = 'Learn how to calculate building square footage using length, width, floors, and irregular sections. Includes examples for homes, offices, garages, and commercial buildings.';
+$metaKeywords    = 'how to calculate square footage of a building, building square footage formula, calculate building area, floor area calculation';
+$schemaData = [
+  '@context' => 'https://schema.org',
+  '@graph'   => [
+    ['@type' => 'Article',
+     'headline' => 'How to Easily Calculate Square Footage of a Building',
+     'description' => 'Step-by-step guide to calculating square footage of rectangular and irregular buildings, multi-story structures, garages, and commercial spaces.',
+     'url' => 'https://americacalculator.com/blog/how-to-calculate-square-footage-of-a-building',
+     'datePublished' => '2026-07-01',
+     'dateModified'  => '2026-07-14',
+     'author' => ['@type' => 'Person', 'name' => 'James Carter', 'jobTitle' => 'Construction & Home Improvement Specialist'],
+     'publisher' => ['@type' => 'Organization', 'name' => 'AmericaCalculator.com', 'url' => 'https://americacalculator.com/'],
+     'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => 'https://americacalculator.com/blog/how-to-calculate-square-footage-of-a-building'],
+    ],
+    ['@type' => 'BreadcrumbList', 'itemListElement' => [
+      ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+      ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog',  'item' => 'https://americacalculator.com/blog/'],
+      ['@type' => 'ListItem', 'position' => 3, 'name' => 'How to Calculate Square Footage of a Building', 'item' => 'https://americacalculator.com/blog/how-to-calculate-square-footage-of-a-building'],
+    ]],
+    ['@type' => 'FAQPage', 'mainEntity' => [
+      ['@type' => 'Question', 'name' => 'How do you calculate the square footage of a building?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Multiply the length by width for each rectangular section, then add the areas of all sections and floors.']],
+      ['@type' => 'Question', 'name' => 'Does building square footage include all floors?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Total building square footage typically includes all floors, but the exact definition depends on the purpose and measurement standard.']],
+      ['@type' => 'Question', 'name' => 'Do I include the garage in square footage?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Include the garage only if the calculation requires total building area. Exclude it when calculating finished living space or heated floor area.']],
+      ['@type' => 'Question', 'name' => 'What is the difference between footprint and total square footage?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'The building footprint is the ground-level area covered. Total square footage includes all floors stacked on top of that footprint.']],
+    ]],
+  ],
+];
+require_once '../includes/header.php';
+?>
+<style>
+*{box-sizing:border-box;}body{background:#f8fafc;}
+.blog-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.blog-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}.blog-bc a{color:#64748b;text-decoration:none;}.blog-bc a:hover{color:#1d4ed8;}
+.blog-header{margin-bottom:1.75rem;}.blog-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.blog-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}.blog-meta span{font-size:.82rem;color:#64748b;}.blog-meta strong{color:#1e293b;}
+.blog-badge{background:#dbeafe;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.blog-cat{background:#fef3c7;color:#92400e;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #fde68a;}
+.blog-header .intro{font-size:1.05rem;color:#475569;line-height:1.75;border-left:4px solid #1d4ed8;padding:.9rem 1rem .9rem 1.25rem;background:#f8fbff;border-radius:0 8px 8px 0;margin:0;}
+.snippet-box{background:linear-gradient(135deg,#1d4ed8,#1e40af);border-radius:12px;padding:1.5rem;margin-bottom:1.75rem;color:#fff;}
+.snippet-box .sq{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.7);margin-bottom:.5rem;}
+.snippet-box .sa{font-size:1.02rem;font-weight:600;line-height:1.65;margin:0;}
+.blog-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.blog-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #eff6ff;}
+.blog-section h3{font-size:1.02rem;color:#1e293b;margin:1.35rem 0 .55rem;font-weight:700;}
+.blog-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}.blog-section p:last-child{margin-bottom:0;}
+.blog-section a{color:#1d4ed8;font-weight:600;text-decoration:none;}.blog-section a:hover{text-decoration:underline;}
+.blog-section strong{color:#1e293b;}
+.blog-section ul,.blog-section ol{color:#475569;padding-left:1.4rem;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}.blog-section li{margin-bottom:.45rem;}
+.formula-box{background:#f0fdf4;border:2px solid #16a34a;border-radius:10px;padding:1.1rem 1.35rem;margin:1rem 0;font-family:monospace;font-size:1rem;color:#065f46;font-weight:700;}
+.blog-table{width:100%;border-collapse:collapse;border-radius:9px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:1.1rem;}
+.blog-table th{background:#1d4ed8;color:#fff;padding:9px 13px;font-size:.84rem;font-weight:600;text-align:left;}
+.blog-table td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:.88rem;color:#334155;}
+.blog-table tr:last-child td{border-bottom:none;}.blog-table tr:nth-child(even) td{background:#f8fafc;}
+.blog-table .hl{color:#1d4ed8;font-weight:700;}
+.blog-info{background:#eff6ff;border-left:4px solid #1d4ed8;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#1e3a8a;line-height:1.65;}
+.blog-warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#92400e;line-height:1.65;}
+.blog-cta{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:13px;padding:1.75rem;margin-bottom:1.5rem;text-align:center;}
+.blog-cta h3{color:#fff;font-size:1.15rem;font-weight:800;margin:0 0 .5rem;}.blog-cta p{color:#94a3b8;font-size:.9rem;margin:0 0 1rem;line-height:1.55;}
+.blog-cta-btns{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;}
+.blog-cta-btns a{display:inline-block;background:#1d4ed8;color:#fff;padding:9px 20px;border-radius:7px;font-weight:700;font-size:.85rem;text-decoration:none;}
+.blog-cta-btns a:hover{background:#1e40af;}.blog-cta-btns a.sec{background:#334155;}
+.blog-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}.blog-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.blog-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.blog-faq-q::after{content:'+';color:#1d4ed8;font-size:1.2rem;flex-shrink:0;}.blog-faq-item.open .blog-faq-q::after{content:'−';}
+.blog-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}.blog-faq-item.open .blog-faq-a{display:block;}
+.blog-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.1rem;}
+.blog-toc{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;}
+.blog-toc-head{background:#1d4ed8;color:#fff;padding:.9rem 1.25rem;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.blog-toc ul{list-style:none;padding:.5rem 0;margin:0;}
+.blog-toc ul li a{display:block;padding:.5rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+.blog-toc ul li a:hover,.blog-toc ul li a.active{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+.blog-related{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;}
+.blog-related-head{padding:.8rem 1.25rem;background:#f8fafc;border-bottom:1px solid #f1f5f9;font-size:.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em;}
+.blog-related ul{list-style:none;padding:.4rem 0;margin:0;}
+.blog-related ul li a{display:block;padding:.55rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.blog-related ul li a:hover{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+@media(max-width:900px){.blog-wrap{grid-template-columns:1fr;}.blog-sidebar{position:static;display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.blog-sidebar{grid-template-columns:1fr;}.blog-header h1{font-size:1.6rem;}}
+</style>
+
+<main id="main-content">
+<div class="blog-wrap">
+<article>
+  <div class="blog-bc"><a href="/">Home</a> › <a href="/blog/">Blog</a> › How to Calculate Square Footage of a Building</div>
+
+  <div class="blog-header">
+    <h1>How to Easily Calculate Square Footage of a Building</h1>
+    <div class="blog-meta">
+      <span>By <strong>James Carter</strong> | Construction &amp; Home Improvement Specialist</span>
+      <span class="blog-badge">🕐 Last Updated: July 2026</span>
+      <span class="blog-cat">🏗️ Construction</span>
+    </div>
+    <p class="intro">To calculate the square footage of a simple rectangular building, multiply its <strong>length by width</strong>. For multi-story or irregular buildings, calculate each floor or section separately and add the results. This guide covers homes, offices, garages, and commercial buildings in cities from Oklahoma City to Kansas City.</p>
+  </div>
+
+  <div class="snippet-box" id="quick-answer">
+    <div class="sq">Quick Answer — Building Square Footage</div>
+    <p class="sa">Rectangular building: <strong>Length × Width</strong>. Multi-story: add each floor's area. Irregular: divide into sections, calculate each, sum them. A 60×40 ft one-story building = <strong>2,400 sq ft</strong>. Two stories = <strong>4,800 sq ft</strong>. Always confirm what to include (garage, basement, porch) based on the purpose of your calculation.</p>
+  </div>
+
+  <div class="blog-section" id="formula">
+    <h2>Building Square Footage Formula</h2>
+    <div class="formula-box">Rectangular Building = Length × Width</div>
+    <div class="formula-box">Multi-Story = Floor 1 Area + Floor 2 Area + Floor 3 Area ...</div>
+
+    <h3>Example: One-Story Building</h3>
+    <p>A building in Oklahoma City measuring 60 feet long × 40 feet wide:</p>
+    <div class="formula-box">60 × 40 = 2,400 sq ft footprint</div>
+    <p>If the building has two identical floors:</p>
+    <div class="formula-box">2,400 × 2 = 4,800 sq ft total floor area</div>
+  </div>
+
+  <div class="blog-section" id="step">
+    <h2>Step-by-Step Measurement Method</h2>
+    <ol>
+      <li>Obtain a floor plan, property survey, or measuring tape.</li>
+      <li>Measure the length and width of each rectangular section.</li>
+      <li>Convert all dimensions to feet.</li>
+      <li>Multiply length × width for each section.</li>
+      <li>Measure additional floors separately.</li>
+      <li>Add all areas together.</li>
+      <li>Subtract any areas excluded by your measurement standard (e.g., unfinished garage for living space calculations).</li>
+    </ol>
+    <div class="blog-info">💡 Sketch the building footprint and record exterior measurements as you move around the structure — especially important for buildings with extensions, wings, porches, or angled walls.</div>
+  </div>
+
+  <div class="blog-section" id="irregular">
+    <h2>Measuring an Irregular Building</h2>
+    <p>Many buildings have a main rectangle plus an attached garage, rear extension, or side addition. Measure each section separately.</p>
+    <h3>Example: Building With Three Sections</h3>
+    <table class="blog-table">
+      <thead><tr><th>Section</th><th>Length</th><th>Width</th><th>Area</th></tr></thead>
+      <tbody>
+        <tr><td>Main building</td><td>50 ft</td><td>30 ft</td><td>1,500 sq ft</td></tr>
+        <tr><td>Rear extension</td><td>20 ft</td><td>15 ft</td><td>300 sq ft</td></tr>
+        <tr><td>Attached office</td><td>12 ft</td><td>10 ft</td><td>120 sq ft</td></tr>
+        <tr><td><strong>Total</strong></td><td>—</td><td>—</td><td class="hl"><strong>1,920 sq ft</strong></td></tr>
+      </tbody>
+    </table>
+    <p>For triangular sections, use: <strong>Base × Height / 2</strong>, then add to the rectangular total.</p>
+  </div>
+
+  <div class="blog-section" id="type">
+    <h2>Interior vs. Exterior Square Footage</h2>
+    <p>The phrase "building square footage" can mean different things. Clarify the purpose before measuring.</p>
+    <table class="blog-table">
+      <thead><tr><th>Measurement Type</th><th>What It Includes</th><th>Common Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Building footprint</strong></td><td>Ground-level area covered</td><td>Site planning, permits</td></tr>
+        <tr><td><strong>Interior floor area</strong></td><td>Usable space inside exterior walls</td><td>Flooring, HVAC, real estate</td></tr>
+        <tr><td><strong>Gross building area</strong></td><td>Total area within exterior walls + common areas</td><td>Commercial leasing</td></tr>
+        <tr><td><strong>Exterior wall area</strong></td><td>Wall surface (perimeter × height)</td><td>Siding, paint, insulation</td></tr>
+      </tbody>
+    </table>
+    <div class="blog-warn">⚠️ Do not use interior floor area to estimate exterior siding — the formula is different: <strong>Perimeter × Wall Height</strong> then subtract windows and doors.</div>
+  </div>
+
+  <div class="blog-section" id="multi-story">
+    <h2>Multi-Story Building Example</h2>
+    <p>A two-story building in Kansas City, Missouri:</p>
+    <ul>
+      <li>First floor: 80 ft × 45 ft</li>
+      <li>Second floor: 80 ft × 45 ft</li>
+      <li>Attached garage: 24 ft × 24 ft</li>
+    </ul>
+    <div class="formula-box">First floor: 80 × 45 = 3,600 sq ft<br>Second floor: 80 × 45 = 3,600 sq ft<br>Garage: 24 × 24 = 576 sq ft</div>
+    <p><strong>Including garage (total building area):</strong> 3,600 + 3,600 + 576 = <strong>7,776 sq ft</strong></p>
+    <p><strong>Excluding garage (heated living space):</strong> 3,600 + 3,600 = <strong>7,200 sq ft</strong></p>
+    <div class="blog-info">💡 This example shows why the intended measurement standard matters. Always confirm what is included before calculating for permits, appraisals, or real-estate listings.</div>
+  </div>
+
+  <div class="blog-section" id="inclusion">
+    <h2>Should You Include the Garage, Basement, or Porch?</h2>
+    <p>The answer depends entirely on the purpose of the calculation. Measure these areas separately so you can include or exclude them as needed:</p>
+    <ul>
+      <li>Attached and detached garages</li>
+      <li>Finished and unfinished basements</li>
+      <li>Attics and lofts</li>
+      <li>Screened porches and patios</li>
+      <li>Balconies and decks</li>
+      <li>Mechanical rooms and storage areas</li>
+    </ul>
+    <p>For real-estate listings, appraisals, permits, or tax documents — use the measurement rules required by the relevant authority. Standards vary by jurisdiction and property type.</p>
+  </div>
+
+  <div class="blog-cta">
+    <h3>Calculate Building &amp; Room Areas Instantly</h3>
+    <p>Use our free construction calculators for concrete, slabs, cubic yards, and more — designed for US homeowners and contractors.</p>
+    <div class="blog-cta-btn">
+      <a href="/construction/concrete-calculator">🧱 Concrete Calculator</a>
+      <a href="/construction/concrete-slab-calculator" class="sec">📐 Concrete Slab</a>
+      <a href="/blog/how-to-calculate-square-feet-of-a-room" class="sec">🏠 Room Square Footage</a>
+    </div>
+  </div>
+
+  <div class="blog-section" id="mistake">
+    <h2>Common Building Measurement Mistakes</h2>
+    <ul>
+      <li>Adding length and width instead of multiplying them.</li>
+      <li>Counting the same extension twice.</li>
+      <li>Including a garage when the project requires living area only.</li>
+      <li>Forgetting a second or third floor.</li>
+      <li>Mixing interior and exterior measurements.</li>
+      <li>Using feet-and-inches values incorrectly without converting.</li>
+      <li>Measuring only the largest rectangle and ignoring smaller sections.</li>
+    </ul>
+    <p>Keep all measurements in a written table — this makes the calculation easy to verify and update if you find an error.</p>
+  </div>
+
+  <div class="blog-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <?php $faqs = [
+      ['How do you calculate the square footage of a building?', 'Multiply length × width for each rectangular section, then add the areas of all sections and floors together.'],
+      ['Does building square footage include all floors?', 'Total building square footage typically includes all floors, but the exact definition depends on the purpose and measurement standard. Confirm with your local authority or appraiser.'],
+      ['Do I include the garage?', 'Include the garage only if the calculation requires total building area. Exclude it when calculating finished living space or heated floor area.'],
+      ['How do you calculate square footage of an L-shaped building?', 'Divide the L-shape into two rectangles. Calculate the area of each rectangle, then add the results together.'],
+      ['What is the difference between footprint and total square footage?', 'The footprint is the ground-level area covered by the building. Total square footage includes all floors stacked on top of that footprint.'],
+    ]; foreach($faqs as $f): ?>
+    <div class="blog-faq-item">
+      <div class="blog-faq-q"><?php echo $f[0]; ?></div>
+      <div class="blog-faq-a"><?php echo $f[1]; ?></div>
+    </div>
+    <?php endforeach; ?>
+  </div>
+
+  <div class="blog-section">
+    <h2>Related Articles</h2>
+    <ul>
+      <li><a href="/blog/how-to-calculate-square-feet-of-a-room">How to Calculate Square Feet of a Room</a> — for measuring individual interior spaces</li>
+      <li><a href="/blog/how-to-calculate-roof-square-footage">How to Calculate Roof Square Footage</a> — pitch factors, roofing squares, and waste</li>
+      <li><a href="/construction/home-addition-cost-calculator">Home Addition Cost Calculator</a> — estimate renovation cost by square footage</li>
+      <li><a href="/construction/concrete-calculator">Concrete Calculator</a> — estimate concrete for foundations and slabs</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:.85rem;color:#94a3b8;"><strong>Disclaimer:</strong> This guide provides general measurement information and is not a substitute for an official survey, appraisal, architectural plan, or local building-code requirement.</p>
+  </div>
+
+</article>
+
+<aside class="blog-sidebar">
+  <div class="blog-toc">
+    <div class="blog-toc-head">📋 On This Page</div>
+    <ul>
+      <li><a href="#quick-answer">Quick Answer</a></li>
+      <li><a href="#formula">Building Formula</a></li>
+      <li><a href="#step">Step-by-Step Method</a></li>
+      <li><a href="#irregular">Irregular Buildings</a></li>
+      <li><a href="#type">Interior vs Exterior</a></li>
+      <li><a href="#multi-story">Multi-Story Example</a></li>
+      <li><a href="#inclusion">Garage &amp; Basement</a></li>
+      <li><a href="#mistake">Common Mistakes</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🔗 Related Articles</div>
+    <ul>
+      <li><a href="/blog/how-to-calculate-square-feet-of-a-room">🏠 Room Square Footage</a></li>
+      <li><a href="/blog/how-to-calculate-roof-square-footage">🏠 Roof Square Footage</a></li>
+      <li><a href="/blog/ohio-state-income-tax">📋 Ohio Income Tax Guide</a></li>
+      <li><a href="/blog/how-to-calculate-cap-rate">🏘️ Cap Rate Guide</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🧱 Construction Tools</div>
+    <ul>
+      <li><a href="/construction/concrete-calculator">Concrete Calculator</a></li>
+      <li><a href="/construction/concrete-slab-calculator">Concrete Slab</a></li>
+      <li><a href="/construction/home-addition-cost-calculator">Home Addition Cost</a></li>
+      <li><a href="/calculators/cubic-yard.php">Cubic Yard</a></li>
+    </ul>
+  </div>
+</aside>
+</div>
+</main>
+<script>
+document.querySelectorAll('.blog-faq-q').forEach(function(q){
+  q.addEventListener('click',function(){
+    var item=this.closest('.blog-faq-item'),was=item.classList.contains('open');
+    document.querySelectorAll('.blog-faq-item').forEach(function(x){x.classList.remove('open');});
+    if(!was)item.classList.add('open');
+  });
+});
+</script>
+<?php require_once '../includes/footer.php'; ?>

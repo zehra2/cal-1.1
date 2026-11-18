@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Built Calculators Portfolio (2026) | AmericaCalculator.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #2563eb;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --white: #ffffff;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; padding-bottom: 4rem; }
+    
+    header { background: var(--white); border-bottom: 1px solid var(--slate-200); padding: 1.5rem 2rem; }
+    .header-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.35rem; font-weight: 800; color: var(--slate-900); text-decoration: none; }
+    .logo span { color: var(--primary); }
+
+    .hero { text-align: center; max-width: 800px; margin: 3rem auto 2.5rem; padding: 0 1.5rem; }
+    .hero h1 { font-size: 2.5rem; font-weight: 800; color: var(--slate-900); margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .hero p { font-size: 1.15rem; color: var(--slate-600); }
+
+    .grid-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.75rem; }
+    
+    .calc-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--slate-200);
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .calc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); border-color: #cbd5e1; }
+
+    .card-top { padding: 1.75rem; }
+    .card-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+    }
+    .badge-loan { background: #eff6ff; color: #2563eb; }
+    .badge-realestate { background: #ecfdf5; color: #059669; }
+    .badge-tax { background: #fef2f2; color: #dc2626; }
+
+    .calc-card h2 { font-size: 1.35rem; font-weight: 800; color: var(--slate-900); margin-bottom: 0.5rem; }
+    .calc-card p { font-size: 0.95rem; color: var(--slate-600); line-height: 1.5; margin-bottom: 1rem; }
+
+    .card-bottom {
+      padding: 1.25rem 1.75rem;
+      background: var(--slate-50);
+      border-top: 1px solid var(--slate-100);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-launch {
+      background: var(--primary);
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .btn-launch:hover { opacity: 0.9; }
+
+    .btn-blueprint {
+      color: var(--slate-700);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .btn-blueprint:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">🇺🇸 America<span>Calculator</span></a>
+      <span style="font-weight: 600; font-size: 0.9rem; color: #10b981; background: #ecfdf5; padding: 0.35rem 0.75rem; border-radius: 9999px;">
+        ● 6 New Interactive Calculators Built
+      </span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Newly Created Interactive Calculators</h1>
+    <p>All requested calculators have been engineered as self-contained, responsive, and reactive web applications ready for deployment to AmericaCalculator.com.</p>
+  </section>
+
+  <main class="grid-container">
+
+    <!-- 1. DTI Calculator -->
+    <div class="calc-card">
+      <div class="card-top">
+        <span class="card-badge badge-loan">Loan Cluster • High Intent</span>
+        <h2>Debt-to-Income (DTI) Calculator</h2>
+        <p>Calculates front-end and back-end ratios in real time with automatic qualification scoring for Conventional, FHA, and VA mortgages.</p>
+      </div>
+      <div class="card-bottom">
+        <a href="debt-to-income-calculator.html" class="btn-launch">Launch Tool →</a>
+        <a href="../new-calculators/debt-to-income-calculator.md" class="btn-blueprint">SEO Blueprint</a>
+      </div>
+    </div>
+
+    <!-- 2. HOA Fee Calculator -->
+    <div class="calc-card">
+      <div class="card-top">
+        <span class="card-badge badge-realestate">Real Estate Cluster</span>
+        <h2>HOA Fee Buying Power Calculator</h2>
+        <p>Calculates exact dollar loss in mortgage purchasing power caused by monthly condo dues and models 10-year fee inflation.</p>
+      </div>
+      <div class="card-bottom">
+        <a href="hoa-fee-calculator.html" class="btn-launch" style="background: #059669;">Launch Tool →</a>
+        <a href="../new-calculators/hoa-fee-calculator.md" class="btn-blueprint">SEO Blueprint</a>
+      </div>
+    </div>
+
+    <!-- 3. Property Tax Calculator -->
+    <div class="calc-card">
+      <div class="card-top">
+        <span class="card-badge badge-realestate">Real Estate Cluster</span>
+        <h2>Property Tax Calculator (By State)</h2>
+        <p>Pre-loaded with 50-state tax benchmarks, county millage rate formulas, homestead exemptions, and 2-month escrow cushions.</p>
+      </div>
+      <div class="card-bottom">
+        <a href="property-tax-calculator.html" class="btn-launch" style="background: #4f46e5;">Launch Tool →</a>
+        <a href="../new-calculators/property-tax-calculator.md" class="btn-blueprint">SEO Blueprint</a>
+      </div>
+    </div>
+
+    <!-- 4. Mortgage Refinance Calculator -->
+    <div class="calc-card">
+      <div class="card-top">
+        <span class="card-badge badge-realestate">Real Estate Cluster</span>
+        <h2>Refinance Break-Even Calculator</h2>
+        <p>Determines exact break-even timeline in months, compares old vs. new payments, and calculates 5-year net savings.</p>
+      </div>
+      <div class="card-bottom">
+        <a href="mortgage-refinance-calculator.html" class="btn-launch" style="background: #0284c7;">Launch Tool →</a>
+        <a href="../new-calculators/mortgage-refinance-calculator.md" class="btn-blueprint">SEO Blueprint</a>
+      </div>
+    </div>
+
+    <!-- 5. Rent Affordability Calculator -->
+    <div class="calc-card">
+      <div class="card-top">
+        <span class="card-badge badge-realestate">Real Estate Cluster</span>
+        <h2>Rent Affordability Calculator</h2>
+        <p>Calculates maximum lease affordability using the 30% gross rule, 40x landlord approval rule, and take-home budget leftovers.</p>
+      </div>
+      <div class="card-bottom">
+        <a href="rent-affordability-calculator.html" class="btn-launch" style="background: #8b5cf6;">Launch Tool →</a>
+        <a href="../new-calculators/rent-affordability-calculator.md" class="btn-blueprint">SEO Blueprint</a>
+      </div>
+    </div>
+
+    <!-- 6. HELOC Calculator -->
+    <div class="calc-card">
+      <div class="card-top">
+        <span class="card-badge badge-loan">Loan Cluster</span>
+        <h2>HELOC Payment Shock Calculator</h2>
+        <p>Calculates available credit line at 85% CLTV and models payment shock transitioning from 10-yr draw to 20-yr repayment.</p>
+      </div>
+      <div class="card-bottom">
+        <a href="heloc-calculator.html" class="btn-launch" style="background: #d97706;">Launch Tool →</a>
+        <a href="../new-calculators/heloc-calculator.md" class="btn-blueprint">SEO Blueprint</a>
+      </div>
+    </div>
+
+    <!-- 7. Texas Paycheck Calculator -->
+    <div class="calc-card">
+      <div class="card-top">
+        <span class="card-badge badge-tax">State Paycheck Expansion</span>
+        <h2>Texas Paycheck Calculator (2026)</h2>
+        <p>Features 0% state income tax mechanics, FICA withholdings, federal brackets, and salary/hourly take-home outputs.</p>
+      </div>
+      <div class="card-bottom">
+        <a href="texas-paycheck-calculator.html" class="btn-launch" style="background: #dc2626;">Launch Tool →</a>
+        <a href="../new-calculators/state-paycheck-expansion-tx-ca-fl.md" class="btn-blueprint">SEO Blueprint</a>
+      </div>
+    </div>
+
+    <!-- 8. Boat Loan Calculator -->
+    <div class="calc-card">
+      <div class="card-top">
+        <span class="card-badge badge-loan">Loan Cluster</span>
+        <h2>Boat Loan Payment Calculator</h2>
+        <p>Marine financing calculator with 5- to 20-year terms, marine survey fee estimation, and down payment modeling.</p>
+      </div>
+      <div class="card-bottom">
+        <a href="boat-loan-calculator.html" class="btn-launch" style="background: #0284c7;">Launch Tool →</a>
+        <a href="../new-calculators/boat-loan-calculator.md" class="btn-blueprint">SEO Blueprint</a>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,415 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "How to Calculate Cap Rate 2026 | Formula & Example";
+$metaDescription = "Learn how to calculate cap rate step-by-step. Includes the NOI formula, worked examples for Memphis and Cleveland, 2026 US benchmarks by city, and the 5 mistakes that destroy returns.";
+$metaKeywords    = 'how to calculate cap rate, cap rate formula, cap rate calculator, what is cap rate, cap rate real estate, cap rate vs cash on cash, good cap rate 2026, cap rate by city';
+$schemaData = [
+  '@context' => 'https://schema.org',
+  '@graph'   => [
+    ['@type' => 'Article',
+     'headline' => 'How to Calculate Cap Rate: Formula, Examples & 2026 Benchmarks',
+     'description' => 'Complete guide to calculating capitalization rate for real estate investors. Includes the NOI formula, worked examples, 2026 benchmarks by city, and common mistakes.',
+     'url' => 'https://americacalculator.com/blog/how-to-calculate-cap-rate',
+     'datePublished' => '2026-01-01', 'dateModified' => '2026-08-01',
+     'author' => ['@type' => 'Person', 'name' => 'Sarah Mitchell', 'jobTitle' => 'Real Estate Investment Analyst'],
+     'publisher' => ['@type' => 'Organization', 'name' => 'AmericaCalculator.com', 'url' => 'https://americacalculator.com/', 'logo' => ['@type' => 'ImageObject', 'url' => 'https://americacalculator.com/image/logo-america%20calculator.jpg']],
+     'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => 'https://americacalculator.com/blog/how-to-calculate-cap-rate'],
+    ],
+    ['@type' => 'BreadcrumbList', 'itemListElement' => [
+      ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+      ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog',  'item' => 'https://americacalculator.com/blog/'],
+      ['@type' => 'ListItem', 'position' => 3, 'name' => 'How to Calculate Cap Rate', 'item' => 'https://americacalculator.com/blog/how-to-calculate-cap-rate'],
+    ]],
+    ['@type' => 'FAQPage', 'mainEntity' => [
+      ['@type' => 'Question', 'name' => 'What is the formula for cap rate?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Cap Rate = Net Operating Income (NOI) A Property Value × 100. NOI is gross rental income minus operating expenses including property taxes, insurance, management, maintenance, and vacancy allowance. Mortgage payments and capital expenditures are excluded.']],
+      ['@type' => 'Question', 'name' => 'Is a higher cap rate always better?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'No. A higher cap rate means more income relative to price, but it usually signals higher risk — older buildings, less stable neighborhoods, or markets with weaker fundamentals. A lower cap rate in a strong market can represent a safer, steadier investment. Context matters more than the number itself.']],
+      ['@type' => 'Question', 'name' => 'Does cap rate include mortgage payments?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'No. Mortgage principal and interest are explicitly excluded from cap rate. Cap rate measures property performance independent of financing. To evaluate a deal with your specific mortgage, use cash-on-cash return instead.']],
+      ['@type' => 'Question', 'name' => 'Should I use purchase price or current market value for cap rate?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Use current market value for the most accurate and professionally accepted calculation. Purchase price becomes outdated as property values change. Current market value reflects the true opportunity cost — what your capital could earn if reinvested elsewhere today.']],
+      ['@type' => 'Question', 'name' => 'What is the difference between cap rate and cash-on-cash return?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Cap rate ignores financing and measures the property\'s unlevered annual return (NOI / Property Value). Cash-on-cash return accounts for your actual mortgage and measures annual pre-tax cash flow relative to the cash you personally invested. Use cap rate to compare properties; use cash-on-cash to evaluate a specific financed deal.']],
+    ]],
+  ],
+];
+require_once '../includes/header.php';
+?>
+<style>
+*{box-sizing:border-box;}body{background:#f8fafc;}
+.blog-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.blog-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}
+.blog-bc a{color:#64748b;text-decoration:none;}.blog-bc a:hover{color:#059669;}
+.blog-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.blog-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}
+.blog-meta span{font-size:.82rem;color:#64748b;}.blog-meta strong{color:#1e293b;}
+.blog-badge{background:#dcfce7;color:#166534;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bbf7d0;}
+.blog-cat{background:#eff6ff;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.blog-intro{font-size:1.03rem;color:#475569;line-height:1.75;margin:0;border-left:4px solid #059669;padding:.9rem 1rem .9rem 1.25rem;background:#f0fdf4;border-radius:0 8px 8px 0;}
+.snippet-box{background:linear-gradient(135deg,#059669,#047857);border-radius:12px;padding:1.5rem;margin:1.5rem 0;color:#fff;}
+.snippet-box .sq{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.7);margin-bottom:.5rem;}
+.snippet-box .sa{font-size:1.02rem;font-weight:600;line-height:1.65;margin:0;}
+.snippet-box .formula{background:rgba(0,0,0,.25);border-radius:7px;padding:.75rem 1rem;font-family:'Courier New',monospace;font-size:1.1rem;font-weight:700;color:#fff;margin-top:.75rem;text-align:center;}
+.blog-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.blog-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #f0fdf4;}
+.blog-section h3{font-size:1.02rem;color:#1e293b;margin:1.35rem 0 .55rem;font-weight:700;}
+.blog-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}
+.blog-section p:last-child{margin-bottom:0;}
+.blog-section a{color:#059669;font-weight:600;text-decoration:none;}.blog-section a:hover{text-decoration:underline;}
+.blog-section strong{color:#1e293b;}
+.blog-section ul,.blog-section ol{color:#475569;padding-left:1.4rem;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}
+.blog-section li{margin-bottom:.45rem;}
+.blog-table{width:100%;border-collapse:collapse;border-radius:9px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:1.1rem;}
+.blog-table th{background:#059669;color:#fff;padding:9px 13px;font-size:.84rem;font-weight:600;text-align:left;}
+.blog-table td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:.88rem;color:#334155;}
+.blog-table tr:last-child td{border-bottom:none;}
+.blog-table tr:nth-child(even) td{background:#f8fafc;}
+.blog-table .hl{color:#059669;font-weight:700;}
+.blog-table .r{color:#dc2626;font-weight:700;}
+.blog-table .y{color:#d97706;font-weight:700;}
+.blog-info{background:#f0fdf4;border-left:4px solid #059669;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#065f46;line-height:1.65;}
+.blog-warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#92400e;line-height:1.65;}
+.blog-code{background:#0f172a;color:#6ee7b7;font-family:'Courier New',monospace;font-size:.95rem;padding:1rem 1.25rem;border-radius:8px;margin:1rem 0;line-height:1.9;}
+.blog-code code{display:block;}
+.blog-code code span{color:#fff;}
+.step-list{list-style:none;padding:0;margin:.85rem 0;counter-reset:step-c;}
+.step-list li{position:relative;padding-left:3rem;margin-bottom:1rem;counter-increment:step-c;}
+.step-list li::before{content:counter(step-c);position:absolute;left:0;top:0;width:28px;height:28px;background:linear-gradient(135deg,#059669,#047857);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.84rem;}
+.step-list li strong{display:block;color:#0f172a;margin-bottom:.2rem;font-size:.97rem;}
+.step-list li span{color:#475569;font-size:.93rem;line-height:1.65;}
+.blog-cta{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:13px;padding:1.75rem;margin-bottom:1.5rem;text-align:center;}
+.blog-cta h3{color:#fff;font-size:1.15rem;font-weight:800;margin:0 0 .5rem;}
+.blog-cta p{color:#94a3b8;font-size:.9rem;margin:0 0 1rem;line-height:1.55;}
+.blog-cta-btns{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;}
+.blog-cta-btns a{display:inline-block;background:#059669;color:#fff;padding:9px 20px;border-radius:7px;font-weight:700;font-size:.85rem;text-decoration:none;}
+.blog-cta-btns a:hover{background:#047857;}
+.blog-cta-btns a.sec{background:#334155;}.blog-cta-btns a.sec:hover{background:#475569;}
+.blog-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}
+.blog-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.blog-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.blog-faq-q::after{content:'+';color:#059669;font-size:1.2rem;flex-shrink:0;}
+.blog-faq-item.open .blog-faq-q::after{content:'−';}
+.blog-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.blog-faq-item.open .blog-faq-a{display:block;}
+/* Sidebar */
+.blog-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.1rem;}
+.blog-toc{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;}
+.blog-toc-head{background:#059669;color:#fff;padding:.9rem 1.25rem;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.blog-toc ul{list-style:none;padding:.5rem 0;margin:0;}
+.blog-toc ul li a{display:block;padding:.5rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+.blog-toc ul li a:hover,.blog-toc ul li a.active{color:#059669;background:#f0fdf4;border-left-color:#059669;}
+.blog-related{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;}
+.blog-related-head{padding:.8rem 1.25rem;background:#f8fafc;border-bottom:1px solid #f1f5f9;font-size:.75rem;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.05em;}
+.blog-related ul{list-style:none;padding:.4rem 0;margin:0;}
+.blog-related ul li a{display:block;padding:.55rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.blog-related ul li a:hover{color:#059669;background:#f0fdf4;border-left-color:#059669;}
+@media(max-width:900px){.blog-wrap{grid-template-columns:1fr;}.blog-sidebar{position:static;display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.blog-sidebar{grid-template-columns:1fr;}.blog-header h1{font-size:1.6rem;}}
+</style>
+
+<main id="main-content">
+<div class="blog-wrap">
+<article>
+  <div class="blog-bc"><a href="/">Home</a> › <a href="/blog/">Blog</a> › How to Calculate Cap Rate</div>
+
+  <div class="blog-header">
+    <h1>How to Calculate Cap Rate: Formula, Examples &amp; 2026 Benchmarks</h1>
+    <div class="blog-meta">
+      <span>By the <strong>AmericaCalculator.com editorial team</strong></span>
+      <span class="blog-badge">🕐 Last Updated: August 2026</span>
+      <span class="blog-cat">🏘️ Real Estate</span>
+    </div>
+    <p class="blog-intro">Cap rate is the single most useful number for screening investment properties — but most investors calculate it wrong. This guide breaks down the exact formula, what counts as NOI, worked examples for Memphis and Cleveland, and the five calculation mistakes that can turn a profitable deal into a money pit.</p>
+  </div>
+
+  <!-- FEATURED SNIPPET -->
+  <div class="snippet-box" id="formula-quick">
+    <div class="sq">Cap Rate Formula — Quick Answer</div>
+    <p class="sa">Cap rate (capitalization rate) = Net Operating Income (NOI) A Property Value × 100. NOI is gross rental income minus all operating expenses (property taxes, insurance, management, maintenance, vacancy) — <em>excluding</em> mortgage payments and capital expenditures. A $250,000 property with $18,000 annual NOI has a cap rate of <strong>7.2%</strong>.</p>
+    <div class="formula">Cap Rate = NOI / Property Value × 100</div>
+  </div>
+
+  <!-- WHAT IS CAP RATE -->
+  <div class="blog-section" id="what-i">
+    <h2>What Is Cap Rate?</h2>
+    <p>Cap rate, short for capitalization rate, is the ratio of a property's annual net operating income to its current market value or purchase price. In plain English: <strong>cap rate tells you your annual return if you bought the property entirely with cash.</strong></p>
+    <p>It strips away financing, taxes, and personal financial situations so you can compare properties on equal footing — whether it's a $200,000 duplex in Memphis or a $2 million apartment complex in Dallas. That's what makes it the go-to screening metric for real estate investors, commercial appraisers, and institutional buyers.</p>
+    <p>Cap rate alone doesn't tell you whether a deal is good or bad. It tells you how efficiently the property converts its value into income — and gives you a standardized number to compare against similar properties in the same market.</p>
+    <div class="blog-info">💡 <strong>Key insight:</strong> Cap rate is an <em>unlevered</em> metric — it deliberately ignores your mortgage. Two investors buying the same property with different financing will have the same cap rate. For a metric that accounts for your specific loan terms, use <a href="/real-estate/cash-on-cash-return-calculator">cash-on-cash return</a> instead.</div>
+  </div>
+
+  <!-- THE FORMULA -->
+  <div class="blog-section" id="formula">
+    <h2>The Cap Rate Formula Explained</h2>
+    <div class="blog-code">
+      <code><span>Cap Rate = Net Operating Income (NOI) A Property Value × 100</span></code>
+      <code>Example: $18,000 NOI / $250,000 value × 100 = <span>7.2%</span></code>
+    </div>
+
+    <h3>What Is Net Operating Income (NOI)?</h3>
+    <p>NOI is the money your property generates <strong>after operating expenses, before any debt payments.</strong> It is not your cash flow. It is not your taxable income. It is the property's raw earning power as a standalone asset.</p>
+    <p><strong>NOI = Gross Rental Income + Other Income − Operating Expenses</strong></p>
+
+    <h3>Operating Expenses — What's Included</h3>
+    <ul>
+      <li>Property taxes</li>
+      <li>Property insurance (landlord/hazard policy)</li>
+      <li>Property management fees (typically 8–12% of rent)</li>
+      <li>Routine maintenance and repairs</li>
+      <li>Landlord-paid utilities (water, trash, common area electric)</li>
+      <li>Landscaping, snow removal, pest control</li>
+      <li>Vacancy allowance (typically 5–10% of gross rent)</li>
+    </ul>
+
+    <h3>Operating Expenses — What's Excluded</h3>
+    <ul>
+      <li><strong>Mortgage principal and interest</strong> (debt service)</li>
+      <li>Income taxes</li>
+      <li>Depreciation</li>
+      <li>Capital expenditures (roof replacement, HVAC, major renovations)</li>
+    </ul>
+
+    <div class="blog-warn">⚠️ <strong>The #1 mistake:</strong> Including your mortgage payment in operating expenses. This invalidates the cap rate calculation entirely. Mortgage is a financing cost, not a property operating cost. Two investors — one all-cash, one leveraged — should calculate the same cap rate for the same property.</div>
+
+    <h3>Purchase Price or Current Market Value?</h3>
+    <p>You can use either, but <strong>current market value is the professional standard.</strong> Here's why: if you bought a property for $300,000 five years ago and it's now worth $500,000, using your original price gives a misleadingly high cap rate that does not reflect current market reality. Current market value tells you what your investment could earn if you sold and reinvested — the true opportunity cost of keeping the property.</p>
+  </div>
+
+  <!-- EXAMPLE 1 -->
+  <div class="blog-section" id="example-1">
+    <h2>Worked Example 1: Single-Family Rental in Memphis, TN</h2>
+    <p>Memphis is consistently one of the highest-yielding rental markets in the US. Here's a realistic 2026 scenario:</p>
+    <table class="blog-table">
+      <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Purchase Price (current market value)</td><td>$250,000</td></tr>
+        <tr><td>Monthly Rent</td><td>$2,000</td></tr>
+        <tr><td>Gross Annual Rent</td><td>$24,000</td></tr>
+        <tr><td>Annual Operating Expenses</td><td>$6,000</td></tr>
+        <tr><td><strong>Net Operating Income (NOI)</strong></td><td><strong>$18,000</strong></td></tr>
+      </tbody>
+    </table>
+    <ol class="step-list">
+      <li><strong>Calculate Gross Annual Income</strong><span>$2,000/month × 12 = $24,000/year</span></li>
+      <li><strong>Subtract Operating Expenses</strong><span>$24,000 − $6,000 = $18,000 NOI</span></li>
+      <li><strong>Apply the Cap Rate Formula</strong><span>$18,000 / $250,000 × 100 = <strong>7.2% cap rate</strong></span></li>
+    </ol>
+    <p>A 7.2% cap rate means if you paid $250,000 all-cash for this Memphis property, you would earn a 7.2% annual return purely from income — before appreciation, tax benefits, or any effect of financing leverage.</p>
+  </div>
+
+  <!-- EXAMPLE 2 -->
+  <div class="blog-section" id="example-2">
+    <h2>Worked Example 2: Multi-Family Property in Cleveland, OH</h2>
+    <p>Cleveland consistently ranks as one of the highest-yielding major markets in the US, with cap rates significantly above national averages:</p>
+    <table class="blog-table">
+      <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Current Market Value</td><td>$1,200,000</td></tr>
+        <tr><td>Annual Rental Income</td><td>$144,000</td></tr>
+        <tr><td>Annual Operating Expenses</td><td>$43,200</td></tr>
+        <tr><td><strong>Net Operating Income (NOI)</strong></td><td><strong>$100,800</strong></td></tr>
+        <tr><td><strong class="hl">Cap Rate</strong></td><td><strong class="hl">8.4%</strong></td></tr>
+      </tbody>
+    </table>
+    <p>$100,800 / $1,200,000 × 100 = <strong>8.4% cap rate</strong></p>
+    <p>This Cleveland multi-family has a higher cap rate than the Memphis single-family home — but that doesn't automatically make it the better deal. Higher cap rates typically signal higher perceived risk: older buildings, less stable tenant bases, slower appreciation markets. The Cleveland property requires more active management and carries more operational complexity. A higher cap rate is compensation for accepting that added complexity and risk.</p>
+    <div class="blog-info">📊 Use the <a href="/real-estate/cap-rate-calculator">Cap Rate Calculator</a> to run these numbers instantly for any property — including your own target acquisition.</div>
+  </div>
+
+  <!-- WHAT IS A GOOD CAP RATE -->
+  <div class="blog-section" id="good-cap-rate">
+    <h2>What Is a Good Cap Rate in 2026?</h2>
+    <p>There's no universal answer. A "good" cap rate depends on property type, location, asset class, and your personal risk tolerance. Here's what the data shows across US markets in 2026:</p>
+    <table class="blog-table">
+      <thead><tr><th>Property Type</th><th>Cap Rate Range</th><th>Risk Level</th></tr></thead>
+      <tbody>
+        <tr><td>Class A Multifamily — major cities</td><td class="y">4.5% – 5.5%</td><td>Low</td></tr>
+        <tr><td>Class B Multifamily — secondary markets</td><td class="y">5.5% – 6.5%</td><td>Medium</td></tr>
+        <tr><td>Class C Multifamily — tertiary markets</td><td class="hl">6.5% – 8.0%</td><td>Higher</td></tr>
+        <tr><td>Single-Family Rentals</td><td class="y">5.0% – 8.0%</td><td>Medium</td></tr>
+        <tr><td>Commercial Retail</td><td class="hl">6.0% – 9.0%</td><td>Medium-High</td></tr>
+        <tr><td>Industrial / Logistics</td><td class="y">5.0% – 7.5%</td><td>Low-Medium</td></tr>
+        <tr><td>Office Properties</td><td class="r">~7.7%</td><td>High (post-COVID vacancy risk)</td></tr>
+      </tbody>
+    </table>
+    <p>According to CBRE's U.S. Cap Rate Survey, multifamily properties averaged a <strong>5.6% cap rate</strong> in Q1 2026 — holding steady for seven consecutive quarters. This reflects a market stabilizing after the rate shock of 2022–2024.</p>
+    <h3>The Risk-Return Tradeoff</h3>
+    <ul>
+      <li><strong>Lower cap rates (4%–5.5%)</strong> — Safer, in-demand locations with stable tenants. New construction in Austin, Denver, or Miami. Lower current income, but stronger appreciation and liquidity.</li>
+      <li><strong>Higher cap rates (7%–10%+)</strong> — More risk. Often tied to older buildings, operational complexity, or weaker demand markets. Bigger cash flow potential for hands-on investors willing to accept volatility.</li>
+    </ul>
+    <div class="blog-info">💡 <strong>Context is everything:</strong> A 5% cap rate in downtown Austin can be an excellent deal. A 5% cap rate on a 1970s commercial building in a rural market is a red flag. Always compare cap rates within the same property type and market tier.</div>
+  </div>
+
+  <!-- CAP RATE VS CASH ON CASH -->
+  <div class="blog-section" id="vs-coc">
+    <h2>Cap Rate vs. Cash-on-Cash Return</h2>
+    <p>These two metrics are frequently confused — but they measure very different things. Smart investors use both, at different stages of the analysis.</p>
+    <table class="blog-table">
+      <thead><tr><th>Feature</th><th>Cap Rate</th><th>Cash-on-Cash Return</th></tr></thead>
+      <tbody>
+        <tr><td>Formula</td><td>NOI / Property Value</td><td>Annual Cash Flow / Cash Invested</td></tr>
+        <tr><td>Includes financing?</td><td>❌ No</td><td>✅ Yes</td></tr>
+        <tr><td>Measures</td><td>Property's unlevered return</td><td>Your actual levered return</td></tr>
+        <tr><td>Best used for</td><td>Screening &amp; comparing properties</td><td>Evaluating a specific financed deal</td></tr>
+        <tr><td>Typical "good" range</td><td>5% – 10% (market-dependent)</td><td>8% – 12%+ (investor-dependent)</td></tr>
+      </tbody>
+    </table>
+    <p><strong>When to use cap rate:</strong> You're browsing listings and want to quickly rank 10 properties in the same market. Cap rate neutralizes financing differences and lets you compare on equal footing.</p>
+    <p><strong>When to use cash-on-cash:</strong> You've narrowed to one property and need to know if your specific down payment, loan rate, and cash reserves produce the return you need after debt service.</p>
+    <p><strong>Critical example:</strong> A property with an 8% cap rate could produce negative cash-on-cash return if you're financing at 7.5% interest with only 10% down. The cap rate looks strong, but your actual cash yield after mortgage payments is terrible. This is why cap rate alone never tells the full story. Use the <a href="/real-estate/cash-on-cash-return-calculator">Cash-on-Cash Return Calculator</a> to model the full picture.</p>
+  </div>
+
+  <!-- 5 MISTAKES -->
+  <div class="blog-section" id="mistake">
+    <h2>5 Cap Rate Calculation Mistakes That Destroy Returns</h2>
+
+    <h3>1. Including Mortgage Payments in NOI</h3>
+    <p>The single most common error. Mortgage principal and interest are <em>not</em> operating expenses. Cap rate is designed to measure the property independent of how you finance it. Including your mortgage payment produces a number that's meaningless for comparison purposes — and almost always makes the deal look worse than it actually is.</p>
+
+    <h3>2. Using Gross Rent Instead of NOI</h3>
+    <p>A seller lists a property renting for $3,000/month. You calculate $36,000 / $400,000 = 9% cap rate. But the property carries $12,000 in annual operating expenses. The real NOI is $24,000, producing a 6% cap rate. That 3% difference at $400,000 represents $12,000 in annual income you thought you were getting — but aren't. Always verify actual operating expenses before calculating NOI.</p>
+
+    <h3>3. Ignoring Realistic Vacancy</h3>
+    <p>Sellers present properties at 100% occupancy. Real markets average 5–10% annual vacancy. A property that sits empty for three months between tenants loses 25% of one quarter's income. Build in a vacancy allowance appropriate for your market and asset class — Class A typically 3–5%, Class C potentially 10–15%.</p>
+
+    <h3>4. Using Outdated Purchase Price</h3>
+    <p>Cap rate changes even when NOI stays constant, because property values fluctuate. If your market appreciated 25% over three years but rents only grew 8%, your cap rate compressed significantly — the property became less efficient at generating income relative to its current value. Recalculate using current market value annually.</p>
+
+    <h3>5. Comparing Cap Rates Across Different Asset Classes</h3>
+    <p>A 6% cap rate on a Class A apartment in Nashville is not comparable to a 6% cap rate on a 1980s strip mall in a rural Ohio county. Different property types, tenant bases, and markets carry fundamentally different risk profiles. Only compare cap rates within the same asset class and market tier.</p>
+  </div>
+
+  <!-- 2026 BENCHMARKS -->
+  <div class="blog-section" id="benchmark">
+    <h2>2026 US Cap Rate Benchmarks by City</h2>
+    <p>Here's where cap rates stand in major US markets as of mid-2026, based on CBRE market survey data and real estate transaction records:</p>
+    <table class="blog-table">
+      <thead><tr><th>City / Market</th><th>Property Type</th><th>Typical Cap Rate</th></tr></thead>
+      <tbody>
+        <tr><td>New York, NY</td><td>Class A Multifamily</td><td class="y">4.0% – 5.0%</td></tr>
+        <tr><td>San Francisco, CA</td><td>Class A Multifamily</td><td class="y">4.0% – 5.0%</td></tr>
+        <tr><td>Los Angeles, CA</td><td>Class A Multifamily</td><td class="y">4.0% – 5.0%</td></tr>
+        <tr><td>Austin, TX</td><td>Class A/B Multifamily</td><td class="y">4.5% – 5.5%</td></tr>
+        <tr><td>Dallas, TX</td><td>Class B Multifamily</td><td class="y">5.0% – 6.0%</td></tr>
+        <tr><td>Denver, CO</td><td>Class B Multifamily</td><td class="y">5.0% – 6.0%</td></tr>
+        <tr><td>Phoenix, AZ</td><td>Class B Multifamily</td><td class="y">5.0% – 6.5%</td></tr>
+        <tr><td>Atlanta, GA</td><td>Class B/C Multifamily</td><td class="hl">5.5% – 6.5%</td></tr>
+        <tr><td>Cincinnati, OH</td><td>Class B/C Multifamily</td><td class="hl">7.0% – 9.0%</td></tr>
+        <tr><td>Memphis, TN</td><td>Class C Multifamily</td><td class="hl">7.5% – 9.0%</td></tr>
+        <tr><td>Cleveland, OH</td><td>Class C Multifamily</td><td class="hl">8.0% – 10.0%</td></tr>
+        <tr><td>National Average</td><td>All Multifamily</td><td class="y">~5.6% – 6.5%</td></tr>
+      </tbody>
+    </table>
+    <p>Gateway markets (New York, LA, San Francisco) command lower cap rates because investors pay a premium for stability, liquidity, and long-term appreciation. Tertiary markets like Cleveland and Memphis offer higher cap rates to compensate for smaller buyer pools, older housing stock, and slower appreciation. Neither is inherently better — they represent different risk-return positions on the same spectrum.</p>
+  </div>
+
+  <!-- VALUATION USE -->
+  <div class="blog-section" id="valuation">
+    <h2>Using Cap Rate for Property Valuation</h2>
+    <p>Cap rate isn't just a screening tool — flip the formula and you can estimate what a property <em>should</em> be worth based on its income:</p>
+    <div class="blog-code">
+      <code><span>Property Value = NOI / Cap Rate</span></code>
+      <code>Example: $35,000 NOI / 0.07 (7% market cap rate) = <span>$500,000</span></code>
+    </div>
+    <p>If similar properties in your target neighborhood trade at 7% cap rates and the property you're evaluating generates $35,000 in NOI, the implied market value is $500,000. This technique — called <strong>direct capitalization</strong> — is a standard method commercial appraisers use to value income-producing properties. It's also used by buyers to identify whether an asking price is justified by the income the property actually generates.</p>
+    <p>If the seller is asking $450,000 and market cap rates suggest $500,000 value, you may have found a below-market deal. If they're asking $575,000, you're paying above what the income supports at current market rates.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="blog-cta" id="calculator-cta">
+    <h3>Calculate Cap Rate Instantly — Free</h3>
+    <p>Run the numbers on any property with our free real estate calculators. No signup required.</p>
+    <div class="blog-cta-btn">
+      <a href="/real-estate/cap-rate-calculator">📊 Cap Rate Calculator</a>
+      <a href="/real-estate/rental-yield-calculator" class="sec">🏠 Rental Yield Calculator</a>
+      <a href="/real-estate/cash-on-cash-return-calculator" class="sec">💵 Cash-on-Cash Return</a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="blog-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <?php $faqs = [
+      ['What is the formula for cap rate?', 'Cap Rate = Net Operating Income (NOI) A Property Value × 100. NOI equals gross rental income minus operating expenses — property taxes, insurance, management, maintenance, vacancy allowance. Mortgage payments and capital expenditures are excluded from operating expenses.'],
+      ['Is a higher cap rate always better?', 'No. Higher cap rates typically signal higher risk — older buildings, less stable tenants, weaker appreciation markets. A 5% cap rate on a brand-new Class A apartment in a growing city can be a better investment than a 9% cap rate on a 1960s Class C building in a declining neighborhood. Always evaluate cap rate in the context of location, asset quality, and market fundamentals.'],
+      ['Does cap rate include mortgage payments?', 'No. Mortgage principal and interest are explicitly excluded from cap rate calculations. Cap rate measures the property\'s performance independent of how it\'s financed. Including debt service invalidates the metric. To evaluate returns on your actual cash investment after mortgage payments, use <a href="/real-estate/cash-on-cash-return-calculator">cash-on-cash return</a>.'],
+      ['Should I use purchase price or current market value?', 'Current market value is the professional standard. Using an old purchase price produces a cap rate that reflects historical conditions, not today\'s market. Current value tells you the opportunity cost — what your capital could earn if invested elsewhere today. Use purchase price only when making a buy/don\'t-buy decision before closing.'],
+      ['What is the difference between cap rate and ROI?', 'Cap rate is a snapshot metric — it measures one year of NOI versus current property value, ignoring financing, taxes, and appreciation. ROI is the full picture, including your actual cash invested, mortgage costs, tax benefits, appreciation over time, and eventual sale proceeds. Cap rate is the opening screening question; ROI is the final answer.'],
+    ]; foreach($faqs as $f): ?>
+    <div class="blog-faq-item">
+      <div class="blog-faq-q"><?php echo $f[0]; ?></div>
+      <div class="blog-faq-a"><?php echo $f[1]; ?></div>
+    </div>
+    <?php endforeach; ?>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="blog-section">
+    <h2>Disclaimer &amp; Sources</h2>
+    <p>This article is for informational and educational purposes only and does not constitute investment advice. Real estate investing involves risk and individual results vary. Always consult a qualified real estate professional, financial advisor, or CPA before making investment decisions.</p>
+    <p><strong>Sources:</strong> CBRE U.S. Cap Rate Survey Q1 2026; <a href="https://www.nar.realtor" target="_blank" rel="noopener noreferrer">National Association of Realtors</a> Commercial Real Estate Outlook; <a href="https://www.federalreserve.gov" target="_blank" rel="noopener noreferrer">Federal Reserve</a> monetary policy data; AmericaCalculator.com internal market research. Cap rate ranges reflect mid-2026 transaction data and may change as market conditions evolve.</p>
+  </div>
+
+</article>
+
+<!-- SIDEBAR -->
+<aside class="blog-sidebar">
+  <div class="blog-toc">
+    <div class="blog-toc-head">📋 On This Page</div>
+    <ul>
+      <li><a href="#formula-quick">Cap Rate Formula</a></li>
+      <li><a href="#what-i">What Is Cap Rate?</a></li>
+      <li><a href="#formula">Formula Explained</a></li>
+      <li><a href="#example-1">Example: Memphis</a></li>
+      <li><a href="#example-2">Example: Cleveland</a></li>
+      <li><a href="#good-cap-rate">Good Cap Rate 2026</a></li>
+      <li><a href="#vs-coc">Cap Rate vs CoC Return</a></li>
+      <li><a href="#mistake">5 Mistakes to Avoid</a></li>
+      <li><a href="#benchmark">2026 Benchmarks</a></li>
+      <li><a href="#valuation">Property Valuation</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🔗 Real Estate Tools</div>
+    <ul>
+      <li><a href="/real-estate/cap-rate-calculator">📊 Cap Rate Calculator</a></li>
+      <li><a href="/real-estate/rental-yield-calculator">🏠 Rental Yield Calculator</a></li>
+      <li><a href="/real-estate/cash-on-cash-return-calculator">💵 Cash-on-Cash Return</a></li>
+      <li><a href="/real-estate/cash-flow-calculator">💰 Cash Flow Calculator</a></li>
+      <li><a href="/real-estate/dscr-calculator">📋 DSCR Calculator</a></li>
+      <li><a href="/real-estate/mortgage-calculator">🏦 Mortgage Calculator</a></li>
+      <li><a href="/real-estate/">🏘️ All Real Estate Tools</a></li>
+    </ul>
+  </div>
+</aside>
+
+</div><!-- /blog-wrap -->
+</main>
+
+<script>
+document.querySelectorAll('.blog-faq-q').forEach(function(q){
+  q.addEventListener('click', function(){
+    var item=this.closest('.blog-faq-item'), was=item.classList.contains('open');
+    document.querySelectorAll('.blog-faq-item').forEach(function(x){x.classList.remove('open');});
+    if(!was) item.classList.add('open');
+  });
+});
+var tocLinks = document.querySelectorAll('.blog-toc a');
+var sections = [];
+tocLinks.forEach(function(a){
+  var id = a.getAttribute('href').replace('#','');
+  var el = document.getElementById(id);
+  if(el) sections.push({a:a, el:el});
+});
+window.addEventListener('scroll', function(){
+  var y = window.scrollY + 130;
+  var cur = sections[0];
+  sections.forEach(function(s){ if(s.el.getBoundingClientRect().top + window.scrollY <= y) cur = s; });
+  tocLinks.forEach(function(a){ a.classList.remove('active'); });
+  if(cur) cur.a.classList.add('active');
+}, {passive:true});
+</script>
+<?php require_once '../includes/footer.php'; ?>

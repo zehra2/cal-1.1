@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rent Affordability Calculator (2026) — How Much Rent Can I Afford? | AmericaCalculator</title>
+  <meta name="description" content="Calculate how much rent you can afford based on your salary and debts. Compare the 30% rule, 40x landlord rule, and 50/30/20 budgeting framework.">
+  <link rel="canonical" href="https://americacalculator.com/real-estate/rent-affordability-calculator">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --primary-light: #f5f3ff;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --white: #ffffff;
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+    header { background: var(--white); border-bottom: 1px solid var(--slate-200); padding: 1rem 2rem; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: var(--slate-900); text-decoration: none; }
+    .logo span { color: var(--primary); }
+
+    .main-wrapper { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+    .page-title-area { text-align: center; margin-bottom: 2.5rem; }
+    .page-title-area h1 { font-size: 2.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 0.75rem; }
+    .page-title-area p { color: var(--slate-600); font-size: 1.1rem; max-width: 720px; margin: 0 auto; }
+
+    .calculator-container {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--slate-200);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .form-panel { padding: 2.25rem; }
+    .results-panel {
+      background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%);
+      color: var(--white);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .input-group { margin-bottom: 1.25rem; }
+    .input-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--slate-700); margin-bottom: 0.4rem; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-prefix { position: absolute; left: 1rem; color: var(--slate-600); font-weight: 600; }
+    .input-wrapper input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.25rem;
+      border: 1.5px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .input-wrapper input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1); }
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .rent-hero-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 1.75rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .rent-hero-card .label { font-size: 0.85rem; color: #c4b5fd; font-weight: 700; text-transform: uppercase; }
+    .rent-hero-card .val-main { font-size: 2.75rem; font-weight: 800; color: var(--white); margin: 0.25rem 0; }
+    .rent-hero-card .val-sub { font-size: 0.95rem; color: #a78bfa; }
+
+    .breakdown-row { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-row span:first-child { color: #cbd5e1; }
+    .breakdown-row span:last-child { font-weight: 700; color: #38bdf8; }
+
+    .content-article { background: var(--white); border-radius: var(--radius); padding: 2.5rem; border: 1px solid var(--slate-200); }
+    .quick-summary-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
+
+    @media (max-width: 860px) {
+      .calculator-container { grid-template-columns: 1fr; }
+      .grid-2-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">🇺🇸 America<span>Calculator</span></a>
+      <nav>
+        <a href="/real-estate/" style="color: var(--slate-700); font-weight: 600; text-decoration: none;">← Real Estate Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="page-title-area">
+      <h1>Rent Affordability Calculator</h1>
+      <p>Calculate your maximum recommended rent payment. Compare the standard 30% gross rule, 40x landlord approval threshold, and monthly debt deductions.</p>
+    </div>
+
+    <div class="calculator-container">
+      <div class="form-panel">
+        <div class="section-subtitle">💵 1. Salary & Earnings</div>
+        
+        <div class="input-group">
+          <label for="annualSalary">Annual Gross Income (Pre-Tax)</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="annualSalary" value="72000" step="1000">
+          </div>
+        </div>
+
+        <div class="section-subtitle" style="margin-top: 1.75rem;">💳 2. Monthly Debt Deductions</div>
+
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="debtPayments">Monthly Debt Obligations (Loans/Cards)</label>
+            <div class="input-wrapper">
+              <span class="input-prefix">$</span>
+              <input type="number" id="debtPayments" value="450" step="50">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="savingsGoal">Monthly Savings Target</label>
+            <div class="input-wrapper">
+              <span class="input-prefix">$</span>
+              <input type="number" id="savingsGoal" value="500" step="50">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-panel">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem;">Affordability Analysis</h3>
+
+          <div class="rent-hero-card">
+            <div class="label">Maximum Recommended Monthly Rent</div>
+            <div class="val-main" id="maxRentDisplay">$1,800</div>
+            <div class="val-sub" id="rentRuleSub">Standard 30% Gross Income Rule</div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1.25rem;">
+            <div class="breakdown-row">
+              <span>Landlord 40x Qualification Cap:</span>
+              <span id="landlordCapDisplay">$1,800 / mo</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Conservative Budget (25% rule):</span>
+              <span id="conservativeCapDisplay">$1,500 / mo</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Estimated Monthly Take-Home:</span>
+              <span id="takeHomeDisplay">$4,560 / mo</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Remaining After Rent & Debts:</span>
+              <span id="leftoverDisplay" style="color: #34d399;">$2,310 / mo</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+          <div style="font-size: 0.85rem; color: #94a3b8;">Gross Monthly Income:</div>
+          <div style="font-size: 1.35rem; font-weight: 800; color: #38bdf8;" id="grossMonthlyDisplay">$6,000 / mo</div>
+        </div>
+      </div>
+    </div>
+
+    <article class="content-article">
+      <div class="quick-summary-box">
+        <h3 style="color: #6d28d9;">💡 Quick Answer: What is the 40x Rent Rule?</h3>
+        <p style="color: #5b21b6;">Landlords calculate your maximum rent allowance using the formula: <strong>Annual Salary ÷ 40 = Maximum Monthly Rent</strong>. An individual earning $80,000 per year qualifies for a maximum rent of $2,000/month. For comfortable budgeting, financial experts recommend spending no more than 30% of take-home pay on rent.</p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    function calculateRent() {
+      const salary = parseFloat(document.getElementById('annualSalary').value) || 0;
+      const debts = parseFloat(document.getElementById('debtPayments').value) || 0;
+      const savings = parseFloat(document.getElementById('savingsGoal').value) || 0;
+
+      const monthlyGross = salary / 12;
+      const maxRent30 = monthlyGross * 0.30;
+      const landlordCap = salary / 40;
+      const conservativeRent = monthlyGross * 0.25;
+
+      // Approximate 24% effective tax withholdings for take-home estimate
+      const estTakeHome = monthlyGross * 0.76;
+      const leftover = estTakeHome - maxRent30 - debts - savings;
+
+      document.getElementById('maxRentDisplay').innerText = '$' + Math.round(maxRent30).toLocaleString();
+      document.getElementById('landlordCapDisplay').innerText = '$' + Math.round(landlordCap).toLocaleString() + ' / mo';
+      document.getElementById('conservativeCapDisplay').innerText = '$' + Math.round(conservativeRent).toLocaleString() + ' / mo';
+      document.getElementById('takeHomeDisplay').innerText = '$' + Math.round(estTakeHome).toLocaleString() + ' / mo';
+      document.getElementById('leftoverDisplay').innerText = '$' + Math.round(leftover).toLocaleString() + ' / mo';
+      document.getElementById('grossMonthlyDisplay').innerText = '$' + Math.round(monthlyGross).toLocaleString() + ' / mo';
+    }
+
+    document.querySelectorAll('input').forEach(el => el.addEventListener('input', calculateRent));
+    calculateRent();
+  </script>
+</body>
+</html>

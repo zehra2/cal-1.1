@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortgage Refinance Break-Even Calculator (2026) | AmericaCalculator</title>
+  <meta name="description" content="Calculate your mortgage refinance break-even point in months. Compare current vs. new monthly payments, closing costs, and 15 vs. 30-year interest savings.">
+  <link rel="canonical" href="https://americacalculator.com/real-estate/mortgage-refinance-calculator">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #f0f9ff;
+      --success: #10b981;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --white: #ffffff;
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+    header { background: var(--white); border-bottom: 1px solid var(--slate-200); padding: 1rem 2rem; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: var(--slate-900); text-decoration: none; }
+    .logo span { color: var(--primary); }
+
+    .main-wrapper { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+    .page-title-area { text-align: center; margin-bottom: 2.5rem; }
+    .page-title-area h1 { font-size: 2.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 0.75rem; }
+    .page-title-area p { color: var(--slate-600); font-size: 1.1rem; max-width: 720px; margin: 0 auto; }
+
+    .calculator-container {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--slate-200);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .form-panel { padding: 2.25rem; }
+    .results-panel {
+      background: linear-gradient(135deg, #0c4a6e 0%, #0f172a 100%);
+      color: var(--white);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .input-group { margin-bottom: 1.25rem; }
+    .input-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--slate-700); margin-bottom: 0.4rem; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-prefix { position: absolute; left: 1rem; color: var(--slate-600); font-weight: 600; }
+    .input-suffix { position: absolute; right: 1rem; color: var(--slate-600); font-weight: 600; }
+    .input-wrapper input, .input-wrapper select {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.25rem;
+      border: 1.5px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .input-wrapper input:focus, .input-wrapper select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1); }
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .break-even-badge {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .break-even-badge .label { font-size: 0.85rem; color: #a7f3d0; font-weight: 700; text-transform: uppercase; }
+    .break-even-badge .months { font-size: 2.75rem; font-weight: 800; color: #6ee7b7; margin: 0.25rem 0; }
+    .break-even-badge .note { font-size: 0.85rem; color: #cbd5e1; }
+
+    .breakdown-row { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-row span:first-child { color: #cbd5e1; }
+    .breakdown-row span:last-child { font-weight: 700; color: #38bdf8; }
+
+    .content-article { background: var(--white); border-radius: var(--radius); padding: 2.5rem; border: 1px solid var(--slate-200); }
+    .quick-summary-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
+
+    @media (max-width: 860px) {
+      .calculator-container { grid-template-columns: 1fr; }
+      .grid-2-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">🇺🇸 America<span>Calculator</span></a>
+      <nav>
+        <a href="/real-estate/" style="color: var(--slate-700); font-weight: 600; text-decoration: none;">← Real Estate Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="page-title-area">
+      <h1>Mortgage Refinance Break-Even Calculator</h1>
+      <p>Determine exactly how many months it will take to recover your refinance closing costs. Compare monthly payment reductions and 15 vs. 30-year total interest savings.</p>
+    </div>
+
+    <div class="calculator-container">
+      <div class="form-panel">
+        <div class="section-subtitle">📜 1. Current Mortgage Details</div>
+        
+        <div class="input-group">
+          <label for="currentBalance">Remaining Principal Balance</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="currentBalance" value="350000" step="5000">
+          </div>
+        </div>
+
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="currentRate">Current Interest Rate</label>
+            <div class="input-wrapper">
+              <input type="number" id="currentRate" value="7.25" step="0.125" style="padding-left: 1rem;">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="currentTerm">Remaining Years</label>
+            <input type="number" id="currentTerm" value="26" style="padding: 0.75rem 1rem; border: 1.5px solid var(--slate-200); border-radius: 10px; font-weight: 600;">
+          </div>
+        </div>
+
+        <div class="section-subtitle" style="margin-top: 1.75rem;">🔄 2. Proposed Refinance Terms</div>
+
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="newRate">New Interest Rate</label>
+            <div class="input-wrapper">
+              <input type="number" id="newRate" value="6.125" step="0.125" style="padding-left: 1rem;">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="newTerm">New Loan Term</label>
+            <select id="newTerm" style="padding: 0.75rem 1rem; border: 1.5px solid var(--slate-200); border-radius: 10px; font-weight: 600;">
+              <option value="30" selected>30 Years</option>
+              <option value="20">20 Years</option>
+              <option value="15">15 Years</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="closingCosts">Estimated Refinance Closing Costs</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="closingCosts" value="4500" step="250">
+          </div>
+        </div>
+      </div>
+
+      <div class="results-panel">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem;">Refinance Analysis</h3>
+
+          <div class="break-even-badge">
+            <div class="label">Break-Even Timeline</div>
+            <div class="months" id="breakEvenDisplay">18 Months</div>
+            <div class="note" id="breakEvenDate">Profitable after 1.5 years</div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1.25rem;">
+            <div class="breakdown-row">
+              <span>Current Monthly Payment:</span>
+              <span id="currentPmtDisplay">$2,460</span>
+            </div>
+            <div class="breakdown-row">
+              <span>New Monthly Payment:</span>
+              <span id="newPmtDisplay">$2,126</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Monthly Payment Savings:</span>
+              <span id="monthlySavingsDisplay" style="color: #34d399;">+$334 / mo</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Estimated 5-Year Net Savings:</span>
+              <span id="fiveYearSavings" style="color: #fbbf24;">+$15,540</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+          <div style="font-size: 0.85rem; color: #94a3b8;">Out-of-Pocket Closing Costs:</div>
+          <div style="font-size: 1.35rem; font-weight: 800; color: #38bdf8;" id="costsDisplay">$4,500</div>
+        </div>
+      </div>
+    </div>
+
+    <article class="content-article">
+      <div class="quick-summary-box">
+        <h3 style="color: #0369a1;">💡 Quick Answer: When Does Refinancing Make Sense?</h3>
+        <p style="color: #0c4a6e;">A mortgage refinance is financially sound if you plan to live in your home longer than your <strong>break-even point</strong> (Closing Costs ÷ Monthly Savings). An 18-month break-even means every month after month 18 puts hundreds of dollars directly back into your pocket.</p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    function pmt(rate, nper, pv) {
+      if (rate === 0) return pv / nper;
+      return (pv * (rate * Math.pow(1 + rate, nper))) / (Math.pow(1 + rate, nper) - 1);
+    }
+
+    function calculateRefinance() {
+      const balance = parseFloat(document.getElementById('currentBalance').value) || 0;
+      const curRate = (parseFloat(document.getElementById('currentRate').value) || 0) / 100 / 12;
+      const curTerm = (parseFloat(document.getElementById('currentTerm').value) || 30) * 12;
+
+      const newRate = (parseFloat(document.getElementById('newRate').value) || 0) / 100 / 12;
+      const newTerm = (parseFloat(document.getElementById('newTerm').value) || 30) * 12;
+      const costs = parseFloat(document.getElementById('closingCosts').value) || 0;
+
+      const curPmt = pmt(curRate, curTerm, balance);
+      const newPmt = pmt(newRate, newTerm, balance);
+      const savings = curPmt - newPmt;
+
+      document.getElementById('currentPmtDisplay').innerText = '$' + Math.round(curPmt).toLocaleString() + ' / mo';
+      document.getElementById('newPmtDisplay').innerText = '$' + Math.round(newPmt).toLocaleString() + ' / mo';
+      document.getElementById('costsDisplay').innerText = '$' + Math.round(costs).toLocaleString();
+
+      if (savings > 0) {
+        const breakEvenMonths = Math.ceil(costs / savings);
+        document.getElementById('breakEvenDisplay').innerText = breakEvenMonths + ' Months';
+        document.getElementById('breakEvenDate').innerText = 'Profitable after ' + (breakEvenMonths / 12).toFixed(1) + ' years';
+        document.getElementById('monthlySavingsDisplay').innerText = '+$' + Math.round(savings).toLocaleString() + ' / mo';
+        document.getElementById('monthlySavingsDisplay').style.color = '#34d399';
+
+        const fiveYearNet = (savings * 60) - costs;
+        document.getElementById('fiveYearSavings').innerText = (fiveYearNet >= 0 ? '+' : '') + '$' + Math.round(fiveYearNet).toLocaleString();
+      } else {
+        document.getElementById('breakEvenDisplay').innerText = 'No Savings';
+        document.getElementById('breakEvenDate').innerText = 'Payment increases with this term/rate';
+        document.getElementById('monthlySavingsDisplay').innerText = '–$' + Math.round(Math.abs(savings)).toLocaleString() + ' / mo';
+        document.getElementById('monthlySavingsDisplay').style.color = '#f87171';
+        document.getElementById('fiveYearSavings').innerText = '–$' + Math.round(Math.abs(savings * 60) + costs).toLocaleString();
+      }
+    }
+
+    document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', calculateRefinance));
+    calculateRefinance();
+  </script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "Ohio State Income Tax Guide 2026 | Brackets & Rate";
+$metaDescription = "Complete guide to Ohio state income tax in 2026. Includes tax brackets, local municipal rates for Columbus, Cleveland & Cincinnati, and how to calculate your take-home pay.";
+$metaKeywords    = 'ohio state income tax, ohio income tax rate 2026, ohio tax brackets, how much is ohio state tax, ohio local income tax, ohio flat tax 2026, ohio municipal income tax';
+$schemaData = [
+  '@context' => 'https://schema.org',
+  '@graph'   => [
+    ['@type' => 'Article',
+     'headline' => 'Ohio State Income Tax Guide 2026: Brackets, Rates & Local Tax',
+     'description' => 'Complete guide to Ohio state income tax for 2026 including the new flat tax rate, municipal income taxes, personal exemptions, and how to calculate total tax burden.',
+     'url' => 'https://americacalculator.com/blog/ohio-state-income-tax',
+     'datePublished' => '2026-01-01',
+     'dateModified'  => '2026-08-01',
+     'author' => ['@type' => 'Person', 'name' => 'David Reyes', 'jobTitle' => 'Payroll & Tax Specialist'],
+     'publisher' => ['@type' => 'Organization', 'name' => 'AmericaCalculator.com', 'url' => 'https://americacalculator.com/', 'logo' => ['@type' => 'ImageObject', 'url' => 'https://americacalculator.com/image/logo-america%20calculator.jpg']],
+     'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => 'https://americacalculator.com/blog/ohio-state-income-tax'],
+    ],
+    ['@type' => 'BreadcrumbList', 'itemListElement' => [
+      ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+      ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog',  'item' => 'https://americacalculator.com/blog/'],
+      ['@type' => 'ListItem', 'position' => 3, 'name' => 'Ohio State Income Tax 2026', 'item' => 'https://americacalculator.com/blog/ohio-state-income-tax'],
+    ]],
+    ['@type' => 'FAQPage', 'mainEntity' => [
+      ['@type' => 'Question', 'name' => 'What is the Ohio state income tax rate for 2026?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'For tax year 2026, Ohio has a flat income tax rate of 2.75% on all nonbusiness income above $26,050. Income below $26,050 is taxed at 0%. This is a result of House Bill 96 signed by Governor DeWine. Business income is taxed separately at 3% after a $250,000 exemption.']],
+      ['@type' => 'Question', 'name' => 'Do I pay local tax if I work from home in Ohio?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. Since January 1, 2022, Ohio requires employers to withhold municipal income tax based on where you physically perform the work. If you work from home, you pay tax to your home city. If you commute, you pay to the city where you work each day. Most Ohio cities offer tax credits to prevent double-taxation.']],
+      ['@type' => 'Question', 'name' => 'Which Ohio city has the highest income tax?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Columbus and Akron both charge 2.5%, making them the highest among Ohio\'s major cities. Toledo and Dayton charge 2.25%, Cleveland 2.0%, and Cincinnati 1.8%. Some smaller Ohio municipalities charge as much as 3%.']],
+      ['@type' => 'Question', 'name' => 'Is Ohio a high-tax state?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Ohio\'s 2.75% flat state income tax is among the lowest in the nation. However, when combined with local municipal taxes (averaging ~1.2% of income), Ohio\'s total income tax burden is middle-of-the-pack nationally. States like Texas and Florida have no income tax, while California and New York charge significantly more.']],
+      ['@type' => 'Question', 'name' => 'Does Ohio tax Social Security benefits?',
+       'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'No. Ohio does not tax Social Security retirement benefits. This is one of the reasons Ohio remains attractive for retirees despite having both state and local income taxes.']],
+    ]],
+  ],
+];
+require_once '../includes/header.php';
+?>
+<style>
+*{box-sizing:border-box;}
+body{background:#f8fafc;}
+.blog-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.blog-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}
+.blog-bc a{color:#64748b;text-decoration:none;}
+.blog-bc a:hover{color:#1d4ed8;}
+/* Article header */
+.blog-header{margin-bottom:1.75rem;}
+.blog-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.blog-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}
+.blog-meta span{font-size:.82rem;color:#64748b;}
+.blog-meta strong{color:#1e293b;}
+.blog-badge{background:#dbeafe;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.blog-cat{background:#dcfce7;color:#166534;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bbf7d0;}
+.blog-header .intro{font-size:1.05rem;color:#475569;line-height:1.75;margin:0;border-left:4px solid #1d4ed8;padding-left:1rem;background:#f8fbff;border-radius:0 8px 8px 0;padding:.9rem 1rem .9rem 1.25rem;}
+/* Featured snippet box */
+.snippet-box{background:linear-gradient(135deg,#1d4ed8,#1e40af);border-radius:12px;padding:1.5rem;margin-bottom:1.75rem;color:#fff;}
+.snippet-box .sq{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.7);margin-bottom:.5rem;}
+.snippet-box .sa{font-size:1.02rem;font-weight:600;line-height:1.65;margin:0;}
+/* Section cards */
+.blog-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.blog-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #eff6ff;}
+.blog-section h3{font-size:1.02rem;color:#1e293b;margin:1.35rem 0 .55rem;font-weight:700;}
+.blog-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}
+.blog-section p:last-child{margin-bottom:0;}
+.blog-section a{color:#1d4ed8;font-weight:600;text-decoration:none;}
+.blog-section a:hover{text-decoration:underline;}
+.blog-section strong{color:#1e293b;}
+.blog-section ul,.blog-section ol{color:#475569;padding-left:1.4rem;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}
+.blog-section li{margin-bottom:.45rem;}
+/* Tables */
+.blog-table{width:100%;border-collapse:collapse;border-radius:9px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:1.1rem;}
+.blog-table th{background:#1d4ed8;color:#fff;padding:9px 13px;font-size:.84rem;font-weight:600;text-align:left;}
+.blog-table td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:.88rem;color:#334155;}
+.blog-table tr:last-child td{border-bottom:none;}
+.blog-table tr:nth-child(even) td{background:#f8fafc;}
+.blog-table .hl{color:#1d4ed8;font-weight:700;}
+.blog-table .g{color:#16a34a;font-weight:700;}
+.blog-table .r{color:#dc2626;font-weight:700;}
+/* Info/warn boxes */
+.blog-info{background:#eff6ff;border-left:4px solid #1d4ed8;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#1e3a8a;line-height:1.65;}
+.blog-warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#92400e;line-height:1.65;}
+.blog-green{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#065f46;line-height:1.65;}
+/* CTA box */
+.blog-cta{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:13px;padding:1.75rem;margin-bottom:1.5rem;text-align:center;}
+.blog-cta h3{color:#fff;font-size:1.15rem;font-weight:800;margin:0 0 .5rem;}
+.blog-cta p{color:#94a3b8;font-size:.9rem;margin:0 0 1rem;line-height:1.55;}
+.blog-cta-btns{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;}
+.blog-cta-btns a{display:inline-block;background:#1d4ed8;color:#fff;padding:9px 20px;border-radius:7px;font-weight:700;font-size:.85rem;text-decoration:none;}
+.blog-cta-btns a:hover{background:#1e40af;}
+.blog-cta-btns a.sec{background:#334155;}
+.blog-cta-btns a.sec:hover{background:#475569;}
+/* FAQ */
+.blog-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}
+.blog-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.blog-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.blog-faq-q::after{content:'+';color:#1d4ed8;font-size:1.2rem;flex-shrink:0;}
+.blog-faq-item.open .blog-faq-q::after{content:'−';}
+.blog-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.blog-faq-item.open .blog-faq-a{display:block;}
+/* Sidebar */
+.blog-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.1rem;}
+.blog-toc{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;}
+.blog-toc-head{background:#1d4ed8;color:#fff;padding:.9rem 1.25rem;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.blog-toc ul{list-style:none;padding:.5rem 0;margin:0;}
+.blog-toc ul li a{display:block;padding:.5rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+.blog-toc ul li a:hover,.blog-toc ul li a.active{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+.blog-related{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;}
+.blog-related-head{padding:.8rem 1.25rem;background:#f8fafc;border-bottom:1px solid #f1f5f9;font-size:.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em;}
+.blog-related ul{list-style:none;padding:.4rem 0;margin:0;}
+.blog-related ul li a{display:block;padding:.55rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.blog-related ul li a:hover{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+/* Responsive */
+@media(max-width:900px){.blog-wrap{grid-template-columns:1fr;}.blog-sidebar{position:static;display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.blog-sidebar{grid-template-columns:1fr;}.blog-header h1{font-size:1.6rem;}}
+</style>
+
+<main id="main-content">
+<div class="blog-wrap">
+<article>
+  <div class="blog-bc"><a href="/">Home</a> º <a href="/blog/">Blog</a> º Ohio State Income Tax Guide 2026</div>
+
+  <div class="blog-header">
+    <h1>Ohio State Income Tax Guide for 2026</h1>
+    <div class="blog-meta">
+      <span>By the <strong>AmericaCalculator.com editorial team</strong></span>
+      <span class="blog-badge">🕐 Last Updated: August 2026</span>
+      <span class="blog-cat">📋 Ohio Taxes</span>
+    </div>
+    <p class="intro">Ohio is one of only a handful of states with both a <strong>state income tax</strong> and a <strong>local municipal income tax</strong>. In 2026, House Bill 96 simplified the state rate to a flat 2.75% — but your city's rate still applies on top of that. This guide breaks down exactly how much you'll pay, with real numbers and worked examples for Columbus, Cleveland, and Cincinnati workers.</p>
+  </div>
+
+  <!-- FEATURED SNIPPET -->
+  <div class="snippet-box" id="quick-answer">
+    <div class="sq">Quick Answer — Ohio State Income Tax Rate 2026</div>
+    <p class="sa">Ohio's state income tax rate for 2026 is <strong>0% on income up to $26,050</strong> and a flat <strong>2.75% on all income above that threshold</strong>. This flat rate applies to W-2 wages, salaries, and most investment income. Business income is taxed separately at 3% after a $250,000 exemption. Your city may also charge 1.5%–2.5% on top of the state rate. A $60,000 salary in Columbus produces approximately <strong>$934 in Ohio state tax</strong> plus <strong>$1,500 in Columbus municipal tax</strong>.</p>
+  </div>
+
+  <!-- SECTION 1: STATE BRACKETS -->
+  <div class="blog-section" id="bracket">
+    <h2>Ohio State Income Tax Brackets (2026)</h2>
+    <p>For tax year 2026, Ohio moved to a simplified <strong>flat tax structure</strong> under House Bill 96. The old multi-bracket system with rates up to 3.5% was replaced with a cleaner two-tier approach:</p>
+    <table class="blog-table">
+      <thead><tr><th>Ohio Taxable Income</th><th>Tax Rate</th><th>What It Means</th></tr></thead>
+      <tbody>
+        <tr><td>$0 “ $26,050</td><td class="g"><strong>0%</strong></td><td>No Ohio state tax on this income</td></tr>
+        <tr><td>$26,051 “ $100,000</td><td class="hl"><strong>2.75%</strong></td><td>Flat rate on every dollar above $26,050</td></tr>
+        <tr><td>Over $100,000</td><td class="hl"><strong>2.75%</strong></td><td>Same flat rate continues — no higher bracket</td></tr>
+      </tbody>
+    </table>
+    <div class="blog-info">📋 <strong>Source:</strong> <a href="https://tax.ohio.gov" target="_blank" rel="noopener noreferrer">Ohio Department of Taxation</a> — Ohio HB 96, effective January 1, 2026. For the most current rates, always verify at tax.ohio.gov.</div>
+
+    <h3>How Marginal Brackets Work — Worked Example: $60,000 Salary</h3>
+    <p>Ohio's brackets are <strong>marginal</strong> — only the income in each bracket is taxed at that rate. Here's the math for a single filer earning $60,000:</p>
+    <table class="blog-table">
+      <thead><tr><th>Income Portion</th><th>Rate</th><th>Tax Owed</th></tr></thead>
+      <tbody>
+        <tr><td>First $26,050</td><td>0%</td><td>$0</td></tr>
+        <tr><td>$26,051 “ $60,000 ($33,950)</td><td>2.75%</td><td>$934</td></tr>
+        <tr><td><strong>Total Ohio State Tax</strong></td><td>”</td><td><strong>$934</strong></td></tr>
+      </tbody>
+    </table>
+    <p>That $934 represents a <strong>1.56% effective state tax rate</strong> on $60,000 gross income — well below the 2.75% marginal rate because almost half the income ($26,050) is taxed at 0%.</p>
+
+    <h3>What Changed for 2026?</h3>
+    <p>In 2025, Ohio had a transitional three-bracket system. Income over $100,000 was taxed at 3.125%. Starting January 1, 2026, that top bracket was eliminated — income over $100,000 now stays at 2.75%. High earners saw a modest rate reduction. Lower-income workers already at 0% or 2.75% saw no change.</p>
+    <div class="blog-green">✅ <strong>Good news for Ohio workers:</strong> Ohio's 2.75% flat rate is now among the lowest state income tax rates in the nation for states that have income tax at all, making it competitive with Indiana (3.05%), Michigan (4.25%), and Kentucky (4.0%).</div>
+
+    <div class="blog-warn" style="margin-top:1rem;">⚠️ <strong>Important: Annual Tax Rate vs. Paycheck Withholding</strong><br>The 2.75% flat rate above applies to your <em>annual Ohio income tax return</em>. However, your <strong>paycheck withholding</strong> is calculated differently — using Ohio's August 2026 withholding tables published by the Ohio Department of Taxation. These tables use a percentage method that may produce slightly different per-paycheck amounts due to how annualized income and exemptions are applied. The end-of-year reconciliation on your IT 1040 will still calculate your final tax at the 2.75% flat rate. Use our <a href="/ohio/paycheck-calculator">Ohio Paycheck Calculator</a> for accurate per-paycheck withholding estimates that reflect the official 2026 withholding tables. <em>Source: <a href="https://tax.ohio.gov/business/employer-withholding" target="_blank" rel="noopener noreferrer">Ohio Department of Taxation — Withholding Tables Effective August 1, 2026</a>.</em></div>
+  </div>
+
+  <!-- SECTION 2: OHIO LOCAL MUNICIPAL TAX -->
+  <div class="blog-section" id="local-tax">
+    <h2>Ohio Local Municipal Income Tax</h2>
+    <p>Here's the part of Ohio taxation that surprises most people: <strong>you also pay tax to the city where you work</strong>. Ohio is one of only a handful of states with a widespread local income tax system, with over 600 municipalities levying their own flat rates on earned wages.</p>
+    <p>Unlike the state tax — which has brackets and exemptions — municipal taxes are typically applied as a flat percentage of your <strong>gross wages</strong> with no exemption or deduction floor.</p>
+
+    <h3>Major Ohio City Tax Rates (2026)</h3>
+    <table class="blog-table">
+      <thead><tr><th>City</th><th>Municipal Tax Rate</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Columbus</strong></td><td class="r">2.50%</td><td>Highest among major Ohio cities</td></tr>
+        <tr><td><strong>Akron</strong></td><td class="r">2.50%</td><td>Tied with Columbus</td></tr>
+        <tr><td><strong>Toledo</strong></td><td class="hl">2.25%</td><td>Administered by Toledo tax division</td></tr>
+        <tr><td><strong>Dayton</strong></td><td class="hl">2.25%</td><td>Administered by Dayton tax division</td></tr>
+        <tr><td><strong>Cleveland</strong></td><td class="hl">2.00%</td><td>Cuyahoga County may add additional layers</td></tr>
+        <tr><td><strong>Cincinnati</strong></td><td class="g">1.80%</td><td>Lowest among major Ohio cities</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The Critical Rule: You Pay Tax Where You WORK</h3>
+    <p>Municipal income tax follows you to wherever you physically sit when performing work — not your home address and not your employer's headquarters. This rule, clarified permanently in Ohio law effective January 1, 2022, has major implications for remote workers.</p>
+    <ul>
+      <li>Work entirely in a Columbus office → pay Columbus's 2.5% rate</li>
+      <li>Work entirely from your home in a suburb with no city tax → pay $0 municipal tax</li>
+      <li>Split your time (3 days office, 2 days home) → pay proportionally to each location</li>
+      <li>Live in Cincinnati, work in Columbus → pay Columbus 2.5% on office days; Cincinnati may credit you</li>
+    </ul>
+    <div class="blog-warn">⚠️ <strong>Remote workers:</strong> Many employers still withhold to the employer's city as a default. If you work from home more than occasionally, review your paystub. You may be overpaying city taxes — or underpaying. Filing a resident city return through RITA or CCA can correct this.</div>
+  </div>
+
+  <!-- SECTION 3: FEDERAL INTERACTION -->
+  <div class="blog-section" id="federal">
+    <h2>How Federal Tax Interacts with Ohio State Tax</h2>
+    <p>Ohio and federal taxes are calculated <strong>independently</strong> — Ohio does not "piggyback" on the federal return. You calculate Ohio taxable income separately using the <a href="https://www.irs.gov/pub/irs-pdf/p15.pdf" target="_blank" rel="noopener noreferrer">IRS withholding tables</a> for federal and the Ohio Department of Taxation tables for state. They are parallel calculations, not sequential.</p>
+    <p>Ohio does start from your federal Adjusted Gross Income (AGI) as a baseline, then makes Ohio-specific adjustments — primarily the personal exemption — before applying the state tax rate.</p>
+
+    <h3>The SALT Deduction Cap</h3>
+    <p>On your federal return, you can deduct state and local taxes (SALT) — but only up to <strong>$10,000 per household</strong> under current federal law. For many Ohio homeowners, property taxes alone consume most or all of that $10,000 cap, leaving no room to deduct Ohio income and municipal taxes on the federal return. This cap was extended through at least 2025 — check <a href="https://www.irs.gov" target="_blank" rel="noopener noreferrer">IRS.gov</a> for current status.</p>
+    <div class="blog-info">💡 <strong>Practical effect:</strong> Most Ohio middle-income homeowners get no federal tax benefit from their Ohio income taxes. The $10,000 SALT cap is most restrictive in high-property-tax areas like the Columbus suburbs, where property taxes alone can reach $6,000–$10,000/year.</div>
+  </div>
+
+  <!-- SECTION 4: WHO FILES -->
+  <div class="blog-section" id="who-file">
+    <h2>Who Needs to File Ohio State Taxes?</h2>
+    <p>You must file an Ohio state income tax return (Form IT 1040) if any of the following apply:</p>
+    <ul>
+      <li><strong>Ohio resident</strong> — You lived in Ohio all year and have Ohio taxable income above $0</li>
+      <li><strong>Part-year resident</strong> — You lived in Ohio for part of the year and earned income during that time</li>
+      <li><strong>Non-resident with Ohio income</strong> — You live in another state but earned income from an Ohio employer, Ohio rental property, or other Ohio source</li>
+      <li><strong>Any person with Ohio AGI above $0</strong> and no credits that fully eliminate the tax liability</li>
+    </ul>
+    <p>You likely do <strong>not</strong> need to file if your Ohio taxable income is $0 or below, all your income is exempt (certain military pay, some disability), or you are a dependent with income below the filing threshold. Always verify at <a href="https://tax.ohio.gov" target="_blank" rel="noopener noreferrer">tax.ohio.gov</a> since rules change annually.</p>
+  </div>
+
+  <!-- SECTION 5: TOTAL TAX BURDEN CALCULATION -->
+  <div class="blog-section" id="calculate">
+    <h2>How to Calculate Your Total Ohio Tax Burden</h2>
+    <p>Let's walk through a complete, step-by-step calculation for a $50,000 salary in Cleveland — a realistic scenario for Ohio's second-largest city.</p>
+    <p><strong>Assumptions:</strong> Single filer, $50,000 W-2 wages, Cleveland employer, standard federal deductions, no pre-tax deductions.</p>
+    <table class="blog-table">
+      <thead><tr><th>Step</th><th>Tax Type</th><th>Calculation</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Ohio Personal Exemption</td><td>Income $40K“$80K = $2,150 exemption</td><td>−$2,150</td></tr>
+        <tr><td>2</td><td><strong>Ohio Taxable Income</strong></td><td>$50,000 − $2,150</td><td><strong>$47,850</strong></td></tr>
+        <tr><td>3</td><td>Ohio State Tax</td><td>2.75% × ($47,850 − $26,050)</td><td><strong>$599</strong></td></tr>
+        <tr><td>4</td><td>Cleveland Municipal Tax</td><td>2.0% × $50,000 gross</td><td><strong>$1,000</strong></td></tr>
+        <tr><td>5</td><td>Social Security (FICA)</td><td>6.2% × $50,000</td><td><strong>$3,100</strong></td></tr>
+        <tr><td>6</td><td>Medicare (FICA)</td><td>1.45% × $50,000</td><td><strong>$725</strong></td></tr>
+        <tr><td>7</td><td>Federal Income Tax (est.)</td><td>10–12% effective bracket, single</td><td><strong>~$3,750</strong></td></tr>
+        <tr><td></td><td><strong>Total Annual Taxes</strong></td><td></td><td><strong>~$9,174</strong></td></tr>
+        <tr><td></td><td><strong>Effective Total Rate</strong></td><td>$9,174 ÷ $50,000</td><td><strong>~18.3%</strong></td></tr>
+      </tbody>
+    </table>
+    <p>That leaves an estimated <strong>take-home pay of ~$40,826/year</strong> ($3,402/month) before any voluntary deductions like 401(k) or health insurance. Use our <a href="/ohio/paycheck-calculator">Ohio Paycheck Calculator</a> to model your exact scenario with your specific city, filing status, and deductions.</p>
+
+    <h3>Ohio Personal Exemption Amounts (2026)</h3>
+    <p>Ohio offers personal exemptions that reduce your taxable income before the 2.75% rate is applied:</p>
+    <table class="blog-table">
+      <thead><tr><th>Federal AGI</th><th>Single Exemption</th><th>Married Filing Jointly</th></tr></thead>
+      <tbody>
+        <tr><td>$40,000 or less</td><td>$2,400</td><td>$4,800</td></tr>
+        <tr><td>$40,001 “ $80,000</td><td>$2,150</td><td>$4,300</td></tr>
+        <tr><td>$80,001 “ $500,000</td><td>$1,900</td><td>$3,800</td></tr>
+        <tr><td>Over $500,000</td><td>$0</td><td>$0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 6: CREDITS AND DEDUCTIONS -->
+  <div class="blog-section" id="credit">
+    <h2>Ohio Tax Credits and Deductions</h2>
+    <p>Beyond the personal exemption, Ohio offers several credits that reduce your final tax bill. Credits are subtracted directly from tax owed — a $200 credit saves $200, not $200 × your tax rate.</p>
+    <ul>
+      <li><strong>Ohio Earned Income Tax Credit (EITC):</strong> 30% of your federal EITC amount. Nonrefundable — reduces Ohio tax to $0 but won't generate a refund. Available to low- and moderate-income working Ohioans who qualify for the federal EITC.</li>
+      <li><strong>Joint Filer Credit:</strong> Available to married couples filing jointly with modified AGI of $500,000 or less. Provides a modest credit to account for the marriage tax structure.</li>
+      <li><strong>Senior Citizen Credit:</strong> $50 credit per return for taxpayers age 65+. Means-tested and phases out at higher incomes.</li>
+      <li><strong>Retirement Income Credit:</strong> Credit for pension and retirement income (401(k) distributions, IRA withdrawals). Phases out above $100,000 income.</li>
+      <li><strong>Child and Dependent Care Credit:</strong> Based on qualifying federal child care expenses. Helps offset daycare and after-school care costs.</li>
+      <li><strong>Business Income Deduction:</strong> If you own an LLC, S-Corp, or partnership, the first <strong>$250,000 of pass-through business income is exempt</strong> from Ohio state tax. Income above $250,000 is taxed at a flat 3% business rate (not the 2.75% personal rate).</li>
+    </ul>
+    <div class="blog-info">💡 <strong>Self-employed Ohioans:</strong> The $250,000 business income deduction is one of the most valuable tax benefits in the state. A sole proprietor with $180,000 in pass-through income pays <strong>zero Ohio state income tax</strong> on that business income.</div>
+  </div>
+
+  <!-- SECTION 7: CTA -->
+  <div class="blog-cta" id="calculator-cta">
+    <h3>Calculate Your Exact Ohio Take-Home Pay</h3>
+    <p>Skip the math — our free Ohio calculators use real 2026 IRS brackets, Ohio state tax tables, and your city's municipal rate to give you an accurate take-home estimate in seconds.</p>
+    <div class="blog-cta-btn">
+      <a href="/ohio/paycheck-calculator">💵 Ohio Paycheck Calculator</a>
+      <a href="/ohio/hourly-paycheck-calculator" class="sec">⏱️ Hourly Paycheck Calculator</a>
+      <a href="/ohio/bonus-tax-calculator" class="sec">🎯 Bonus Tax Calculator</a>
+    </div>
+  </div>
+
+  <!-- SECTION 8: FAQ -->
+  <div class="blog-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <?php $faqs = [
+      ['What is the Ohio state income tax rate for 2026?', 'For tax year 2026, Ohio has a flat income tax rate of <strong>2.75%</strong> on all nonbusiness income above $26,050. Income below $26,050 is taxed at 0%. This flat rate is the result of House Bill 96. Business pass-through income is taxed separately at 3% after the first $250,000 exemption. For official guidance, visit <a href="https://tax.ohio.gov" target="_blank" rel="noopener noreferrer">tax.ohio.gov</a>.'],
+      ['Do I pay local tax if I work from home in Ohio?', 'Yes — but you pay tax to your <em>home</em> city, not your employer\'s city. Since January 1, 2022, Ohio requires withholding based on where you physically work each day. If you\'re fully remote, you pay your home city\'s rate. If you commute, you pay the office city\'s rate for those days. Most Ohio cities offer credits to prevent double taxation when you live and work in different cities.'],
+      ['Which Ohio city has the highest income tax?', '<strong>Columbus and Akron</strong> are tied at 2.5% — the highest of Ohio\'s major cities. Toledo and Dayton charge 2.25%, Cleveland charges 2.0%, and Cincinnati charges 1.8%. Some smaller municipalities charge higher rates. Always verify your specific city\'s current rate at <a href="https://tax.ohio.gov" target="_blank" rel="noopener noreferrer">tax.ohio.gov</a>.'],
+      ['Is Ohio a high-tax state?', 'Ohio\'s 2.75% flat state rate is relatively low nationally. However, adding local municipal taxes (averaging ~1.2% of income in cities) brings the combined state + local burden to roughly 3.5%–5% for most Ohio workers — middle-of-the-pack nationally. States like Texas and Florida have zero income tax, while California\'s top rate exceeds 13%.'],
+      ['Does Ohio tax Social Security benefits?', 'No. Ohio does not tax Social Security retirement benefits. This makes Ohio more attractive for retirees compared to states like Missouri, Utah, and others that partially or fully tax Social Security income. However, other retirement income (pensions, 401(k) distributions) is taxable in Ohio, subject to the retirement income credit.'],
+    ]; foreach($faqs as $f): ?>
+    <div class="blog-faq-item">
+      <div class="blog-faq-q"><?php echo $f[0]; ?></div>
+      <div class="blog-faq-a"><?php echo $f[1]; ?></div>
+    </div>
+    <?php endforeach; ?>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="blog-section">
+    <h2>Disclaimer &amp; Sources</h2>
+    <p>This article is for informational purposes only and does not constitute tax advice. Ohio tax law changes frequently — always verify current rules with the <a href="https://tax.ohio.gov" target="_blank" rel="noopener noreferrer">Ohio Department of Taxation</a> or a qualified CPA before making financial decisions.</p>
+    <p><strong>Sources:</strong> Ohio Department of Taxation (HB 96 rate tables, 2026 withholding tables); <a href="https://www.irs.gov" target="_blank" rel="noopener noreferrer">IRS.gov</a> (Publication 15, federal brackets); Tax Foundation (State Individual Income Tax Rates 2026); Regional Income Tax Agency (RITA) municipal rate schedules.</p>
+  </div>
+
+</article>
+
+<!-- SIDEBAR -->
+<aside class="blog-sidebar">
+  <div class="blog-toc">
+    <div class="blog-toc-head">📋 On This Page</div>
+    <ul>
+      <li><a href="#quick-answer">Ohio Tax Rate at a Glance</a></li>
+      <li><a href="#bracket">2026 Tax Brackets</a></li>
+      <li><a href="#local-tax">Local Municipal Tax</a></li>
+      <li><a href="#federal">Federal Tax Interaction</a></li>
+      <li><a href="#who-file">Who Needs to File?</a></li>
+      <li><a href="#calculate">Full Tax Calculation</a></li>
+      <li><a href="#credit">Credits &amp; Deductions</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🔗 Ohio Tax Tools</div>
+    <ul>
+      <li><a href="/ohio/paycheck-calculator">💵 Ohio Paycheck Calculator</a></li>
+      <li><a href="/ohio/hourly-paycheck-calculator">⏱️ Hourly Paycheck</a></li>
+      <li><a href="/ohio/salary-paycheck-calculator">📊 Salary Paycheck</a></li>
+      <li><a href="/ohio/overtime-calculator">🕐 Overtime Calculator</a></li>
+      <li><a href="/ohio/bonus-tax-calculator">🎯 Bonus Tax Calculator</a></li>
+      <li><a href="/ohio/payroll-tax-calculator">🏢 Employer Payroll Tax</a></li>
+      <li><a href="/ohio/">🏠 All Ohio Tools</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">📖 Related Ohio Guides</div>
+    <ul>
+      <li><a href="/blog/ohio-paycheck-calculator-new-job-take-home-pay">💼 New Job Take-Home Pay Guide</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">💰 Finance Tools</div>
+    <ul>
+      <li><a href="/calculators/retirement-saving">🧮 Retirement Savings Calculator</a></li>
+      <li><a href="/calculators/investment-growth-calculator">📈 Investment Growth</a></li>
+      <li><a href="/calculators/cd-interest.php">💰 CD Interest Calculator</a></li>
+    </ul>
+  </div>
+</aside>
+
+</div><!-- /blog-wrap -->
+</main>
+
+<script>
+document.querySelectorAll('.blog-faq-q').forEach(function(q){
+  q.addEventListener('click', function(){
+    var item = this.closest('.blog-faq-item'), was = item.classList.contains('open');
+    document.querySelectorAll('.blog-faq-item').forEach(function(x){ x.classList.remove('open'); });
+    if(!was) item.classList.add('open');
+  });
+});
+/* TOC scroll spy */
+var tocLinks = document.querySelectorAll('.blog-toc a');
+var sections = [];
+tocLinks.forEach(function(a){
+  var id = a.getAttribute('href').replace('#','');
+  var el = document.getElementById(id);
+  if(el) sections.push({a:a,el:el});
+});
+window.addEventListener('scroll', function(){
+  var y = window.scrollY + 130;
+  var cur = sections[0];
+  sections.forEach(function(s){ if(s.el.getBoundingClientRect().top + window.scrollY <= y) cur = s; });
+  tocLinks.forEach(function(a){ a.classList.remove('active'); });
+  if(cur) cur.a.classList.add('active');
+}, {passive:true});
+</script>
+<?php require_once '../includes/footer.php'; ?>

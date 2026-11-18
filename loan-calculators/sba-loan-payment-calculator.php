@@ -1,0 +1,1210 @@
+<?php
+// ─── SEO Meta ───────────────────────────────────────────────────────────────
+$pageTitle       = 'SBA Loan Payment Calculator (2026) “ Monthly Payment, Down Payment & Amortization';
+$metaDescription = 'Free SBA loan payment calculator for 2026. Calculate your exact monthly SBA loan payment, required down payment, total interest, and view a full amortization schedule. Works for 7(a), 504, and Express loans.';
+$metaKeywords    = 'sba loan payment calculator, sba loan down payment calculator, calculate sba loan payment, sba loan monthly payment calculator, sba loan calculator payment, how to calculate sba loan payment, sba 7a payment calculator, sba loan amortization 2026';
+
+// ─── Structured Data ─────────────────────────────────────────────────────────
+$schemaData = [
+    '@context' => 'https://schema.org',
+    '@graph'   => [
+        [
+            '@type'               => 'WebApplication',
+            'name'                => 'SBA Loan Payment Calculator',
+            'url'                 => 'https://americacalculator.com/loan-calculators/sba-loan-payment-calculator',
+            'description'         => 'Free SBA loan payment calculator that estimates your exact monthly payment, required down payment, total interest paid, and provides a full month-by-month amortization schedule.',
+            'applicationCategory' => 'FinanceApplication',
+            'operatingSystem'     => 'All',
+            'offers'              => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
+        ],
+        [
+            '@type'     => 'HowTo',
+            'name'      => 'How to Calculate Your SBA Loan Payment',
+            'totalTime' => 'PT2M',
+            'step'      => [
+                ['@type' => 'HowToStep', 'position' => 1, 'name' => 'Enter the loan amount', 'text' => 'Enter the total dollar amount you need. SBA 7(a) max is $5 million.'],
+                ['@type' => 'HowToStep', 'position' => 2, 'name' => 'Enter the interest rate', 'text' => 'Input the annual rate. Most SBA 7(a) loans in 2026 are Prime (8.5%) + 2.25%–2.75%.'],
+                ['@type' => 'HowToStep', 'position' => 3, 'name' => 'Enter the loan term', 'text' => 'Enter years: up to 10 for equipment/working capital, 25 for real estate.'],
+                ['@type' => 'HowToStep', 'position' => 4, 'name' => 'Enter down payment percentage', 'text' => 'Most SBA loans require 10%–20% down. Enter your expected equity injection.'],
+                ['@type' => 'HowToStep', 'position' => 5, 'name' => 'Click Calculate', 'text' => 'View your monthly payment, down payment amount, total interest, and full amortization schedule.'],
+            ],
+        ],
+        [
+            '@type'      => 'FAQPage',
+            'mainEntity' => [
+                ['@type' => 'Question', 'name' => 'How do I calculate my SBA loan payment?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Use the standard amortization formula: M = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1], where P is the loan principal, r is the monthly interest rate, and n is the number of payments. Our calculator does this instantly.']],
+                ['@type' => 'Question', 'name' => 'What is the monthly payment on a $200,000 SBA loan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'At 11.25% over 10 years, a $200,000 SBA loan has a monthly payment of approximately $2,757. At 11.25% over 25 years, the payment drops to about $1,962 but total interest is much higher.']],
+                ['@type' => 'Question', 'name' => 'What is the monthly payment on a $300,000 SBA loan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'At 11.25% over 10 years, a $300,000 SBA loan has a monthly payment of approximately $4,135. Over 25 years the payment is about $2,943 but total interest more than doubles.']],
+                ['@type' => 'Question', 'name' => 'How much down payment is required for an SBA loan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Most SBA 7(a) lenders require 10%–20% equity injection. SBA 504 loans require exactly 10% from the borrower. Business acquisitions often require 20–30%.']],
+                ['@type' => 'Question', 'name' => 'What is the SBA loan interest rate in 2026?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'SBA 7(a) variable rates in 2026 are Prime (8.50%) + 2.25%–2.75%, putting most loans at 10.75%–11.25% APR. SBA 504 CDC fixed rates are typically 5.50%–6.50%.']],
+                ['@type' => 'Question', 'name' => 'Can I make extra payments on an SBA loan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. SBA loans under 15 years have no prepayment penalty. For loans 15+ years, early payoff in years 1–3 incurs a fee of 5%, 3%, or 1% respectively.']],
+                ['@type' => 'Question', 'name' => 'What is the SBA loan payment formula?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'M = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]. M = monthly payment, P = principal, r = monthly rate (annual ÷ 12 ÷ 100), n = total months (years × 12).']],
+                ['@type' => 'Question', 'name' => 'Does the SBA loan payment include taxes and insurance?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'No. The calculated payment covers principal and interest only. You will need to add property taxes, insurance, and any escrow amounts separately.']],
+            ],
+        ],
+    ],
+    ['@type' => 'BreadcrumbList', 'itemListElement' => [
+      ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+      ['@type' => 'ListItem', 'position' => 2, 'name' => 'Loan Calculators', 'item' => 'https://americacalculator.com/loan-calculators/'],
+      ['@type' => 'ListItem', 'position' => 3, 'name' => 'SBA Loan Payment Calculator', 'item' => 'https://americacalculator.com/loan-calculators/sba-loan-payment-calculator'],
+    ]],
+
+];
+
+require_once '../includes/header.php';
+require_once '../includes/helpers.php';
+?>
+<style>
+/* ============================================================
+   PAGE BASE
+============================================================ */
+body { background: #f5f7fa; }
+
+.sba-page-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  display: grid;
+  grid-template-columns: 220px 1fr 260px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ============================================================
+   LEFT TOC SIDEBAR
+============================================================ */
+.toc-sidebar {
+  position: sticky;
+  top: 6rem;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e8edf5;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+.toc-sidebar-header {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f5fa8 100%);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.toc-list { list-style: none; padding: 0.75rem 0; margin: 0; }
+.toc-list li a {
+  display: block;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.84rem;
+  color: #475569;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: all 0.18s;
+  line-height: 1.4;
+}
+.toc-list li a:hover, .toc-list li a.toc-active {
+  color: #0f5fa8; background: #f0f6ff; border-left-color: #0f5fa8;
+}
+.toc-divider { height: 1px; background: #f1f5f9; margin: 0.5rem 0; }
+.toc-related-label { padding: 0.5rem 1.25rem; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+.toc-related-list { list-style: none; padding: 0; margin: 0 0 0.75rem; }
+.toc-related-list li a { display: block; padding: 0.4rem 1.25rem; font-size: 0.82rem; color: #64748b; text-decoration: none; transition: color 0.15s; }
+.toc-related-list li a:hover { color: #0f5fa8; }
+
+/* ============================================================
+   MAIN CONTENT
+============================================================ */
+.main-content { min-width: 0; }
+
+.page-hero { margin-bottom: 2rem; }
+.page-hero h1 { font-size: 2.1rem; color: #0f172a; margin: 0 0 0.6rem; line-height: 1.25; }
+.page-hero .hero-desc { font-size: 1.05rem; color: #64748b; line-height: 1.65; margin: 0 0 0.75rem; border-left: 4px solid #dde6f4; padding-left: 1rem; }
+.page-hero .breadcrumb { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.75rem; }
+.page-hero .breadcrumb a { color: #64748b; text-decoration: none; }
+.page-hero .breadcrumb a:hover { color: #0f5fa8; }
+
+/* ─── CALCULATOR ─────────────────────────────────────── */
+.calc-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  border: 1px solid #eef2f7;
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+}
+.calc-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.calc-form-panel { padding: 2rem; border-right: 1px solid #f0f4fa; }
+.calc-results-panel { padding: 2rem; background: linear-gradient(160deg, #f8fbff 0%, #eef5ff 100%); }
+
+.form-field { margin-bottom: 1.3rem; }
+.form-field label { display: block; font-weight: 600; font-size: 0.9rem; color: #1e293b; margin-bottom: 0.45rem; }
+.form-field input, .form-field select {
+  width: 100%; padding: 13px 15px; border: 1.5px solid #d1dae8; border-radius: 8px;
+  font-size: 1rem; color: #0f172a; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box; background: #fff;
+}
+.form-field input:focus, .form-field select:focus {
+  border-color: #0f5fa8; box-shadow: 0 0 0 3px rgba(15, 95, 168, 0.12);
+}
+.form-field .field-hint { font-size: 0.78rem; color: #94a3b8; margin-top: 0.35rem; line-height: 1.4; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.btn-calc {
+  width: 100%; background: linear-gradient(135deg, #1d4ed8 0%, #0f5fa8 100%);
+  color: #fff; padding: 15px; border: none; border-radius: 9px; font-size: 1rem;
+  font-weight: 700; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s, transform 0.15s;
+}
+.btn-calc:hover { opacity: 0.92; transform: translateY(-1px); }
+
+/* Results */
+.results-heading { font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem; }
+.results-sub { font-size: 0.84rem; color: #64748b; margin: 0 0 1.25rem; }
+
+.result-boxes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+.res-box {
+  background: #fff; border: 1.5px solid #e8edf5; border-radius: 10px;
+  padding: 1.1rem 0.75rem; text-align: center;
+}
+.res-box.primary {
+  background: linear-gradient(135deg, #1d4ed8, #0f5fa8);
+  border-color: transparent; box-shadow: 0 6px 18px rgba(29,78,216,0.22);
+  grid-column: span 2;
+  padding: 1.35rem 1rem;
+}
+.res-val { display: block; font-size: 1.5rem; font-weight: 800; color: #1d4ed8; margin-bottom: 0.2rem; line-height: 1; }
+.res-box.primary .res-val { color: #fff; font-size: 2rem; }
+.res-lbl { font-size: 0.78rem; color: #64748b; font-weight: 600; line-height: 1.3; }
+.res-box.primary .res-lbl { color: rgba(255,255,255,0.8); font-size: 0.88rem; }
+
+/* Down payment highlight */
+.down-payment-callout {
+  background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px;
+  padding: 1rem 1.1rem; margin-bottom: 1.25rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.dp-label { font-size: 0.85rem; font-weight: 600; color: #166534; }
+.dp-sublabel { font-size: 0.75rem; color: #4ade80; margin-top: 2px; }
+.dp-value { font-size: 1.5rem; font-weight: 800; color: #16a34a; }
+
+/* Amortization bar */
+.amort-title { font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 0.6rem; }
+.amort-bar { display: flex; height: 14px; border-radius: 20px; overflow: hidden; background: #e2e8f0; margin-bottom: 0.6rem; }
+.amort-p { background: #1d4ed8; transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+.amort-i { background: #93c5fd; transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+.amort-legend { display: flex; gap: 1.25rem; }
+.leg-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #64748b; font-weight: 500; }
+.leg-dot { width: 11px; height: 11px; border-radius: 3px; }
+.dot-p { background: #1d4ed8; } .dot-i { background: #93c5fd; }
+
+/* Amortization Table Toggle */
+.amort-table-section { border-top: 1px solid #f0f4fa; }
+.amort-toggle-btn {
+  width: 100%; background: none; border: none; padding: 1rem 2rem; font-size: 0.9rem;
+  font-weight: 600; color: #1d4ed8; cursor: pointer; text-align: left;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.amort-toggle-btn:hover { background: #f8fbff; }
+.amort-table-wrap { display: none; padding: 0 2rem 1.5rem; overflow-x: auto; }
+.amort-table-wrap.open { display: block; }
+.amort-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.amort-table th { background: #1e3a5f; color: #fff; padding: 10px 12px; text-align: right; font-weight: 600; }
+.amort-table th:first-child { text-align: left; }
+.amort-table td { padding: 8px 12px; text-align: right; border-bottom: 1px solid #f1f5f9; color: #334155; }
+.amort-table td:first-child { text-align: left; font-weight: 600; color: #1e293b; }
+.amort-table tr:nth-child(even) td { background: #f8fafc; }
+.amort-table .pc { color: #1d4ed8; font-weight: 600; }
+.amort-table .ic { color: #dc2626; }
+
+/* Content Sections */
+.content-section {
+  background: #fff; border-radius: 14px; border: 1px solid #eef2f7;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.03); padding: 2.25rem;
+  margin-bottom: 2rem; scroll-margin-top: 6rem;
+}
+.content-section h2 { font-size: 1.65rem; color: #0f172a; margin: 0 0 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid #f0f4fa; }
+.content-section h3 { font-size: 1.18rem; color: #1e293b; margin: 1.75rem 0 0.7rem; }
+.content-section p { color: #475569; line-height: 1.75; margin-bottom: 1.25rem; font-size: 1rem; }
+.content-section ul, .content-section ol { color: #475569; line-height: 1.75; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.content-section li { margin-bottom: 0.5rem; }
+.content-section strong { color: #1e293b; }
+
+/* Quick Examples Grid */
+.examples-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.25rem 0; }
+.ex-card {
+  background: #f8faff; border: 1.5px solid #e0eafb; border-radius: 10px; padding: 1.25rem 1rem;
+  text-align: center; transition: box-shadow 0.2s;
+}
+.ex-card:hover { box-shadow: 0 4px 14px rgba(29,78,216,0.1); border-color: #bfdbfe; }
+.ex-card .ex-amount { font-size: 1.2rem; font-weight: 800; color: #1d4ed8; margin-bottom: 0.35rem; }
+.ex-card .ex-detail { font-size: 0.78rem; color: #94a3b8; margin-bottom: 0.6rem; }
+.ex-card .ex-payment { font-size: 1.05rem; font-weight: 700; color: #0f172a; }
+.ex-card .ex-pay-label { font-size: 0.75rem; color: #64748b; }
+
+/* Formula */
+.formula-box { background: #0f172a; color: #e2e8f0; padding: 1.25rem 2rem; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 1.05rem; text-align: center; margin: 1.25rem 0; }
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; margin: 1rem 0; font-size: 0.95rem; color: #475569; }
+
+/* Rate table */
+.rate-table { width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; border: 1px solid #e8edf5; margin-bottom: 1.5rem; }
+.rate-table th { background: #1e3a5f; color: #fff; padding: 13px 16px; text-align: left; font-size: 0.88rem; font-weight: 600; }
+.rate-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; color: #334155; }
+.rate-table tr:last-child td { border-bottom: none; }
+.rate-table tr:nth-child(even) td { background: #f8fafc; }
+.rv { color: #1d4ed8; font-weight: 700; }
+.rg { color: #16a34a; font-weight: 600; }
+.rr { color: #dc2626; font-weight: 600; }
+
+/* Howto steps */
+.howto-list { list-style: none; padding: 0; margin: 1.25rem 0 0; counter-reset: howto-counter; }
+.howto-list li { position: relative; padding-left: 3.5rem; margin-bottom: 1.75rem; counter-increment: howto-counter; }
+.howto-list li::before { content: counter(howto-counter); position: absolute; left: 0; top: 0; width: 34px; height: 34px; background: linear-gradient(135deg, #1d4ed8, #0f5fa8); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.95rem; }
+.howto-list li strong { color: #0f172a; display: block; margin-bottom: 0.25rem; font-size: 1rem; }
+.howto-list li span { color: #475569; line-height: 1.65; font-size: 0.97rem; }
+
+/* Info / warning boxes */
+.info-box { background: #eff6ff; border-left: 4px solid #1d4ed8; border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.25rem 0; font-size: 0.95rem; color: #1e3a5f; line-height: 1.6; }
+.tip-box { background: #f0fdf4; border-left: 4px solid #16a34a; border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.25rem 0; font-size: 0.95rem; color: #166534; line-height: 1.6; }
+.warning-box { background: #fefce8; border-left: 4px solid #ca8a04; border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.25rem 0; font-size: 0.95rem; color: #713f12; line-height: 1.6; }
+
+/* FAQ */
+.faq-item { border-bottom: 1px solid #f0f4fa; padding-bottom: 1.25rem; margin-bottom: 1.25rem; }
+.faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.faq-q { font-size: 1.02rem; font-weight: 700; color: #0f172a; margin-bottom: 0.6rem; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.faq-q::after { content: '+'; font-size: 1.3rem; color: #1d4ed8; flex-shrink: 0; }
+.faq-item.open .faq-q::after { content: '−'; }
+.faq-a { color: #475569; line-height: 1.7; font-size: 0.97rem; display: none; }
+.faq-item.open .faq-a { display: block; }
+
+/* ============================================================
+   RIGHT SIDEBAR
+============================================================ */
+.right-sidebar { position: sticky; top: 6rem; display: flex; flex-direction: column; gap: 1.25rem; }
+
+.rates-widget { background: #fff; border-radius: 12px; border: 1px solid #e8edf5; box-shadow: 0 4px 18px rgba(0,0,0,0.05); overflow: hidden; }
+.rates-widget-header { background: linear-gradient(135deg, #1e3a5f, #0f5fa8); color: #fff; padding: 1rem 1.25rem; }
+.rates-widget-header .icon-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+.rates-widget-title { font-size: 1rem; font-weight: 700; }
+.rates-widget-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.75); }
+.rates-updated { font-size: 0.72rem; color: rgba(255,255,255,0.6); margin-top: 0.35rem; }
+.rates-list { padding: 0.75rem 0; }
+.rate-row { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 1.25rem; border-bottom: 1px solid #f8fafc; transition: background 0.15s; }
+.rate-row:last-child { border-bottom: none; }
+.rate-row:hover { background: #f8fbff; }
+.rate-label { font-size: 0.82rem; font-weight: 600; color: #334155; }
+.rate-sublabel { font-size: 0.72rem; color: #94a3b8; }
+.rate-value { font-size: 1.05rem; font-weight: 800; color: #1d4ed8; }
+.rate-change { font-size: 0.7rem; margin-top: 1px; color: #94a3b8; }
+.rates-footer { padding: 0.85rem 1.25rem; border-top: 1px solid #f0f4fa; background: #f8fbff; }
+.rates-footer a { font-size: 0.83rem; font-weight: 700; color: #1d4ed8; text-decoration: none; display: flex; align-items: center; gap: 0.35rem; }
+.rates-footer a:hover { text-decoration: underline; }
+.loading-spinner { display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; font-size: 0.82rem; color: #94a3b8; }
+.spinner-dot { width: 6px; height: 6px; background: #93c5fd; border-radius: 50%; animation: pulse-dot 1.4s infinite ease-in-out; }
+.spinner-dot:nth-child(2) { animation-delay: 0.2s; } .spinner-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes pulse-dot { 0%,80%,100% { transform: scale(0.8); opacity: 0.5; } 40% { transform: scale(1.2); opacity: 1; } }
+
+.quick-access-widget { background: #fff; border-radius: 12px; border: 1px solid #e8edf5; box-shadow: 0 2px 12px rgba(0,0,0,0.04); overflow: hidden; }
+.widget-header { padding: 0.9rem 1.25rem; background: #f8fafc; border-bottom: 1px solid #f0f4fa; font-size: 0.83rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; }
+.widget-links { list-style: none; padding: 0.5rem 0; margin: 0; }
+.widget-links li a { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; font-size: 0.85rem; color: #475569; text-decoration: none; border-left: 3px solid transparent; transition: all 0.15s; font-weight: 500; }
+.widget-links li a:hover, .widget-links li a.active { color: #0f5fa8; background: #f0f6ff; border-left-color: #0f5fa8; }
+
+/* ── Responsive ── */
+@media (max-width: 1200px) { .sba-page-wrap { grid-template-columns: 200px 1fr 240px; } }
+@media (max-width: 1024px) { .sba-page-wrap { grid-template-columns: 1fr; } .toc-sidebar, .right-sidebar { position: static; } .right-sidebar { display: grid; grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) {
+  .sba-page-wrap { padding: 1rem 1rem 3rem; }
+  .calc-inner { grid-template-columns: 1fr; }
+  .calc-form-panel { border-right: none; border-bottom: 1px solid #f0f4fa; }
+  .result-boxes { grid-template-columns: 1fr 1fr; }
+  .res-box.primary { grid-column: span 2; }
+  .formula-grid { grid-template-columns: 1fr; }
+  .examples-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .right-sidebar { grid-template-columns: 1fr; }
+  .page-hero h1 { font-size: 1.65rem; }
+  .content-section h2 { font-size: 1.3rem; }
+}
+</style>
+
+<main id="main-content">
+<div class="sba-page-wrap">
+
+  <!-- ════════════════════════════════════════
+       LEFT: TABLE OF CONTENTS SIDEBAR
+  ════════════════════════════════════════ -->
+  <aside class="toc-sidebar">
+    <div class="toc-sidebar-header">📋 In This Article</div>
+    <ul class="toc-list">
+      <li><a href="#calculator" class="toc-active">SBA Payment Calculator</a></li>
+      <li><a href="#quick-example">Common Loan Scenarios</a></li>
+      <li><a href="#how-to-calculate">How to Calculate SBA Payment</a></li>
+      <li><a href="#down-payment">Down Payment Calculator</a></li>
+      <li><a href="#payment-formula">Payment Formula Explained</a></li>
+      <li><a href="#current-rate">2026 SBA Interest Rates</a></li>
+      <li><a href="#loan-type">SBA 7(a) vs 504 Payments</a></li>
+      <li><a href="#payment-factor">What Affects Your Payment</a></li>
+      <li><a href="#reduce-payment">How to Lower Your Payment</a></li>
+      <li><a href="#extra-payment">Impact of Extra Payments</a></li>
+      <li><a href="#prepayment">Prepayment Penalties</a></li>
+      <li><a href="#faq">Frequently Asked Questions</a></li>
+    </ul>
+    <div class="toc-divider"></div>
+    <div class="toc-related-label">Related Calculators</div>
+    <ul class="toc-related-list">
+      <li><a href="<?php echo $baseUrl; ?>/loan-calculators/sba-loan-calculator">SBA Loan Calculator</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/loan-calculators/business-loan-calculator">Business Loan</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/loan-calculators/auto-loan-calculator">Auto Loan</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/loan-calculators/personal-loan-calculator">Personal Loan</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/real-estate/cap-rate-calculator">Cap Rate</a></li>
+    </ul>
+  </aside>
+
+  <!-- ════════════════════════════════════════
+       CENTER: MAIN CONTENT
+  ════════════════════════════════════════ -->
+  <div class="main-content">
+
+    <!-- HERO -->
+    <div class="page-hero">
+      <div class="breadcrumb">
+        <a href="<?php echo $baseUrl; ?>/index.php">Home</a> º
+        <a href="<?php echo $baseUrl; ?>/loan-calculators/">Finance</a> º
+        SBA Loan Payment Calculator
+      </div>
+      <h1>SBA Loan Payment Calculator (2026)</h1>
+      <p class="hero-desc">
+        Find your exact monthly SBA loan payment, required down payment, and total interest
+        in seconds. Works for <strong>SBA 7(a)</strong>, <strong>SBA 504</strong>, and
+        <strong>SBA Express</strong> loans. Includes a complete amortization schedule and
+        live 2026 interest rate benchmarks.
+      </p>
+    </div>
+
+    <!-- ─── CALCULATOR ────────────────────────────────── -->
+    <div class="calc-card" id="calculator">
+      <div class="calc-inner">
+
+        <!-- Form -->
+        <div class="calc-form-panel">
+          <div class="form-field">
+            <label for="loan_amount">Total Loan Amount ($)</label>
+            <input type="number" id="loan_amount" value="250000" min="1000" max="5000000" step="1000">
+            <div class="field-hint">SBA 7(a) max: $5,000,000 &nbsp;|&nbsp; SBA 504 max: $5,500,000</div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="interest_rate">Annual Interest Rate (%)</label>
+              <input type="number" id="interest_rate" value="11.25" min="0.1" max="50" step="0.01">
+              <div class="field-hint">2026: Prime 8.50% + 2.25–2.75%</div>
+            </div>
+            <div class="form-field">
+              <label for="loan_term">Loan Term (years)</label>
+              <input type="number" id="loan_term" value="10" min="1" max="30" step="1">
+              <div class="field-hint">Max 10 yrs equipment / 25 yrs real estate</div>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="down_payment_pct">Down Payment / Equity Injection (%)</label>
+            <input type="number" id="down_payment_pct" value="10" min="0" max="100" step="1">
+            <div class="field-hint">SBA 7(a): typically 10%–20% &nbsp;|&nbsp; SBA 504: exactly 10%</div>
+          </div>
+          <div class="form-field">
+            <label for="loan_type">SBA Loan Type</label>
+            <select id="loan_type">
+              <option value="7a">SBA 7(a) — Variable Rate</option>
+              <option value="504">SBA 504 — Fixed Rate (CDC portion)</option>
+              <option value="expres">SBA Express</option>
+              <option value="micro">SBA Microloan</option>
+            </select>
+            <div class="field-hint">Helps apply the correct rate range benchmark</div>
+          </div>
+          <button type="button" class="btn-calc" id="sba-calc-btn">⚡ Calculate My SBA Payment</button>
+        </div>
+
+        <!-- Results -->
+        <div class="calc-results-panel">
+          <h3 class="results-heading">Your Payment Summary</h3>
+          <p class="results-sub" id="results-desc">Based on $250,000 at 11.25% over 10 years</p>
+
+          <div class="result-boxe">
+            <div class="res-box primary">
+              <span class="res-val" id="res_monthly">$3,479</span>
+              <span class="res-lbl">Monthly Payment (P&I)</span>
+            </div>
+            <div class="res-box">
+              <span class="res-val" id="res_interest">$163,576</span>
+              <span class="res-lbl">Total Interest Paid</span>
+            </div>
+            <div class="res-box">
+              <span class="res-val" id="res_total">$413,576</span>
+              <span class="res-lbl">Total Amount Repaid</span>
+            </div>
+          </div>
+
+          <!-- Down Payment Callout -->
+          <div class="down-payment-callout">
+            <div>
+              <div class="dp-label">💵 Required Down Payment</div>
+              <div class="dp-sublabel">Equity injection to secure loan</div>
+            </div>
+            <div class="dp-value" id="res_downpayment">$27,778</div>
+          </div>
+
+          <!-- Amort Bar -->
+          <div class="amort-title">Principal vs. Interest Split</div>
+          <div class="amort-bar">
+            <div class="amort-p" id="bar_p" style="width:60%"></div>
+            <div class="amort-i" id="bar_i" style="width:40%"></div>
+          </div>
+          <div class="amort-legend">
+            <div class="leg-item"><div class="leg-dot dot-p"></div>Principal</div>
+            <div class="leg-item"><div class="leg-dot dot-i"></div>Interest</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amortization Table -->
+      <div class="amort-table-section">
+        <button class="amort-toggle-btn" id="amort-toggle">
+          <span>📊 Show Full Amortization Schedule</span>
+          <span id="amort-icon"></span>
+        </button>
+        <div class="amort-table-wrap" id="amort-table-wrap">
+          <table class="amort-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Payment</th>
+                <th>Principal</th>
+                <th>Interest</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amort-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /calc-card -->
+
+    <!-- ─── QUICK EXAMPLES ────────────────────────────── -->
+    <section class="content-section" id="quick-example">
+      <h2>Common SBA Loan Payment Scenarios</h2>
+      <p>
+        Not sure where your loan falls? Here are the most frequently searched SBA loan payment
+        amounts at <strong>11.25% APR</strong> over <strong>10 years</strong> — the most common
+        combination in 2026. Click any card to auto-fill the calculator above.
+      </p>
+      <div class="examples-grid">
+        <div class="ex-card" onclick="fillCalc(100000)" style="cursor:pointer;">
+          <div class="ex-amount">$100,000</div>
+          <div class="ex-detail">11.25% · 10 years</div>
+          <div class="ex-payment">$1,379/mo</div>
+          <div class="ex-pay-label">Monthly Payment</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(150000)" style="cursor:pointer;">
+          <div class="ex-amount">$150,000</div>
+          <div class="ex-detail">11.25% · 10 years</div>
+          <div class="ex-payment">$2,068/mo</div>
+          <div class="ex-pay-label">Monthly Payment</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(200000)" style="cursor:pointer;">
+          <div class="ex-amount">$200,000</div>
+          <div class="ex-detail">11.25% · 10 years</div>
+          <div class="ex-payment">$2,757/mo</div>
+          <div class="ex-pay-label">Monthly Payment</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(250000)" style="cursor:pointer;">
+          <div class="ex-amount">$250,000</div>
+          <div class="ex-detail">11.25% · 10 years</div>
+          <div class="ex-payment">$3,479/mo</div>
+          <div class="ex-pay-label">Monthly Payment</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(300000)" style="cursor:pointer;">
+          <div class="ex-amount">$300,000</div>
+          <div class="ex-detail">11.25% · 10 years</div>
+          <div class="ex-payment">$4,135/mo</div>
+          <div class="ex-pay-label">Monthly Payment</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(500000)" style="cursor:pointer;">
+          <div class="ex-amount">$500,000</div>
+          <div class="ex-detail">11.25% · 10 years</div>
+          <div class="ex-payment">$6,892/mo</div>
+          <div class="ex-pay-label">Monthly Payment</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem;color:#94a3b8;"><em>Click any card to load that scenario into the calculator. Figures for illustration based on 11.25% APR, 10-year term.</em></p>
+    </section>
+
+    <!-- ─── HOW TO CALCULATE ─────────────────────────── -->
+    <section class="content-section" id="how-to-calculate">
+      <h2>How to Calculate Your SBA Loan Payment</h2>
+      <p>
+        Calculating your SBA loan payment is simpler than it sounds. Every monthly payment you
+        make covers two components: the <strong>interest</strong> owed on the remaining balance
+        for that month, and a <strong>principal</strong> reduction that lowers what you still owe.
+        Here's how to use this calculator effectively:
+      </p>
+      <ol class="howto-list">
+        <li>
+          <strong>Enter your total loan amount</strong>
+          <span>This is the full amount you're borrowing — <em>before</em> subtracting your down payment.
+          If your project costs $300,000 and you put 10% down ($30,000), your loan amount is still
+          $300,000 total project cost, but the loan funded by the bank is $270,000. Enter the
+          <strong>financed amount</strong> — what you're actually borrowing.</span>
+        </li>
+        <li>
+          <strong>Enter the annual interest rate</strong>
+          <span>Use the rate your lender quoted, or check the 2026 benchmarks in the sidebar.
+          SBA 7(a) variable rates are Prime (8.50%) + the lender's spread. If you haven't been
+          quoted yet, <strong>11.00%–11.25%</strong> is a reasonable 2026 baseline for most
+          7(a) borrowers with good credit.</span>
+        </li>
+        <li>
+          <strong>Enter the loan term</strong>
+          <span>Your repayment period directly affects your monthly payment. A 10-year term
+          on $250,000 at 11.25% produces a <strong>$3,479/month</strong> payment. Stretching to
+          25 years drops the payment to <strong>$2,391/month</strong> but more than triples
+          the total interest paid. Use the calculator to compare.</span>
+        </li>
+        <li>
+          <strong>Enter your down payment percentage</strong>
+          <span>The down payment (called "equity injection" in SBA terminology) is the portion
+          you pay upfront. Entering your expected percentage lets the calculator show you the
+          exact dollar amount required and confirm you're within SBA guidelines.</span>
+        </li>
+        <li>
+          <strong>Click Calculate and review your full amortization schedule</strong>
+          <span>Hit the Calculate button to see your monthly payment instantly. Then click
+          "Show Full Amortization Schedule" to see a complete month-by-month breakdown of
+          exactly how each payment is split between principal and interest throughout
+          the entire loan.</span>
+        </li>
+      </ol>
+      <div class="tip-box">
+        ✅ <strong>Pro tip:</strong> Run the calculator twice — once with your actual loan term and
+        once 5 years shorter. The difference in monthly payment is often smaller than expected,
+        but the interest savings are usually massive.
+      </div>
+    </section>
+
+    <!-- ─── DOWN PAYMENT ─────────────────────────────── -->
+    <section class="content-section" id="down-payment">
+      <h2>SBA Loan Down Payment Calculator</h2>
+      <p>
+        The SBA doesn't call it a "down payment" — they call it an <strong>equity injection</strong>.
+        But the concept is identical: a percentage of the total project cost that you contribute
+        from your own funds before the loan is approved. Understanding exactly how much you need
+        is critical before you apply.
+      </p>
+      <h3>Standard Down Payment Requirements by Loan Type</h3>
+      <table class="rate-table">
+        <thead><tr><th>SBA Loan Type</th><th>Typical Down Payment</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>SBA 7(a) — Working Capital</strong></td><td class="rg">0%–10%</td><td>May be waived with strong collateral</td></tr>
+          <tr><td><strong>SBA 7(a) — Equipment</strong></td><td class="rv">10%–15%</td><td>Equipment often serves as its own collateral</td></tr>
+          <tr><td><strong>SBA 7(a) — Real Estate</strong></td><td class="rv">10%–20%</td><td>Lower LTV = lower payment</td></tr>
+          <tr><td><strong>SBA 7(a) — Business Acquisition</strong></td><td class="rr">20%–30%</td><td>Higher risk = more equity required</td></tr>
+          <tr><td><strong>SBA 504 — All types</strong></td><td class="rv">Exactly 10%</td><td>Program-mandated; no flexibility</td></tr>
+          <tr><td><strong>SBA Express</strong></td><td class="rv">10%–20%</td><td>Lender-determined; faster approval</td></tr>
+        </tbody>
+      </table>
+      <h3>Where Can the Down Payment Come From?</h3>
+      <p>
+        The SBA is more flexible about the <em>source</em> of the equity injection than many borrowers
+        expect. Acceptable sources typically include:
+      </p>
+      <ul>
+        <li><strong>Personal savings</strong> — the most common and straightforward source</li>
+        <li><strong>Seller financing</strong> — when buying a business, the seller can hold a portion on standby</li>
+        <li><strong>Gift funds</strong> — allowed from family members in some cases (must be documented)</li>
+        <li><strong>Equity in existing assets</strong> — real estate equity or equipment trade-in value</li>
+        <li><strong>Retirement funds (ROBS)</strong> — Rollover for Business Startups; complex but legal</li>
+      </ul>
+      <div class="warning-box">
+        ⚠️ <strong>Important:</strong> Borrowed funds (personal loans, credit cards) generally cannot
+        be used as the equity injection — the SBA requires the down payment to represent actual "skin
+        in the game." Always confirm acceptable sources with your specific lender before applying.
+      </div>
+    </section>
+
+    <!-- ─── FORMULA ───────────────────────────────────── -->
+    <section class="content-section" id="payment-formula">
+      <h2>SBA Loan Payment Formula Explained</h2>
+      <p>
+        Every SBA loan payment is calculated using the standard amortizing loan formula.
+        This is the same formula used by every bank in the United States — our calculator
+        simply automates the math:
+      </p>
+      <div class="formula-box">M = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]</div>
+      <div class="formula-grid">
+        <span><strong>M</strong> = Monthly payment (what you pay each month)</span>
+        <span><strong>P</strong> = Principal (total loan amount borrowed)</span>
+        <span><strong>r</strong> = Monthly interest rate (annual rate ÷ 12 ÷ 100)</span>
+        <span><strong>n</strong> = Total number of payments (years × 12)</span>
+      </div>
+      <h3>Step-by-Step Manual Calculation Example</h3>
+      <p>Let's verify the $250,000 loan at 11.25% for 10 years manually:</p>
+      <ol style="color:#475569; line-height:1.8; padding-left:1.5rem; font-size:0.97rem;">
+        <li>Convert annual rate to monthly: <strong>11.25% ÷ 12 ÷ 100 = 0.009375</strong></li>
+        <li>Calculate total payments: <strong>10 × 12 = 120 months</strong></li>
+        <li>Calculate (1 + r)ⁿ: <strong>(1.009375)¹²⁰ = 3.0536</strong></li>
+        <li>Apply formula: M = 250,000 × (0.009375 × 3.0536) / (3.0536 − 1)</li>
+        <li>Calculate (1 + r)ⁿ: <strong>(1.009375)¹²⁰ = 3.0536</strong></li>
+        <li>Apply formula: M = 250,000 × (0.009375 × 3.0536) / (3.0536 − 1)</li>
+        <li>Result: M = 250,000 × 0.028688 / 2.0536 = <strong>$3,479.22 per month</strong></li>
+      </ol>
+      <div class="info-box">
+        💡 <strong>Why this matters:</strong> Understanding the formula shows you that your rate
+        and term both influence your payment non-linearly. A small rate improvement has an
+        outsized impact on total interest — a drop from 11.25% to 10.75% on a $250,000
+        10-year loan saves over <strong>$8,100</strong> in total interest.
+      </div>
+    </section>
+
+    <!-- ─── CURRENT RATES ─────────────────────────────── -->
+    <section class="content-section" id="current-rate">
+      <h2>Current SBA Loan Interest Rates — July 2026</h2>
+      <p>
+        SBA loan interest rates move with market benchmarks. The SBA doesn't set a fixed rate — instead, it sets <em>maximums</em> that lenders cannot exceed. Here are the current
+        2026 rate ranges across all SBA programs:
+      </p>
+      <table class="rate-table">
+        <thead><tr><th>Program</th><th>Rate Type</th><th>Current Rate Range</th><th>Max Term</th><th>Max Amount</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>SBA 7(a) Standard</strong></td>
+            <td>Variable (Prime + spread)</td>
+            <td class="rv">10.75%–11.25%</td>
+            <td>25 years</td>
+            <td>$5,000,000</td>
+          </tr>
+          <tr>
+            <td><strong>SBA 7(a) — Fixed</strong></td>
+            <td>Fixed (lender-set)</td>
+            <td class="rv">9.50%–12.50%</td>
+            <td>25 years</td>
+            <td>$5,000,000</td>
+          </tr>
+          <tr>
+            <td><strong>SBA 504 (CDC portion)</strong></td>
+            <td>Fixed (Treasury-linked)</td>
+            <td class="rg">5.50%–6.50%</td>
+            <td>25 years</td>
+            <td>$5,500,000</td>
+          </tr>
+          <tr>
+            <td><strong>SBA Express</strong></td>
+            <td>Variable (Prime + up to 6.5%)</td>
+            <td class="rr">Up to 15.00%</td>
+            <td>7 years</td>
+            <td>$500,000</td>
+          </tr>
+          <tr>
+            <td><strong>SBA Microloan</strong></td>
+            <td>Fixed</td>
+            <td class="rv">8.00%–13.00%</td>
+            <td>6 years</td>
+            <td>$50,000</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        The <strong>WSJ Prime Rate</strong> — the key benchmark for SBA 7(a) variable loans — currently stands at <strong>8.50%</strong> following Federal Reserve policy decisions.
+        Most SBA 7(a) lenders apply a spread of 2.25% to 2.75% on top of Prime, resulting in
+        the 10.75%–11.25% range you see widely advertised in 2026.
+      </p>
+    </section>
+
+    <!-- ─── LOAN TYPES ─────────────────────────────────── -->
+    <section class="content-section" id="loan-type">
+      <h2>SBA 7(a) vs. SBA 504 — How Payments Differ</h2>
+      <p>
+        The payment structure for SBA 7(a) and SBA 504 loans is fundamentally different.
+        Understanding this distinction is critical before you commit to a program.
+      </p>
+      <h3>SBA 7(a) Loan Payments</h3>
+      <p>
+        With an SBA 7(a) loan, you have one lender and one monthly payment. The entire loan is
+        funded by an SBA-approved bank, which then receives a partial government guarantee.
+        If your rate is variable (the most common structure), your payment can fluctuate as
+        the Prime Rate changes — though most lenders set adjustments quarterly or annually
+        rather than monthly.
+      </p>
+      <p>
+        At $250,000 with an 11.25% variable rate over 10 years, your monthly payment is
+        <strong>$3,479.22</strong>. If Prime drops by 0.50%, your rate drops to 10.75% and your
+        payment falls to roughly <strong>$3,414</strong> — a savings of about $65/month or $7,800
+        over the loan's life.
+      </p>
+      <h3>SBA 504 Loan Payments</h3>
+      <p>
+        SBA 504 loans are structured as <strong>two separate loans with two separate payments</strong>:
+      </p>
+      <ul>
+        <li><strong>Bank loan (~50% of project cost):</strong> Variable rate, set by the lender</li>
+        <li><strong>CDC loan (~40% of project cost):</strong> Fixed rate, set monthly by the SBA/Treasury</li>
+        <li><strong>Borrower equity (10%):</strong> Your down payment — not a loan</li>
+      </ul>
+      <p>
+        For a $1,000,000 project: the bank funds $500,000 (variable rate, 10–15 year term),
+        the CDC funds $400,000 (fixed ~6% rate, 20–25 year term), and you bring $100,000 in
+        equity. You'll make two separate monthly payments until both are paid off.
+      </p>
+      <div class="info-box">
+        💡 <strong>Which is better?</strong> If you need flexible use of funds or are borrowing
+        under $350,000, SBA 7(a) is usually simpler. If you're buying commercial real estate or
+        heavy equipment and want a <em>fixed</em> rate, SBA 504's CDC portion delivers rate
+        certainty that the 7(a) program typically doesn't.
+      </div>
+    </section>
+
+    <!-- ─── PAYMENT FACTORS ────────────────────────────── -->
+    <section class="content-section" id="payment-factor">
+      <h2>What Affects Your SBA Loan Monthly Payment?</h2>
+      <p>
+        Your SBA loan payment is determined by four variables. Understanding how each one
+        moves the needle helps you negotiate smarter and plan more accurately.
+      </p>
+      <h3>1. Loan Amount (Principal)</h3>
+      <p>
+        The most obvious factor. A larger loan means a larger payment, roughly proportionally.
+        Doubling the loan amount doubles the monthly payment, assuming all other terms are equal.
+        At 11.25% over 10 years: <strong>$100,000 = $1,379/month</strong>,
+        <strong>$200,000 = $2,757/month</strong>, <strong>$500,000 = $6,892/month</strong>.
+      </p>
+      <h3>2. Interest Rate</h3>
+      <p>
+        The rate has a significant but non-linear impact on your payment. On a $250,000 10-year loan,
+        the difference between 10.75% and 11.25% is about <strong>$65/month ($780/year)</strong>.
+        Over 10 years, that's $7,800. On a 25-year real estate loan, the impact compounds further — a 0.5% rate difference can save <strong>$15,000–$20,000</strong> in total interest.
+      </p>
+      <h3>3. Loan Term</h3>
+      <p>
+        Extending your term lowers your monthly payment significantly but dramatically increases
+        total interest. On $250,000 at 11.25%: a 10-year term costs <strong>$163,576 in interest</strong>;
+        a 25-year term costs <strong>$467,310 in interest</strong> — nearly 3x more, even though
+        the monthly payment only drops by $1,055.
+      </p>
+      <h3>4. Down Payment / Equity Injection</h3>
+      <p>
+        A larger down payment reduces the loan principal, which directly lowers your monthly payment.
+        On a $300,000 project, putting 10% down ($30,000) gives you a $270,000 loan at $3,722/month.
+        Putting 20% down ($60,000) gives you a $240,000 loan at $3,308/month — a savings of $414/month.
+      </p>
+      <table class="rate-table" style="margin-top:1rem;">
+        <thead><tr><th>$300K Project · 11.25% · 10 Years</th><th>Loan Amount</th><th>Monthly Payment</th><th>Total Interest</th></tr></thead>
+        <tbody>
+          <tr><td>10% Down ($30,000)</td><td>$270,000</td><td class="rv">$3,722</td><td>$176,582</td></tr>
+          <tr><td>15% Down ($45,000)</td><td>$255,000</td><td class="rv">$3,516</td><td>$166,827</td></tr>
+          <tr><td>20% Down ($60,000)</td><td>$240,000</td><td class="rv">$3,308</td><td>$156,952</td></tr>
+          <tr><td>25% Down ($75,000)</td><td>$225,000</td><td class="rg">$3,101</td><td>$147,218</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ─── REDUCE PAYMENT ────────────────────────────── -->
+    <section class="content-section" id="reduce-payment">
+      <h2>How to Lower Your SBA Loan Payment</h2>
+      <p>
+        If the monthly payment feels too high for your current cash flow, here are proven
+        strategies that actually work — ranked from most to least impactful:
+      </p>
+      <h3>1. Extend the Loan Term</h3>
+      <p>
+        The fastest way to reduce your payment is to choose a longer term. If you're buying
+        equipment, the SBA allows up to 10 years. If your collateral includes commercial
+        real estate, you may qualify for up to 25 years, which can cut the payment nearly
+        in half compared to a 10-year term.
+      </p>
+      <h3>2. Improve Your Credit Score Before Applying</h3>
+      <p>
+        Even a 20-point improvement in your personal FICO score (from 660 to 680) can qualify
+        you for a lower interest rate with many SBA lenders. Each quarter-point reduction in rate
+        saves hundreds of dollars per year on a $250,000+ loan. Give yourself 6 months to
+        improve your score before a major application.
+      </p>
+      <h3>3. Negotiate the Spread with Your Lender</h3>
+      <p>
+        The SBA sets maximum spreads over Prime (2.25%–2.75% for most 7(a) loans), but lenders
+        are free to offer less. Borrowers with strong financials, substantial collateral, or
+        existing banking relationships often qualify for the lower end of the spread range.
+        Getting Prime + 2.25% instead of Prime + 2.75% saves real money over time.
+      </p>
+      <h3>4. Increase Your Down Payment</h3>
+      <p>
+        Every dollar of extra equity injection reduces your loan principal by the same amount.
+        If you can swing 15% down instead of 10% on a $300,000 loan, your monthly payment
+        drops by $206 and you save nearly $25,000 in total interest over 10 years.
+      </p>
+      <h3>5. Consider an SBA 504 Loan for Real Estate</h3>
+      <p>
+        If your purchase qualifies for the SBA 504 program, the CDC portion carries a
+        <em>fixed</em> rate in the 5.50%–6.50% range — substantially lower than a 7(a)
+        variable rate. The blended rate across both loans often works out to a meaningfully
+        lower monthly payment for real estate and heavy equipment purchases.
+      </p>
+    </section>
+
+    <!-- ─── EXTRA PAYMENTS ────────────────────────────── -->
+    <section class="content-section" id="extra-payment">
+      <h2>Impact of Extra Payments on Your SBA Loan</h2>
+      <p>
+        Making additional principal payments on your SBA loan — even small ones — can dramatically
+        reduce your total interest paid and shorten the loan's life. The key is that extra payments
+        applied directly to principal reduce the balance on which future interest is calculated.
+        This compounding effect gets more powerful the earlier you make those payments.
+      </p>
+      <h3>Real Numbers: $250,000 Loan at 11.25% for 10 Years</h3>
+      <table class="rate-table">
+        <thead><tr><th>Extra Monthly Payment</th><th>Months Saved</th><th>Interest Saved</th><th>New Payoff Date</th></tr></thead>
+        <tbody>
+          <tr><td>$0 (standard)</td><td>”</td><td>”</td><td>120 months (10 years)</td></tr>
+          <tr><td>+$100/month</td><td>~5 months</td><td class="rg">~$7,200</td><td>~115 months</td></tr>
+          <tr><td>+$250/month</td><td>~13 months</td><td class="rg">~$15,800</td><td>~107 months</td></tr>
+          <tr><td>+$500/month</td><td>~24 months</td><td class="rg">~$27,100</td><td>~96 months</td></tr>
+          <tr><td>+$1,000/month</td><td>~40 months</td><td class="rg">~$44,000</td><td>~80 months</td></tr>
+        </tbody>
+      </table>
+      <p>
+        These numbers assume the extra payment is applied directly to principal every month.
+        Always confirm with your lender that extra payments are applied to principal rather than
+        credited toward future scheduled payments — the distinction matters.
+      </p>
+      <div class="tip-box">
+        ✅ <strong>Best timing for extra payments:</strong> In the early months of your loan,
+        a much larger portion of your payment goes to interest. Making extra principal payments
+        in years 1–3 delivers the highest interest savings because it reduces the balance on which
+        all future interest is calculated.
+      </div>
+    </section>
+
+    <!-- ─── PREPAYMENT ─────────────────────────────────── -->
+    <section class="content-section" id="prepayment">
+      <h2>SBA Loan Prepayment Penalties</h2>
+      <p>
+        Before you plan to pay off your SBA loan early, you need to understand the prepayment rules.
+        The rules differ based on your loan term length:
+      </p>
+      <h3>Loans Under 15 Years — No Penalty</h3>
+      <p>
+        If your SBA 7(a) loan has a term of <strong>less than 15 years</strong>, you can prepay
+        any amount at any time without incurring a penalty. This covers the vast majority of
+        working capital and equipment loans (which max at 10 years). You're free to make extra
+        payments, pay off the loan entirely, or refinance without any fees.
+      </p>
+      <h3>Loans 15 Years or Longer — Early Payoff Fee</h3>
+      <p>
+        SBA 7(a) loans with terms of <strong>15 years or more</strong> carry a prepayment fee
+        if you pay off more than 25% of the outstanding principal balance within the first three years:
+      </p>
+      <table class="rate-table">
+        <thead><tr><th>Payoff During</th><th>Fee</th><th>Example ($500K loan)</th></tr></thead>
+        <tbody>
+          <tr><td>Year 1</td><td class="rr">5% of amount prepaid</td><td>Up to $25,000</td></tr>
+          <tr><td>Year 2</td><td class="rv">3% of amount prepaid</td><td>Up to $15,000</td></tr>
+          <tr><td>Year 3</td><td class="rv">1% of amount prepaid</td><td>Up to $5,000</td></tr>
+          <tr><td>After Year 3</td><td class="rg">No penalty</td><td>$0</td></tr>
+        </tbody>
+      </table>
+      <p>
+        The fee applies to the amount prepaid, not the total loan balance. So if you pay an
+        extra $50,000 in year 2 on a 25-year loan, the fee is $1,500 (3% of $50,000).
+        Whether that's worth it depends on the interest you'd save — the calculator above
+        can help you model this.
+      </p>
+    </section>
+
+    <!-- ─── FAQ ────────────────────────────────────────── -->
+    <section class="content-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item open">
+        <div class="faq-q">How do I calculate my SBA loan payment?</div>
+        <div class="faq-a">Use the calculator at the top of this page for instant results. Manually, the formula is M = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1], where P is your loan principal, r is the monthly rate (annual rate ÷ 12 ÷ 100), and n is the total number of monthly payments (years × 12). For a $250,000 loan at 11.25% over 10 years: r = 0.009375, n = 120, monthly payment = <strong>$3,479.22</strong> (verified by standard amortization formula).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What is the monthly payment on a $200,000 SBA loan?</div>
+        <div class="faq-a">At <strong>11.25% APR over 10 years</strong>, a $200,000 SBA loan has a monthly payment of approximately <strong>$2,757</strong>. Total interest paid over the life of the loan is approximately $130,840. At 25 years (real estate term), the monthly payment drops to approximately $1,962 but total interest rises to over $388,000. Always compare total cost, not just monthly payment.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What is the monthly payment on a $300,000 SBA loan?</div>
+        <div class="faq-a">At <strong>11.25% over 10 years</strong>, a $300,000 SBA loan requires a monthly payment of approximately <strong>$4,135</strong>. Total interest: ~$196,153. If structured over 25 years (for real estate), the monthly payment falls to approximately <strong>$2,943</strong>, but total interest climbs to over $582,000. Use the calculator above to model any amount.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How much down payment is required for an SBA loan?</div>
+        <div class="faq-a">Most SBA 7(a) loans require a <strong>10%–20% equity injection</strong>. SBA 504 loans require exactly <strong>10%</strong> from the borrower. Business acquisitions often require 20%–30%. Working capital loans may require little to no down payment if you have strong collateral. The calculator above automatically shows your required dollar amount based on the percentage you enter.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Does the SBA loan payment include taxes and insurance?</div>
+        <div class="faq-a">No. The payment shown by this calculator covers <strong>principal and interest only</strong> (P&I). If your lender requires an escrow account for property taxes and insurance — common with real estate-secured loans — those amounts will be added on top of the P&I payment. Ask your lender for the full PITI (Principal, Interest, Taxes, Insurance) breakdown.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What is the current SBA interest rate in 2026?</div>
+        <div class="faq-a">As of July 2026, SBA 7(a) variable rates are <strong>Prime (8.50%) + 2.25%–2.75%</strong>, putting most loans at <strong>10.75%–11.25% APR</strong>. Fixed-rate 7(a) loans are available at slightly higher rates. SBA 504 CDC fixed rates are approximately <strong>5.50%–6.50%</strong>. The live rates widget in the sidebar updates with the latest Federal Reserve data.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I get an SBA loan payment calculator for a specific location in the USA?</div>
+        <div class="faq-a">SBA loan payments are the same nationwide — the program is federal, so your location doesn't change the calculation. However, your <em>tax rate</em> varies by state and county, and your <em>insurance costs</em> vary by region. For P&I only, this calculator is accurate for all 50 US states. Factor in local taxes and insurance separately based on your property's location.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I make extra payments on my SBA loan without penalty?</div>
+        <div class="faq-a">For loans under 15 years (most equipment and working capital loans): <strong>yes, penalty-free at any time</strong>. For loans 15+ years (some real estate loans): prepaying more than 25% of balance in the first 3 years incurs a fee of 5% (year 1), 3% (year 2), or 1% (year 3) on the amount prepaid. After year 3, all SBA loans are penalty-free for early payoff.</div>
+      </div>
+
+    </section>
+
+  </div><!-- /main-content -->
+
+  <!-- ════════════════════════════════════════
+       RIGHT SIDEBAR
+  ════════════════════════════════════════ -->
+  <aside class="right-sidebar">
+
+    <!-- Live Rates Widget -->
+    <div class="rates-widget">
+      <div class="rates-widget-header">
+        <div class="icon-row">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          <span class="rates-widget-title">Interest Rates</span>
+        </div>
+        <div class="rates-widget-subtitle">Current SBA benchmark rates</div>
+        <div class="rates-updated" id="rates-last-updated">Fetching live data...</div>
+      </div>
+      <div id="rates-loading" class="loading-spinner">
+        <div class="spinner-dot"></div><div class="spinner-dot"></div><div class="spinner-dot"></div>
+        <span>Connecting to FRED...</span>
+      </div>
+      <div class="rates-list" id="rates-list" style="display:none;">
+        <div class="rate-row">
+          <div><div class="rate-label">WSJ Prime Rate</div><div class="rate-sublabel">SBA 7(a) base</div></div>
+          <div style="text-align:right;"><div class="rate-value" id="rate-prime">8.50%</div><div class="rate-change" id="rate-prime-chg">”</div></div>
+        </div>
+        <div class="rate-row">
+          <div><div class="rate-label">SBA 7(a) Rate</div><div class="rate-sublabel">Prime + 2.75%</div></div>
+          <div style="text-align:right;"><div class="rate-value" id="rate-sba">11.25%</div><div class="rate-change" id="rate-sba-chg">Typical 2026</div></div>
+        </div>
+        <div class="rate-row">
+          <div><div class="rate-label">10-Yr Treasury</div><div class="rate-sublabel">SBA 504 benchmark</div></div>
+          <div style="text-align:right;"><div class="rate-value" id="rate-10yr">”</div><div class="rate-change" id="rate-10yr-chg">”</div></div>
+        </div>
+        <div class="rate-row">
+          <div><div class="rate-label">Fed Funds Rate</div><div class="rate-sublabel">Current target</div></div>
+          <div style="text-align:right;"><div class="rate-value" id="rate-fed">”</div><div class="rate-change" id="rate-fed-chg">”</div></div>
+        </div>
+      </div>
+      <div class="rates-footer">
+        <a href="https://fred.stlouisfed.org/series/DPRIME" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Check Current Rates →
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Calculators -->
+    <div class="quick-access-widget">
+      <div class="widget-header">🏦 Loan Calculators</div>
+      <ul class="widget-link">
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/sba-loan-calculator">💼 SBA Loan Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/sba-loan-payment-calculator" class="active">📋 SBA Payment Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/business-loan-calculator">🏢 Business Loan</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/auto-loan-calculator">🚗 Auto Loan</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/personal-loan-calculator">👤 Personal Loan</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/land-loan-calculator">🌎 Land Loan</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/rv-loan-calculator">🚐 RV Loan</a></li>
+      </ul>
+    </div>
+
+    <!-- Business Tools -->
+    <div class="quick-access-widget">
+      <div class="widget-header">📈 Business Tools</div>
+      <ul class="widget-link">
+        <li><a href="<?php echo $baseUrl; ?>/business/profit-margin-calculator">💰 Profit Margin</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/business/markup-calculator">🏷️ Markup Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/real-estate/cap-rate-calculator">🏘️ Cap Rate</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/business/freelance-rate-calculator">💻 Freelance Rate</a></li>
+      </ul>
+    </div>
+
+  </aside>
+
+</div><!-- /sba-page-wrap -->
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ── ELEMENTS ───────────────────────── */
+  const inpAmount  = document.getElementById('loan_amount');
+  const inpRate    = document.getElementById('interest_rate');
+  const inpTerm    = document.getElementById('loan_term');
+  const inpDP      = document.getElementById('down_payment_pct');
+  const calcBtn    = document.getElementById('sba-calc-btn');
+
+  const resMonthly = document.getElementById('res_monthly');
+  const resInterest= document.getElementById('res_interest');
+  const resTotal   = document.getElementById('res_total');
+  const resDp      = document.getElementById('res_downpayment');
+  const resDesc    = document.getElementById('results-desc');
+  const barP       = document.getElementById('bar_p');
+  const barI       = document.getElementById('bar_i');
+  const amortTbody = document.getElementById('amort-tbody');
+
+  const fmtC = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  const fmtC2= new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2});
+
+  /* ── CALCULATE ──────────────────────── */
+  function calculate() {
+    const projectAmt = parseFloat(inpAmount.value) || 0;
+    const rate       = parseFloat(inpRate.value)   || 0;
+    const yrs        = parseFloat(inpTerm.value)   || 0;
+    const dpPct      = parseFloat(inpDP.value)     || 0;
+
+    if (projectAmt <= 0 || rate <= 0 || yrs <= 0) {
+      resMonthly.textContent = '--'; resInterest.textContent = '--';
+      resTotal.textContent = '--'; resDp.textContent = '--'; return;
+    }
+
+    const dpAmt = projectAmt * (dpPct / 100);
+    const P     = projectAmt - dpAmt;    // financed amount
+    const r     = (rate / 100) / 12;
+    const n     = yrs * 12;
+    const M     = P * (r * Math.pow(1+r,n)) / (Math.pow(1+r,n) - 1);
+    const totalPaid = M * n;
+    const totalInt  = totalPaid - P;
+
+    resMonthly.textContent  = fmtC.format(M);
+    resInterest.textContent = fmtC.format(totalInt);
+    resTotal.textContent    = fmtC.format(totalPaid);
+    resDp.textContent       = fmtC.format(dpAmt);
+    resDesc.textContent     = `Based on ${fmtC.format(P)} financed at ${rate}% over ${yrs} years`;
+
+    barP.style.width = (P / totalPaid * 100) + '%';
+    barI.style.width = (totalInt / totalPaid * 100) + '%';
+
+    buildTable(P, r, n, M);
+  }
+
+  function buildTable(P, r, n, M) {
+    let bal = P, rows = '';
+    for (let mo = 1; mo <= n; mo++) {
+      const iAmt = bal * r;
+      const pAmt = M - iAmt;
+      bal -= pAmt;
+      if (bal < 0) bal = 0;
+      rows += `<tr>
+        <td>${mo}</td>
+        <td>${fmtC2.format(M)}</td>
+        <td class="pc">${fmtC2.format(pAmt)}</td>
+        <td class="ic">${fmtC2.format(iAmt)}</td>
+        <td>${fmtC2.format(bal)}</td>
+      </tr>`;
+    }
+    amortTbody.innerHTML = rows;
+  }
+
+  calcBtn.addEventListener('click', calculate);
+  [inpAmount,inpRate,inpTerm,inpDP].forEach(el => el.addEventListener('input', calculate));
+  calculate();
+
+  /* ── AMORTIZATION TOGGLE ────────────── */
+  const toggle = document.getElementById('amort-toggle');
+  const wrap   = document.getElementById('amort-table-wrap');
+  const icon   = document.getElementById('amort-icon');
+  toggle.addEventListener('click', function () {
+    const open = wrap.classList.toggle('open');
+    icon.textContent = open ? '▲' : '';
+    toggle.querySelector('span').textContent = open ? '📊 Hide Amortization Schedule' : '📊 Show Full Amortization Schedule';
+  });
+
+  /* ── TOC ACTIVE SCROLL HIGHLIGHT ───── */
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const sections = [];
+  tocLinks.forEach(link => {
+    const id = link.getAttribute('href').replace('#','');
+    const sec = document.getElementById(id);
+    if (sec) sections.push({ link, sec });
+  });
+  function updateTOC() {
+    const y = window.scrollY + 130;
+    let active = sections[0];
+    sections.forEach(s => { if(s.sec.getBoundingClientRect().top + window.scrollY <= y) active = s; });
+    tocLinks.forEach(l => l.classList.remove('toc-active'));
+    if (active) active.link.classList.add('toc-active');
+  }
+  window.addEventListener('scroll', updateTOC, { passive: true });
+  updateTOC();
+
+  /* ── FAQ ACCORDION ──────────────────── */
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', function () {
+      const item = this.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  /* ── LIVE RATES (FRED API) ──────────── */
+  async function fetchFred(series) {
+    try {
+      const url = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${series}&limit=5&sort_order=desc`;
+      const res  = await fetch(url, { signal: AbortSignal.timeout(7000) });
+      if (!res.ok) throw new Error('bad');
+      const txt  = await res.text();
+      const rows = txt.trim().split('\n').filter(l => !l.startsWith('DATE'));
+      for (const row of rows) {
+        const parts = row.split(',');
+        if (parts[1] && parts[1] !== '.') return { value: parseFloat(parts[1]), date: parts[0] };
+      }
+    } catch {}
+    return null;
+  }
+
+  async function loadRates() {
+    try {
+      const [prime, t10, fed] = await Promise.all([
+        fetchFred('DPRIME'), fetchFred('DGS10'), fetchFred('FEDFUNDS')
+      ]);
+      document.getElementById('rates-loading').style.display = 'none';
+      document.getElementById('rates-list').style.display   = 'block';
+      const today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      document.getElementById('rates-last-updated').textContent = `Updated: ${today}`;
+      if (prime) {
+        document.getElementById('rate-prime').textContent = prime.value.toFixed(2) + '%';
+        const sbaRate = prime.value + 2.75;
+        document.getElementById('rate-sba').textContent   = sbaRate.toFixed(2) + '%';
+        if (!inpRate._userSet) { inpRate.value = sbaRate.toFixed(2); calculate(); }
+      }
+      if (t10) { document.getElementById('rate-10yr').textContent = t10.value.toFixed(2) + '%'; document.getElementById('rate-10yr-chg').textContent = 'Live'; }
+      if (fed) { document.getElementById('rate-fed').textContent  = fed.value.toFixed(2) + '%'; }
+    } catch {
+      document.getElementById('rates-loading').style.display = 'none';
+      document.getElementById('rates-list').style.display   = 'block';
+      document.getElementById('rate-10yr').textContent = '~4.28%';
+      document.getElementById('rate-fed').textContent  = '5.25%–5.50%';
+      document.getElementById('rates-last-updated').textContent = 'As of July 2026';
+    }
+  }
+  inpRate.addEventListener('input', () => { inpRate._userSet = true; });
+  loadRates();
+
+});
+
+/* ── QUICK EXAMPLE CARDS ── (global scope for onclick) */
+function fillCalc(amount) {
+  document.getElementById('loan_amount').value = amount;
+  document.getElementById('loan_amount').dispatchEvent(new Event('input'));
+  document.getElementById('calculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+<?php require_once '../includes/footer.php'; ?>

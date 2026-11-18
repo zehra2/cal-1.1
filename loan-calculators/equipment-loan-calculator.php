@@ -1,0 +1,520 @@
+<?php
+$currentYear = date('Y');
+$pageTitle = "Equipment Loan & Lease Calculator ($currentYear) | Section 179 Tax Savings";
+$metaDescription = "Free equipment financing calculator $currentYear. Compare equipment loans, $1 buyout capital leases, FMV operating leases, and calculate Section 179 tax deduction savings.";
+$metaKeywords = 'equipment loan calculator, equipment financing calculator, section 179 calculator, equipment lease calculator, heavy equipment financing, commercial machinery loan';
+$schemaData = json_decode(<<<'EOD'
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "HowTo",
+      "name": "How to Calculate Equipment Financing Payments and Section 179 Tax Deductions",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Enter equipment acquisition price",
+          "text": "Input the total purchase price of the commercial machinery, vehicle, medical device, or technology hardware."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Select financing structure",
+          "text": "Choose between an Equipment Loan, $1 Buyout Capital Lease, or Fair Market Value (FMV) Operating Lease."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Set interest rate and financing term",
+          "text": "Specify the commercial equipment interest rate and repayment term from 24 to 84 months (2 to 7 years)."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Apply Section 179 tax deduction",
+          "text": "Enter your corporate or pass-through business tax bracket to calculate first-year tax write-off savings."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Review net equipment cost and ROI",
+          "text": "Analyze your monthly payment, total interest charges, upfront tax savings, and true net after-tax cost of the asset."
+        }
+      ]
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://americacalculator.com/loan-calculators/equipment-loan-calculator#app",
+      "name": "Equipment Financing & Section 179 Calculator",
+      "url": "https://americacalculator.com/loan-calculators/equipment-loan-calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offer": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Calculate commercial equipment financing payments, $1 buyout vs FMV leases, and first-year Section 179 tax write-offs."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://americacalculator.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Loan Calculators",
+          "item": "https://americacalculator.com/loan-calculators/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Equipment Loan Calculator",
+          "item": "https://americacalculator.com/loan-calculators/equipment-loan-calculator"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://americacalculator.com/loan-calculators/equipment-loan-calculator#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Section 179 tax deduction limit for equipment in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For 2026, the IRS Section 179 deduction limit allows US businesses to write off up to $1,220,000 of qualifying new and used commercial equipment, machinery, technology, and vehicles in the year of purchase. The deduction phase-out begins dollar-for-dollar when total annual equipment purchases exceed $3,050,000."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between an Equipment Loan and a $1 Buyout Lease?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An Equipment Loan is a standard chattel mortgage where your business owns the title from day one and pledges the equipment as collateral. A $1 Buyout Lease (Capital Lease) is legally structured as a lease for cash-flow purposes, but transfers full ownership to your business at the end of the term for a nominal $1.00 fee. Both qualify for the full Section 179 tax deduction."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a Fair Market Value (FMV) equipment lease?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Fair Market Value (FMV) Lease (Operating Lease) offers lower monthly payments because the lessor retains ownership and assumes residual value risk. At lease maturity, the business can either return the equipment, upgrade to new machinery, or purchase it at its prevailing fair market value. Lease payments are 100% tax-deductible as operating expenses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What credit score is needed for commercial equipment financing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most commercial equipment lenders look for a personal FICO score of 650+ (with 700+ needed for top tier rates) and at least 2 years in business. Because the equipment itself serves as tangible collateral, equipment financing has higher approval rates and lower interest rates than unsecured business loans."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you finance used commercial equipment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Most commercial equipment lenders finance used machinery, yellow iron construction equipment, CNC tools, commercial vehicles, and agricultural implements, provided the equipment has a remaining useful operational life extending beyond the loan term."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do equipment loans require a down payment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many equipment financing programs offer 100% financing (0% down) for established businesses with strong credit, allowing soft costs (shipping, installation, tooling, and initial training) to be bundled into the loan. Other programs typically require a 10% to 20% down payment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long are typical equipment financing terms?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Equipment loan terms typically range from 24 to 84 months (2 to 7 years). Lenders match the repayment term to the expected useful economic life of the machinery (e.g., 36 months for computer servers, 60 to 84 months for heavy yellow iron excavators or manufacturing presses)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much cash can Section 179 save on a $150,000 equipment purchase?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On a $150,000 equipment purchase by a business in a 35% effective tax bracket (combined federal and state), taking the full 100% Section 179 deduction creates an immediate $52,500 tax savings ($150,000 × 35%). This lowers the true net out-of-pocket cost of the equipment to just $97,500."
+          }
+        }
+      ]
+    }
+  ]
+}
+EOD
+, true);
+require_once __DIR__ . '/../includes/header.php';
+?>
+<style>
+:root {
+  --primary: #4338ca;
+  --primary-hover: #3730a3;
+  --primary-light: #e0e7ff;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+  --white: #ffffff;
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+.main-wrapper { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+.page-title-area { margin-bottom: 2rem; }
+.page-title-area h1 { font-size: 2.1rem; color: var(--slate-900); margin-bottom: 0.5rem; }
+.page-title-area p { color: var(--slate-600); font-size: 1.05rem; }
+.calculator-container { display: grid; grid-template-columns: 1.15fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+.form-panel { background: var(--white); border-radius: var(--radius); padding: 2rem; border: 1px solid var(--slate-200); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+.results-panel { background: #312e81; color: #ffffff; border-radius: var(--radius); padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 25px rgba(49,46,129,0.25); }
+.section-subtitle { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-600); margin-bottom: 0.85rem; }
+.input-group { margin-bottom: 1.25rem; }
+.input-group label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--slate-700); margin-bottom: 0.4rem; }
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-prefix { position: absolute; left: 1rem; color: var(--slate-600); font-weight: 600; }
+.input-suffix { position: absolute; right: 1rem; color: var(--slate-600); font-weight: 600; }
+.input-wrapper input, .input-wrapper select {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
+  border: 1.5px solid var(--slate-200);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+.input-wrapper input:focus, .input-wrapper select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(67,56,202,0.1); }
+.grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.equip-hero-card {
+  background: rgba(129, 140, 248, 0.2);
+  border: 1px solid rgba(129, 140, 248, 0.4);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.equip-hero-card .label { font-size: 0.82rem; color: #c7d2fe; font-weight: 700; text-transform: uppercase; }
+.equip-hero-card .val-main { font-size: 2.5rem; font-weight: 800; color: #e0e7ff; margin: 0.25rem 0; line-height: 1; }
+.equip-hero-card .val-sub { font-size: 0.88rem; color: #c7d2fe; }
+.breakdown-row { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 0.55rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row span:first-child { color: #c7d2fe; }
+.breakdown-row span:last-child { font-weight: 700; color: #ffffff; }
+.calculator-content-body { margin-top: 2.5rem; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+.calculator-content-body h2 { font-size: 1.65rem; color: #0f172a; margin: 2rem 0 1rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; }
+.calculator-content-body h3 { font-size: 1.25rem; color: #1e293b; margin: 1.5rem 0 0.75rem; }
+.calculator-content-body p { color: #475569; font-size: 1.02rem; line-height: 1.75; margin-bottom: 1.25rem; }
+.calculator-content-body ul, .calculator-content-body ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #475569; line-height: 1.75; }
+.calculator-content-body li { margin-bottom: 0.5rem; }
+.table-responsive { overflow-x: auto; margin: 1.5rem 0; }
+.data-table { width: 100%; border-collapse: collapse; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+.data-table th { background: #1e293b; color: #ffffff; padding: 12px 16px; text-align: left; font-size: 0.9rem; }
+.data-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; color: #334155; font-size: 0.92rem; }
+.data-table tr:nth-child(even) td { background: #f8fafc; }
+.quick-answer-card { background: #eef2ff; border-left: 4px solid #4338ca; padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem; }
+.quick-answer-card h2 { font-size: 1.35rem; color: #312e81; margin: 0 0 0.5rem; border: none; padding: 0; }
+.quick-answer-card p { color: #3730a3; margin: 0; }
+.faq-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+.faq-item h4 { margin: 0 0 0.4rem; color: #0f172a; font-size: 1.05rem; }
+.faq-item p { margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6; }
+@media (max-width: 860px) {
+  .calculator-container { grid-template-columns: 1fr; }
+  .grid-2-col { grid-template-columns: 1fr; }
+}
+</style>
+
+<main class="main-wrapper">
+  <div class="page-title-area">
+    <h1>Equipment Financing &amp; Section 179 Calculator (<?php echo $currentYear; ?>)</h1>
+    <p>Calculate monthly equipment loan and lease payments. Model Section 179 first-year tax write-offs, bonus depreciation, and compare $1 Buyout vs. FMV lease options.</p>
+  </div>
+
+  <div class="calculator-container">
+    <div class="form-panel">
+      <div class="section-subtitle">1. Equipment Cost &amp; Structure</div>
+      
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="equipPrice">Equipment Purchase Price ($)</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="equipPrice" value="150000" step="5000">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="equipDownPct">Down Payment (%)</label>
+          <div class="input-wrapper">
+            <input type="number" id="equipDownPct" value="10" min="0" max="50" step="5" style="padding-left: 1rem;">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="equipStructure">Financing Structure</label>
+          <div class="input-wrapper" style="padding-left: 0;">
+            <select id="equipStructure" style="padding-left: 1rem;">
+              <option value="loan" selected>Equipment Loan (Ownership Day 1)</option>
+              <option value="buyout">$1 Buyout Capital Lease</option>
+              <option value="fmv">Fair Market Value (FMV) Lease</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="equipTermMonths">Loan Term (Months)</label>
+          <div class="input-wrapper" style="padding-left: 0;">
+            <select id="equipTermMonths" style="padding-left: 1rem;">
+              <option value="24">24 Months (2 Years)</option>
+              <option value="36">36 Months (3 Years)</option>
+              <option value="48">48 Months (4 Years)</option>
+              <option value="60" selected>60 Months (5 Years)</option>
+              <option value="72">72 Months (6 Years)</option>
+              <option value="84">84 Months (7 Years)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-subtitle" style="margin-top: 1.75rem;">2. Interest &amp; Tax Settings</div>
+
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="equipRate">Interest Rate (APR %)</label>
+          <div class="input-wrapper">
+            <input type="number" id="equipRate" value="8.25" step="0.125" style="padding-left: 1rem;">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="taxBracket">Business Tax Bracket (%)</label>
+          <div class="input-wrapper">
+            <input type="number" id="taxBracket" value="35.0" step="1.0" style="padding-left: 1rem;">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-panel">
+      <div>
+        <div class="equip-hero-card">
+          <div class="label">Estimated Monthly Payment</div>
+          <div class="val-main" id="resMonthlyPayment">$2,752 / mo</div>
+          <div class="val-sub" id="resFinancedAmt">Amount Financed: $135,000</div>
+        </div>
+
+        <div class="breakdown-row"><span>Section 179 First-Year Tax Savings:</span><span id="resTaxSavings" style="color:#34d399;">$52,500</span></div>
+        <div class="breakdown-row"><span>Net After-Tax Equipment Cost:</span><span id="resNetCost" style="color:#fbbf24;">$97,500</span></div>
+        <div class="breakdown-row"><span>Required Upfront Down Payment:</span><span id="resDownPayment">$15,000</span></div>
+        <div class="breakdown-row"><span>Lifetime Interest Paid:</span><span id="resTotalInterest">$30,120</span></div>
+        <div class="breakdown-row"><span>First Year Cash Flow Impact:</span><span id="resFirstYearCashFlow" style="color:#34d399;">+$34,476 (Positive)</span></div>
+      </div>
+
+      <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1rem; text-align: center;">
+        <div style="font-size: 0.8rem; color: #c7d2fe;">Total Cumulative Payments (P&amp;I + Down):</div>
+        <div style="font-size: 1.35rem; font-weight: 800; color: #e0e7ff;" id="resTotalCost">$180,120</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calculator-content-body">
+    <div class="quick-answer-card">
+      <h2>Maximizing Section 179 Tax Savings on Equipment in <?php echo $currentYear; ?></h2>
+      <p>Under IRS Section 179, businesses can deduct <strong>100% of the purchase price</strong> of qualifying new and used equipment up to the <strong>$1,220,000 deduction cap</strong>. By pairing equipment financing (where you put down only 10%–20%) with the full tax write-off, your first-year tax savings can actually <strong>exceed your total first-year cash payments</strong>, creating immediate positive cash flow.</p>
+    </div>
+
+    <h2>Equipment Loan vs. $1 Buyout Lease vs. FMV Operating Lease</h2>
+    <p>Choosing the right commercial financing structure depends on your tax objectives, balance sheet requirements, and whether you intend to keep or replace the equipment:</p>
+
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Equipment Loan</th>
+            <th>$1 Buyout Capital Lease</th>
+            <th>Fair Market Value (FMV) Lease</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Legal Ownership</strong></td><td>Business owns title on Day 1</td><td>Lessor holds title until $1 buyout</td><td>Lessor retains permanent title</td></tr>
+          <tr><td><strong>Monthly Payment</strong></td><td>Moderate</td><td>Moderate (similar to loan)</td><td>Lowest (15% to 25% lower payment)</td></tr>
+          <tr><td><strong>Section 179 Eligibility</strong></td><td>100% Eligible</td><td>100% Eligible</td><td>No (Lessor claims depreciation)</td></tr>
+          <tr><td><strong>Tax Deduction Method</strong></td><td>Section 179 + Interest Expense</td><td>Section 179 + Interest Expense</td><td>100% of monthly lease payments deductible</td></tr>
+          <tr><td><strong>End of Term Options</strong></td><td>Equipment is fully owned</td><td>Own equipment for $1.00</td><td>Return, upgrade, or buy at FMV</td></tr>
+          <tr><td><strong>Best For</strong></td><td>Long-life heavy machinery &amp; vehicles</td><td>Equipment you definitely want to keep</td><td>Rapidly obsolescing tech &amp; medical devices</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Qualifying Equipment Categories: What Can Be Financed in 2026?</h2>
+    <p>Equipment financing extends across virtually all commercial sectors. Lenders evaluate the resale liquidity and useful life of the asset when structuring terms:</p>
+    <ul>
+      <li><strong>Construction &amp; Yellow Iron:</strong> Excavators, skid steers, bulldozers, cranes, and paving equipment (typical 60–84 month financing).</li>
+      <li><strong>Transportation &amp; Commercial Fleets:</strong> Semi-trucks (Class 8), box trucks, flatbeds, refrigerated trailers, and corporate service vans.</li>
+      <li><strong>Manufacturing &amp; CNC Machinery:</strong> Laser cutters, milling machines, stamping presses, injection molders, and automated assembly robotics.</li>
+      <li><strong>Medical, Dental &amp; Veterinary:</strong> Digital X-ray systems, MRI/CT scanners, surgical lasers, dental chairs, and laboratory diagnostic analyzers.</li>
+      <li><strong>Restaurant, Hospitality &amp; Food Service:</strong> Commercial walk-in coolers, combi ovens, espresso machines, and high-capacity dishwashers.</li>
+      <li><strong>Information Technology &amp; Telecom:</strong> High-performance server racks, cloud network appliances, enterprise phone systems, and licensed operating software.</li>
+    </ul>
+
+    <h2>Financing Soft Costs: Freight, Rigging, Installation, and Training</h2>
+    <p>A frequent blind spot for business operators is neglecting non-hardware acquisition expenses. When purchasing a $200,000 automated machine, your business may incur:</p>
+    <ul>
+      <li><strong>Freight and Transportation:</strong> $5,000 to $12,000 in heavy flatbed shipping and crane offloading fees.</li>
+      <li><strong>Rigging and Site Prep:</strong> $8,000 in reinforced concrete flooring, 480V three-phase electrical drops, and pneumatic airlines.</li>
+      <li><strong>Implementation &amp; Vendor Training:</strong> $6,000 in on-site technician calibration and employee software onboarding.</li>
+    </ul>
+    <p>Most premier equipment lenders allow up to <strong>20% to 25% of the total loan amount</strong> to cover these soft costs, rolling them directly into the monthly payment so you incur zero out-of-pocket operational disruption.</p>
+
+    <h2>Lender Comparison: Bank vs. Captive Finance vs. Specialty Fintech</h2>
+    <p>Where you obtain your equipment loan directly dictates your cost of capital and speed to funding:</p>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr><th>Lender Channel</th><th>Typical APR Range</th><th>Speed to Capital</th><th>Credit / Underwriting Rigor</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Traditional Commercial Bank</strong></td><td>6.75% &ndash; 8.50%</td><td>2 to 4 weeks</td><td>Highest (Full tax returns, DSCR > 1.25, 700+ FICO)</td></tr>
+          <tr><td><strong>Manufacturer Captive Finance (e.g., Cat, Deere)</strong></td><td>0.0% Promo &ndash; 7.99%</td><td>3 to 7 business days</td><td>Moderate (Brand-subsidized rates to move inventory)</td></tr>
+          <tr><td><strong>Fintech Equipment Platforms</strong></td><td>8.50% &ndash; 16.00%</td><td>24 to 48 hours</td><td>Streamlined (Bank statements only, fast digital approval)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Step-by-Step Section 179 Tax Advantage Model ($150,000 Equipment Example)</h2>
+    <p>Consider a machine shop or contractor acquiring a <strong>$150,000 CNC mill or mini-excavator</strong> with 10% down ($15,000) on a 60-month loan at 8.25%:</p>
+    <ul>
+      <li><strong>Total Purchase Price:</strong> $150,000 (100% written off via Section 179 in year one).</li>
+      <li><strong>Estimated Direct Tax Savings (35% combined tax rate):</strong> <code>$150,000 &times; 35% = $52,500</code>.</li>
+      <li><strong>First Year Total Cash Outlay (Down payment + 12 monthly payments of $2,752):</strong> <code>$15,000 + ($2,752 &times; 12) = $48,024</code>.</li>
+      <li><strong>Net First-Year Cash Impact:</strong> <code>$52,500 Tax Savings &minus; $48,024 Payments = +$4,476 Positive Net Cash Flow!</code></li>
+    </ul>
+    <p>By leveraging Section 179 with low down-payment financing, the tax reduction exceeds the first year's total principal and interest payments, generating immediate surplus liquidity for operations.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+    <div class="faq-item">
+      <h4>What is the Section 179 tax deduction limit for equipment in 2026?</h4>
+      <p>For 2026, the IRS Section 179 limit allows businesses to write off up to $1,220,000 of qualifying new and used equipment in the year of purchase. The phase-out begins when equipment purchases exceed $3,050,000.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the difference between an Equipment Loan and a $1 Buyout Lease?</h4>
+      <p>An Equipment Loan gives you direct title from day one. A $1 Buyout Lease is structured as a lease for legal purposes but transfers full ownership at the end of the term for $1. Both qualify for the Section 179 tax write-off.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is a Fair Market Value (FMV) equipment lease?</h4>
+      <p>An FMV lease offers lower monthly payments because the lessor retains ownership. At maturity, the business returns, upgrades, or buys the equipment at fair market value. Lease payments are deductible as operating expenses.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What credit score is needed for commercial equipment financing?</h4>
+      <p>Most lenders look for a personal FICO score of 650+ (700+ for best rates) and 2+ years in business. Because the equipment serves as collateral, approval rates are higher than unsecured loans.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can you finance used commercial equipment?</h4>
+      <p>Yes, lenders finance used machinery, construction equipment, vehicles, and tools, provided the equipment has a remaining economic lifespan exceeding the loan term.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Do equipment loans require a down payment?</h4>
+      <p>Many lenders offer 100% financing (0% down) for established businesses with strong credit, bundling soft costs (shipping, installation). Other programs require 10% to 20% down.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How long are typical equipment financing terms?</h4>
+      <p>Terms range from 24 to 84 months (2 to 7 years), matching the repayment term to the expected useful economic life of the machinery.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How much cash can Section 179 save on a $150,000 equipment purchase?</h4>
+      <p>At a 35% effective tax rate, a $150,000 Section 179 deduction creates $52,500 in tax savings, reducing the net out-of-pocket equipment cost to $97,500.</p>
+    </div>
+
+    <h2>Explore Related Business &amp; Commercial Calculators</h2>
+    <ul>
+      <li><a href="/loan-calculators/commercial-loan-calculator">Commercial Real Estate Loan Calculator</a> &mdash; Calculate balloon payments, DSCR, and debt yields.</li>
+      <li><a href="/loan-calculators/sba-loan-calculator">SBA 7(a) Loan Calculator</a> &mdash; Compare SBA financing rates against commercial equipment loans.</li>
+      <li><a href="/business/profit-margin-calculator">Profit Margin Calculator</a> &mdash; Model gross and net operating margins after equipment depreciation.</li>
+      <li><a href="/business/automation-roi-calculator">Automation ROI Calculator</a> &mdash; Calculate payback periods and labor savings on new machinery.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+function calculateEquipment() {
+  var price = parseFloat(document.getElementById('equipPrice').value) || 0;
+  var downPct = (parseFloat(document.getElementById('equipDownPct').value) || 10) / 100;
+  var structure = document.getElementById('equipStructure').value;
+  var months = parseInt(document.getElementById('equipTermMonths').value) || 60;
+  var rate = (parseFloat(document.getElementById('equipRate').value) || 8.25) / 100;
+  var taxBracket = (parseFloat(document.getElementById('taxBracket').value) || 35.0) / 100;
+
+  var downPayment = price * downPct;
+  var financedAmt = Math.max(0, price - downPayment);
+
+  var r = rate / 12;
+  var monthlyPayment = 0;
+
+  if (structure === 'fmv') {
+    // FMV lease: lower payment factoring ~20% residual value
+    var fmvDiscount = 0.82;
+    var fmvPrincipal = financedAmt * fmvDiscount;
+    if (r > 0 && months > 0) {
+      monthlyPayment = fmvPrincipal * (r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+    }
+  } else {
+    // Standard Loan / $1 Buyout Lease
+    if (r > 0 && months > 0 && financedAmt > 0) {
+      monthlyPayment = financedAmt * (r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+    }
+  }
+
+  var totalInterest = (monthlyPayment * months) - financedAmt;
+  if (structure === 'fmv') totalInterest = (monthlyPayment * months) - (financedAmt * 0.82);
+
+  // Section 179: 100% deduction on purchase price for Loan and $1 Buyout
+  var taxSavings = 0;
+  if (structure !== 'fmv') {
+    taxSavings = price * taxBracket;
+  } else {
+    // FMV: First year deduction is just the 12 lease payments
+    taxSavings = (monthlyPayment * 12) * taxBracket;
+  }
+
+  var netCost = (price + totalInterest) - taxSavings;
+  var totalCost = downPayment + (monthlyPayment * months);
+  var firstYearPayments = downPayment + (monthlyPayment * 12);
+  var firstYearNetFlow = taxSavings - firstYearPayments;
+
+  document.getElementById('resMonthlyPayment').textContent = '$' + Math.round(monthlyPayment).toLocaleString() + ' / mo';
+  document.getElementById('resFinancedAmt').textContent = 'Amount Financed: $' + Math.round(financedAmt).toLocaleString();
+  document.getElementById('resTaxSavings').textContent = '$' + Math.round(taxSavings).toLocaleString();
+  document.getElementById('resNetCost').textContent = '$' + Math.round(netCost).toLocaleString();
+  document.getElementById('resDownPayment').textContent = '$' + Math.round(downPayment).toLocaleString();
+  document.getElementById('resTotalInterest').textContent = '$' + Math.round(Math.max(0, totalInterest)).toLocaleString();
+  
+  if (firstYearNetFlow >= 0) {
+    document.getElementById('resFirstYearCashFlow').textContent = '+$' + Math.round(firstYearNetFlow).toLocaleString() + ' (Positive)';
+    document.getElementById('resFirstYearCashFlow').style.color = '#34d399';
+  } else {
+    document.getElementById('resFirstYearCashFlow').textContent = '-$' + Math.round(Math.abs(firstYearNetFlow)).toLocaleString();
+    document.getElementById('resFirstYearCashFlow').style.color = '#fca5a5';
+  }
+
+  document.getElementById('resTotalCost').textContent = '$' + Math.round(totalCost).toLocaleString();
+}
+
+document.querySelectorAll('#equipPrice, #equipDownPct, #equipStructure, #equipTermMonths, #equipRate, #taxBracket').forEach(function(el) {
+  el.addEventListener('input', calculateEquipment);
+  el.addEventListener('change', calculateEquipment);
+});
+calculateEquipment();
+</script>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

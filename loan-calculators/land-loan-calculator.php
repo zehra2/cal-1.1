@@ -1,0 +1,1083 @@
+<?php
+$currentYear = date('Y');
+
+// ─── SEO Meta ───────────────────────────────────────────────────────────────
+$pageTitle       = "Land Loan Calculator ($currentYear) — Raw Land & Lot Payment Estimator";
+$metaDescription = "Calculate your exact monthly land loan payment, down payment, and total interest. Free $currentYear land loan calculator for raw land, vacant lots, and rural properties. See current land loan rates.";
+$metaKeywords    = 'land loan calculator, land loan payment calculator, land loan calculator with down payment, vacant land loan calculator, raw land loan calculator, rural land loan calculator, farm land loan calculator, agriculture land loan calculator, lot land loan calculator';
+
+// ─── Structured Data (JSON-LD) ───────────────────────────────────────────────
+$schemaData = [
+    '@context' => 'https://schema.org',
+    '@graph'   => [
+        [
+            '@type'               => 'WebApplication',
+            'name'                => 'Land Loan Calculator',
+            'url'                 => 'https://americacalculator.com/loan-calculators/land-loan-calculator',
+            'description'         => "Free $currentYear land loan calculator that estimates monthly payments for raw land, improved lots, and rural agricultural properties.",
+            'applicationCategory' => 'FinanceApplication',
+            'operatingSystem'     => 'All',
+            'offers'              => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
+        ],
+        [
+            '@type'     => 'HowTo',
+            'name'      => 'How to Calculate a Land Loan Payment',
+            'totalTime' => 'PT2M',
+            'step'      => [
+                ['@type' => 'HowToStep', 'position' => 1, 'name' => 'Select your land type', 'text' => 'Choose between raw land, an improved lot, or rural/agricultural land to see the appropriate down payment benchmarks.'],
+                ['@type' => 'HowToStep', 'position' => 2, 'name' => 'Enter the land price', 'text' => 'Enter the total agreed purchase price for the property.'],
+                ['@type' => 'HowToStep', 'position' => 3, 'name' => 'Enter down payment percentage', 'text' => 'Raw land requires 35%–50% down. Lots require 20%–30%. Rural requires 20%–35%.'],
+                ['@type' => 'HowToStep', 'position' => 4, 'name' => 'Enter interest rate & term', 'text' => 'Input the annual interest rate and loan term (typically 5 to 15 years for land).'],
+                ['@type' => 'HowToStep', 'position' => 5, 'name' => 'Click Calculate', 'text' => 'Instantly view your monthly payment, down payment amount, and full amortization schedule.'],
+            ],
+        ],
+        [
+            '@type'      => 'FAQPage',
+            'mainEntity' => [
+                ['@type' => 'Question', 'name' => "What are land loan interest rates in $currentYear?", 'acceptedAnswer' => ['@type' => 'Answer', 'text' => "Land loan rates are higher than mortgages. Raw land rates typically run 8.5%–13%. Improved lot rates are 7%–10%. Rural/agricultural land rates are 7%–11%."]],
+                ['@type' => 'Question', 'name' => 'How much down payment is required for a land loan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Raw/unimproved land: 35%–50% down. Improved lots: 20%–30% down. Rural agricultural land: 20%–35% down.']],
+                ['@type' => 'Question', 'name' => 'What is the difference between a raw land loan and a lot loan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Raw land is completely undeveloped with no utilities or road access, making it higher risk. Improved lots have utilities and infrastructure, qualifying for lower rates and down payments.']],
+                ['@type' => 'Question', 'name' => 'Can I get a land loan with no money down?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Very rarely. USDA Section 502 Direct Loans can sometimes finance rural land with zero down for low-income borrowers. Otherwise, expect to pay 20%–50% down.']],
+                ['@type' => 'Question', 'name' => 'How long can you finance a land loan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Most land loans have terms of 5–15 years. Some USDA or Farm Credit programs can extend up to 30 or 40 years for agricultural operations.']],
+                ['@type' => 'Question', 'name' => 'Can I convert a land loan into a construction or mortgage loan later?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. Once you are ready to build, many lenders offer a construction-to-permanent loan that rolls your land loan and construction financing into a single mortgage. If you already own the land outright, you can use the equity as your down payment on a construction loan. The land loan itself does not automatically convert — you need to apply for a new loan product.']],
+                ['@type' => 'Question', 'name' => 'What is a USDA land loan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'The USDA offers several rural land financing programs. The USDA Section 502 Direct Loan helps low-to-moderate income buyers purchase homes in rural areas and may include land. The USDA Farm Service Agency (FSA) provides farm ownership loans for agricultural land. These programs offer below-market rates and lower down payment requirements but require the property to be in an eligible rural area.']],
+                ['@type' => 'Question', 'name' => 'Is land loan interest tax deductible?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'It depends on how you use the land. If the land is used for a trade or business (such as farming or investment property), the interest may be deductible as a business expense. If you plan to build a primary residence, the interest is generally not deductible until construction begins and the loan is secured by the finished home. Consult a qualified tax professional for your specific situation.']],
+                ['@type' => 'Question', 'name' => 'What happens if I cannot build on the land during the loan term?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Land loans are typically short-term (5–15 years) with the expectation that the borrower will develop the property or refinance. If you reach the end of the loan term without developing the land, you will need to refinance, sell the property, or pay off the loan in full. Some lenders offer balloon payments at the end of the term. Failure to pay can result in foreclosure, and land is harder to sell quickly than a home.']],
+            ],
+        ],
+        [
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Loan Calculators', 'item' => 'https://americacalculator.com/loan-calculators/'],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => 'Land Loan Calculator', 'item' => 'https://americacalculator.com/loan-calculators/land-loan-calculator'],
+            ]
+        ],
+    ],
+];
+
+require_once '../includes/header.php';
+require_once '../includes/helpers.php';
+?>
+<style>
+/* ============================================================
+   PAGE BASE
+============================================================ */
+body { background: #f5f7fa; }
+
+.sba-page-wrap {
+  max-width: 1320px; margin: 0 auto; padding: 2rem 1.5rem 4rem;
+  display: grid; grid-template-columns: 220px 1fr 260px; gap: 2rem; align-items: start;
+}
+
+/* ============================================================
+   LEFT TOC SIDEBAR
+============================================================ */
+.toc-sidebar {
+  position: sticky; top: 6rem; background: #fff; border-radius: 12px;
+  border: 1px solid #e8edf5; box-shadow: 0 2px 12px rgba(0,0,0,0.04); overflow: hidden;
+}
+.toc-sidebar-header {
+  background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+  color: #fff; padding: 1rem 1.25rem; font-weight: 700; font-size: 0.85rem;
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+.toc-list { list-style: none; padding: 0.75rem 0; margin: 0; }
+.toc-list li a {
+  display: block; padding: 0.5rem 1.25rem; font-size: 0.84rem; color: #475569;
+  text-decoration: none; border-left: 3px solid transparent; transition: all 0.18s; line-height: 1.4;
+}
+.toc-list li a:hover, .toc-list li a.toc-active { color: #166534; background: #f0fdf4; border-left-color: #166534; }
+.toc-divider { height: 1px; background: #f1f5f9; margin: 0.5rem 0; }
+.toc-related-label { padding: 0.5rem 1.25rem; font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+.toc-related-list { list-style: none; padding: 0; margin: 0 0 0.75rem; }
+.toc-related-list li a { display: block; padding: 0.4rem 1.25rem; font-size: 0.82rem; color: #64748b; text-decoration: none; transition: color 0.15s; }
+.toc-related-list li a:hover { color: #166534; }
+
+/* ============================================================
+   MAIN CONTENT
+============================================================ */
+.main-content { min-width: 0; }
+
+.page-hero { margin-bottom: 2rem; }
+.page-hero h1 { font-size: 2.1rem; color: #0f172a; margin: 0 0 0.6rem; line-height: 1.25; }
+.page-hero .hero-desc { font-size: 1.05rem; color: #64748b; line-height: 1.65; margin: 0 0 0.75rem; border-left: 4px solid #bbf7d0; padding-left: 1rem; }
+.page-hero .breadcrumb { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.75rem; }
+.page-hero .breadcrumb a { color: #64748b; text-decoration: none; }
+.page-hero .breadcrumb a:hover { color: #166534; }
+
+/* ─── CALCULATOR ─────────────────────────────────────── */
+.calc-card {
+  background: #fff; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  border: 1px solid #eef2f7; margin-bottom: 2.5rem; overflow: hidden;
+}
+.calc-inner { display: grid; grid-template-columns: 1fr 1fr; }
+.calc-form-panel { padding: 2rem; border-right: 1px solid #f0f4fa; }
+.calc-results-panel { padding: 2rem; background: linear-gradient(160deg, #f8fdfa 0%, #f0fdf4 100%); }
+
+.form-field { margin-bottom: 1.3rem; }
+.form-field label { display: block; font-weight: 600; font-size: 0.9rem; color: #1e293b; margin-bottom: 0.45rem; }
+.form-field input, .form-field select {
+  width: 100%; padding: 13px 15px; border: 1.5px solid #d1dae8; border-radius: 8px;
+  font-size: 1rem; color: #0f172a; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box; background: #fff;
+}
+.form-field input:focus, .form-field select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12); }
+.form-field .field-hint { font-size: 0.78rem; color: #94a3b8; margin-top: 0.35rem; line-height: 1.4; transition: color 0.3s; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.btn-calc {
+  width: 100%; background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  color: #fff; padding: 15px; border: none; border-radius: 9px; font-size: 1rem;
+  font-weight: 700; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s, transform 0.15s;
+}
+.btn-calc:hover { opacity: 0.92; transform: translateY(-1px); }
+
+/* Land type pills */
+.land-type-radios { display: flex; gap: 0.5rem; margin-top: 0.25rem; flex-wrap: wrap; }
+.radio-pill {
+  flex: 1; text-align: center; padding: 10px 8px; border: 1px solid #d1dae8; border-radius: 8px;
+  cursor: pointer; font-size: 0.82rem; font-weight: 600; color: #64748b; background: #f8fafc;
+  transition: all 0.2s; display: flex; flex-direction: column; gap: 0.25rem; align-items: center; justify-content: center;
+}
+.radio-pill:hover { border-color: #bbf7d0; background: #f0fdf4; }
+.radio-pill.active { background: #16a34a; color: white; border-color: #166534; box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3); }
+.radio-pill input { display: none; }
+.radio-pill-icon { font-size: 1.25rem; }
+
+/* Results */
+.results-heading { font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem; }
+.results-sub { font-size: 0.84rem; color: #64748b; margin: 0 0 1.25rem; }
+
+.result-boxes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+.res-box { background: #fff; border: 1.5px solid #e8edf5; border-radius: 10px; padding: 1.1rem 0.75rem; text-align: center; }
+.res-box.primary {
+  background: linear-gradient(135deg, #15803d, #166534); border-color: transparent;
+  box-shadow: 0 6px 18px rgba(21, 128, 61, 0.22); grid-column: span 2; padding: 1.35rem 1rem;
+}
+.res-val { display: block; font-size: 1.5rem; font-weight: 800; color: #15803d; margin-bottom: 0.2rem; line-height: 1; }
+.res-box.primary .res-val { color: #fff; font-size: 2rem; }
+.res-lbl { font-size: 0.78rem; color: #64748b; font-weight: 600; line-height: 1.3; }
+.res-box.primary .res-lbl { color: rgba(255,255,255,0.8); font-size: 0.88rem; }
+
+/* Down payment / Warning callouts */
+.down-payment-callout {
+  background: #fff; border: 1.5px solid #86efac; border-radius: 10px;
+  padding: 1rem 1.1rem; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center;
+}
+.dp-label { font-size: 0.85rem; font-weight: 600; color: #166534; }
+.dp-sublabel { font-size: 0.75rem; color: #16a34a; margin-top: 2px; }
+.dp-value { font-size: 1.5rem; font-weight: 800; color: #15803d; }
+
+.dp-warning {
+  background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
+  padding: 0.85rem 1rem; font-size: 0.82rem; color: #b45309; margin-bottom: 1.25rem; display: none; line-height: 1.4;
+}
+.dp-warning.active { display: flex; gap: 0.5rem; align-items: flex-start; }
+
+/* Amortization bar */
+.amort-title { font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 0.6rem; }
+.amort-bar { display: flex; height: 14px; border-radius: 20px; overflow: hidden; background: #e2e8f0; margin-bottom: 0.6rem; }
+.amort-p { background: #16a34a; transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+.amort-i { background: #86efac; transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+.amort-legend { display: flex; gap: 1.25rem; }
+.leg-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #64748b; font-weight: 500; }
+.leg-dot { width: 11px; height: 11px; border-radius: 3px; }
+.dot-p { background: #16a34a; } .dot-i { background: #86efac; }
+
+/* Amortization Table Toggle */
+.amort-table-section { border-top: 1px solid #f0f4fa; }
+.amort-toggle-btn {
+  width: 100%; background: none; border: none; padding: 1rem 2rem; font-size: 0.9rem;
+  font-weight: 600; color: #15803d; cursor: pointer; text-align: left;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.amort-toggle-btn:hover { background: #f0fdf4; }
+.amort-table-wrap { display: none; padding: 0 2rem 1.5rem; overflow-x: auto; }
+.amort-table-wrap.open { display: block; }
+.amort-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.amort-table th { background: #166534; color: #fff; padding: 10px 12px; text-align: right; font-weight: 600; }
+.amort-table th:first-child { text-align: left; }
+.amort-table td { padding: 8px 12px; text-align: right; border-bottom: 1px solid #f1f5f9; color: #334155; }
+.amort-table td:first-child { text-align: left; font-weight: 600; color: #1e293b; }
+.amort-table tr:nth-child(even) td { background: #f8fafc; }
+.amort-table .pc { color: #16a34a; font-weight: 600; }
+.amort-table .ic { color: #dc2626; }
+
+/* Content Sections */
+.content-section {
+  background: #fff; border-radius: 14px; border: 1px solid #eef2f7;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.03); padding: 2.25rem;
+  margin-bottom: 2rem; scroll-margin-top: 6rem;
+}
+.content-section h2 { font-size: 1.65rem; color: #0f172a; margin: 0 0 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid #f0f4fa; }
+.content-section h3 { font-size: 1.18rem; color: #1e293b; margin: 1.75rem 0 0.7rem; }
+.content-section p { color: #475569; line-height: 1.75; margin-bottom: 1.25rem; font-size: 1rem; }
+.content-section ul, .content-section ol { color: #475569; line-height: 1.75; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.content-section li { margin-bottom: 0.5rem; }
+.content-section strong { color: #1e293b; }
+
+/* Quick Examples Grid */
+.examples-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.25rem 0; }
+.ex-card {
+  background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 1.25rem 1rem;
+  text-align: center; transition: box-shadow 0.2s, border-color 0.2s; cursor: pointer;
+}
+.ex-card:hover { box-shadow: 0 4px 14px rgba(22, 163, 74, 0.1); border-color: #86efac; }
+.ex-card .ex-amount { font-size: 1.2rem; font-weight: 800; color: #15803d; margin-bottom: 0.35rem; }
+.ex-card .ex-detail { font-size: 0.78rem; color: #94a3b8; margin-bottom: 0.6rem; }
+.ex-card .ex-payment { font-size: 1.05rem; font-weight: 700; color: #0f172a; }
+.ex-card .ex-pay-label { font-size: 0.75rem; color: #64748b; }
+
+/* Formula */
+.formula-box { background: #0f172a; color: #e2e8f0; padding: 1.25rem 2rem; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 1.05rem; text-align: center; margin: 1.25rem 0; }
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; margin: 1rem 0; font-size: 0.95rem; color: #475569; }
+
+/* Rate table */
+.rate-table { width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; border: 1px solid #e8edf5; margin-bottom: 1.5rem; }
+.rate-table th { background: #166534; color: #fff; padding: 13px 16px; text-align: left; font-size: 0.88rem; font-weight: 600; }
+.rate-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; color: #334155; }
+.rate-table tr:last-child td { border-bottom: none; }
+.rate-table tr:nth-child(even) td { background: #f8fafc; }
+.rv { color: #15803d; font-weight: 700; }
+.rr { color: #dc2626; font-weight: 600; }
+
+/* Howto steps */
+.howto-list { list-style: none; padding: 0; margin: 1.25rem 0 0; counter-reset: howto-counter; }
+.howto-list li { position: relative; padding-left: 3.5rem; margin-bottom: 1.75rem; counter-increment: howto-counter; }
+.howto-list li::before { content: counter(howto-counter); position: absolute; left: 0; top: 0; width: 34px; height: 34px; background: linear-gradient(135deg, #15803d, #166534); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.95rem; }
+.howto-list li strong { color: #0f172a; display: block; margin-bottom: 0.25rem; font-size: 1rem; }
+.howto-list li span { color: #475569; line-height: 1.65; font-size: 0.97rem; }
+
+/* Info boxes */
+.info-box { background: #f0fdf4; border-left: 4px solid #16a34a; border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.25rem 0; font-size: 0.95rem; color: #14532d; line-height: 1.6; }
+
+/* FAQ */
+.faq-item { border-bottom: 1px solid #f0f4fa; padding-bottom: 1.25rem; margin-bottom: 1.25rem; }
+.faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.faq-q { font-size: 1.02rem; font-weight: 700; color: #0f172a; margin-bottom: 0.6rem; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.faq-q::after { content: '+'; font-size: 1.3rem; color: #166534; flex-shrink: 0; }
+.faq-item.open .faq-q::after { content: '−'; }
+.faq-a { color: #475569; line-height: 1.7; font-size: 0.97rem; display: none; }
+.faq-item.open .faq-a { display: block; }
+
+/* ============================================================
+   RIGHT SIDEBAR
+============================================================ */
+.right-sidebar { position: sticky; top: 6rem; display: flex; flex-direction: column; gap: 1.25rem; }
+
+.rates-widget { background: #fff; border-radius: 12px; border: 1px solid #e8edf5; box-shadow: 0 4px 18px rgba(0,0,0,0.05); overflow: hidden; }
+.rates-widget-header { background: linear-gradient(135deg, #166534, #14532d); color: #fff; padding: 1rem 1.25rem; }
+.rates-widget-header .icon-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+.rates-widget-title { font-size: 1rem; font-weight: 700; }
+.rates-widget-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.75); }
+.rates-updated { font-size: 0.72rem; color: rgba(255,255,255,0.6); margin-top: 0.35rem; }
+.rates-list { padding: 0.75rem 0; }
+.rate-row { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 1.25rem; border-bottom: 1px solid #f8fafc; transition: background 0.15s; }
+.rate-row:last-child { border-bottom: none; }
+.rate-row:hover { background: #f0fdf4; }
+.rate-label { font-size: 0.82rem; font-weight: 600; color: #334155; }
+.rate-sublabel { font-size: 0.72rem; color: #94a3b8; }
+.rate-value { font-size: 1.05rem; font-weight: 800; color: #166534; }
+.rate-change { font-size: 0.7rem; margin-top: 1px; color: #94a3b8; }
+.rates-footer { padding: 0.85rem 1.25rem; border-top: 1px solid #f0f4fa; background: #f8fafc; }
+.rates-footer a { font-size: 0.83rem; font-weight: 700; color: #166534; text-decoration: none; display: flex; align-items: center; gap: 0.35rem; }
+.rates-footer a:hover { text-decoration: underline; }
+
+.loading-spinner { display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; font-size: 0.82rem; color: #94a3b8; }
+.spinner-dot { width: 6px; height: 6px; background: #86efac; border-radius: 50%; animation: pulse-dot 1.4s infinite ease-in-out; }
+.spinner-dot:nth-child(2) { animation-delay: 0.2s; } .spinner-dot:nth-child(3) { animation-delay: 0.4s; }
+
+.quick-access-widget { background: #fff; border-radius: 12px; border: 1px solid #e8edf5; box-shadow: 0 2px 12px rgba(0,0,0,0.04); overflow: hidden; }
+.widget-header { padding: 0.9rem 1.25rem; background: #f8fafc; border-bottom: 1px solid #f0f4fa; font-size: 0.83rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; }
+.widget-links { list-style: none; padding: 0.5rem 0; margin: 0; }
+.widget-links li a { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; font-size: 0.85rem; color: #475569; text-decoration: none; border-left: 3px solid transparent; transition: all 0.15s; font-weight: 500; }
+.widget-links li a:hover, .widget-links li a.active { color: #166534; background: #f0fdf4; border-left-color: #166534; }
+
+/* ── Responsive ── */
+@media (max-width: 1200px) { .sba-page-wrap { grid-template-columns: 200px 1fr 240px; } }
+@media (max-width: 1024px) { .sba-page-wrap { grid-template-columns: 1fr; } .toc-sidebar, .right-sidebar { position: static; } .right-sidebar { display: grid; grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) {
+  .sba-page-wrap { padding: 1rem 1rem 3rem; }
+  .calc-inner { grid-template-columns: 1fr; }
+  .calc-form-panel { border-right: none; border-bottom: 1px solid #f0f4fa; }
+  .result-boxes { grid-template-columns: 1fr 1fr; }
+  .res-box.primary { grid-column: span 2; }
+  .formula-grid { grid-template-columns: 1fr; }
+  .examples-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .right-sidebar { grid-template-columns: 1fr; }
+  .page-hero h1 { font-size: 1.65rem; }
+  .content-section h2 { font-size: 1.3rem; }
+}
+</style>
+
+<main id="main-content">
+<div class="sba-page-wrap">
+
+  <!-- ════════════════════════════════════════
+       LEFT: TABLE OF CONTENTS SIDEBAR
+  ════════════════════════════════════════ -->
+  <aside class="toc-sidebar">
+    <div class="toc-sidebar-header">📋 In This Article</div>
+    <ul class="toc-list">
+      <li><a href="#calculator" class="toc-active">Land Loan Calculator</a></li>
+      <li><a href="#quick-example">Common Land Loan Amounts</a></li>
+      <li><a href="#how-to-calculate">How to Calculate Payment</a></li>
+      <li><a href="#down-payment">Down Payment Guide</a></li>
+      <li><a href="#land-type">Raw vs Lot vs Rural Land</a></li>
+      <li><a href="#current-rate"><?php echo $currentYear; ?> Interest Rates</a></li>
+      <li><a href="#payment-formula">Payment Formula Explained</a></li>
+      <li><a href="#faq">Frequently Asked Questions</a></li>
+    </ul>
+    <div class="toc-divider"></div>
+    <div class="toc-related-label">Related Calculators</div>
+    <ul class="toc-related-list">
+      <li><a href="<?php echo $baseUrl; ?>/loan-calculators/sba-loan-calculator">SBA Loan Calculator</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/loan-calculators/business-loan-calculator">Business Loan</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/real-estate/cap-rate-calculator">Cap Rate Calculator</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/loan-calculators/auto-loan-calculator">Auto Loan</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/loan-calculators/personal-loan-calculator">Personal Loan</a></li>
+    </ul>
+  </aside>
+
+  <!-- ════════════════════════════════════════
+       CENTER: MAIN CONTENT
+  ════════════════════════════════════════ -->
+  <div class="main-content">
+
+    <!-- HERO -->
+    <div class="page-hero">
+      <div class="breadcrumb">
+        <a href="<?php echo $baseUrl; ?>/index.php">Home</a> ›
+        <a href="<?php echo $baseUrl; ?>/loan-calculators/">Finance</a> ›
+        Land Loan Calculator
+      </div>
+      <h1>Land Loan Calculator (<?php echo $currentYear; ?>)</h1>
+      <p class="hero-desc">
+        Calculate monthly payments for <strong>raw land</strong>, <strong>vacant lots</strong>,
+        and <strong>rural agricultural property</strong>. Find your exact monthly payment,
+        required down payment, and view a full amortization schedule.
+      </p>
+    </div>
+
+    <!-- ─── CALCULATOR ────────────────────────────────── -->
+    <div class="calc-card" id="calculator">
+      <div class="calc-inner">
+
+        <!-- Form -->
+        <div class="calc-form-panel">
+          <div class="form-field">
+            <label>What type of land are you buying?</label>
+            <div class="land-type-radio">
+              <label class="radio-pill active" data-type="raw" data-dp="35" data-rate="9.5" data-term="10">
+                <span class="radio-pill-icon">🌲</span>
+                <span>Raw / Unimproved</span>
+                <input type="radio" name="land_type" value="raw" checked>
+              </label>
+              <label class="radio-pill" data-type="lot" data-dp="20" data-rate="7.5" data-term="15">
+                <span class="radio-pill-icon">🏘️</span>
+                <span>Improved Lot</span>
+                <input type="radio" name="land_type" value="lot">
+              </label>
+              <label class="radio-pill" data-type="rural" data-dp="25" data-rate="8.0" data-term="20">
+                <span class="radio-pill-icon">🌾</span>
+                <span>Rural / Farm</span>
+                <input type="radio" name="land_type" value="rural">
+              </label>
+            </div>
+            <div class="field-hint" id="land-type-hint">Raw land typically requires 35%–50% down.</div>
+          </div>
+          
+          <div class="form-field">
+            <label for="land_price">Total Land Price ($)</label>
+            <input type="number" id="land_price" value="100000" min="1000" step="1000">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-field">
+              <label for="down_payment_pct">Down Payment (%)</label>
+              <input type="number" id="down_payment_pct" value="35" min="0" max="100" step="1">
+              <div class="field-hint" id="dp-hint">Raw land standard</div>
+            </div>
+            <div class="form-field">
+              <label for="loan_term">Loan Term (years)</label>
+              <input type="number" id="loan_term" value="10" min="1" max="40" step="1">
+              <div class="field-hint" id="term-hint">Max 10–15 yrs common</div>
+            </div>
+          </div>
+          
+          <div class="form-field">
+            <label for="interest_rate">Annual Interest Rate (%)</label>
+            <input type="number" id="interest_rate" value="9.50" min="0.1" max="30" step="0.01">
+            <div class="field-hint" id="rate-hint"><?php echo $currentYear; ?> typical range: 8.5%–13%</div>
+          </div>
+
+          <button type="button" class="btn-calc" id="land-calc-btn">⚡ Calculate Payment</button>
+        </div>
+
+        <!-- Results -->
+        <div class="calc-results-panel">
+          <h3 class="results-heading">Your Loan Payment Summary</h3>
+          <p class="results-sub" id="results-desc">Based on $65,000 financed at 9.5% over 10 years</p>
+
+          <div class="result-boxe">
+            <div class="res-box primary">
+              <span class="res-val" id="res_monthly">$841</span>
+              <span class="res-lbl">Monthly Payment (P&I)</span>
+            </div>
+            <div class="res-box">
+              <span class="res-val" id="res_interest">$35,979</span>
+              <span class="res-lbl">Total Interest Paid</span>
+            </div>
+            <div class="res-box">
+              <span class="res-val" id="res_total">$100,979</span>
+              <span class="res-lbl">Total Financed Cost</span>
+            </div>
+          </div>
+
+          <!-- Down Payment Callout -->
+          <div class="down-payment-callout">
+            <div>
+              <div class="dp-label">💵 Required Down Payment</div>
+              <div class="dp-sublabel" id="res_dp_pct">35% equity injection</div>
+            </div>
+            <div class="dp-value" id="res_downpayment">$35,000</div>
+          </div>
+          
+          <!-- Warning for low down payment -->
+          <div class="dp-warning" id="dp-warning">
+            <span>⚠️</span>
+            <span id="dp-warning-text">Warning text</span>
+          </div>
+
+          <!-- Amort Bar -->
+          <div class="amort-title">Principal vs. Interest Split</div>
+          <div class="amort-bar">
+            <div class="amort-p" id="bar_p" style="width:65%"></div>
+            <div class="amort-i" id="bar_i" style="width:35%"></div>
+          </div>
+          <div class="amort-legend">
+            <div class="leg-item"><div class="leg-dot dot-p"></div>Principal</div>
+            <div class="leg-item"><div class="leg-dot dot-i"></div>Interest</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amortization Table -->
+      <div class="amort-table-section">
+        <button class="amort-toggle-btn" id="amort-toggle">
+          <span>📊 Show Full Amortization Schedule</span>
+          <span id="amort-icon">▼</span>
+        </button>
+        <div class="amort-table-wrap" id="amort-table-wrap">
+          <table class="amort-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Payment</th>
+                <th>Principal</th>
+                <th>Interest</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amort-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /calc-card -->
+
+    <!-- ─── QUICK EXAMPLES ────────────────────────────── -->
+    <section class="content-section" id="quick-example">
+      <h2>Common Land Loan Amounts (Raw Land)</h2>
+      <p>
+        Here are common raw land financing scenarios based on a standard <strong>35% down payment</strong>,
+        financed over <strong>10 years at 9.5% APR</strong>. Click any card to load these figures into
+        the calculator above.
+      </p>
+      <div class="examples-grid">
+        <div class="ex-card" onclick="fillCalc(50000, 35, 10, 9.5)">
+          <div class="ex-amount">$50,000 Land</div>
+          <div class="ex-detail">$17,500 down (35%)</div>
+          <div class="ex-payment">$420 / mo</div>
+          <div class="ex-pay-label">Financing $32,500</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(100000, 35, 10, 9.5)">
+          <div class="ex-amount">$100,000 Land</div>
+          <div class="ex-detail">$35,000 down (35%)</div>
+          <div class="ex-payment">$841 / mo</div>
+          <div class="ex-pay-label">Financing $65,000</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(150000, 35, 10, 9.5)">
+          <div class="ex-amount">$150,000 Land</div>
+          <div class="ex-detail">$52,500 down (35%)</div>
+          <div class="ex-payment">$1,262 / mo</div>
+          <div class="ex-pay-label">Financing $97,500</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(250000, 35, 10, 9.5)">
+          <div class="ex-amount">$250,000 Land</div>
+          <div class="ex-detail">$87,500 down (35%)</div>
+          <div class="ex-payment">$2,103 / mo</div>
+          <div class="ex-pay-label">Financing $162,500</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(500000, 35, 10, 9.5)">
+          <div class="ex-amount">$500,000 Land</div>
+          <div class="ex-detail">$175,000 down (35%)</div>
+          <div class="ex-payment">$4,207 / mo</div>
+          <div class="ex-pay-label">Financing $325,000</div>
+        </div>
+        <div class="ex-card" onclick="fillCalc(1000000, 35, 10, 9.5)">
+          <div class="ex-amount">$1 Million Land</div>
+          <div class="ex-detail">$350,000 down (35%)</div>
+          <div class="ex-payment">$8,414 / mo</div>
+          <div class="ex-pay-label">Financing $650,000</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── HOW TO CALCULATE ─────────────────────────── -->
+    <section class="content-section" id="how-to-calculate">
+      <h2>How to Calculate Your Land Loan Payment</h2>
+      <p>
+        Financing land is fundamentally different from getting a home mortgage. Because
+        there is no home structure acting as immediate collateral, lenders view land loans
+        as higher risk. Here is how to use our calculator to accurately estimate your costs:
+      </p>
+      <ol class="howto-list">
+        <li>
+          <strong>Select your land type</strong>
+          <span>Toggle between raw land, improved lot, or rural/farm land at the top of the calculator.
+          This will automatically adjust the recommended down payment, interest rate, and loan term hints
+          based on <?php echo $currentYear; ?> lending standards in the USA.</span>
+        </li>
+        <li>
+          <strong>Enter the total land purchase price</strong>
+          <span>Input the agreed-upon sale price of the property. The calculator will automatically
+          determine the <em>financed amount</em> by subtracting your down payment.</span>
+        </li>
+        <li>
+          <strong>Adjust the down payment percentage</strong>
+          <span>Unlike a house where you might put down 5% or 10%, land loans require substantial equity.
+          Raw land frequently requires 35% to 50% down. Our calculator warns you if you enter a down
+          payment lower than typical bank requirements for your chosen land type.</span>
+        </li>
+        <li>
+          <strong>Set your interest rate and term</strong>
+          <span>Land loans carry higher interest rates and shorter repayment periods (often 5 to 15 years)
+          compared to 30-year home mortgages. A shorter term drastically reduces your total interest paid.</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ─── DOWN PAYMENT ─────────────────────────────── -->
+    <section class="content-section" id="down-payment">
+      <h2>Land Loan Calculator With Down Payment Requirements</h2>
+      <p>
+        The biggest hurdle to buying land is usually the down payment. Lenders require
+        "skin in the game" because if a borrower falls on hard times, they will typically default
+        on vacant land long before they default on their primary residence.
+      </p>
+      <h3>Typical <?php echo $currentYear; ?> Down Payment Minimums:</h3>
+      <table class="rate-table">
+        <thead>
+          <tr>
+            <th>Land Type</th>
+            <th>Standard Down Payment</th>
+            <th>Why?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Raw Land</strong></td>
+            <td class="rr">35% – 50%</td>
+            <td>No utilities, no road access. Hardest to sell if foreclosed.</td>
+          </tr>
+          <tr>
+            <td><strong>Unimproved Land</strong></td>
+            <td class="rr">25% – 40%</td>
+            <td>Some utilities may be near, but no immediate plans to build.</td>
+          </tr>
+          <tr>
+            <td><strong>Improved Lot</strong></td>
+            <td class="rv">20% – 30%</td>
+            <td>In a subdivision, utilities ready, streets paved. Lower risk.</td>
+          </tr>
+          <tr>
+            <td><strong>Rural / Farm</strong></td>
+            <td class="rv">20% – 35%</td>
+            <td>Agricultural potential. May qualify for USDA/FSA loans.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="info-box">
+        💡 <strong>Tip for lower down payments:</strong> If you are buying an improved lot and plan
+        to build a home immediately, you can apply for a <strong>Construction-to-Permanent Loan</strong>.
+        This wraps the land purchase and home construction into a single loan, often requiring only
+        10% to 20% down on the total project cost.
+      </div>
+    </section>
+    
+    <!-- ─── LAND TYPES ────────────────────────────────── -->
+    <section class="content-section" id="land-type">
+      <h2>Raw Land vs. Vacant Lot vs. Rural Land Loans</h2>
+      <p>
+        The type of land you purchase dictates the loan product you need. Lenders categorize
+        parcels based on their level of improvement and intended use.
+      </p>
+      
+      <h3>1. Raw Land Loans (Highest Risk)</h3>
+      <p>
+        Raw land is completely untouched. It has no electricity, no sewer or septic, no municipal
+        water, and often lacks paved road access. Because developing raw land is expensive and
+        unpredictable, banks charge the highest interest rates and require the largest down payments
+        (up to 50%). Terms rarely exceed 10 years.
+      </p>
+
+      <h3>2. Improved Lot Loans (Medium Risk)</h3>
+      <p>
+        An improved lot (often called a vacant lot) is typically located in a developed subdivision.
+        It has access to roads, water, electricity, and sewer (or a perc test for septic). Because
+        it's ready for immediate construction, lenders view it as less risky. You can often secure
+        a lot loan with 20% down and terms extending up to 15 years at lower rates.
+      </p>
+      
+      <h3>3. Rural and Farm Land Loans (Specialized)</h3>
+      <p>
+        If you're buying large acreage for agricultural use, hunting, or recreation, specialized
+        lenders like the <strong>Farm Credit System</strong> or the <strong>USDA</strong> are your
+        best options. They understand rural property values better than commercial banks and offer
+        competitive rates and longer terms (up to 30 years for qualifying agricultural use).
+      </p>
+    </section>
+
+    <!-- ─── CURRENT RATES ─────────────────────────────── -->
+    <section class="content-section" id="current-rate">
+      <h2>Current Land Loan Rates in <?php echo $currentYear; ?></h2>
+      <p>
+        Unlike 30-year fixed mortgages, land loan rates aren't heavily standardized across the country.
+        Rates vary significantly based on the lender (local credit union vs. Farm Credit), your
+        credit score, and the size of your down payment.
+      </p>
+      <p>
+        As a general rule, land loan interest rates run <strong>1.5% to 3.0% higher</strong> than
+        conventional home mortgage rates. In <?php echo $currentYear; ?>, expect the following ranges
+        for a borrower with a 700+ credit score:
+      </p>
+      <table class="rate-table">
+        <thead><tr><th>Property Type</th><th>Typical Rate Range</th><th>Best Lender Type</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Raw Land</strong></td>
+            <td class="rr">8.5% – 13.0%</td>
+            <td>Local Community Banks, Credit Unions</td>
+          </tr>
+          <tr>
+            <td><strong>Improved Lot</strong></td>
+            <td class="rv">7.0% – 10.0%</td>
+            <td>Local Banks, Credit Unions</td>
+          </tr>
+          <tr>
+            <td><strong>Rural / Ag Land</strong></td>
+            <td class="rv">7.0% – 10.5%</td>
+            <td>Farm Credit System, USDA/FSA</td>
+          </tr>
+          <tr>
+            <td><strong>Owner Financing</strong></td>
+            <td class="rr">8.0% – 12.0%</td>
+            <td>Directly with the land seller</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ─── FORMULA ───────────────────────────────────── -->
+    <section class="content-section" id="payment-formula">
+      <h2>Land Loan Payment Formula Explained</h2>
+      <p>
+        This calculator uses the standard amortizing loan formula. It calculates the fixed monthly
+        payment required to pay off both the principal and the accrued interest over the life of the loan.
+      </p>
+      <div class="formula-box">M = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]</div>
+      <div class="formula-grid">
+        <span><strong>M</strong> = Monthly Payment</span>
+        <span><strong>P</strong> = Principal (Land Price minus Down Payment)</span>
+        <span><strong>r</strong> = Monthly Interest Rate (Annual Rate / 12 A 100)</span>
+        <span><strong>n</strong> = Total Months (Years × 12)</span>
+      </div>
+      <p>
+        <strong>Manual Example:</strong> Buying a $100,000 lot with 20% down ($20k). You are
+        financing $80,000 (P). The rate is 8.5% (r = 0.007083) over 15 years (n = 180).<br>
+        M = 80,000 × [0.007083(1.007083)¹⁸⁰] / [(1.007083)¹⁸⁰ − 1] = <strong>$787.79 per month</strong>.
+      </p>
+    </section>
+
+    <!-- ─── FAQ ────────────────────────────────────────── -->
+    <section class="content-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item open">
+        <div class="faq-q">Can you finance land for 30 years?</div>
+        <div class="faq-a">Rarely. Commercial banks and credit unions typically cap land loans at 10 to 15 years. The exception is rural or agricultural land purchased through specialized lenders like the Farm Credit System or the USDA, which may offer 20- to 30-year terms for qualifying buyers.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What credit score is needed for a land loan?</div>
+        <div class="faq-a">Because land is speculative collateral, lenders are strict. You generally need a minimum credit score of <strong>680 to 720</strong> to secure a land loan with reasonable terms. If your score is lower, you will likely face higher interest rates or be required to put down a larger deposit (e.g., 50%).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Are land loan rates higher than mortgage rates?</div>
+        <div class="faq-a">Yes. Land loan interest rates are typically 1.5% to 3.0% higher than traditional 30-year fixed mortgage rates. If current mortgage rates are 6.5%, expect land loan rates to be between 8.0% and 9.5% for an improved lot, and higher for raw land.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is owner financing a good idea for land?</div>
+        <div class="faq-a">Owner financing (seller carryback) is very common in land sales because banks are reluctant to lend on raw land. It can be a great option if the seller offers a lower interest rate or requires a smaller down payment than a bank. However, always have a real estate attorney review the promissory note and ensure a clear title transfer.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I use my land equity for a construction loan?</div>
+        <div class="faq-a">Yes. If you own the land outright (or have substantial equity in it), most lenders will allow you to use that equity as the down payment for a construction loan to build a home. For example, if you own a $50,000 lot free and clear, that $50k counts toward your down payment on a $300,000 construction project.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I convert a land loan into a construction or mortgage loan later?</div>
+        <div class="faq-a">Yes. Once you are ready to build, many lenders offer a <strong>construction-to-permanent loan</strong> that rolls your land loan and construction financing into a single long-term mortgage. If you already own the land outright, you can use the equity as your down payment. The land loan itself does not automatically convert — you apply for a new loan product when you are ready to build.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What is a USDA land loan?</div>
+        <div class="faq-a">The USDA offers several rural land financing programs. The <strong>USDA Section 502 Direct Loan</strong> helps low-to-moderate income buyers in eligible rural areas and may include land financing. The <strong>USDA Farm Service Agency (FSA)</strong> provides farm ownership loans for agricultural land at below-market rates. These programs require the property to be in a USDA-eligible rural area and have income limits. Check eligibility at <strong>eligibility.sc.egov.usda.gov</strong>.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is land loan interest tax deductible?</div>
+        <div class="faq-a">It depends on how you use the land. <strong>Business or investment land</strong> (farming, rental, development) — interest may be deductible as a business expense. <strong>Future primary residence</strong> — interest is generally not deductible until construction begins and the loan is secured by the finished home. Raw land held speculatively is typically not deductible. Always consult a qualified tax professional for your specific situation.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What happens if I cannot build on the land during the loan term?</div>
+        <div class="faq-a">Land loans are typically short-term (5–15 years) with the expectation that you will develop or refinance before the term ends. If you reach the end of the term without building, your options are: <strong>(1)</strong> refinance into a new land loan, <strong>(2)</strong> sell the property, or <strong>(3)</strong> pay off the balance. Many land loans include a balloon payment at maturity — meaning the full remaining balance is due. Failure to pay can result in foreclosure, and vacant land is harder to sell quickly than a home.</div>
+      </div>
+
+    </section>
+
+  </div><!-- /main-content -->
+
+  <!-- ════════════════════════════════════════
+       RIGHT SIDEBAR
+  ════════════════════════════════════════ -->
+  <aside class="right-sidebar">
+
+    <!-- Live Rates Widget -->
+    <div class="rates-widget">
+      <div class="rates-widget-header">
+        <div class="icon-row">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          <span class="rates-widget-title">Market Benchmarks</span>
+        </div>
+        <div class="rates-widget-subtitle">Economic indicators affecting land rates</div>
+        <div class="rates-updated" id="rates-last-updated">Fetching live data...</div>
+      </div>
+      <div id="rates-loading" class="loading-spinner">
+        <div class="spinner-dot"></div><div class="spinner-dot"></div><div class="spinner-dot"></div>
+        <span>Connecting to FRED...</span>
+      </div>
+      <div class="rates-list" id="rates-list" style="display:none;">
+        <div class="rate-row">
+          <div><div class="rate-label">10-Yr Treasury</div><div class="rate-sublabel">Affects long-term rates</div></div>
+          <div style="text-align:right;"><div class="rate-value" id="rate-10yr">—</div><div class="rate-change" id="rate-10yr-chg">Live</div></div>
+        </div>
+        <div class="rate-row">
+          <div><div class="rate-label">Prime Rate</div><div class="rate-sublabel">Base for variable loans</div></div>
+          <div style="text-align:right;"><div class="rate-value" id="rate-prime">—</div><div class="rate-change" id="rate-prime-chg">Live</div></div>
+        </div>
+        <div class="rate-row" style="background:#f0fdf4;">
+          <div><div class="rate-label">Raw Land Rate</div><div class="rate-sublabel"><?php echo $currentYear; ?> Estimate</div></div>
+          <div style="text-align:right;"><div class="rate-value">8.5%–13%</div><div class="rate-change">Typical Spread</div></div>
+        </div>
+      </div>
+      <div class="rates-footer">
+        <a href="https://fred.stlouisfed.org/series/DGS10" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Check Treasury Rates →
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Calculators -->
+    <div class="quick-access-widget">
+      <div class="widget-header">🏦 Loan Calculators</div>
+      <ul class="widget-link">
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/land-loan-calculator" class="active">🌎 Land Loan Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/sba-loan-calculator">💼 SBA Loan Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/sba-loan-payment-calculator">📋 SBA Payment Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/business-loan-calculator">🏢 Business Loan</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/auto-loan-calculator">🚗 Auto Loan</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/personal-loan-calculator">👤 Personal Loan</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/rv-loan-calculator">🚐 RV Loan</a></li>
+      </ul>
+    </div>
+
+  </aside>
+
+</div><!-- /sba-page-wrap -->
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ── ELEMENTS ───────────────────────── */
+  const inpPrice   = document.getElementById('land_price');
+  const inpDpPct   = document.getElementById('down_payment_pct');
+  const inpRate    = document.getElementById('interest_rate');
+  const inpTerm    = document.getElementById('loan_term');
+  const calcBtn    = document.getElementById('land-calc-btn');
+
+  const resMonthly = document.getElementById('res_monthly');
+  const resInterest= document.getElementById('res_interest');
+  const resTotal   = document.getElementById('res_total');
+  const resDpPct   = document.getElementById('res_dp_pct');
+  const resDpAmt   = document.getElementById('res_downpayment');
+  const resDesc    = document.getElementById('results-desc');
+  
+  const dpWarning  = document.getElementById('dp-warning');
+  const dpWarnText = document.getElementById('dp-warning-text');
+  
+  const barP       = document.getElementById('bar_p');
+  const barI       = document.getElementById('bar_i');
+  const amortTbody = document.getElementById('amort-tbody');
+
+  const fmtC = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  const fmtC2= new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2});
+
+  let currentMinDp = 35; // Default for Raw Land
+
+  /* ── LAND TYPE PILLS ────────────────── */
+  const pills = document.querySelectorAll('.radio-pill');
+  pills.forEach(pill => {
+    pill.addEventListener('click', function(e) {
+      if(e.target.tagName !== 'INPUT') {
+        const input = this.querySelector('input');
+        input.checked = true;
+      }
+      pills.forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+      
+      const type = this.getAttribute('data-type');
+      const recDp = parseFloat(this.getAttribute('data-dp'));
+      const recRate = parseFloat(this.getAttribute('data-rate'));
+      const recTerm = parseFloat(this.getAttribute('data-term'));
+      
+      currentMinDp = recDp;
+      
+      // Update hints
+      const hintDp = document.getElementById('dp-hint');
+      const hintRate = document.getElementById('rate-hint');
+      const hintTerm = document.getElementById('term-hint');
+      const hintType = document.getElementById('land-type-hint');
+      
+      if(type === 'raw') {
+        hintDp.textContent = 'Raw land typically requires 35%–50%';
+        hintRate.textContent = 'Raw land range: 8.5%–13%';
+        hintTerm.textContent = 'Max 10–15 yrs common';
+        hintType.textContent = 'Raw land requires the highest down payment and rates.';
+      } else if(type === 'lot') {
+        hintDp.textContent = 'Lot loans typically require 20%–30%';
+        hintRate.textContent = 'Lot range: 7.0%–10%';
+        hintTerm.textContent = 'Max 15 yrs common';
+        hintType.textContent = 'Improved lots have utilities, lowering risk for banks.';
+      } else {
+        hintDp.textContent = 'Rural/Ag typically requires 20%–35%';
+        hintRate.textContent = 'Rural range: 7.0%–10.5%';
+        hintTerm.textContent = 'Can extend to 20–30 yrs (USDA)';
+        hintType.textContent = 'Rural or farm land may qualify for specialized USDA rates.';
+      }
+      
+      // Flash animation on hints to show they changed
+      [hintDp, hintRate, hintTerm].forEach(h => {
+        h.style.color = '#15803d';
+        setTimeout(() => h.style.color = '', 800);
+      });
+      
+      // Auto-fill recommended values if user hasn't explicitly typed recently
+      // (For simplicity in this design, we just auto-fill on type switch)
+      inpDpPct.value = recDp;
+      inpRate.value = recRate;
+      inpTerm.value = recTerm;
+      
+      calculate();
+    });
+  });
+
+  /* ── CALCULATE ──────────────────────── */
+  function calculate() {
+    const price = parseFloat(inpPrice.value) || 0;
+    const dpPct = parseFloat(inpDpPct.value) || 0;
+    const rate  = parseFloat(inpRate.value)  || 0;
+    const yrs   = parseFloat(inpTerm.value)  || 0;
+
+    if (price <= 0 || rate <= 0 || yrs <= 0) {
+      resMonthly.textContent = '--'; resInterest.textContent = '--';
+      resTotal.textContent = '--'; resDpAmt.textContent = '--'; return;
+    }
+
+    const dpAmt = price * (dpPct / 100);
+    const P     = price - dpAmt;    // financed amount
+    
+    if (P <= 0) {
+      // 100% down payment
+      resMonthly.textContent = '$0'; resInterest.textContent = '$0';
+      resTotal.textContent = '$0'; resDpAmt.textContent = fmtC.format(dpAmt);
+      resDpPct.textContent = dpPct + '% equity injection';
+      dpWarning.classList.remove('active');
+      barP.style.width = '100%'; barI.style.width = '0%';
+      amortTbody.innerHTML = '';
+      return;
+    }
+
+    const r = (rate / 100) / 12;
+    const n = yrs * 12;
+    const M = P * (r * Math.pow(1+r,n)) / (Math.pow(1+r,n) - 1);
+    const totalPaid = M * n;
+    const totalInt  = totalPaid - P;
+
+    resMonthly.textContent  = fmtC.format(M);
+    resInterest.textContent = fmtC.format(totalInt);
+    resTotal.textContent    = fmtC.format(totalPaid);
+    resDpAmt.textContent    = fmtC.format(dpAmt);
+    resDpPct.textContent    = dpPct + '% equity injection';
+    resDesc.textContent     = `Based on ${fmtC.format(P)} financed at ${rate}% over ${yrs} years`;
+
+    // Warnings
+    if (dpPct < currentMinDp) {
+      dpWarning.classList.add('active');
+      dpWarnText.innerHTML = `Your down payment (<strong>${dpPct}%</strong>) is below the typical minimum requirement (<strong>${currentMinDp}%</strong>) for this land type. You may have trouble finding a lender.`;
+    } else {
+      dpWarning.classList.remove('active');
+    }
+
+    barP.style.width = (P / totalPaid * 100) + '%';
+    barI.style.width = (totalInt / totalPaid * 100) + '%';
+
+    buildTable(P, r, n, M);
+  }
+
+  function buildTable(P, r, n, M) {
+    let bal = P, rows = '';
+    for (let mo = 1; mo <= n; mo++) {
+      const iAmt = bal * r;
+      const pAmt = M - iAmt;
+      bal -= pAmt;
+      if (bal < 0) bal = 0;
+      rows += `<tr>
+        <td>${mo}</td>
+        <td>${fmtC2.format(M)}</td>
+        <td class="pc">${fmtC2.format(pAmt)}</td>
+        <td class="ic">${fmtC2.format(iAmt)}</td>
+        <td>${fmtC2.format(bal)}</td>
+      </tr>`;
+    }
+    amortTbody.innerHTML = rows;
+  }
+
+  calcBtn.addEventListener('click', calculate);
+  [inpPrice, inpDpPct, inpRate, inpTerm].forEach(el => el.addEventListener('input', calculate));
+  calculate();
+
+  /* ── AMORTIZATION TOGGLE ────────────── */
+  const toggle = document.getElementById('amort-toggle');
+  const wrap   = document.getElementById('amort-table-wrap');
+  const icon   = document.getElementById('amort-icon');
+  toggle.addEventListener('click', function () {
+    const open = wrap.classList.toggle('open');
+    icon.textContent = open ? '▲' : '▼';
+    toggle.querySelector('span').textContent = open ? '📊 Hide Amortization Schedule' : '📊 Show Full Amortization Schedule';
+  });
+
+  /* ── TOC ACTIVE SCROLL HIGHLIGHT ───── */
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const sections = [];
+  tocLinks.forEach(link => {
+    const id = link.getAttribute('href').replace('#','');
+    const sec = document.getElementById(id);
+    if (sec) sections.push({ link, sec });
+  });
+  function updateTOC() {
+    const y = window.scrollY + 130;
+    let active = sections[0];
+    sections.forEach(s => { if(s.sec.getBoundingClientRect().top + window.scrollY <= y) active = s; });
+    tocLinks.forEach(l => l.classList.remove('toc-active'));
+    if (active) active.link.classList.add('toc-active');
+  }
+  window.addEventListener('scroll', updateTOC, { passive: true });
+  updateTOC();
+
+  /* ── FAQ ACCORDION ──────────────────── */
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', function () {
+      const item = this.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  /* ── LIVE RATES (FRED API) ──────────── */
+  async function fetchFred(series) {
+    try {
+      const url = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${series}&limit=5&sort_order=desc`;
+      const res  = await fetch(url, { signal: AbortSignal.timeout(7000) });
+      if (!res.ok) throw new Error('bad');
+      const txt  = await res.text();
+      const rows = txt.trim().split('\n').filter(l => !l.startsWith('DATE'));
+      for (const row of rows) {
+        const parts = row.split(',');
+        if (parts[1] && parts[1] !== '.') return { value: parseFloat(parts[1]), date: parts[0] };
+      }
+    } catch {}
+    return null;
+  }
+
+  async function loadRates() {
+    try {
+      const [t10, prime] = await Promise.all([
+        fetchFred('DGS10'), fetchFred('DPRIME')
+      ]);
+      document.getElementById('rates-loading').style.display = 'none';
+      document.getElementById('rates-list').style.display   = 'block';
+      const today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      document.getElementById('rates-last-updated').textContent = `Updated: ${today}`;
+      
+      if (t10) document.getElementById('rate-10yr').textContent = t10.value.toFixed(2) + '%';
+      if (prime) document.getElementById('rate-prime').textContent = prime.value.toFixed(2) + '%';
+    } catch {
+      document.getElementById('rates-loading').style.display = 'none';
+      document.getElementById('rates-list').style.display   = 'block';
+      document.getElementById('rate-10yr').textContent = '~4.28%';
+      document.getElementById('rate-prime').textContent  = '8.50%';
+      document.getElementById('rates-last-updated').textContent = 'Live fetch failed';
+    }
+  }
+  loadRates();
+
+});
+
+/* ── QUICK EXAMPLE CARDS ── */
+function fillCalc(price, dp, term, rate) {
+  // Ensure "Raw Land" pill is selected for these examples
+  const rawPill = document.querySelector('.radio-pill[data-type="raw"]');
+  if(rawPill && !rawPill.classList.contains('active')) {
+    rawPill.click(); // This will auto-update the inputs and calculate
+  }
+  
+  document.getElementById('land_price').value = price;
+  document.getElementById('down_payment_pct').value = dp;
+  document.getElementById('loan_term').value = term;
+  document.getElementById('interest_rate').value = rate;
+  
+  document.getElementById('land_price').dispatchEvent(new Event('input'));
+  document.getElementById('calculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+<?php require_once '../includes/footer.php'; ?>

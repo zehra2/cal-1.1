@@ -1,0 +1,936 @@
+{
+  "date_range": {
+    "start": "2026-08-06",
+    "end": "2026-08-12",
+    "days": 7
+  },
+  "daily_totals_from_chart": {
+    "clicks": 5.0,
+    "impressions": 4273.0,
+    "ctr": 0.0011701380762930026,
+    "weighted_position": 68.50294874795225
+  },
+  "query_rows": 1000,
+  "page_rows": 81,
+  "country_rows": 66,
+  "device_rows": 2,
+  "query_table_totals": {
+    "clicks": 3.0,
+    "impressions": 3174.0
+  },
+  "page_table_totals": {
+    "clicks": 5.0,
+    "impressions": 4417.0
+  },
+  "country_table_totals": {
+    "clicks": 5.0,
+    "impressions": 4273.0
+  },
+  "device_table_totals": {
+    "clicks": 5.0,
+    "impressions": 4273.0
+  },
+  "brand_classification": {
+    "brand_clicks": 1.0,
+    "brand_impressions": 12.0,
+    "nonbrand_clicks": 2.0,
+    "nonbrand_impressions": 3162.0
+  },
+  "top_queries_by_clicks": [
+    {
+      "Top queries": "america calculator",
+      "Clicks": 1.0,
+      "Impressions": 12.0,
+      "CTR": 0.0833,
+      "Position": 4.58
+    },
+    {
+      "Top queries": "payroll calculator ohio",
+      "Clicks": 1.0,
+      "Impressions": 4.0,
+      "CTR": 0.25,
+      "Position": 51.0
+    },
+    {
+      "Top queries": "bacalaureat calculator",
+      "Clicks": 1.0,
+      "Impressions": 2.0,
+      "CTR": 0.5,
+      "Position": 9.0
+    },
+    {
+      "Top queries": "closing cost calculator",
+      "Clicks": 0.0,
+      "Impressions": 108.0,
+      "CTR": 0.0,
+      "Position": 80.32
+    },
+    {
+      "Top queries": "closing cost calculator estimator",
+      "Clicks": 0.0,
+      "Impressions": 99.0,
+      "CTR": 0.0,
+      "Position": 80.02
+    },
+    {
+      "Top queries": "calculate closing costs",
+      "Clicks": 0.0,
+      "Impressions": 76.0,
+      "CTR": 0.0,
+      "Position": 72.61
+    },
+    {
+      "Top queries": "sba 504 loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 69.0,
+      "CTR": 0.0,
+      "Position": 78.17
+    },
+    {
+      "Top queries": "estimate closing costs",
+      "Clicks": 0.0,
+      "Impressions": 32.0,
+      "CTR": 0.0,
+      "Position": 72.84
+    },
+    {
+      "Top queries": "home addition cost",
+      "Clicks": 0.0,
+      "Impressions": 31.0,
+      "CTR": 0.0,
+      "Position": 61.97
+    },
+    {
+      "Top queries": "cap rate calculator",
+      "Clicks": 0.0,
+      "Impressions": 31.0,
+      "CTR": 0.0,
+      "Position": 68.16
+    }
+  ],
+  "top_queries_by_impressions": [
+    {
+      "Top queries": "closing cost calculator",
+      "Clicks": 0.0,
+      "Impressions": 108.0,
+      "CTR": 0.0,
+      "Position": 80.32
+    },
+    {
+      "Top queries": "closing cost calculator estimator",
+      "Clicks": 0.0,
+      "Impressions": 99.0,
+      "CTR": 0.0,
+      "Position": 80.02
+    },
+    {
+      "Top queries": "calculate closing costs",
+      "Clicks": 0.0,
+      "Impressions": 76.0,
+      "CTR": 0.0,
+      "Position": 72.61
+    },
+    {
+      "Top queries": "sba 504 loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 69.0,
+      "CTR": 0.0,
+      "Position": 78.17
+    },
+    {
+      "Top queries": "estimate closing costs",
+      "Clicks": 0.0,
+      "Impressions": 32.0,
+      "CTR": 0.0,
+      "Position": 72.84
+    },
+    {
+      "Top queries": "home addition cost",
+      "Clicks": 0.0,
+      "Impressions": 31.0,
+      "CTR": 0.0,
+      "Position": 61.97
+    },
+    {
+      "Top queries": "cap rate calculator",
+      "Clicks": 0.0,
+      "Impressions": 31.0,
+      "CTR": 0.0,
+      "Position": 68.16
+    },
+    {
+      "Top queries": "estimated closing costs",
+      "Clicks": 0.0,
+      "Impressions": 31.0,
+      "CTR": 0.0,
+      "Position": 73.94
+    },
+    {
+      "Top queries": "home addition cost calculator",
+      "Clicks": 0.0,
+      "Impressions": 29.0,
+      "CTR": 0.0,
+      "Position": 44.41
+    },
+    {
+      "Top queries": "closing costs calculator",
+      "Clicks": 0.0,
+      "Impressions": 29.0,
+      "CTR": 0.0,
+      "Position": 75.72
+    },
+    {
+      "Top queries": "sba 504 loan amortization schedule",
+      "Clicks": 0.0,
+      "Impressions": 27.0,
+      "CTR": 0.0,
+      "Position": 84.74
+    },
+    {
+      "Top queries": "closing costs calculator for buyer",
+      "Clicks": 0.0,
+      "Impressions": 26.0,
+      "CTR": 0.0,
+      "Position": 88.96
+    },
+    {
+      "Top queries": "sba loan payment calculator",
+      "Clicks": 0.0,
+      "Impressions": 23.0,
+      "CTR": 0.0,
+      "Position": 73.78
+    },
+    {
+      "Top queries": "interest only loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 23.0,
+      "CTR": 0.0,
+      "Position": 82.22
+    },
+    {
+      "Top queries": "lot loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 22.0,
+      "CTR": 0.0,
+      "Position": 53.36
+    },
+    {
+      "Top queries": "sba loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 22.0,
+      "CTR": 0.0,
+      "Position": 74.68
+    },
+    {
+      "Top queries": "504 loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 21.0,
+      "CTR": 0.0,
+      "Position": 84.33
+    },
+    {
+      "Top queries": "land loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 20.0,
+      "CTR": 0.0,
+      "Position": 58.15
+    },
+    {
+      "Top queries": "down payment calculator",
+      "Clicks": 0.0,
+      "Impressions": 20.0,
+      "CTR": 0.0,
+      "Position": 70.25
+    },
+    {
+      "Top queries": "calculating interest only mortgages",
+      "Clicks": 0.0,
+      "Impressions": 20.0,
+      "CTR": 0.0,
+      "Position": 78.55
+    }
+  ],
+  "zero_click_high_impression_queries": [
+    {
+      "Top queries": "closing cost calculator",
+      "Clicks": 0.0,
+      "Impressions": 108.0,
+      "CTR": 0.0,
+      "Position": 80.32
+    },
+    {
+      "Top queries": "closing cost calculator estimator",
+      "Clicks": 0.0,
+      "Impressions": 99.0,
+      "CTR": 0.0,
+      "Position": 80.02
+    },
+    {
+      "Top queries": "calculate closing costs",
+      "Clicks": 0.0,
+      "Impressions": 76.0,
+      "CTR": 0.0,
+      "Position": 72.61
+    },
+    {
+      "Top queries": "sba 504 loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 69.0,
+      "CTR": 0.0,
+      "Position": 78.17
+    },
+    {
+      "Top queries": "estimate closing costs",
+      "Clicks": 0.0,
+      "Impressions": 32.0,
+      "CTR": 0.0,
+      "Position": 72.84
+    },
+    {
+      "Top queries": "home addition cost",
+      "Clicks": 0.0,
+      "Impressions": 31.0,
+      "CTR": 0.0,
+      "Position": 61.97
+    },
+    {
+      "Top queries": "cap rate calculator",
+      "Clicks": 0.0,
+      "Impressions": 31.0,
+      "CTR": 0.0,
+      "Position": 68.16
+    },
+    {
+      "Top queries": "estimated closing costs",
+      "Clicks": 0.0,
+      "Impressions": 31.0,
+      "CTR": 0.0,
+      "Position": 73.94
+    },
+    {
+      "Top queries": "home addition cost calculator",
+      "Clicks": 0.0,
+      "Impressions": 29.0,
+      "CTR": 0.0,
+      "Position": 44.41
+    },
+    {
+      "Top queries": "closing costs calculator",
+      "Clicks": 0.0,
+      "Impressions": 29.0,
+      "CTR": 0.0,
+      "Position": 75.72
+    },
+    {
+      "Top queries": "sba 504 loan amortization schedule",
+      "Clicks": 0.0,
+      "Impressions": 27.0,
+      "CTR": 0.0,
+      "Position": 84.74
+    },
+    {
+      "Top queries": "closing costs calculator for buyer",
+      "Clicks": 0.0,
+      "Impressions": 26.0,
+      "CTR": 0.0,
+      "Position": 88.96
+    },
+    {
+      "Top queries": "sba loan payment calculator",
+      "Clicks": 0.0,
+      "Impressions": 23.0,
+      "CTR": 0.0,
+      "Position": 73.78
+    },
+    {
+      "Top queries": "interest only loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 23.0,
+      "CTR": 0.0,
+      "Position": 82.22
+    },
+    {
+      "Top queries": "lot loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 22.0,
+      "CTR": 0.0,
+      "Position": 53.36
+    },
+    {
+      "Top queries": "sba loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 22.0,
+      "CTR": 0.0,
+      "Position": 74.68
+    },
+    {
+      "Top queries": "504 loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 21.0,
+      "CTR": 0.0,
+      "Position": 84.33
+    },
+    {
+      "Top queries": "land loan calculator",
+      "Clicks": 0.0,
+      "Impressions": 20.0,
+      "CTR": 0.0,
+      "Position": 58.15
+    },
+    {
+      "Top queries": "down payment calculator",
+      "Clicks": 0.0,
+      "Impressions": 20.0,
+      "CTR": 0.0,
+      "Position": 70.25
+    },
+    {
+      "Top queries": "calculating interest only mortgages",
+      "Clicks": 0.0,
+      "Impressions": 20.0,
+      "CTR": 0.0,
+      "Position": 78.55
+    }
+  ],
+  "near_page_one_queries": [
+    {
+      "Top queries": "calculator america",
+      "Clicks": 0.0,
+      "Impressions": 4.0,
+      "CTR": 0.0,
+      "Position": 10.5
+    }
+  ],
+  "top_pages_by_clicks": [
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/land-loan-calculator",
+      "Clicks": 1.0,
+      "Impressions": 214.0,
+      "CTR": 0.004699999999999999,
+      "Position": 62.48
+    },
+    {
+      "Top pages": "https://americacalculator.com/",
+      "Clicks": 1.0,
+      "Impressions": 149.0,
+      "CTR": 0.0067,
+      "Position": 38.42
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/freight-class.php",
+      "Clicks": 1.0,
+      "Impressions": 42.0,
+      "CTR": 0.023799999999999998,
+      "Position": 77.1
+    },
+    {
+      "Top pages": "https://americacalculator.com/ohio/paycheck-calculator",
+      "Clicks": 1.0,
+      "Impressions": 27.0,
+      "CTR": 0.037000000000000005,
+      "Position": 47.59
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/calculator-bacalaureat.php",
+      "Clicks": 1.0,
+      "Impressions": 16.0,
+      "CTR": 0.0625,
+      "Position": 27.12
+    },
+    {
+      "Top pages": "https://americacalculator.com/real-estate/closing-cost-calculator",
+      "Clicks": 0.0,
+      "Impressions": 711.0,
+      "CTR": 0.0,
+      "Position": 79.34
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/sba-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 460.0,
+      "CTR": 0.0,
+      "Position": 77.95
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/rv-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 391.0,
+      "CTR": 0.0,
+      "Position": 72.66
+    },
+    {
+      "Top pages": "https://americacalculator.com/construction/home-addition-cost-calculator",
+      "Clicks": 0.0,
+      "Impressions": 388.0,
+      "CTR": 0.0,
+      "Position": 61.47
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/interest-only-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 348.0,
+      "CTR": 0.0,
+      "Position": 82.78
+    }
+  ],
+  "top_pages_by_impressions": [
+    {
+      "Top pages": "https://americacalculator.com/real-estate/closing-cost-calculator",
+      "Clicks": 0.0,
+      "Impressions": 711.0,
+      "CTR": 0.0,
+      "Position": 79.34
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/sba-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 460.0,
+      "CTR": 0.0,
+      "Position": 77.95
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/rv-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 391.0,
+      "CTR": 0.0,
+      "Position": 72.66
+    },
+    {
+      "Top pages": "https://americacalculator.com/construction/home-addition-cost-calculator",
+      "Clicks": 0.0,
+      "Impressions": 388.0,
+      "CTR": 0.0,
+      "Position": 61.47
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/interest-only-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 348.0,
+      "CTR": 0.0,
+      "Position": 82.78
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/land-loan-calculator",
+      "Clicks": 1.0,
+      "Impressions": 214.0,
+      "CTR": 0.004699999999999999,
+      "Position": 62.48
+    },
+    {
+      "Top pages": "https://americacalculator.com/blog/how-to-calculate-square-feet-of-a-room",
+      "Clicks": 0.0,
+      "Impressions": 175.0,
+      "CTR": 0.0,
+      "Position": 70.55
+    },
+    {
+      "Top pages": "https://americacalculator.com/",
+      "Clicks": 1.0,
+      "Impressions": 149.0,
+      "CTR": 0.0067,
+      "Position": 38.42
+    },
+    {
+      "Top pages": "https://americacalculator.com/real-estate/cap-rate-calculator",
+      "Clicks": 0.0,
+      "Impressions": 144.0,
+      "CTR": 0.0,
+      "Position": 66.94
+    },
+    {
+      "Top pages": "https://americacalculator.com/blog/ohio-state-income-tax",
+      "Clicks": 0.0,
+      "Impressions": 92.0,
+      "CTR": 0.0,
+      "Position": 68.61
+    },
+    {
+      "Top pages": "https://americacalculator.com/real-estate/down-payment-calculator",
+      "Clicks": 0.0,
+      "Impressions": 88.0,
+      "CTR": 0.0,
+      "Position": 75.98
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/differential-equation.php",
+      "Clicks": 0.0,
+      "Impressions": 81.0,
+      "CTR": 0.0,
+      "Position": 59.96
+    },
+    {
+      "Top pages": "https://americacalculator.com/technology/bottleneck-calculator",
+      "Clicks": 0.0,
+      "Impressions": 75.0,
+      "CTR": 0.0,
+      "Position": 45.57
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/sba-loan-payment-calculator",
+      "Clicks": 0.0,
+      "Impressions": 75.0,
+      "CTR": 0.0,
+      "Position": 58.96
+    },
+    {
+      "Top pages": "https://americacalculator.com/business/markup-calculator",
+      "Clicks": 0.0,
+      "Impressions": 70.0,
+      "CTR": 0.0,
+      "Position": 67.23
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/terminus.php",
+      "Clicks": 0.0,
+      "Impressions": 60.0,
+      "CTR": 0.0,
+      "Position": 40.27
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/cd-interest.php",
+      "Clicks": 0.0,
+      "Impressions": 55.0,
+      "CTR": 0.0,
+      "Position": 90.45
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/dave-ramsey-investment.php",
+      "Clicks": 0.0,
+      "Impressions": 49.0,
+      "CTR": 0.0,
+      "Position": 32.71
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/freight-class.php",
+      "Clicks": 1.0,
+      "Impressions": 42.0,
+      "CTR": 0.023799999999999998,
+      "Position": 77.1
+    },
+    {
+      "Top pages": "https://americacalculator.com/real-estate/rental-yield-calculator",
+      "Clicks": 0.0,
+      "Impressions": 39.0,
+      "CTR": 0.0,
+      "Position": 51.26
+    }
+  ],
+  "zero_click_high_impression_pages": [
+    {
+      "Top pages": "https://americacalculator.com/real-estate/closing-cost-calculator",
+      "Clicks": 0.0,
+      "Impressions": 711.0,
+      "CTR": 0.0,
+      "Position": 79.34
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/sba-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 460.0,
+      "CTR": 0.0,
+      "Position": 77.95
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/rv-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 391.0,
+      "CTR": 0.0,
+      "Position": 72.66
+    },
+    {
+      "Top pages": "https://americacalculator.com/construction/home-addition-cost-calculator",
+      "Clicks": 0.0,
+      "Impressions": 388.0,
+      "CTR": 0.0,
+      "Position": 61.47
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/interest-only-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 348.0,
+      "CTR": 0.0,
+      "Position": 82.78
+    },
+    {
+      "Top pages": "https://americacalculator.com/blog/how-to-calculate-square-feet-of-a-room",
+      "Clicks": 0.0,
+      "Impressions": 175.0,
+      "CTR": 0.0,
+      "Position": 70.55
+    },
+    {
+      "Top pages": "https://americacalculator.com/real-estate/cap-rate-calculator",
+      "Clicks": 0.0,
+      "Impressions": 144.0,
+      "CTR": 0.0,
+      "Position": 66.94
+    },
+    {
+      "Top pages": "https://americacalculator.com/blog/ohio-state-income-tax",
+      "Clicks": 0.0,
+      "Impressions": 92.0,
+      "CTR": 0.0,
+      "Position": 68.61
+    },
+    {
+      "Top pages": "https://americacalculator.com/real-estate/down-payment-calculator",
+      "Clicks": 0.0,
+      "Impressions": 88.0,
+      "CTR": 0.0,
+      "Position": 75.98
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/differential-equation.php",
+      "Clicks": 0.0,
+      "Impressions": 81.0,
+      "CTR": 0.0,
+      "Position": 59.96
+    },
+    {
+      "Top pages": "https://americacalculator.com/technology/bottleneck-calculator",
+      "Clicks": 0.0,
+      "Impressions": 75.0,
+      "CTR": 0.0,
+      "Position": 45.57
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/sba-loan-payment-calculator",
+      "Clicks": 0.0,
+      "Impressions": 75.0,
+      "CTR": 0.0,
+      "Position": 58.96
+    },
+    {
+      "Top pages": "https://americacalculator.com/business/markup-calculator",
+      "Clicks": 0.0,
+      "Impressions": 70.0,
+      "CTR": 0.0,
+      "Position": 67.23
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/terminus.php",
+      "Clicks": 0.0,
+      "Impressions": 60.0,
+      "CTR": 0.0,
+      "Position": 40.27
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/cd-interest.php",
+      "Clicks": 0.0,
+      "Impressions": 55.0,
+      "CTR": 0.0,
+      "Position": 90.45
+    },
+    {
+      "Top pages": "https://americacalculator.com/calculators/dave-ramsey-investment.php",
+      "Clicks": 0.0,
+      "Impressions": 49.0,
+      "CTR": 0.0,
+      "Position": 32.71
+    },
+    {
+      "Top pages": "https://americacalculator.com/real-estate/rental-yield-calculator",
+      "Clicks": 0.0,
+      "Impressions": 39.0,
+      "CTR": 0.0,
+      "Position": 51.26
+    },
+    {
+      "Top pages": "https://americacalculator.com/business/real-estate-roi-calculator",
+      "Clicks": 0.0,
+      "Impressions": 38.0,
+      "CTR": 0.0,
+      "Position": 71.11
+    },
+    {
+      "Top pages": "https://americacalculator.com/business/amazon-roi-calculator",
+      "Clicks": 0.0,
+      "Impressions": 37.0,
+      "CTR": 0.0,
+      "Position": 35.24
+    },
+    {
+      "Top pages": "https://americacalculator.com/loan-calculators/business-loan-calculator",
+      "Clicks": 0.0,
+      "Impressions": 35.0,
+      "CTR": 0.0,
+      "Position": 80.34
+    }
+  ],
+  "near_page_one_pages": [
+    {
+      "Top pages": "https://americacalculator.com/calculators/determinant.php",
+      "Clicks": 0.0,
+      "Impressions": 3.0,
+      "CTR": 0.0,
+      "Position": 18.67
+    }
+  ],
+  "countries_by_clicks": [
+    {
+      "Country": "Pakistan",
+      "Clicks": 3.0,
+      "Impressions": 20.0,
+      "CTR": 0.15,
+      "Position": 49.05
+    },
+    {
+      "Country": "United States",
+      "Clicks": 1.0,
+      "Impressions": 3717.0,
+      "CTR": 0.0003,
+      "Position": 70.79
+    },
+    {
+      "Country": "India",
+      "Clicks": 1.0,
+      "Impressions": 66.0,
+      "CTR": 0.0152,
+      "Position": 56.38
+    },
+    {
+      "Country": "Canada",
+      "Clicks": 0.0,
+      "Impressions": 61.0,
+      "CTR": 0.0,
+      "Position": 64.23
+    },
+    {
+      "Country": "Philippines",
+      "Clicks": 0.0,
+      "Impressions": 48.0,
+      "CTR": 0.0,
+      "Position": 55.46
+    },
+    {
+      "Country": "Indonesia",
+      "Clicks": 0.0,
+      "Impressions": 46.0,
+      "CTR": 0.0,
+      "Position": 50.46
+    },
+    {
+      "Country": "United Arab Emirates",
+      "Clicks": 0.0,
+      "Impressions": 30.0,
+      "CTR": 0.0,
+      "Position": 57.73
+    },
+    {
+      "Country": "United Kingdom",
+      "Clicks": 0.0,
+      "Impressions": 25.0,
+      "CTR": 0.0,
+      "Position": 53.04
+    },
+    {
+      "Country": "Bangladesh",
+      "Clicks": 0.0,
+      "Impressions": 20.0,
+      "CTR": 0.0,
+      "Position": 53.95
+    },
+    {
+      "Country": "Turkey",
+      "Clicks": 0.0,
+      "Impressions": 19.0,
+      "CTR": 0.0,
+      "Position": 60.95
+    },
+    {
+      "Country": "Russia",
+      "Clicks": 0.0,
+      "Impressions": 15.0,
+      "CTR": 0.0,
+      "Position": 47.67
+    },
+    {
+      "Country": "Netherlands",
+      "Clicks": 0.0,
+      "Impressions": 13.0,
+      "CTR": 0.0,
+      "Position": 52.08
+    },
+    {
+      "Country": "Thailand",
+      "Clicks": 0.0,
+      "Impressions": 13.0,
+      "CTR": 0.0,
+      "Position": 52.85
+    },
+    {
+      "Country": "Mexico",
+      "Clicks": 0.0,
+      "Impressions": 12.0,
+      "CTR": 0.0,
+      "Position": 46.17
+    },
+    {
+      "Country": "Spain",
+      "Clicks": 0.0,
+      "Impressions": 12.0,
+      "CTR": 0.0,
+      "Position": 48.75
+    },
+    {
+      "Country": "Morocco",
+      "Clicks": 0.0,
+      "Impressions": 11.0,
+      "CTR": 0.0,
+      "Position": 43.09
+    },
+    {
+      "Country": "Ukraine",
+      "Clicks": 0.0,
+      "Impressions": 10.0,
+      "CTR": 0.0,
+      "Position": 49.0
+    },
+    {
+      "Country": "Vietnam",
+      "Clicks": 0.0,
+      "Impressions": 10.0,
+      "CTR": 0.0,
+      "Position": 63.5
+    },
+    {
+      "Country": "Australia",
+      "Clicks": 0.0,
+      "Impressions": 9.0,
+      "CTR": 0.0,
+      "Position": 39.44
+    },
+    {
+      "Country": "Poland",
+      "Clicks": 0.0,
+      "Impressions": 8.0,
+      "CTR": 0.0,
+      "Position": 33.12
+    }
+  ],
+  "devices": [
+    {
+      "Device": "Desktop",
+      "Clicks": 4.0,
+      "Impressions": 3413.0,
+      "CTR": 0.0012,
+      "Position": 68.94
+    },
+    {
+      "Device": "Mobile",
+      "Clicks": 1.0,
+      "Impressions": 860.0,
+      "CTR": 0.0012,
+      "Position": 66.7
+    }
+  ],
+  "search_appearance": [
+    {
+      "Search Appearance": "Product snippets",
+      "Clicks": 0.0,
+      "Impressions": 8.0,
+      "CTR": 0.0,
+      "Position": 61.88
+    }
+  ]
+}

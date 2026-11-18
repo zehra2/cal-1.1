@@ -1,0 +1,451 @@
+<?php
+$currentYear = date('Y');
+$pageTitle = "Property Tax Calculator ($currentYear) | 50-State Real Estate Tax Rates";
+$metaDescription = "Calculate your annual and monthly property taxes. Compare effective property tax rates across all 50 US states, millage rates, and homestead exemption savings.";
+$schemaData = json_decode(<<<'EOD'
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "HowTo",
+      "name": "How to Calculate Real Estate Property Taxes",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Enter property market value",
+          "text": "Input the recent purchase price or fair market valuation of the real estate."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Apply local assessment ratio",
+          "text": "Enter the county assessment percentage to determine the taxable assessed value."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Deduct homestead exemptions",
+          "text": "Subtract eligible state or county homestead, senior, or veteran exemptions."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Enter local millage tax rate",
+          "text": "Input total combined county, municipal, and school district millage rate per $1,000."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Calculate annual & monthly tax",
+          "text": "View total annual property tax obligation and monthly escrow withholding amount."
+        }
+      ]
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://americacalculator.com/real-estate/property-tax-calculator#app",
+      "name": "Property Tax Calculator",
+      "url": "https://americacalculator.com/real-estate/property-tax-calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offer": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Calculate annual and monthly real estate property taxes, assessment ratios, millage rates, and state property tax rankings."
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://americacalculator.com/real-estate/property-tax-calculator#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is property tax calculated from market value?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Property tax is calculated by multiplying your property's taxable assessed value (Fair Market Value × Assessment Ratio minus Exemptions) by the local millage tax rate: Annual Property Tax = (Taxable Assessed Value × Millage Rate) / 1,000. For example, a $400,000 home in a county with a 100% assessment ratio and a 30 mill tax rate pays ($400,000 × 30) / 1,000 = $12,000 per year."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a millage rate in property taxes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A mill is equal to one-tenth of one cent ($0.001), or $1 of property tax per $1,000 of assessed value. A millage rate of 25 mills means you owe $25 in property taxes for every $1,000 of taxable assessed valuation (equivalent to an effective tax rate of 2.50%)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which US states have the highest and lowest property taxes in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "New Jersey has the highest effective property tax rate in the nation at approximately 2.49%, followed by Illinois (2.27%), Connecticut (2.15%), and Texas (1.74%). Hawaii has the lowest effective property tax rate at 0.28%, followed by Alabama (0.41%), Colorado (0.51%), and Nevada (0.60%)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a Homestead Exemption and how much does it save?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Homestead Exemption reduces the taxable assessed value of your primary residence, lowering your annual property tax bill. For example, Texas provides a $100,000 school district homestead exemption, saving homeowners $1,200 to $1,500+ annually. Florida provides a $50,000 homestead exemption and caps annual assessed value increases at 3% (Save Our Homes cap)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between market value and assessed value?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Market value is the price a willing buyer would pay for your home in an open real estate transaction. Assessed value is the dollar valuation assigned to your property by the county tax assessor for municipal tax purposes, often calculated as a statutory percentage (assessment ratio) of market value."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does property tax affect my monthly mortgage escrow payment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most mortgage lenders require a tax escrow account. Your annual property tax obligation is divided by 12 and collected each month alongside your mortgage principal and interest payment. The lender holds these funds in escrow and pays your county property tax bill directly on the statutory due date."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you appeal your county property tax assessment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. If you believe your county tax assessor overvalued your property relative to comparable neighborhood sales, you can file a formal property tax appeal with your county Board of Assessment Appeals during the annual protest window, potentially reducing your annual tax bill by thousands of dollars."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are real estate property taxes deductible on federal income taxes (SALT Cap)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under IRS federal tax rules, real estate property taxes are deductible on Schedule A if you itemize deductions, subject to the statutory State and Local Tax (SALT) deduction cap of $10,000 ($5,000 if married filing separately) for combined state income and property taxes."
+          }
+        }
+      ]
+    }
+  ]
+}
+EOD
+, true);
+require_once __DIR__ . '/../includes/header.php';
+?>
+<style>
+:root {
+  --primary: #059669;
+  --primary-hover: #047857;
+  --primary-light: #ecfdf5;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+  --white: #ffffff;
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+.main-wrapper { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+.page-title-area { margin-bottom: 2rem; }
+.page-title-area h1 { font-size: 2.1rem; color: var(--slate-900); margin-bottom: 0.5rem; }
+.page-title-area p { color: var(--slate-600); font-size: 1.05rem; }
+.calculator-container { display: grid; grid-template-columns: 1.15fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+.form-panel { background: var(--white); border-radius: var(--radius); padding: 2rem; border: 1px solid var(--slate-200); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+.results-panel { background: #064e3b; color: #ffffff; border-radius: var(--radius); padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 25px rgba(6,78,59,0.25); }
+.section-subtitle { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-600); margin-bottom: 0.85rem; }
+.input-group { margin-bottom: 1.25rem; }
+.input-group label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--slate-700); margin-bottom: 0.4rem; }
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-prefix { position: absolute; left: 1rem; color: var(--slate-600); font-weight: 600; }
+.input-suffix { position: absolute; right: 1rem; color: var(--slate-600); font-weight: 600; }
+.input-wrapper input, .input-wrapper select {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
+  border: 1.5px solid var(--slate-200);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+.input-wrapper input:focus, .input-wrapper select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(5,150,105,0.1); }
+.grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.tax-hero-card {
+  background: rgba(52, 211, 153, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.tax-hero-card .label { font-size: 0.82rem; color: #a7f3d0; font-weight: 700; text-transform: uppercase; }
+.tax-hero-card .val-main { font-size: 2.5rem; font-weight: 800; color: #34d399; margin: 0.25rem 0; line-height: 1; }
+.tax-hero-card .val-sub { font-size: 0.88rem; color: #d1fae5; }
+.breakdown-row { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 0.55rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row span:first-child { color: #a7f3d0; }
+.breakdown-row span:last-child { font-weight: 700; color: #ffffff; }
+.calculator-content-body { margin-top: 2.5rem; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+.calculator-content-body h2 { font-size: 1.65rem; color: #0f172a; margin: 2rem 0 1rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; }
+.calculator-content-body h3 { font-size: 1.25rem; color: #1e293b; margin: 1.5rem 0 0.75rem; }
+.calculator-content-body p { color: #475569; font-size: 1.02rem; line-height: 1.75; margin-bottom: 1.25rem; }
+.calculator-content-body ul, .calculator-content-body ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #475569; line-height: 1.75; }
+.calculator-content-body li { margin-bottom: 0.5rem; }
+.table-responsive { overflow-x: auto; margin: 1.5rem 0; }
+.data-table { width: 100%; border-collapse: collapse; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+.data-table th { background: #1e293b; color: #ffffff; padding: 12px 16px; text-align: left; font-size: 0.9rem; }
+.data-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; color: #334155; font-size: 0.92rem; }
+.data-table tr:nth-child(even) td { background: #f8fafc; }
+.quick-answer-card { background: #ecfdf5; border-left: 4px solid #059669; padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem; }
+.quick-answer-card h2 { font-size: 1.35rem; color: #065f46; margin: 0 0 0.5rem; border: none; padding: 0; }
+.quick-answer-card p { color: #047857; margin: 0; }
+.faq-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+.faq-item h4 { margin: 0 0 0.4rem; color: #0f172a; font-size: 1.05rem; }
+.faq-item p { margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6; }
+@media (max-width: 860px) {
+  .calculator-container { grid-template-columns: 1fr; }
+  .grid-2-col { grid-template-columns: 1fr; }
+}
+</style>
+
+<main class="main-wrapper">
+  <div class="page-title-area">
+    <h1>Property Tax Calculator (<?php echo $currentYear; ?>)</h1>
+    <p>Calculate your annual and monthly real estate property taxes. Compare effective property tax rates across all 50 US states, millage rates, and homestead exemption deductions.</p>
+  </div>
+
+  <div class="calculator-container">
+    <div class="form-panel">
+      <div class="section-subtitle">1. Property Valuation &amp; State</div>
+      
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="propMarketValue">Home Market Value ($)</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="propMarketValue" value="400000" step="5000">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="stateSelector">Select US State</label>
+          <div class="input-wrapper" style="padding-left: 0;">
+            <select id="stateSelector" style="padding-left: 1rem;">
+              <option value="1.74" selected>Texas (1.74% avg)</option>
+              <option value="0.75">California (0.75% Prop 13 avg)</option>
+              <option value="0.86">Florida (0.86% avg)</option>
+              <option value="1.53">Ohio (1.53% avg)</option>
+              <option value="1.73">New York (1.73% avg)</option>
+              <option value="2.49">New Jersey (2.49% - Highest)</option>
+              <option value="2.27">Illinois (2.27%)</option>
+              <option value="0.28">Hawaii (0.28% - Lowest)</option>
+              <option value="custom">Custom Rate / Millage Rate</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-subtitle" style="margin-top: 1.75rem;">2. Assessment &amp; Exemptions</div>
+
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="taxRatePct">Effective Tax Rate (%)</label>
+          <div class="input-wrapper">
+            <input type="number" id="taxRatePct" value="1.74" step="0.05" style="padding-left: 1rem;">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="assessmentRatio">Assessment Ratio (%)</label>
+          <div class="input-wrapper">
+            <input type="number" id="assessmentRatio" value="100" min="10" max="100" step="5" style="padding-left: 1rem;">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="homesteadExempt">Homestead Exemption ($)</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="homesteadExempt" value="40000" step="5000">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="millageRateDisplay">Equivalent Millage Rate</label>
+          <div class="input-wrapper">
+            <input type="text" id="millageRateDisplay" value="17.40 mills" readonly style="background:#f1f5f9; cursor:not-allowed;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-panel">
+      <div>
+        <div class="tax-hero-card">
+          <div class="label">Annual Property Tax Obligation</div>
+          <div class="val-main" id="resAnnualTax">$6,264 / yr</div>
+          <div class="val-sub" id="resMonthlyTax">Monthly Escrow: $522 / mo</div>
+        </div>
+
+        <div class="breakdown-row"><span>Gross Assessed Value:</span><span id="resGrossAssessed">$400,000</span></div>
+        <div class="breakdown-row"><span>Taxable Value After Exemption:</span><span id="resTaxableValue" style="color:#a7f3d0;">$360,000</span></div>
+        <div class="breakdown-row"><span>Homestead Exemption Tax Savings:</span><span id="resExemptionSavings" style="color:#34d399;">$696 / yr</span></div>
+        <div class="breakdown-row"><span>Effective Overall Tax Burden:</span><span id="resEffectivePct">1.57% of Market Value</span></div>
+      </div>
+
+      <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1rem; text-align: center;">
+        <div style="font-size: 0.8rem; color: #a7f3d0;">10-Year Cumulative Property Tax Outflow:</div>
+        <div style="font-size: 1.35rem; font-weight: 800; color: #34d399;" id="res10YrTax">$62,640</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calculator-content-body">
+    <div class="quick-answer-card">
+      <h2>How US Property Taxes Work in <?php echo $currentYear; ?></h2>
+      <p>Real estate property taxes are local municipal taxes used to fund public school districts, police, fire departments, roads, and libraries. Your tax bill equals your <strong>Taxable Assessed Value</strong> (Assessed Value minus Homestead Exemptions) multiplied by your local <strong>Millage Tax Rate</strong>. Effective rates range from <strong>0.28% in Hawaii</strong> to <strong>2.49% in New Jersey</strong>.</p>
+    </div>
+
+    <h2>50-State Property Tax Rate Comparison Table</h2>
+    <p>The table below ranks effective property tax rates across major US states, including annual tax obligations on a $400,000 residential property:</p>
+
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Effective Property Tax Rate</th>
+            <th>Annual Tax on $400k Home</th>
+            <th>Monthly Escrow Impact</th>
+            <th>State Homestead Protections</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>New Jersey</strong></td><td>2.49%</td><td>$9,960 / yr</td><td>$830 / mo</td><td>Anchor property tax relief program</td></tr>
+          <tr><td><strong>Illinois</strong></td><td>2.27%</td><td>$9,080 / yr</td><td>$757 / mo</td><td>General Homestead Exemption ($10,000 in Cook Co)</td></tr>
+          <tr><td><strong>Connecticut</strong></td><td>2.15%</td><td>$8,600 / yr</td><td>$717 / mo</td><td>70% uniform assessment ratio statewide</td></tr>
+          <tr><td><strong>Texas</strong></td><td>1.74%</td><td>$6,960 / yr</td><td>$580 / mo</td><td>$100,000 ISD Homestead Exemption</td></tr>
+          <tr><td><strong>New York</strong></td><td>1.73%</td><td>$6,920 / yr</td><td>$577 / mo</td><td>NYS Basic STAR school tax relief program</td></tr>
+          <tr><td><strong>Ohio</strong></td><td>1.53%</td><td>$6,120 / yr</td><td>$510 / mo</td><td>35% assessment ratio statewide</td></tr>
+          <tr><td><strong>Pennsylvania</strong></td><td>1.50%</td><td>$6,000 / yr</td><td>$500 / mo</td><td>County-level assessment ratios &amp; Homestead Act</td></tr>
+          <tr><td><strong>Florida</strong></td><td>0.86%</td><td>$3,440 / yr</td><td>$287 / mo</td><td>$50,000 Homestead Exemption + 3% SOH Cap</td></tr>
+          <tr><td><strong>California</strong></td><td>0.75%</td><td>$3,000 / yr</td><td>$250 / mo</td><td>Proposition 13 (1% base rate + 2% annual cap)</td></tr>
+          <tr><td><strong>Colorado</strong></td><td>0.51%</td><td>$2,040 / yr</td><td>$170 / mo</td><td>6.7% residential assessment rate</td></tr>
+          <tr><td><strong>Hawaii</strong></td><td>0.28%</td><td>$1,120 / yr</td><td>$93 / mo</td><td>Lowest effective property tax rate in the US</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Understanding Millage Rates &amp; The Property Tax Formula</h2>
+    <p>Local tax jurisdictions (school districts, county commissioners, township boards, and water authorities) express taxes in <strong>mills</strong>. One mill equals one-thousandth of a dollar ($0.001), or $1 per $1,000 of assessed property valuation.</p>
+    
+    <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:10px; padding:1.25rem; margin:1.5rem 0;">
+      <h3 style="margin:0 0 .5rem; color:#0f172a; font-size:1.1rem;">📐 The Standard Property Tax Calculation:</h3>
+      <p style="margin:0; font-size:.95rem; color:#334155;"><code>Annual Property Tax = [(Fair Market Value &times; Assessment Ratio) - Homestead Exemptions] &times; (Total Millage Rate / 1,000)</code></p>
+    </div>
+
+    <h2>How to Appeal an Overvalued Property Tax Assessment</h2>
+    <p>County tax assessments frequently lag market downturns or rely on inaccurate square footage data. If your assessed value is higher than recent comparable sales:</p>
+    <ul>
+      <li><strong>Request Property Record Card:</strong> Obtain your official property card from the county appraisal district and inspect it for incorrect bathroom counts, basement square footage, or condition ratings.</li>
+      <li><strong>Gather 3 to 5 Recent Comps:</strong> Find comparable homes in your immediate neighborhood sold within the last 6 months at a lower price per square foot.</li>
+      <li><strong>File Formal Appeal Before Deadline:</strong> Submit your appeal to the county Board of Equalization / Assessment Appeals during the annual protest window (typically April–May).</li>
+    </ul>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+    <div class="faq-item">
+      <h4>How is property tax calculated from market value?</h4>
+      <p>Property tax is calculated by multiplying your property's taxable assessed value (Fair Market Value × Assessment Ratio minus Exemptions) by the local millage tax rate: Annual Property Tax = (Taxable Assessed Value × Millage Rate) / 1,000.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is a millage rate in property taxes?</h4>
+      <p>A mill equals one-tenth of one cent ($0.001), or $1 of property tax per $1,000 of assessed value. A millage rate of 25 mills means you owe $25 in taxes for every $1,000 of taxable assessed valuation (2.50%).</p>
+    </div>
+    <div class="faq-item">
+      <h4>Which US states have the highest and lowest property taxes in 2026?</h4>
+      <p>New Jersey has the highest effective rate at 2.49%, followed by Illinois (2.27%) and Connecticut (2.15%). Hawaii has the lowest effective property tax rate at 0.28%, followed by Alabama (0.41%) and Colorado (0.51%).</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is a Homestead Exemption and how much does it save?</h4>
+      <p>A Homestead Exemption reduces the taxable assessed value of your primary residence. For example, Texas provides a $100,000 school district homestead exemption, saving homeowners $1,200 to $1,500+ annually.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the difference between market value and assessed value?</h4>
+      <p>Market value is the price a buyer would pay for your home on the open market. Assessed value is the valuation assigned by the county tax assessor for tax calculations.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How does property tax affect my monthly mortgage escrow payment?</h4>
+      <p>Lenders divide your annual property tax bill by 12 and collect it monthly alongside your mortgage principal and interest payment, holding the funds in escrow to pay the county on the statutory due date.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can you appeal your county property tax assessment?</h4>
+      <p>Yes. If your county overvalued your property relative to neighborhood comps, you can file an appeal with your county Board of Assessment Appeals during the annual protest window.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Are real estate property taxes deductible on federal income taxes (SALT Cap)?</h4>
+      <p>Yes, property taxes are deductible on Schedule A if you itemize, subject to the $10,000 statutory State and Local Tax (SALT) deduction cap for combined state income and property taxes.</p>
+    </div>
+
+    <h2>Explore Related Real Estate &amp; Closing Cost Tools</h2>
+    <ul>
+      <li><a href="/real-estate/closing-cost-calculator">Closing Cost Calculator</a> &mdash; Calculate property tax escrow prepaids and transfer taxes at closing.</li>
+      <li><a href="/real-estate/mortgage-calculator">Mortgage Payment Calculator</a> &mdash; Calculate full monthly PITI including real estate property taxes.</li>
+      <li><a href="/real-estate/hoa-fee-calculator">HOA Fee &amp; Buying Power Calculator</a> &mdash; Model total recurring housing dues and inflation.</li>
+      <li><a href="/real-estate/rent-vs-buy-calculator">Rent vs. Buy Calculator</a> &mdash; Factor property taxes into long-term homeownership costs.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+function calculateTax() {
+  var marketValue = parseFloat(document.getElementById('propMarketValue').value) || 0;
+  var rate = (parseFloat(document.getElementById('taxRatePct').value) || 1.74) / 100;
+  var ratio = (parseFloat(document.getElementById('assessmentRatio').value) || 100) / 100;
+  var exemption = parseFloat(document.getElementById('homesteadExempt').value) || 0;
+
+  var grossAssessed = marketValue * ratio;
+  var taxableValue = Math.max(0, grossAssessed - exemption);
+  var annualTax = taxableValue * rate;
+  var monthlyTax = annualTax / 12;
+  var exemptionSavings = exemption * rate;
+  var effectivePct = marketValue > 0 ? (annualTax / marketValue) * 100 : 0;
+  var tenYearTax = annualTax * 10;
+
+  var millage = (rate * 1000).toFixed(2) + ' mills';
+  document.getElementById('millageRateDisplay').value = millage;
+
+  document.getElementById('resAnnualTax').textContent = '$' + Math.round(annualTax).toLocaleString() + ' / yr';
+  document.getElementById('resMonthlyTax').textContent = 'Monthly Escrow: $' + Math.round(monthlyTax).toLocaleString() + ' / mo';
+  document.getElementById('resGrossAssessed').textContent = '$' + Math.round(grossAssessed).toLocaleString();
+  document.getElementById('resTaxableValue').textContent = '$' + Math.round(taxableValue).toLocaleString();
+  document.getElementById('resExemptionSavings').textContent = '$' + Math.round(exemptionSavings).toLocaleString() + ' / yr';
+  document.getElementById('resEffectivePct').textContent = effectivePct.toFixed(2) + '% of Market Value';
+  document.getElementById('res10YrTax').textContent = '$' + Math.round(tenYearTax).toLocaleString();
+}
+
+document.getElementById('stateSelector').addEventListener('change', function() {
+  var val = this.value;
+  if (val !== 'custom') {
+    document.getElementById('taxRatePct').value = val;
+    if (val === '1.74') document.getElementById('homesteadExempt').value = 40000;
+    else if (val === '0.86') document.getElementById('homesteadExempt').value = 50000;
+    else if (val === '0.75') document.getElementById('homesteadExempt').value = 7000;
+    else if (val === '1.53') {
+      document.getElementById('assessmentRatio').value = 35;
+      document.getElementById('homesteadExempt').value = 25000;
+    } else {
+      document.getElementById('assessmentRatio').value = 100;
+    }
+  }
+  calculateTax();
+});
+
+document.querySelectorAll('#propMarketValue, #taxRatePct, #assessmentRatio, #homesteadExempt').forEach(function(el) {
+  el.addEventListener('input', calculateTax);
+  el.addEventListener('change', calculateTax);
+});
+calculateTax();
+</script>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

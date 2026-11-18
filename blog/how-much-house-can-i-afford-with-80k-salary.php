@@ -1,0 +1,281 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "How Much House Can I Afford with an \$80k Salary in $currentYear? | AmericaCalculator";
+$metaDescription = "Calculate how much house you can afford with an \$80,000 salary in $currentYear. See realistic 2026 home price ranges, monthly payments, and DTI examples.";
+$metaKeywords    = "how much house can i afford with 80k salary, 80k salary mortgage, how much house can i buy with 80k, 80k income home price 2026, 28 36 rule 80k salary";
+
+$schemaData = [
+  '@context' => 'https://schema.org',
+  '@graph'   => [
+    [
+      '@type' => 'Article',
+      'headline' => "How Much House Can I Afford with an \$80k Salary in $currentYear?",
+      'description' => "Complete breakdown of home affordability on an \$80,000 annual income in $currentYear, including DTI thresholds, down payments, and monthly PITI payments.",
+      'url' => 'https://americacalculator.com/blog/how-much-house-can-i-afford-with-80k-salary',
+      'datePublished' => '2026-10-02',
+      'dateModified'  => '2026-10-02',
+      'author' => ['@type' => 'Person', 'name' => 'Sarah Mitchell', 'jobTitle' => 'Real Estate Investment Analyst'],
+      'publisher' => ['@type' => 'Organization', 'name' => 'AmericaCalculator.com', 'url' => 'https://americacalculator.com/'],
+      'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => 'https://americacalculator.com/blog/how-much-house-can-i-afford-with-80k-salary'],
+    ],
+    [
+      '@type' => 'BreadcrumbList',
+      'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://americacalculator.com/'],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => 'https://americacalculator.com/blog/'],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => "How Much House on \$80k Salary", 'item' => 'https://americacalculator.com/blog/how-much-house-can-i-afford-with-80k-salary'],
+      ]
+    ],
+    [
+      '@type' => 'FAQPage',
+      'mainEntity' => [
+        [
+          '@type' => 'Question',
+          'name' => 'Can I afford a $350,000 house on an $80k salary?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'A $350,000 house on an $80,000 salary is on the aggressive side. With 10% down at 6.5% interest, your monthly PITI payment would be around $2,250, representing nearly 34% of your gross monthly pay. If you have zero other debts and excellent credit, you may qualify under a 43% back-end DTI, but your budget will be tight.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'What is the ideal home price for someone making $80,000 a year?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'The sweet spot for an $80k earner is between $260,000 and $310,000. This keeps your monthly mortgage payment around $1,700 to $1,900, well within the standard 28% front-end guideline ($1,867/month), leaving enough cash for lifestyle and emergency savings.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'Can I use an FHA loan with an $80,000 income?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'Yes. FHA loans are very popular among $80k salary earners because they require only 3.5% down ($9,800 on a $280,000 home) and allow credit scores as low as 580. FHA underwriting also permits higher back-end debt-to-income ratios up to 45% or 50% with automated underwriting approval.'
+          ]
+        ],
+        [
+          '@type' => 'Question',
+          'name' => 'How much cash do I need to save before buying a home on an $80k salary?',
+          'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => 'You should aim to save between $20,000 and $35,000. On a $280,000 home, you will need approximately $14,000 for a 5% down payment, $6,000 to $8,000 for closing costs and escrow prepaids, and at least $5,000 to $10,000 held in reserve for post-closing emergencies.'
+          ]
+        ]
+      ]
+    ]
+  ]
+];
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+<style>
+*{box-sizing:border-box;}body{background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;margin:0;}
+a{color:#0369a1;text-decoration:none;}a:hover{text-decoration:underline;}
+.blog-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.blog-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}
+.blog-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.blog-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}
+.blog-meta span{font-size:.82rem;color:#64748b;}
+.blog-badge{background:#dbeafe;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.blog-cat{background:#f0fdf4;color:#166534;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bbf7d0;}
+.blog-intro{font-size:1.03rem;color:#334155;line-height:1.75;margin:0;border-left:4px solid #0369a1;padding:.9rem 1rem .9rem 1.25rem;background:#f0f9ff;border-radius:0 8px 8px 0;}
+.snippet-box{background:linear-gradient(135deg,#0369a1,#0284c7);border-radius:12px;padding:1.5rem;margin:1.5rem 0;color:#fff;}
+.snippet-box .sq{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.8);margin-bottom:.5rem;}
+.snippet-box .sa{font-size:1.02rem;font-weight:600;line-height:1.65;margin:0;}
+.blog-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.blog-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #e0f2fe;}
+.blog-section h3{font-size:1.05rem;color:#1e293b;margin:1.35rem 0 .55rem;font-weight:700;}
+.blog-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}
+.blog-section p:last-child{margin-bottom:0;}
+.blog-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;}
+.blog-table th{background:#0369a1;color:#fff;padding:10px 14px;text-align:left;}
+.blog-table td{padding:9px 14px;border-bottom:1px solid #e2e8f0;color:#334155;}
+.blog-table tr:nth-child(even) td{background:#f8fafc;}
+.blog-cta{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:13px;padding:1.75rem;margin:2rem 0;text-align:center;}
+.blog-cta h3{color:#fff;font-size:1.2rem;font-weight:800;margin:0 0 .5rem;}
+.blog-cta p{color:#94a3b8;font-size:.92rem;margin:0 0 1.25rem;line-height:1.6;}
+.blog-cta a{display:inline-block;background:#0284c7;color:#fff;padding:11px 24px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;transition:background .2s;}
+.blog-cta a:hover{background:#0369a1;}
+.blog-faq-item{border-bottom:1px solid #f1f5f9;padding:.85rem 0;}
+.blog-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.blog-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.blog-faq-q::after{content:'+';color:#0369a1;font-size:1.2rem;flex-shrink:0;}
+.blog-faq-item.open .blog-faq-q::after{content:'−';}
+.blog-faq-a{display:none;color:#475569;font-size:.91rem;line-height:1.7;padding-top:.5rem;}
+.blog-faq-item.open .blog-faq-a{display:block;}
+.blog-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.25rem;}
+.blog-card-box{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;}
+.blog-card-box-head{background:#0369a1;color:#fff;padding:.85rem 1.25rem;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.blog-card-box ul{list-style:none;padding:.5rem 0;margin:0;}
+.blog-card-box ul li a{display:block;padding:.5rem 1.25rem;font-size:.84rem;color:#475569;text-decoration:none;transition:all .15s;}
+.blog-card-box ul li a:hover{color:#0369a1;background:#f0f9ff;padding-left:1.45rem;}
+@media(max-width:900px){.blog-wrap{grid-template-columns:1fr;}.blog-sidebar{position:static;}}
+</style>
+
+<main id="main-content">
+<div class="blog-wrap">
+<article>
+  <div class="blog-bc"><a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; How Much House on $80k Salary</div>
+
+  <div class="blog-header">
+    <h1>How Much House Can I Afford with an $80k Salary in <?php echo $currentYear; ?>?</h1>
+    <div class="blog-meta">
+      <span>By <strong>Sarah Mitchell</strong>, Real Estate Analyst</span>
+      <span class="blog-badge">✓ Audited for <?php echo $currentYear; ?> Guidelines</span>
+      <span class="blog-cat">🏠 Home Affordability</span>
+    </div>
+    <p class="blog-intro">
+      Earning an <strong>$80,000 annual salary</strong> puts you squarely in the middle class in most US housing markets. In <?php echo $currentYear; ?>, a homebuyer earning $80,000 can comfortably purchase a home priced between <strong>$250,000 and $330,000</strong>, with monthly payments that keep you financially secure while building home equity.
+    </p>
+  </div>
+
+  <div class="snippet-box">
+    <div class="sq">Quick Buying Power Summary — $80,000 Salary</div>
+    <p class="sa">
+      &bull; <strong>Gross Monthly Income:</strong> $6,667 / month<br>
+      &bull; <strong>Comfortable Housing Target (28% Front-End):</strong> $1,867 / month<br>
+      &bull; <strong>Maximum Debt Ceiling (36%–43% Back-End):</strong> $2,400 – $2,867 / month<br>
+      &bull; <strong>Target Purchase Price Range:</strong> $250,000 – $330,000
+    </p>
+  </div>
+
+  <div class="blog-section">
+    <h2>The 28/36 Rule on an $80k Annual Income</h2>
+    <p>
+      With an annual gross salary of $80,000, your gross pay is exactly <strong>$6,666.67 per month</strong>. Here is how standard mortgage underwriting rules break down:
+    </p>
+    <ul>
+      <li><strong>28% Front-End Limit:</strong> $6,667 &times; 0.28 = <strong>$1,867 per month</strong>. This is your target ceiling for Principal, Interest, Property Taxes, and Homeowners Insurance (PITI).</li>
+      <li><strong>36% Back-End Limit:</strong> $6,667 &times; 0.36 = <strong>$2,400 per month</strong>. This is the recommended ceiling for your mortgage plus all existing debts (car loans, student loans, credit cards).</li>
+      <li><strong>43% Conventional Maximum:</strong> $6,667 &times; 0.43 = <strong>$2,867 per month</strong>. This represents the outer qualifying limit for standard Fannie Mae/Freddie Mac automated approvals.</li>
+    </ul>
+    <p>
+      If you currently pay $350/month on an auto loan and $150/month in student loans ($500 total monthly debt), your available housing budget under a 36% rule is <code>$2,400 - $500 = $1,900/month</code>.
+    </p>
+  </div>
+
+  <div class="blog-section">
+    <h2>Realistic Home Purchase Scenarios on an $80k Salary</h2>
+    <p>
+      Here is what an $80,000 earner can afford across different down payment tiers at typical <?php echo $currentYear; ?> interest rates:
+    </p>
+    <table class="blog-table">
+      <thead>
+        <tr>
+          <th>Down Payment</th>
+          <th>Interest Rate</th>
+          <th>Estimated Home Price</th>
+          <th>Estimated Loan Amount</th>
+          <th>Est. Monthly PITI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>20% ($62,000–$66,000)</strong></td>
+          <td>6.50%</td>
+          <td>$310,000 – $330,000</td>
+          <td>$248,000 – $264,000</td>
+          <td>$1,720 – $1,840</td>
+        </tr>
+        <tr>
+          <td><strong>10% ($28,000–$30,000)</strong></td>
+          <td>6.50%</td>
+          <td>$280,000 – $300,000</td>
+          <td>$252,000 – $270,000</td>
+          <td>$1,770 – $1,910*</td>
+        </tr>
+        <tr>
+          <td><strong>5% ($13,000–$14,000)</strong></td>
+          <td>6.75%</td>
+          <td>$260,000 – $280,000</td>
+          <td>$247,000 – $266,000</td>
+          <td>$1,780 – $1,920*</td>
+        </tr>
+        <tr>
+          <td><strong>FHA 3.5% ($9,500–$10,500)</strong></td>
+          <td>6.50%</td>
+          <td>$270,000 – $295,000</td>
+          <td>$260,550 – $284,675</td>
+          <td>$1,820 – $1,990**</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:.82rem;color:#64748b;">
+      *Includes Private Mortgage Insurance (PMI). **Includes FHA Mortgage Insurance Premium (MIP). Assumes 1.2% property taxes and $1,300/year hazard insurance.
+    </p>
+  </div>
+
+  <div class="blog-section">
+    <h2>Smart Strategies for $80k Earners in <?php echo $currentYear; ?></h2>
+    <p>
+      Achieving successful homeownership on an $80k salary requires strategic planning:
+    </p>
+    <ol style="color:#475569;line-height:1.75;padding-left:1.4rem;">
+      <li><strong>Explore FHA &amp; Conventional 97 Programs:</strong> You do not need $60,000 in cash. A Conventional 97 loan requires only 3% down ($8,400 on a $280k home).</li>
+      <li><strong>Check USDA Zero-Down Eligibility:</strong> If buying in a qualifying suburban or rural fringe community, USDA home loans offer 0% down payment financing with very low mortgage guarantee fees.</li>
+      <li><strong>Pay Down Revolving Credit:</strong> Eliminating a $300 car loan or credit card balance instantly frees up equivalent borrowing power to purchase an additional $45,000 in home value.</li>
+      <li><strong>Protect Your Cash Reserve:</strong> Never drain your bank account to $0 at closing. Keep at least $5,000 to $10,000 in liquid reserves for emergency maintenance and moving costs.</li>
+    </ol>
+  </div>
+
+  <div class="blog-cta">
+    <h3>Discover Your Custom Affordability Range</h3>
+    <p>Run your exact debts, down payment, and credit tier through our free interactive calculator.</p>
+    <a href="/real-estate/home-affordability-calculator">Calculate How Much House You Can Afford &rarr;</a>
+  </div>
+
+  <div class="blog-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="blog-faq-list">
+      <div class="blog-faq-item open">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">Can I afford a $350,000 house on an $80k salary?</div>
+        <div class="blog-faq-a">A $350,000 house on an $80,000 salary is on the aggressive side. With 10% down at 6.5% interest, your monthly PITI payment would be around $2,250, representing nearly 34% of your gross monthly pay. If you have zero other debts and excellent credit, you may qualify under a 43% back-end DTI, but your budget will be tight.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">What is the ideal home price for someone making $80,000 a year?</div>
+        <div class="blog-faq-a">The sweet spot for an $80k earner is between $260,000 and $310,000. This keeps your monthly mortgage payment around $1,700 to $1,900, well within the standard 28% front-end guideline ($1,867/month), leaving enough cash for lifestyle and emergency savings.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">Can I use an FHA loan with an $80,000 income?</div>
+        <div class="blog-faq-a">Yes. FHA loans are very popular among $80k salary earners because they require only 3.5% down ($9,800 on a $280,000 home) and allow credit scores as low as 580. FHA underwriting also permits higher back-end debt-to-income ratios up to 45% or 50% with automated underwriting approval.</div>
+      </div>
+      <div class="blog-faq-item">
+        <div class="blog-faq-q" onclick="toggleFaq(this)">How much cash do I need to save before buying a home on an $80k salary?</div>
+        <div class="blog-faq-a">You should aim to save between $20,000 and $35,000. On a $280,000 home, you will need approximately $14,000 for a 5% down payment, $6,000 to $8,000 for closing costs and escrow prepaids, and at least $5,000 to $10,000 held in reserve for post-closing emergencies.</div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- SIDEBAR -->
+<aside class="blog-sidebar">
+  <div class="blog-card-box">
+    <div class="blog-card-box-head">Interactive Tools</div>
+    <ul>
+      <li><a href="/real-estate/home-affordability-calculator">🏠 Home Affordability Tool</a></li>
+      <li><a href="/real-estate/mortgage-calculator">🏦 Fixed-Rate Mortgage</a></li>
+      <li><a href="/real-estate/down-payment-calculator">⬇️ Down Payment Calculator</a></li>
+      <li><a href="/real-estate/closing-cost-calculator">🧾 Closing Cost Calculator</a></li>
+      <li><a href="/loan-calculators/debt-to-income-calculator">⚖️ DTI Ratio Calculator</a></li>
+    </ul>
+  </div>
+
+  <div class="blog-card-box">
+    <div class="blog-card-box-head">Related Guides</div>
+    <ul>
+      <li><a href="/blog/how-much-house-can-i-afford-with-100k-salary">House on $100k Salary</a></li>
+      <li><a href="/blog/how-much-down-payment-for-300k-house">Down Payment on $300k House</a></li>
+      <li><a href="/blog/how-much-are-closing-costs-on-a-300k-house">Closing Costs on $300k House</a></li>
+      <li><a href="/blog/how-to-calculate-closing-costs">Complete Closing Cost Guide</a></li>
+    </ul>
+  </div>
+</aside>
+</div>
+</main>
+
+<script>
+function toggleFaq(el){
+  el.parentElement.classList.toggle('open');
+}
+</script>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -1,0 +1,44 @@
+{
+  "sitemap_url_count": 72,
+  "status_counts": {
+    "200": 71,
+    "404": 1
+  },
+  "errors": [],
+  "missing_title": [],
+  "duplicate_titles": {},
+  "missing_meta_description": [
+    "https://americacalculator.com/construction/"
+  ],
+  "duplicate_meta_descriptions": {
+    "Free online calculators for finance, loans, real estate, construction, math, health, and more.": 6
+  },
+  "missing_canonical": [
+    "https://americacalculator.com/construction/"
+  ],
+  "canonical_mismatch": [],
+  "h1_not_one": [],
+  "invalid_jsonld": [],
+  "unreachable_from_homepage": [
+    "https://americacalculator.com/blog/",
+    "https://americacalculator.com/loan-calculators/",
+    "https://americacalculator.com/real-estate/",
+    "https://americacalculator.com/ohio/",
+    "https://americacalculator.com/business/",
+    "https://americacalculator.com/construction/",
+    "https://americacalculator.com/calculators/calculadora-de-horas.php",
+    "https://americacalculator.com/calculators/calculo-da-hora.php"
+  ],
+  "depth_counts": {
+    "0": 1,
+    "1": 62,
+    "unreachable_from_homepage": 8,
+    "2": 1
+  },
+  "low_word_count_under_300": [
+    {
+      "url": "https://americacalculator.com/construction/",
+      "word_count": 47
+    }
+  ]
+}

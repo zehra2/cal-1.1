@@ -1,0 +1,645 @@
+<?php
+$currentYear = date('Y');
+$pageTitle       = "Retirement Savings Calculator ($currentYear) | How Long Will Money Last";
+$metaDescription = "Free retirement savings calculator. Enter your nest egg, location, and withdrawal rate to see exactly how long your money will last — with Social Security, inflation, and city-specific cost-of-living data.";
+$metaKeywords    = 'retirement savings calculator, how long will my retirement savings last, retirement calculator Michigan, retirement calculator Texas, retirement calculator Austin, retirement calculator Florida, free retirement calculator 2026, how much to retire, 4% rule calculator, nest egg calculator';
+$schemaData = [
+  '@context' => 'https://schema.org',
+  '@graph'   => [
+    [
+      '@type'               => 'WebApplication',
+      'name'                => 'Retirement Savings Calculator',
+      'url'                 => 'https://americacalculator.com/calculators/retirement-savings',
+      'description'         => "Free $currentYear retirement savings calculator. See how long your nest egg lasts with location-specific cost-of-living data for Michigan, Texas, Florida, and 7 more US states.",
+      'applicationCategory' => 'FinanceApplication',
+      'operatingSystem'     => 'All',
+      'offers'              => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
+      'featureList'         => 'Social Security offset, inflation adjustment, location cost-of-living multiplier, year-by-year balance projection',
+    ],
+    [
+      '@type'       => 'HowTo',
+      'name'        => 'How to Calculate How Long Your Retirement Savings Will Last',
+      'description' => 'Use this calculator to project how many years your retirement nest egg will last based on your location, spending, Social Security, and investment returns.',
+      'step'        => [
+        ['@type' => 'HowToStep', 'position' => '1', 'name' => 'Enter your retirement savings',    'text' => 'Type your current total retirement savings (401k, IRA, brokerage — all accounts combined).'],
+        ['@type' => 'HowToStep', 'position' => '2', 'name' => 'Set your monthly expenses',        'text' => 'Enter your estimated monthly spending in retirement. Use the location selector to auto-fill a suggested baseline for your city or state.'],
+        ['@type' => 'HowToStep', 'position' => '3', 'name' => 'Add Social Security income',       'text' => 'Enter your expected monthly Social Security benefit. The 2026 average is $2,071/month. Delay to age 70 to maximize your benefit.'],
+        ['@type' => 'HowToStep', 'position' => '4', 'name' => 'Set investment return and inflation', 'text' => 'Default is 6% annual return and 3% inflation (3% real return). Adjust based on your portfolio allocation.'],
+        ['@type' => 'HowToStep', 'position' => '5', 'name' => 'Click Calculate',                  'text' => 'The calculator projects your year-by-year balance and tells you exactly how many years your savings will last — and your withdrawal rate as a percentage.'],
+      ],
+    ],
+    [
+      '@type'      => 'FAQPage',
+      'mainEntity' => [
+        ['@type' => 'Question', 'name' => 'How long will $500,000 last in retirement?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'At a 4% withdrawal rate ($20,000/year), $500,000 lasts approximately 30 years with 6% returns and 3% inflation. With $2,071/month Social Security reducing your draw to $500/month from savings, $500,000 can last indefinitely. Location matters: $500,000 goes further in Michigan or Texas than in California or Hawaii.']],
+        ['@type' => 'Question', 'name' => 'How long will $1 million last in retirement?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'At a 4% withdrawal rate ($40,000/year from savings), $1 million lasts 30+ years with average market returns. Combined with Social Security ($2,071/month average), most retirees with $1M are comfortable in lower cost-of-living states like Michigan, Ohio, and Texas. In high-cost states like California, $1M may only last 15–20 years at typical spending levels.']],
+        ['@type' => 'Question', 'name' => 'What is the 4% rule for retirement?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'The 4% rule (Bengen, 1994) states you can safely withdraw 4% of your portfolio in year one, then increase withdrawals by inflation annually, without running out of money over a 30-year retirement. Morningstar\'s 2026 update recommends 3.9% for conservative planners. William Bengen himself now advocates 5.25%–5.5% for diversified portfolios.']],
+        ['@type' => 'Question', 'name' => 'How much do I need to retire in Michigan?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Michigan has a cost-of-living index of 89 (national average = 100), making it one of the more affordable retirement states. A comfortable single-person retirement in Michigan costs roughly $45,000–$52,000/year. After Social Security ($24,900/year average), you need savings to cover $20,000–$27,000/year — requiring a nest egg of $500,000–$675,000 using the 4% rule.']],
+        ['@type' => 'Question', 'name' => 'How much do I need to retire in Texas or Austin?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Texas has no state income tax, which lowers the effective cost of retirement. The statewide cost-of-living index is 94. Austin\'s rapid growth has pushed costs higher — closer to 110–115 for housing. A comfortable Austin retirement costs $55,000–$70,000/year. Outside Austin (San Antonio, Lubbock, Amarillo), $45,000–$55,000/year is typical. Texas retirees need roughly $500,000–$1,100,000 depending on city.']],
+        ['@type' => 'Question', 'name' => 'Does Social Security count toward retirement savings?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Social Security is guaranteed lifetime income — it reduces how much you need to draw from savings. The 2026 average retired-worker benefit is $2,071/month ($24,852/year). Delaying from age 62 to 70 increases your benefit by roughly 76%. Enter your expected Social Security benefit in this calculator to see how much it extends your savings runway.']],
+        ['@type' => 'Question', 'name' => 'What is a safe withdrawal rate in 2026?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Safe withdrawal rate guidance for 2026: Conservative 3.5%–3.9% (Morningstar), Moderate 4.0%–4.5%, Flexible/aggressive 5.0%–5.5% (Bengen). Your ideal rate depends on portfolio mix, guaranteed income, spending flexibility, and longevity expectations. A dynamic strategy — spending less in down markets — allows higher average withdrawals over time.']],
+        ['@type' => 'Question', 'name' => 'How does inflation affect retirement savings?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'At 3% annual inflation, purchasing power is cut in half in 23 years. A $50,000 annual budget at age 65 requires $67,000 by age 75 just to buy the same goods. This calculator applies your chosen inflation rate to increase withdrawals each year, giving you a realistic projection of how long savings last in real dollar terms.']],
+        ['@type' => 'Question', 'name' => 'Should I use a free online retirement calculator or a financial advisor?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Free calculators (like this one, plus NerdWallet, SmartAsset, and Schwab) are excellent starting points for planning scenarios. They give you a data-driven baseline quickly. A fee-only financial advisor adds value for complex situations: pension decisions, Social Security timing strategies, tax-efficient withdrawal sequencing, and estate planning. Use the calculator first, then consult an advisor for the final plan.']],
+        ['@type' => 'Question', 'name' => 'Which states are cheapest to retire in?',
+         'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'The most affordable retirement states in 2026 by cost-of-living index: Oklahoma (85), Mississippi (85), Arkansas (86), Alabama (87), Michigan (89), Ohio (90), Kansas (90), Iowa (90), Missouri (91), Tennessee (91). Texas (94) is affordable outside major cities and has no state income tax. Florida (99) is near average but property insurance costs have risen sharply.']],
+      ],
+    ],
+    [
+      '@type'           => 'BreadcrumbList',
+      'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home',        'item' => 'https://americacalculator.com/'],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Calculators', 'item' => 'https://americacalculator.com/'],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => 'Retirement Savings Calculator', 'item' => 'https://americacalculator.com/calculators/retirement-savings'],
+      ],
+    ],
+  ],
+];
+require_once '../includes/header.php';
+?>
+<style>
+*{box-sizing:border-box;}
+body{background:#f5f7fa;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;}
+/* ── Layout ── */
+.rs-wrap{max-width:1320px;margin:0 auto;padding:2rem 1.5rem 4rem;display:grid;grid-template-columns:220px 1fr 280px;gap:2rem;align-items:start;}
+/* ── TOC sidebar ── */
+.rs-toc{position:sticky;top:6rem;background:#fff;border-radius:12px;border:1px solid #e8edf5;box-shadow:0 2px 12px rgba(0,0,0,.04);overflow:hidden;}
+.rs-toc-head{background:linear-gradient(135deg,#1e40af,#1d4ed8);color:#fff;padding:1rem 1.25rem;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.8px;}
+.rs-toc-list{list-style:none;padding:.75rem 0;margin:0;}
+.rs-toc-list li a{display:block;padding:.48rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .18s;}
+.rs-toc-list li a:hover{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+.rs-toc-div{height:1px;background:#f1f5f9;margin:.5rem 0;}
+.rs-toc-rlbl{padding:.5rem 1.25rem;font-size:.75rem;font-weight:700;color:#94a3b8;text-transform:uppercase;}
+.rs-toc-rlist{list-style:none;padding:0;margin:0 0 .75rem;}
+.rs-toc-rlist li a{display:block;padding:.4rem 1.25rem;font-size:.81rem;color:#64748b;text-decoration:none;transition:color .15s;}
+.rs-toc-rlist li a:hover{color:#1d4ed8;}
+/* ── Main ── */
+.rs-main{min-width:0;}
+.rs-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.75rem;}
+.rs-bc a{color:#64748b;text-decoration:none;}.rs-bc a:hover{color:#1d4ed8;}
+.rs-hero{margin-bottom:2rem;}
+.rs-hero h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;font-weight:800;}
+.rs-desc{font-size:1.03rem;color:#64748b;line-height:1.65;margin:0 0 .75rem;border-left:4px solid #1d4ed8;padding-left:1rem;}
+/* ── Calculator card ── */
+.rs-card{background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.06);border:1px solid #e2e8f0;margin-bottom:2rem;overflow:hidden;}
+.rs-card-head{background:linear-gradient(135deg,#1e293b,#0f172a);padding:1.25rem 1.75rem;display:flex;align-items:center;gap:.75rem;}
+.rs-card-head h2{font-size:1.15rem;color:#f1f5f9;margin:0;font-weight:700;}
+.rs-card-head span{font-size:.8rem;color:#94a3b8;}
+.rs-calc-body{display:grid;grid-template-columns:1fr 1fr;}
+/* ── Form ── */
+.rs-form{padding:1.75rem;border-right:1px solid #f0f4fa;}
+.rs-field{margin-bottom:1.1rem;}
+.rs-field label{display:block;font-weight:600;font-size:.88rem;color:#1e293b;margin-bottom:.35rem;}
+.rs-field input,.rs-field select{width:100%;padding:11px 14px;border:1.5px solid #d1dae8;border-radius:8px;font-size:.97rem;color:#0f172a;outline:none;transition:border-color .2s;background:#fff;}
+.rs-field input:focus,.rs-field select:focus{border-color:#1d4ed8;box-shadow:0 0 0 3px rgba(29,78,216,.1);}
+.rs-field .rs-hint{font-size:.74rem;color:#94a3b8;margin-top:.28rem;line-height:1.4;}
+.rs-row2{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
+.rs-btn{width:100%;background:linear-gradient(135deg,#1d4ed8,#1e40af);color:#fff;padding:14px;border:none;border-radius:9px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:.75rem;transition:opacity .2s,transform .15s;letter-spacing:.01em;}
+.rs-btn:hover{opacity:.92;transform:translateY(-1px);}
+/* ── Results ── */
+.rs-res{padding:1.75rem;background:linear-gradient(160deg,#f8fafc,#eff6ff);}
+.rs-res-head{font-size:1.05rem;font-weight:700;color:#0f172a;margin:0 0 1rem;}
+.rs-primary{background:linear-gradient(135deg,#1d4ed8,#1e40af);border-radius:10px;padding:1.25rem 1rem;text-align:center;margin-bottom:.85rem;box-shadow:0 6px 18px rgba(29,78,216,.25);}
+.rs-primary-val{display:block;font-size:2.6rem;font-weight:900;color:#fff;line-height:1;margin-bottom:.2rem;}
+.rs-primary-lbl{font-size:.85rem;color:rgba(255,255,255,.8);}
+.rs-boxes{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.85rem;}
+.rs-box{background:#fff;border:1.5px solid #e2e8f0;border-radius:9px;padding:.85rem .75rem;text-align:center;}
+.rs-box.warn{border-color:#f97316;background:#fff7ed;}
+.rs-box-val{display:block;font-size:1.1rem;font-weight:800;color:#1d4ed8;margin-bottom:.12rem;}
+.rs-box.warn .rs-box-val{color:#ea580c;}
+.rs-box-lbl{font-size:.7rem;color:#64748b;font-weight:600;line-height:1.35;}
+.rs-verdict{border-radius:9px;padding:.9rem 1rem;font-size:.9rem;font-weight:600;line-height:1.55;margin-bottom:.85rem;}
+.rs-verdict.good{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;}
+.rs-verdict.ok{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+.rs-verdict.bad{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;}
+/* ── Projection table ── */
+.rs-proj-wrap{max-height:220px;overflow-y:auto;border-radius:8px;border:1px solid #e2e8f0;margin-top:.5rem;}
+.rs-proj-table{width:100%;border-collapse:collapse;font-size:.8rem;}
+.rs-proj-table th{background:#1e293b;color:#e2e8f0;padding:7px 10px;text-align:right;position:sticky;top:0;}
+.rs-proj-table th:first-child{text-align:left;}
+.rs-proj-table td{padding:6px 10px;border-bottom:1px solid #f1f5f9;text-align:right;color:#334155;}
+.rs-proj-table td:first-child{text-align:left;font-weight:600;color:#1e293b;}
+.rs-proj-table tr:last-child td{border-bottom:none;}
+.rs-proj-table tr.depleted td{color:#ef4444;font-weight:700;}
+/* ── Content sections ── */
+.rs-section{background:#fff;border-radius:14px;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(0,0,0,.04);padding:2rem;margin-bottom:1.75rem;scroll-margin-top:6rem;}
+.rs-section h2{font-size:1.45rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #eff6ff;font-weight:700;}
+.rs-section h3{font-size:1.1rem;color:#1e293b;margin:1.5rem 0 .6rem;font-weight:600;}
+.rs-section p{color:#475569;line-height:1.75;font-size:.97rem;margin-bottom:.9rem;}
+.rs-section ul,.rs-section ol{color:#475569;line-height:1.75;font-size:.97rem;padding-left:1.4rem;margin-bottom:.9rem;}
+.rs-section li{margin-bottom:.45rem;}
+.rs-section strong{color:#1e293b;}
+.rs-section a{color:#1d4ed8;font-weight:600;text-decoration:none;}.rs-section a:hover{text-decoration:underline;}
+.rs-table{width:100%;border-collapse:collapse;margin:1rem 0 1.25rem;font-size:.88rem;}
+.rs-table th{background:#1e293b;color:#e2e8f0;padding:10px 14px;text-align:left;font-weight:600;}
+.rs-table td{padding:9px 14px;border-bottom:1px solid #f1f5f9;color:#334155;}
+.rs-table tr:nth-child(even) td{background:#f8fafc;}
+.rs-table tr:last-child td{border-bottom:none;}
+.rs-info{background:#eff6ff;border-left:4px solid #1d4ed8;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#1e3a8a;line-height:1.6;}
+/* ── FAQ ── */
+.rs-faq-item{border-bottom:1px solid #f0f4fa;padding-bottom:1.1rem;margin-bottom:1.1rem;}
+.rs-faq-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.rs-faq-q{font-size:1rem;font-weight:700;color:#0f172a;margin-bottom:.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;line-height:1.4;}
+.rs-faq-q::after{content:'+';font-size:1.3rem;color:#64748b;flex-shrink:0;line-height:1;}
+.rs-faq-item.open .rs-faq-q::after{content:'−';}
+.rs-faq-a{color:#475569;line-height:1.7;font-size:.95rem;display:none;}
+.rs-faq-item.open .rs-faq-a{display:block;}
+/* ── Right sidebar ── */
+.rs-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.25rem;}
+.rs-widget{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 3px 14px rgba(0,0,0,.05);overflow:hidden;}
+.rs-widget-head{background:linear-gradient(135deg,#1d4ed8,#1e40af);color:#fff;padding:1rem 1.25rem;}
+.rs-widget-title{font-size:.97rem;font-weight:700;}
+.rs-widget-sub{font-size:.76rem;color:rgba(255,255,255,.75);margin-top:.15rem;}
+.rs-widget-rows{padding:.35rem 0;}
+.rs-widget-row{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1.25rem;border-bottom:1px solid #f8fafc;}
+.rs-widget-row:last-child{border-bottom:none;}
+.rs-wl{font-size:.8rem;font-weight:600;color:#334155;}
+.rs-ws{font-size:.7rem;color:#94a3b8;}
+.rs-wv{font-size:.92rem;font-weight:800;color:#1d4ed8;}
+.rs-widget-foot{padding:.8rem 1.25rem;border-top:1px solid #f0f4fa;background:#f8fafc;}
+.rs-widget-foot a{font-size:.82rem;font-weight:700;color:#1d4ed8;text-decoration:none;}
+.rs-quick-widget{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;}
+.rs-quick-head{padding:.85rem 1.25rem;background:#f8fafc;border-bottom:1px solid #f0f4fa;font-size:.8rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;}
+.rs-quick-links{list-style:none;padding:.4rem 0;margin:0;}
+.rs-quick-links li a{display:flex;align-items:center;gap:.5rem;padding:.6rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;font-weight:500;}
+.rs-quick-links li a:hover{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+/* ── Responsive ── */
+@media(max-width:1100px){.rs-wrap{grid-template-columns:1fr;}.rs-toc,.rs-sidebar{position:static;}.rs-sidebar{display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.rs-wrap{padding:1rem 1rem 3rem;}.rs-calc-body{grid-template-columns:1fr;}.rs-form{border-right:none;border-bottom:1px solid #f0f4fa;}.rs-sidebar{grid-template-columns:1fr;}.rs-row2{grid-template-columns:1fr;}.rs-boxes{grid-template-columns:1fr 1fr;}}
+</style>
+
+<main id="main-content">
+<div class="rs-wrap">
+
+  <!-- Left TOC -->
+  <aside class="rs-toc">
+    <div class="rs-toc-head">📋 On This Page</div>
+    <ul class="rs-toc-list">
+      <li><a href="#calculator">Calculator</a></li>
+      <li><a href="#how-it-work">How It Works</a></li>
+      <li><a href="#location-guide">Cost by Location</a></li>
+      <li><a href="#worked-example">Worked Examples</a></li>
+      <li><a href="#strategie">Strategies</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="rs-toc-div"></div>
+    <div class="rs-toc-rlbl">Related Tools</div>
+    <ul class="rs-toc-rlist">
+      <li><a href="<?php echo $baseUrl; ?>/calculators/cd-interest.php">CD Interest Calculator</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/calculators/investment-growth-calculator">Investment Growth</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/business/roi-calculator">ROI Calculator</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/real-estate/rental-yield-calculator">Rental Yield</a></li>
+      <li><a href="<?php echo $baseUrl; ?>/blog/retirement-savings-longevity-calculator">Retirement Blog Guide</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main content -->
+  <div class="rs-main">
+    <div class="rs-bc"><a href="/">Home</a> › <a href="/">Calculators</a> › Retirement Savings Calculator</div>
+
+    <div class="rs-hero">
+      <h1>Retirement Savings Calculator (<?php echo $currentYear; ?>) — How Long Will My Money Last?</h1>
+      <p class="rs-desc">Enter your nest egg, location, monthly expenses, and Social Security benefit to see a year-by-year projection of how long your retirement savings will last — with city-specific cost-of-living data for Michigan, Texas, Florida, and more.</p>
+    </div>
+
+    <!-- ═══ CALCULATOR ═══ -->
+    <div class="rs-card" id="calculator">
+      <div class="rs-card-head">
+        <h2>💰 Retirement Savings Calculator</h2>
+        <span>Free · No login · <?php echo $currentYear; ?> data</span>
+      </div>
+      <div class="rs-calc-body">
+
+        <!-- Inputs -->
+        <div class="rs-form">
+          <div class="rs-field">
+            <label for="rs_saving">Total Retirement Savings ($)</label>
+            <input type="number" id="rs_saving" value="500000" min="0" step="1000">
+            <div class="rs-hint">All accounts combined: 401(k), IRA, Roth IRA, brokerage</div>
+          </div>
+          <div class="rs-field">
+            <label for="rs_location">Your Location</label>
+            <select id="rs_location">
+              <option value="100,55000" data-ss="2071">National Average</option>
+              <optgroup label="Affordable State">
+                <option value="89,46000"  data-ss="1980">Michigan (statewide avg)</option>
+                <option value="85,41000"  data-ss="1920">Oklahoma</option>
+                <option value="87,43000"  data-ss="1940">Arkansas</option>
+                <option value="90,47000"  data-ss="2010">Ohio</option>
+                <option value="91,48000"  data-ss="2020">Missouri</option>
+                <option value="91,48500"  data-ss="2025">Tennessee</option>
+              </optgroup>
+              <optgroup label="Mid-Cost State">
+                <option value="94,50000"  data-ss="2071">Texas (statewide avg)</option>
+                <option value="96,52000"  data-ss="2071">Texas — San Antonio</option>
+                <option value="112,62000" data-ss="2100">Texas — Austin</option>
+                <option value="99,54000"  data-ss="2071">Texas — Dallas/Fort Worth</option>
+                <option value="99,55000"  data-ss="2071">Florida (statewide avg)</option>
+                <option value="96,52000"  data-ss="2050">Florida — Jacksonville</option>
+                <option value="101,56000" data-ss="2071">Florida — Orlando</option>
+                <option value="110,63000" data-ss="2100">Florida — Miami</option>
+                <option value="95,51000"  data-ss="2030">Arizona (statewide avg)</option>
+                <option value="105,58000" data-ss="2071">Arizona — Phoenix</option>
+                <option value="93,49000"  data-ss="2010">North Carolina</option>
+              </optgroup>
+              <optgroup label="Higher-Cost State">
+                <option value="120,68000" data-ss="2200">Colorado — Denver</option>
+                <option value="130,74000" data-ss="2300">Washington — Seattle</option>
+                <option value="142,82000" data-ss="2350">California — Los Angeles</option>
+                <option value="155,90000" data-ss="2400">California — San Francisco</option>
+                <option value="130,73000" data-ss="2250">New York — NYC</option>
+                <option value="148,86000" data-ss="2150">Hawaii</option>
+              </optgroup>
+            </select>
+            <div class="rs-hint">Auto-fills suggested monthly expenses and Social Security for your area</div>
+          </div>
+          <div class="rs-field">
+            <label for="rs_expense">Monthly Expenses in Retirement ($)</label>
+            <input type="number" id="rs_expense" value="4583" min="0" step="100">
+            <div class="rs-hint">Housing, food, healthcare, transport, leisure — before Social Security</div>
+          </div>
+          <div class="rs-field">
+            <label for="rs_s">Monthly Social Security Benefit ($)</label>
+            <input type="number" id="rs_s" value="2071" min="0" step="50">
+            <div class="rs-hint">2026 average is $2,071/mo. Delay to 70 for maximum benefit.</div>
+          </div>
+          <div class="rs-row2">
+            <div class="rs-field">
+              <label for="rs_return">Annual Return (%)</label>
+              <input type="number" id="rs_return" value="6" min="0" max="15" step="0.1">
+              <div class="rs-hint">Moderate: 60/40 portfolio ≈ 6%</div>
+            </div>
+            <div class="rs-field">
+              <label for="rs_inflation">Inflation Rate (%)</label>
+              <input type="number" id="rs_inflation" value="3" min="0" max="10" step="0.1">
+              <div class="rs-hint">30-yr US avg ≈ 3.0%</div>
+            </div>
+          </div>
+          <div class="rs-field">
+            <label for="rs_age">Current Age at Retirement</label>
+            <input type="number" id="rs_age" value="65" min="50" max="80" step="1">
+          </div>
+          <button class="rs-btn" id="rs-btn">⚡ Calculate How Long Savings Last</button>
+        </div>
+
+        <!-- Results -->
+        <div class="rs-re">
+          <h3 class="rs-res-head">Your Retirement Runway</h3>
+          <div class="rs-primary">
+            <span class="rs-primary-val" id="rs-year">—</span>
+            <span class="rs-primary-lbl">Years savings will last</span>
+          </div>
+          <div class="rs-boxe">
+            <div class="rs-box">
+              <span class="rs-box-val" id="rs-withdraw-rate">—</span>
+              <span class="rs-box-lbl">Initial withdrawal rate</span>
+            </div>
+            <div class="rs-box">
+              <span class="rs-box-val" id="rs-annual-gap">—</span>
+              <span class="rs-box-lbl">Annual draw from savings</span>
+            </div>
+            <div class="rs-box">
+              <span class="rs-box-val" id="rs-age-depleted">—</span>
+              <span class="rs-box-lbl">Age when savings run out</span>
+            </div>
+            <div class="rs-box">
+              <span class="rs-box-val" id="rs-bal-10">—</span>
+              <span class="rs-box-lbl">Balance at year 10</span>
+            </div>
+          </div>
+          <div class="rs-verdict" id="rs-verdict"></div>
+          <div style="font-size:.78rem;font-weight:700;color:#64748b;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em;">Year-by-Year Projection</div>
+          <div class="rs-proj-wrap">
+            <table class="rs-proj-table">
+              <thead><tr><th>Year</th><th>Age</th><th>Withdrawal</th><th>Growth</th><th>Balance</th></tr></thead>
+              <tbody id="rs-proj-body"></tbody>
+            </table>
+          </div>
+          <p style="font-size:.72rem;color:#94a3b8;margin-top:.5rem;">Results are estimates. Consult a qualified financial advisor before making retirement decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ HOW IT WORKS ═══ -->
+    <section class="rs-section" id="how-it-work">
+      <h2>How This Retirement Calculator Works</h2>
+      <p>This calculator estimates how long your retirement savings will last by projecting your portfolio balance year-by-year. Here is the logic behind each calculation:</p>
+
+      <h3>Step 1 — Calculate Your Annual Income Gap</h3>
+      <p>Not all of your retirement expenses come from savings. Social Security, pensions, and annuities cover part of the cost. The income gap is the amount you actually need to withdraw from investments:</p>
+      <p><strong>Annual Income Gap = (Monthly Expenses × 12) − (Social Security × 12) − Other Guaranteed Income</strong></p>
+      <p>Example: $4,583/month expenses ($55,000/year) − $2,071/month Social Security ($24,852/year) = <strong>$30,148/year from savings</strong></p>
+
+      <h3>Step 2 — Calculate Your Initial Withdrawal Rate</h3>
+      <p><strong>Withdrawal Rate = Annual Income Gap / Total Savings</strong></p>
+      <p>Example: $30,148 / $500,000 = <strong>6.03%</strong> — above the 4% guideline, which means $500,000 with these assumptions will deplete over time.</p>
+
+      <h3>Step 3 — Project Year by Year with Inflation</h3>
+      <p>Each year, withdrawals increase by your inflation rate (default 3%), while the remaining balance grows at your investment return (default 6%). The real return is 6% − 3% = 3%. The calculator runs this loop until the balance hits zero or reaches 50 years.</p>
+
+      <h3>What the 4% Rule Means in Practice</h3>
+      <p>The famous 4% rule (Bengen, 1994) suggests that withdrawing 4% of your portfolio in year one — then increasing by inflation each year — provides a high probability of not running out of money over 30 years. On $500,000, that's $20,000/year from savings. Combined with $24,852 in Social Security, total retirement income would be $44,852/year.</p>
+      <div class="rs-info">💡 <strong>Morningstar's <?php echo $currentYear; ?> update</strong> recommends a 3.9% safe withdrawal rate for 30-year retirements. William Bengen — the creator of the 4% rule — now advocates 5.25%–5.5% for well-diversified portfolios. The right rate depends on your flexibility, guaranteed income, and risk tolerance.</div>
+    </section>
+
+    <!-- ═══ LOCATION GUIDE ═══ -->
+    <section class="rs-section" id="location-guide">
+      <h2>How Much You Need to Retire — By Location (<?php echo $currentYear; ?>)</h2>
+      <p>Where you retire is one of the biggest variables in retirement planning. A $500,000 nest egg that runs out in 12 years in San Francisco can last 30+ years in rural Michigan or Oklahoma. The table below shows estimated annual retirement spending, required nest egg (4% rule, after Social Security), and key retirement tax facts for major US locations.</p>
+
+      <table class="rs-table">
+        <thead>
+          <tr>
+            <th>Location</th>
+            <th>COL Index</th>
+            <th>Annual Expenses (single)</th>
+            <th>Nest Egg Needed*</th>
+            <th>State Income Tax on Retirement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Michigan</strong></td><td>89</td><td>$45,000–$52,000</td><td>~$500,000–$675,000</td><td>4.05% flat; pension exemptions available</td></tr>
+          <tr><td><strong>Ohio</strong></td><td>90</td><td>$46,000–$53,000</td><td>~$525,000–$700,000</td><td>Progressive 0–3.5%; SS not taxed</td></tr>
+          <tr><td><strong>Missouri</strong></td><td>91</td><td>$47,000–$54,000</td><td>~$550,000–$725,000</td><td>SS partially taxed; pension deductions</td></tr>
+          <tr><td><strong>Tennessee</strong></td><td>91</td><td>$47,000–$55,000</td><td>~$550,000–$750,000</td><td>No income tax on wages/SS</td></tr>
+          <tr><td><strong>Texas (statewide)</strong></td><td>94</td><td>$49,000–$57,000</td><td>~$600,000–$800,000</td><td>No state income tax</td></tr>
+          <tr><td><strong>Texas — San Antonio</strong></td><td>96</td><td>$50,000–$58,000</td><td>~$625,000–$825,000</td><td>No state income tax</td></tr>
+          <tr><td><strong>Texas — Austin</strong></td><td>112</td><td>$58,000–$72,000</td><td>~$830,000–$1,185,000</td><td>No state income tax; high property tax</td></tr>
+          <tr><td><strong>Florida (statewide)</strong></td><td>99</td><td>$52,000–$61,000</td><td>~$675,000–$900,000</td><td>No state income tax; rising insurance costs</td></tr>
+          <tr><td><strong>Florida — Miami</strong></td><td>110</td><td>$59,000–$70,000</td><td>~$860,000–$1,135,000</td><td>No state income tax</td></tr>
+          <tr><td><strong>Arizona — Phoenix</strong></td><td>105</td><td>$55,000–$64,000</td><td>~$750,000–$975,000</td><td>2.5% flat; SS not taxed</td></tr>
+          <tr><td><strong>North Carolina</strong></td><td>93</td><td>$48,000–$56,000</td><td>~$575,000–$775,000</td><td>4.5% flat; SS not taxed</td></tr>
+          <tr><td><strong>Colorado — Denver</strong></td><td>120</td><td>$63,000–$75,000</td><td>~$950,000–$1,260,000</td><td>4.4% flat; $24K pension deduction</td></tr>
+          <tr><td><strong>California — Los Angeles</strong></td><td>142</td><td>$76,000–$92,000</td><td>~$1,280,000–$1,680,000</td><td>Progressive up to 13.3%</td></tr>
+          <tr><td><strong>Hawaii</strong></td><td>148</td><td>$80,000–$96,000</td><td>~$1,380,000–$1,800,000</td><td>Progressive 1.4–11%; SS not taxed</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.8rem;color:#64748b;">*Nest egg needed = (Annual expenses − $24,852 avg Social Security) A 4% withdrawal rate. Assumes single retiree, age 65, 2026 data. COL index: national average = 100. Sources: BLS, Census ACS, SmartAsset, GoBankingRates, Motley Fool.</p>
+
+      <h3>Why Michigan Is One of the Best Retirement States</h3>
+      <p>Michigan ranks consistently among the most affordable retirement states. Its cost-of-living index of 89 — below the national average — means your retirement dollar stretches roughly 12% further than in an average state. Michigan also offers significant pension tax exemptions for retirees born before 1946, and Social Security is not taxed at the state level for most residents. Cities like Grand Rapids, Traverse City, and Ann Arbor offer excellent healthcare infrastructure at far lower costs than coastal metros.</p>
+
+      <h3>Retiring in Texas: No State Income Tax, But Location Matters</h3>
+      <p>Texas has zero state income tax — a major advantage that effectively increases your retirement purchasing power by 4–9% compared to high-tax states. However, Texas has high property taxes (among the highest in the nation at 1.6–2.2% effective rates), which can eat into that advantage, especially for homeowners. Austin has experienced dramatic cost-of-living increases: housing costs rose over 40% from 2020–2023, though they have partially corrected since. San Antonio and smaller Texas cities remain genuinely affordable options.</p>
+
+      <h3>Florida: No Income Tax, But Watch Insurance Costs</h3>
+      <p>Florida's combination of no state income tax and warm climate makes it a perennial top retirement destination. However, property and homeowners insurance costs in coastal Florida have risen sharply — some areas have seen premiums double or triple since 2021. Inland Florida (Ocala, Lakeland, The Villages) is significantly more affordable than Miami or coastal areas.</p>
+    </section>
+
+    <!-- ═══ WORKED EXAMPLES ═══ -->
+    <section class="rs-section" id="worked-example">
+      <h2>Worked Examples: How Long Will My Money Last?</h2>
+
+      <h3>Example 1 — $500,000 in Michigan, Modest Spending</h3>
+      <ul>
+        <li>Savings: $500,000 | Location: Michigan | Age at retirement: 65</li>
+        <li>Monthly expenses: $3,833 ($46,000/year) | Social Security: $1,980/month ($23,760/year)</li>
+        <li>Annual income gap: $46,000 − $23,760 = <strong>$22,240/year from savings</strong></li>
+        <li>Initial withdrawal rate: $22,240 / $500,000 = <strong>4.45%</strong></li>
+        <li>With 6% returns and 3% inflation: savings last approximately <strong>28–32 years</strong></li>
+        <li>Age when money runs out: approximately <strong>93–97</strong></li>
+      </ul>
+      <p>At 4.45%, this is slightly above the strict 4% guideline but within the range most planners consider manageable — especially since spending can flex downward in bad market years.</p>
+
+      <h3>Example 2 — $1,000,000 in Austin, Texas</h3>
+      <ul>
+        <li>Savings: $1,000,000 | Location: Austin | Age at retirement: 65</li>
+        <li>Monthly expenses: $5,167 ($62,000/year) | Social Security: $2,100/month ($25,200/year)</li>
+        <li>Annual income gap: $62,000 − $25,200 = <strong>$36,800/year from savings</strong></li>
+        <li>Initial withdrawal rate: $36,800 / $1,000,000 = <strong>3.68%</strong></li>
+        <li>With 6% returns and 3% inflation: savings last <strong>indefinitely</strong> — balance grows over 30 years</li>
+      </ul>
+      <p>$1M in Austin at 3.68% is well within the safe zone. No state income tax helps. Property taxes are the main ongoing cost to plan for (~$8,000–$15,000/year for a $400K home).</p>
+
+      <h3>Example 3 — $300,000 in Florida, Average Spending</h3>
+      <ul>
+        <li>Savings: $300,000 | Location: Florida statewide | Age at retirement: 65</li>
+        <li>Monthly expenses: $4,583 ($55,000/year) | Social Security: $2,071/month ($24,852/year)</li>
+        <li>Annual income gap: $55,000 − $24,852 = <strong>$30,148/year from savings</strong></li>
+        <li>Initial withdrawal rate: $30,148 / $300,000 = <strong>10.05%</strong></li>
+        <li>With 6% returns and 3% inflation: savings run out in approximately <strong>11–13 years</strong></li>
+        <li>Age when money runs out: approximately <strong>76–78</strong></li>
+      </ul>
+      <p>This scenario highlights a serious shortfall. At a 10% withdrawal rate, no investment return can keep up with withdrawals long-term. Strategies: delay Social Security to increase monthly benefit, work part-time for 3–5 years, relocate to lower-cost area, or supplement with rental income.</p>
+
+      <h3>Example 4 — $750,000 in Ohio, $2,500/month Social Security</h3>
+      <ul>
+        <li>Savings: $750,000 | Location: Ohio | Age at retirement: 67</li>
+        <li>Monthly expenses: $3,917 ($47,000/year) | Social Security: $2,500/month ($30,000/year) — delayed benefit</li>
+        <li>Annual income gap: $47,000 − $30,000 = <strong>$17,000/year from savings</strong></li>
+        <li>Initial withdrawal rate: $17,000 / $750,000 = <strong>2.27%</strong></li>
+        <li>Result: savings last <strong>indefinitely</strong> — portfolio continues growing</li>
+      </ul>
+      <p>Delaying Social Security to maximize the benefit is one of the highest-value retirement decisions available. Here, a delayed Social Security benefit of $2,500 (vs. $1,980 at 62) reduces the portfolio draw by $13,200/year, turning a marginal plan into a robust one.</p>
+    </section>
+
+    <!-- ═══ STRATEGIES ═══ -->
+    <section class="rs-section" id="strategie">
+      <h2>7 Strategies to Make Your Retirement Savings Last Longer</h2>
+      <ol>
+        <li><strong>Delay Social Security to age 70.</strong> Every year you delay past full retirement age (67) adds roughly 8% to your permanent monthly benefit. A $2,071/month benefit at 67 becomes approximately $2,565/month at 70 — for life. This single decision can be worth $100,000+ in lifetime benefits for many retirees.</li>
+        <li><strong>Use a dynamic withdrawal rate.</strong> Instead of a fixed percentage, withdraw more in good market years and less in bad ones. Research shows that reducing withdrawals by 10–15% during market downturns can add 5–10 years to a portfolio's lifespan.</li>
+        <li><strong>Consider relocating to a lower-cost state.</strong> Moving from California or New York to Michigan, Ohio, or Tennessee can reduce annual retirement spending by $20,000–$40,000, effectively adding years to your savings runway without changing your lifestyle.</li>
+        <li><strong>Reduce investment fees.</strong> A 1% annual fee on a $750,000 portfolio costs $7,500/year — equivalent to a 1% higher withdrawal rate. Shift to low-cost index funds if your expense ratios exceed 0.5%.</li>
+        <li><strong>Sequence withdrawals tax-efficiently.</strong> Withdraw from taxable accounts first, then traditional IRAs and 401(k)s, then Roth IRAs last. This reduces annual tax liability and allows tax-advantaged accounts to continue growing.</li>
+        <li><strong>Work part-time for 2–3 years after retiring.</strong> Even $15,000–$20,000/year in part-time income reduces your portfolio withdrawal rate by 1–2%, potentially adding 5–8 years to your retirement runway.</li>
+        <li><strong>Consider an immediate annuity for a portion of savings.</strong> A single-premium immediate annuity (SPIA) converts a lump sum into guaranteed monthly income for life. For retirees with inadequate Social Security or pension income, using 20–30% of savings to purchase guaranteed income can dramatically reduce the longevity risk on the remaining portfolio.</li>
+      </ol>
+      <div class="rs-info">💡 <strong>The most effective combination</strong> is: delay Social Security + relocate to lower cost area + keep investment fees below 0.3%. These three moves together can add 10–20 years to how long your savings last without sacrificing quality of life.</div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section class="rs-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="rs-faq-item open">
+        <div class="rs-faq-q">How long will $500,000 last in retirement?</div>
+        <div class="rs-faq-a">At a 4% withdrawal rate ($20,000/year from savings), $500,000 lasts approximately 30 years with 6% returns and 3% inflation. Add $2,071/month Social Security and your total income is $44,852/year — sufficient for comfortable retirement in Michigan, Ohio, or Tennessee. In high-cost states like California, $500,000 may only last 10–15 years at typical spending levels.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">How long will $1 million last in retirement?</div>
+        <div class="rs-faq-a">At a 4% withdrawal rate ($40,000/year from savings), $1 million lasts 30+ years and may actually grow. Combined with average Social Security of $24,852/year, total income is $64,852/year — enough for comfortable retirement almost anywhere except the most expensive coastal metros. In lower-cost states like Michigan, Texas (outside Austin), or the Carolinas, $1 million provides exceptional retirement security.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">What is the 4% rule and does it still work in <?php echo $currentYear; ?>?</div>
+        <div class="rs-faq-a">The 4% rule (Bengen, 1994) says you can safely withdraw 4% of your portfolio in year one, then increase withdrawals by inflation, without running out over 30 years. In <?php echo $currentYear; ?>, Morningstar recommends 3.9% for conservative planners, while Bengen himself now advocates 5.25%–5.5% for diversified portfolios. The rule still works as a starting guideline — but your actual safe rate depends on your portfolio mix, guaranteed income, spending flexibility, and how long you expect to live.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">How much do I need to retire in Michigan?</div>
+        <div class="rs-faq-a">Michigan's cost-of-living index is 89 (11% below the national average). A comfortable single-person retirement costs roughly $45,000–$52,000/year. After average Social Security ($24,852/year), you need savings to cover $20,000–$27,000/year — requiring approximately $500,000–$675,000 at the 4% rule. Couples typically need $65,000–$75,000/year total, requiring $1,000,000–$1,250,000 in combined savings and Social Security.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">How much do I need to retire in Texas or Austin?</div>
+        <div class="rs-faq-a">Texas has no state income tax, which effectively reduces retirement costs by 4–9% vs. high-tax states. Statewide cost-of-living is 94 (slightly below average). Austin is a major exception — its COL index is now approximately 112 due to housing cost increases. A comfortable Austin retirement costs $58,000–$72,000/year, requiring $825,000–$1,185,000 in savings (after Social Security). San Antonio ($50,000–$58,000/year) requires only $625,000–$825,000.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">Should I include Social Security in this calculation?</div>
+        <div class="rs-faq-a">Yes — and it makes a dramatic difference. This calculator subtracts your Social Security (and other guaranteed income) from your annual expenses first, then calculates how much needs to come from savings. The 2026 average Social Security retirement benefit is $2,071/month ($24,852/year). Delaying from age 62 to 70 can increase your benefit by 76%, potentially adding decades to how long your savings last.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">What is a safe withdrawal rate in <?php echo $currentYear; ?>?</div>
+        <div class="rs-faq-a">Current guidance: Conservative 3.5%–3.9% (Morningstar), Moderate 4.0%–4.5%, Flexible 5.0%–5.5% (Bengen). If you have flexibility to reduce spending in bad market years, you can safely target a higher rate. If you need a fixed income regardless of markets, stay at or below 3.9%. This calculator shows your withdrawal rate in the results panel so you can compare it to these benchmarks.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">How does inflation affect retirement savings?</div>
+        <div class="rs-faq-a">At 3% annual inflation, your purchasing power is cut in half in 23 years. A $55,000/year retirement budget at age 65 requires $73,900/year by age 75 just to maintain the same lifestyle. This calculator automatically increases your withdrawals by your chosen inflation rate each year, giving you a realistic projection rather than an overly optimistic flat-rate estimate.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">Which states are cheapest to retire in?</div>
+        <div class="rs-faq-a">The most affordable retirement states by cost-of-living in <?php echo $currentYear; ?>: Oklahoma (85), Mississippi (85), Arkansas (86), Alabama (87), Michigan (89), Ohio (90), Kansas (90), Iowa (90), Missouri (91), Tennessee (91). Michigan and Tennessee are particularly popular because they combine low cost of living with good healthcare infrastructure. Texas (94) is affordable outside Austin and has no state income tax.</div>
+      </div>
+      <div class="rs-faq-item">
+        <div class="rs-faq-q">How accurate is this retirement calculator?</div>
+        <div class="rs-faq-a">This calculator provides an estimate based on your inputs and constant-rate assumptions. Real retirement outcomes vary due to market volatility (sequence-of-returns risk), actual inflation, healthcare cost spikes, and life expectancy. For greater accuracy, compare results from multiple calculators (NerdWallet, SmartAsset, Schwab) and consult a fee-only financial advisor for a personalized plan. This tool is most useful for scenario planning and understanding the impact of different variables.</div>
+      </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <p style="font-size:.8rem;color:#94a3b8;line-height:1.6;">
+      <strong>Disclaimer:</strong> This calculator provides estimates for educational purposes only. Results are not financial, tax, or investment advice. Retirement outcomes depend on many factors not captured here including market volatility, healthcare costs, and individual circumstances. Always consult a qualified financial advisor before making retirement decisions. AmericaCalculator.com does not provide financial advisory services.
+    </p>
+  </div>
+
+  <!-- Right sidebar -->
+  <aside class="rs-sidebar">
+    <div class="rs-widget">
+      <div class="rs-widget-head">
+        <div class="rs-widget-title">Nest Egg Needed by Location</div>
+        <div class="rs-widget-sub">Single retiree, 4% rule, after SS</div>
+      </div>
+      <div class="rs-widget-row">
+        <div class="rs-widget-row"><div><div class="rs-wl">Michigan</div><div class="rs-w">COL index 89</div></div><div><div class="rs-wv">~$550K</div></div></div>
+        <div class="rs-widget-row"><div><div class="rs-wl">Texas (avg)</div><div class="rs-w">No state tax</div></div><div><div class="rs-wv">~$700K</div></div></div>
+        <div class="rs-widget-row"><div><div class="rs-wl">Austin, TX</div><div class="rs-w">COL index 112</div></div><div><div class="rs-wv">~$1.0M</div></div></div>
+        <div class="rs-widget-row"><div><div class="rs-wl">Florida (avg)</div><div class="rs-w">No state tax</div></div><div><div class="rs-wv">~$790K</div></div></div>
+        <div class="rs-widget-row" style="background:#eff6ff;"><div><div class="rs-wl">US Average</div><div class="rs-w">COL index 100</div></div><div><div class="rs-wv">~$900K</div></div></div>
+        <div class="rs-widget-row"><div><div class="rs-wl">California</div><div class="rs-w">COL index 142</div></div><div><div class="rs-wv">~$1.5M</div></div></div>
+      </div>
+      <div class="rs-widget-foot">
+        <a href="#location-guide">Full location comparison table →</a>
+      </div>
+    </div>
+    <div class="rs-quick-widget">
+      <div class="rs-quick-head">💰 Finance Tools</div>
+      <ul class="rs-quick-link">
+        <li><a href="<?php echo $baseUrl; ?>/calculators/cd-interest.php">💰 CD Interest Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/calculators/investment-growth-calculator">📈 Investment Growth</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/business/roi-calculator">💼 ROI Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/real-estate/rental-yield-calculator">🏘️ Rental Yield</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/loan-calculators/sba-loan-calculator">🏦 SBA Loan Calculator</a></li>
+        <li><a href="<?php echo $baseUrl; ?>/blog/retirement-savings-longevity-calculator">📖 Retirement Blog Guide</a></li>
+      </ul>
+    </div>
+  </aside>
+
+</div>
+</main>
+
+<script>
+(function(){
+  // ── Location data: [colIndex, annualExpenses, defaultSS] ──
+  var locData = {};
+  document.getElementById('rs_location').querySelectorAll('option').forEach(function(opt){
+    var parts = opt.value.split(',');
+    locData[opt.value] = {col: parseFloat(parts[0]), exp: parseFloat(parts[1]), ss: parseFloat(opt.getAttribute('data-ss'))};
+  });
+
+  document.getElementById('rs_location').addEventListener('change', function(){
+    var d = locData[this.value];
+    if(!d) return;
+    document.getElementById('rs_expenses').value = Math.round(d.exp/12);
+    document.getElementById('rs_ss').value = d.ss;
+    calculate();
+  });
+
+  function fmtM(n){ return '$'+(Math.abs(n)<1e6 ? Math.round(n).toLocaleString('en-US') : (n/1e6).toFixed(2)+'M'); }
+  function fmtPct(n){ return n.toFixed(1)+'%'; }
+
+  function calculate(){
+    var savings   = parseFloat(document.getElementById('rs_savings').value)||0;
+    var monthExp  = parseFloat(document.getElementById('rs_expenses').value)||0;
+    var monthSS   = parseFloat(document.getElementById('rs_ss').value)||0;
+    var retRate   = parseFloat(document.getElementById('rs_return').value)||6;
+    var infRate   = parseFloat(document.getElementById('rs_inflation').value)||3;
+    var age       = parseInt(document.getElementById('rs_age').value)||65;
+
+    var annualExp = monthExp * 12;
+    var annualSS  = monthSS * 12;
+    var annualGap = Math.max(0, annualExp - annualSS);
+    var drawRate  = savings > 0 ? (annualGap / savings) * 100 : 0;
+
+    // Year-by-year projection
+    var balance    = savings;
+    var withdrawal = annualGap;
+    var r          = retRate / 100;
+    var inf        = infRate / 100;
+    var yearsLast  = 0;
+    var bal10      = null;
+    var rows       = [];
+    var maxYears   = 50;
+
+    for(var y = 1; y <= maxYears; y++){
+      if(balance <= 0){ break; }
+      var growth = balance * r;
+      var newBal = balance + growth - withdrawal;
+      rows.push({year: y, age: age+y, withdrawal: withdrawal, growth: growth, balance: Math.max(0, newBal)});
+      if(y === 10) bal10 = newBal;
+      if(newBal <= 0){ yearsLast = y; break; }
+      withdrawal *= (1 + inf);
+      balance = newBal;
+      yearsLast = y; // still going
+    }
+    var infinite = (yearsLast === maxYears && balance > 0);
+
+    // ── Populate results ──
+    document.getElementById('rs-years').textContent      = infinite ? '50+ yrs ♾' : yearsLast + ' yrs';
+    document.getElementById('rs-withdraw-rate').textContent = fmtPct(drawRate);
+    document.getElementById('rs-annual-gap').textContent    = fmtM(annualGap) + '/yr';
+    document.getElementById('rs-age-depleted').textContent  = infinite ? 'Never' : 'Age ' + (age + yearsLast);
+    document.getElementById('rs-bal-10').textContent        = bal10 !== null ? fmtM(bal10) : '—';
+
+    var verdict = document.getElementById('rs-verdict');
+    if(infinite){
+      verdict.className = 'rs-verdict good';
+      verdict.textContent = '✅ Your savings appear sustainable. At a '+fmtPct(drawRate)+' withdrawal rate, your portfolio grows or holds steady for 50+ years.';
+    } else if(yearsLast >= 25){
+      verdict.className = 'rs-verdict ok';
+      verdict.textContent = '⚠️ '+yearsLast+' years is close to adequate for a 30-year retirement. Consider reducing spending, delaying Social Security, or adding part-time income to extend your runway.';
+    } else {
+      verdict.className = 'rs-verdict bad';
+      verdict.textContent = '🚨 At '+fmtPct(drawRate)+'withdrawal rate, savings run out at age '+(age+yearsLast)+'. Review the strategies below — delaying Social Security and reducing expenses are the highest-impact moves.';
+    }
+
+    // ── Projection table ──
+    var tbody = document.getElementById('rs-proj-body');
+    tbody.innerHTML = '';
+    rows.forEach(function(r){
+      var tr = document.createElement('tr');
+      if(r.balance <= 0) tr.className = 'depleted';
+      tr.innerHTML = '<td>'+r.year+'</td>'
+        +'<td>'+r.age+'</td>'
+        +'<td>'+fmtM(r.withdrawal)+'</td>'
+        +'<td>+'+fmtM(r.growth)+'</td>'
+        +'<td>'+(r.balance <= 0 ? '<span style="color:#ef4444">$0 — Depleted</span>' : fmtM(r.balance))+'</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('rs-btn').addEventListener('click', calculate);
+  document.querySelectorAll('#rs_savings,#rs_expenses,#rs_ss,#rs_return,#rs_inflation,#rs_age').forEach(function(el){
+    el.addEventListener('input', calculate);
+    el.addEventListener('change', calculate);
+  });
+
+  calculate(); // run on load
+})();
+</script>
+<?php require_once '../includes/footer.php'; ?>
