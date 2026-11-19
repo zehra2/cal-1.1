@@ -1,0 +1,400 @@
+<%- include('../../partials/header') %>
+<style>
+body{background:#f8fafc;}
+.cc-wrap{max-width:1060px;margin:0 auto;padding:2rem 1.25rem 5rem;}
+.cc-bc{font-size:.8rem;color:#94a3b8;margin-bottom:.75rem;}.cc-bc a{color:#64748b;text-decoration:none;}
+.cc-hero h1{font-size:1.85rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.cc-hero p{font-size:.97rem;color:#64748b;line-height:1.65;margin:0 0 .5rem;border-left:3px solid #0891b2;padding-left:.9rem;}
+.cc-meta{font-size:.78rem;color:#94a3b8;margin-bottom:1.75rem;}
+.cc-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;margin-bottom:1.75rem;}
+.cc-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden;}
+.cc-card-head{background:#0e7490;color:#fff;padding:1rem 1.5rem;font-size:1rem;font-weight:700;}
+.cc-body{padding:1.5rem;}
+.cc-field{margin-bottom:1rem;}
+.cc-field label{display:block;font-size:.85rem;font-weight:600;color:#1e293b;margin-bottom:.35rem;}
+.cc-field input,.cc-field select{width:100%;padding:10px 13px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:.94rem;color:#0f172a;outline:none;background:#fff;transition:border-color .2s;}
+.cc-field input:focus,.cc-field select:focus{border-color:#0891b2;}
+.cc-field .hint{font-size:.73rem;color:#94a3b8;margin-top:.25rem;}
+.cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.cc-sec-lbl{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:1.2rem 0 .7rem;padding-bottom:.3rem;border-bottom:1px solid #f1f5f9;}
+.cc-btn{width:100%;background:#0e7490;color:#fff;padding:13px;border:none;border-radius:8px;font-size:.97rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:background .2s;}
+.cc-btn:hover{background:#0891b2;}
+.cc-result{background:#ecfeff;border:1.5px solid #a5f3fc;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1.25rem;}
+.cc-result-primary{text-align:center;margin-bottom:1rem;}
+.cc-result-primary .val{font-size:2.4rem;font-weight:800;color:#0e7490;display:block;line-height:1;}
+.cc-result-primary .lbl{font-size:.83rem;color:#64748b;}
+.cc-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-bottom:.85rem;}
+.cc-stat{background:#fff;border-radius:8px;padding:.75rem;text-align:center;border:1px solid #a5f3fc;}
+.cc-stat .sv{display:block;font-size:1rem;font-weight:800;color:#0e7490;}
+.cc-stat .sl{font-size:.69rem;color:#64748b;font-weight:600;line-height:1.3;}
+.cc-pct{text-align:center;font-size:.83rem;color:#64748b;margin-bottom:.75rem;}
+.cc-pct strong{color:#0e7490;}
+.cc-lines{background:#fff;border:1px solid #a5f3fc;border-radius:8px;padding:.75rem 1rem;}
+.cc-line{display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid #ecfeff;font-size:.86rem;}
+.cc-line:last-child{border-bottom:none;font-weight:700;color:#0e7490;}
+.cc-line .ll{color:#64748b;}.cc-line .lv{font-weight:600;color:#1e293b;}
+.cc-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:1.75rem;margin-bottom:1.5rem;}
+.cc-section h2{font-size:1.3rem;color:#0f172a;margin:0 0 .85rem;padding-bottom:.6rem;border-bottom:2px solid #ecfeff;}
+.cc-section h3{font-size:1.05rem;color:#0f172a;margin:1.25rem 0 .55rem;}
+.cc-section p{color:#475569;line-height:1.72;font-size:.95rem;margin-bottom:.9rem;}
+.cc-section p:last-child{margin-bottom:0;}
+.cc-section a{color:#0891b2;font-weight:600;text-decoration:none;}
+.cc-section a:hover{text-decoration:underline;}
+.cc-table{width:100%;border-collapse:collapse;border-radius:9px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:1rem;}
+.cc-table th{background:#0e7490;color:#fff;padding:9px 13px;font-size:.84rem;font-weight:600;text-align:left;}
+.cc-table td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:.87rem;color:#334155;}
+.cc-table tr:last-child td{border-bottom:none;}
+.cc-table tr:nth-child(even) td{background:#f8fafc;}
+.cc-table .hl{color:#0e7490;font-weight:700;}
+.cc-table .r{color:#dc2626;font-weight:700;}
+.cc-info{background:#ecfeff;border-left:4px solid #0891b2;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.9rem;color:#164e63;line-height:1.65;}
+.cc-warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.9rem;color:#78350f;line-height:1.65;}
+.cc-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}
+.cc-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.cc-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.cc-faq-q::after{content:'+';color:#0891b2;font-size:1.2rem;flex-shrink:0;}
+.cc-faq-item.open .cc-faq-q::after{content:'−';}
+.cc-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.cc-faq-item.open .cc-faq-a{display:block;}
+.cc-related{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.75rem;margin-top:.75rem;}
+.cc-rel{display:block;background:#ecfeff;border:1.5px solid #a5f3fc;border-radius:8px;padding:.75rem 1rem;font-size:.85rem;font-weight:600;color:#0e7490;text-decoration:none;text-align:center;transition:background .15s;}
+.cc-rel:hover{background:#cffafe;}
+@media(max-width:760px){.cc-layout{grid-template-columns:1fr;}.cc-grid,.cc-stat-grid{grid-template-columns:1fr;}.cc-hero h1{font-size:1.5rem;}}
+
+.pdf-bar{display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap;}
+.pdf-btn{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:2px solid currentColor;padding:9px 18px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.pdf-btn:hover{opacity:.85;}
+@media print{.cc-btn,.pdf-bar,nav,footer,header,.cc-bc{display:none!important;}.cc-wrap{padding:0!important;}body{background:#fff!important;}}
+</style>
+
+<main id="main-content">
+<div class="cc-wrap">
+  <div class="cc-bc">
+    <a href="/">Home</a> ›
+    <a href="/real-estate/">Real Estate</a> ›
+    <a href="/real-estate/closing-cost-calculator">Closing Cost Calculator</a> ›
+    California
+  </div>
+
+  <div class="cc-hero">
+    <h1>California Closing Cost Calculator (<%= currentYear %>)</h1>
+    <p>Estimate buyer closing costs for a California home purchase — county documentary transfer tax, city transfer tax, escrow fees, title insurance, and total cash to close.</p>
+    <div class="cc-meta">✍️ By AmericaCalculator Real Estate Team | Last verified: July <%= currentYear %> | Sources: California Board of Equalization, CLTA, CAR</div>
+  </div>
+
+
+  <!-- ─── 2026 CALIFORNIA TRANSFER TAX CALLOUT ─────────────────────────── -->
+  <div style="background:linear-gradient(135deg,#1e3a5f 0%,#1e40af 60%,#0891b2 100%);border-radius:14px;padding:1.4rem 1.75rem;margin-bottom:1.25rem;border:1px solid #1d4ed8;box-shadow:0 4px 24px rgba(29,78,216,.2);" id="ca-tax-box">
+    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem;">
+      <span style="background:#ef4444;color:#fff;font-size:.7rem;font-weight:800;padding:2px 9px;border-radius:20px;letter-spacing:.07em;">&#9679; <%= currentYear %> RATES</span>
+      <span style="color:rgba(255,255,255,.7);font-size:.78rem;">California Documentary Transfer Tax — Verified <%= currentMonthYear %></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.85rem;">
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;">Standard County Rate</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#fff;">$1.10 <span style="font-size:.85rem;font-weight:400;">per $1,000</span></div>
+        <div style="font-size:.74rem;color:rgba(255,255,255,.65);margin-top:.25rem;">Most CA counties &mdash; paid by seller</div>
+      </div>
+      <div style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);border-radius:9px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;">Los Angeles City</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#fca5a5;">$5.60 <span style="font-size:.85rem;font-weight:400;">per $1,000</span></div>
+        <div style="font-size:.74rem;color:rgba(255,255,255,.65);margin-top:.25rem;">+ Measure ULA: 4% on $5M&ndash;10M, 5.5% on $10M+</div>
+      </div>
+      <div style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);border-radius:9px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;">San Francisco (Tiered)</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#fca5a5;">$6.80&ndash;$25 <span style="font-size:.85rem;font-weight:400;">per $1,000</span></div>
+        <div style="font-size:.74rem;color:rgba(255,255,255,.65);margin-top:.25rem;">Highest rate on sales over $25M</div>
+      </div>
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem;">Escrow Fee (buyer's share)</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#a5f3fc;">~0.1% <span style="font-size:.85rem;font-weight:400;">of price</span></div>
+        <div style="font-size:.74rem;color:rgba(255,255,255,.65);margin-top:.25rem;">Base $250 + $2/$1K split 50/50 buyer/seller</div>
+      </div>
+    </div>
+    <div style="margin-top:.85rem;font-size:.83rem;color:rgba(255,255,255,.75);line-height:1.6;">
+      <strong style="color:#fff;">Title Insurance:</strong> SoCal (LA, SD, OC) &mdash; seller pays owner policy. NorCal (SF Bay Area) &mdash; buyer pays owner policy. Lender policy always paid by buyer. Source: California Department of Insurance, CLTA.
+    </div>
+  </div>
+  <style>@media(max-width:640px){#ca-tax-box{padding:1rem 1.1rem;}}</style>
+
+  <div class="cc-layout">
+    <div class="cc-card">
+      <div class="cc-card-head">🧾 California Closing Cost Calculator</div>
+      <div class="cc-body">
+        <div class="cc-sec-lbl">Purchase Details</div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Purchase Price ($)</label><input type="number" id="cc-price" value="700000" min="0" step="5000"></div>
+          <div class="cc-field"><label>Down Payment (%)</label><input type="number" id="cc-down" value="20" min="0" max="100" step="1"></div>
+        </div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Interest Rate (%)</label><input type="number" id="cc-rate" value="7.0" min="0" max="20" step="0.05"></div>
+          <div class="cc-field"><label>Loan Type</label>
+            <select id="cc-type">
+              <option value="conventional">Conventional</option>
+              <option value="fha">FHA Loan (+1.75% MIP)</option>
+              <option value="va">VA Loan (+Funding Fee)</option>
+              <option value="cash">All Cash</option>
+            </select>
+          </div>
+        </div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>County</label>
+            <select id="ca-county" onchange="calcCC()">
+              <option value="la">Los Angeles ($5.60/$1k city+county)</option>
+              <option value="sf">San Francisco (tiered, starts $6.80/$1k)</option>
+              <option value="sd">San Diego ($1.10/$1k county only)</option>
+              <option value="orange">Orange ($1.10/$1k county only)</option>
+              <option value="alameda">Alameda + Oakland ($15/$1k city)</option>
+              <option value="other">Other CA County ($1.10/$1k)</option>
+            </select>
+          </div>
+          <div class="cc-field"><label>NorCal or SoCal?</label>
+            <select id="ca-region">
+              <option value="socal">SoCal (seller pays owner title)</option>
+              <option value="norcal">NorCal (buyer pays owner title)</option>
+            </select>
+          </div>
+        </div>
+        <div class="cc-sec-lbl">Lender &amp; Third-Party Fees</div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Origination Fee (%)</label><input type="number" id="cc-orig" value="0.75" min="0" max="5" step="0.05"></div>
+          <div class="cc-field"><label>Appraisal Fee ($)</label><input type="number" id="cc-appr" value="650" min="0" step="50"></div>
+        </div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Title Insurance ($)</label><input type="number" id="cc-title" value="1800" min="0" step="100"><div class="hint">NorCal: buyer pays; SoCal: seller pays (0 here)</div></div>
+          <div class="cc-field"><label>Escrow Fee (your share, $)</label><input type="number" id="cc-escrow" value="800" min="0" step="50"><div class="hint">Buyer's share; typically split 50/50</div></div>
+        </div>
+        <div class="cc-sec-lbl">Prepaid Items</div>
+        <div class="cc-grid">
+          <div class="cc-field"><label>Annual Property Tax ($)</label><input type="number" id="cc-tax" value="8750" min="0" step="100"><div class="hint">~1.25% of price; reassessed at purchase</div></div>
+          <div class="cc-field"><label>Annual Homeowners Insurance ($)</label><input type="number" id="cc-hoi" value="1800" min="0" step="100"></div>
+        </div>
+        <button class="cc-btn" onclick="calcCC()">⚡ Estimate California Closing Costs</button>
+        <div class="cc-result" id="cc-result" style="display:none;">
+          <div class="cc-result-primary">
+            <span class="val" id="cc-total">$0</span>
+            <span class="lbl">Estimated Total Cash to Close</span>
+          </div>
+          <div class="cc-pct" id="cc-pct-line"></div>
+          <div class="cc-stat-grid">
+            <div class="cc-stat"><span class="sv" id="cc-dp">$0</span><span class="sl">Down Payment</span></div>
+            <div class="cc-stat"><span class="sv" id="cc-fee">$0</span><span class="sl">Closing Costs</span></div>
+            <div class="cc-stat"><span class="sv" id="cc-prepaid">$0</span><span class="sl">Prepaids &amp; Escrow</span></div>
+          </div>
+          <div class="cc-line">
+            <div class="cc-line"><span class="ll">Down Payment</span><span class="lv" id="cl-dp">—</span></div>
+            <div class="cc-line"><span class="ll">Loan Origination Fee</span><span class="lv" id="cl-orig">—</span></div>
+            <div class="cc-line"><span class="ll">Appraisal</span><span class="lv" id="cl-appr">—</span></div>
+            <div class="cc-line"><span class="ll">Title Insurance (buyer's share)</span><span class="lv" id="cl-title">—</span></div>
+            <div class="cc-line"><span class="ll">Escrow Fee (buyer's share)</span><span class="lv" id="cl-escrow">—</span></div>
+            <div class="cc-line"><span class="ll" id="cl-tt-label">Transfer Tax (buyer's share)</span><span class="lv" id="cl-tt">—</span></div>
+            <div class="cc-line" id="cl-extra-row" style="display:none;"><span class="ll" id="cl-extra-label">FHA MIP / VA Fee</span><span class="lv" id="cl-extra">—</span></div>
+            <div class="cc-line"><span class="ll">Prepaid Tax (2 months)</span><span class="lv" id="cl-tax">—</span></div>
+            <div class="cc-line"><span class="ll">Prepaid Insurance (1 year)</span><span class="lv" id="cl-hoi">—</span></div>
+            <div class="cc-line"><span class="ll" style="font-weight:700;color:#0f172a;">Total Cash to Close</span><span class="lv" id="cl-total">—</span></div>
+          </div>
+          <div class="pdf-bar">
+            <button class="pdf-btn" style="color:inherit;" onclick="window.print()">&#128424; Print / Save as PDF</button>
+            <button class="pdf-btn" style="color:inherit;" onclick="copyResults()">&#128203; Copy Results</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="cc-section" style="margin-bottom:1.25rem;">
+        <h2>CA Closing Costs by County (<%= currentYear %>)</h2>
+        <table class="cc-table">
+          <thead><tr><th>County / City</th><th>Transfer Tax Rate</th><th>Est. Costs on $700k Home</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Los Angeles County</strong></td><td>$5.60/$1,000 (city+county)</td><td class="r">$3,920</td></tr>
+            <tr><td>San Diego County</td><td>$1.10/$1,000</td><td class="hl">$770</td></tr>
+            <tr><td>Orange County</td><td>$1.10/$1,000</td><td class="hl">$770</td></tr>
+            <tr><td>San Francisco (tiered)</td><td>$6.80–$25/$1,000</td><td class="r">$4,760+</td></tr>
+            <tr><td>Alameda / Oakland</td><td>Up to $15/$1,000</td><td class="r">$10,500</td></tr>
+            <tr><td>Riverside County</td><td>$1.10/$1,000</td><td class="hl">$770</td></tr>
+            <tr><td>Sacramento County</td><td>$1.10/$1,000</td><td class="hl">$770</td></tr>
+            <tr><td>Santa Clara County</td><td>$1.10/$1,000</td><td>$770</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.82rem;color:#94a3b8;margin:0;">Transfer tax only. LA and SF city surtaxes are added on top of county rate.</p>
+      </div>
+      <div class="cc-section">
+        <h2>NorCal vs. SoCal Closing Customs</h2>
+        <table class="cc-table">
+          <thead><tr><th>Item</th><th>NorCal (SF Bay Area)</th><th>SoCal (LA/SD/OC)</th></tr></thead>
+          <tbody>
+            <tr><td>Owner's Title Insurance</td><td class="r">Buyer pays</td><td class="hl">Seller pays</td></tr>
+            <tr><td>Escrow Company</td><td>Independent escrow</td><td>Title company escrow</td></tr>
+            <tr><td>Transfer Tax</td><td>Seller pays (custom)</td><td>Seller pays (custom)</td></tr>
+            <tr><td>Attorney Required</td><td colspan="2" style="text-align:center;">No — escrow state</td></tr>
+          </tbody>
+        </table>
+        <div class="cc-warn">⚠️ <strong>LA Measure ULA:</strong> Sales of $5M–$10M incur an extra 4% "mansion tax." Sales over $10M incur 5.5%. This is buyer-or-seller negotiable but typically paid by seller. Affects luxury closings significantly.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CA-Specific Deep Dive -->
+  <div class="cc-section">
+    <h2>California-Specific Closing Cost Rules</h2>
+
+    <h3>Documentary Transfer Tax (DTT)</h3>
+    <p>California Revenue and Taxation Code Section 11911 authorizes counties to levy a documentary transfer tax of <strong>$0.55 per $500 of value</strong> (equivalent to $1.10 per $1,000). Cities may levy an additional city transfer tax on top of the county rate. The tax is typically based on the full purchase price, not the loan amount — unlike some states that calculate only on the financed portion.</p>
+    <p>Transfer tax is <strong>customarily paid by the seller</strong> in California, but this is a negotiable term of the purchase contract — not a statutory requirement. In some transactions, particularly in buyer's markets, buyers may agree to pay it.</p>
+
+    <h3>San Francisco Transfer Tax — Tiered Rates</h3>
+    <table class="cc-table">
+      <thead><tr><th>Sale Price</th><th>Combined Rate (County + City)</th><th>Tax on That Amount</th></tr></thead>
+      <tbody>
+        <tr><td>$0 – $250,000</td><td>$6.80/$1,000 (0.68%)</td><td>Up to $1,700</td></tr>
+        <tr><td>$250,001 – $999,999</td><td>$6.80/$1,000</td><td>Up to $6,800 on $1M</td></tr>
+        <tr><td>$1,000,000 – $4,999,999</td><td>$11.25/$1,000 (1.125%)</td><td>$11,250 per $1M</td></tr>
+        <tr><td>$5,000,000 – $9,999,999</td><td>$12.50/$1,000 (1.25%)</td><td>$62,500 on $5M sale</td></tr>
+        <tr><td>$10,000,000 – $24,999,999</td><td>$15.00/$1,000 (1.5%)</td><td>$150,000 on $10M sale</td></tr>
+        <tr><td>$25,000,000+</td><td>$25.00/$1,000 (2.5%)</td><td>$625,000 on $25M sale</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Title Insurance in California</h3>
+    <p>California title insurance rates are promulgated (filed with the California Department of Insurance) and are the same across title companies for the base rate — you cannot negotiate the rate itself. However, title companies can compete on endorsements, search fees, and escrow services. The two standard policies are:</p>
+    <ul style="color:#475569;padding-left:1.4rem;line-height:1.8;font-size:.95rem;">
+      <li><strong>CLTA (California Land Title Association) policy</strong> — standard coverage, protects against recorded title defects only.</li>
+      <li><strong>ALTA (American Land Title Association) policy</strong> — extended coverage, protects against survey disputes, unrecorded easements, and other off-record risks. Most lenders require ALTA for the lender's policy.</li>
+    </ul>
+    <p>Title insurance premium is calculated as a percentage of the purchase price, typically around <strong>0.19% – 0.35%</strong> depending on county and coverage level. On a $700,000 purchase, the owner's ALTA policy typically runs <strong>$1,500–$2,450</strong>.</p>
+
+    <h3>California Escrow Fees</h3>
+    <p>Escrow companies in California charge a combination of a base fee plus a per-thousand rate. A typical formula used by major California escrow companies:</p>
+    <table class="cc-table">
+      <thead><tr><th>Purchase Price</th><th>Typical Total Escrow Fee</th><th>Buyer's Share (50%)</th></tr></thead>
+      <tbody>
+        <tr><td>$400,000</td><td>~$1,200</td><td>~$600</td></tr>
+        <tr><td>$600,000</td><td>~$1,500</td><td>~$750</td></tr>
+        <tr><td>$800,000</td><td>~$1,800</td><td>~$900</td></tr>
+        <tr><td>$1,000,000</td><td>~$2,200</td><td>~$1,100</td></tr>
+        <tr><td>$1,500,000</td><td>~$3,000</td><td>~$1,500</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Property Tax — Proposition 13 Reassessment</h3>
+    <p>When you purchase a California property, it is <strong>reassessed to the full purchase price</strong> under Prop 13. The effective property tax rate across California averages approximately <strong>1.1% – 1.25%</strong> of purchase price (base 1% plus local voter-approved bonds and assessments). This means on a $700,000 purchase you can expect annual property tax of <strong>$7,700 – $8,750</strong> per year — significantly higher than the prior owner may have been paying if they owned for decades.</p>
+    <div class="cc-info">💡 At closing, 2 months of estimated property taxes are collected into escrow. With a July closing on a $700,000 purchase (~$8,750/year tax), expect <strong>~$1,458 in prepaid property taxes</strong> collected at closing.</div>
+
+    <h3>Worked Example: $700,000 Home, Los Angeles, Conventional 20% Down</h3>
+    <table class="cc-table">
+      <thead><tr><th>Item</th><th>Amount</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Down Payment (20%)</td><td><strong>$140,000</strong></td><td>Paid at closing</td></tr>
+        <tr><td>Loan Origination (0.75% of $560k)</td><td>$4,200</td><td>Lender fee</td></tr>
+        <tr><td>Appraisal</td><td>$650</td><td>Lender-ordered</td></tr>
+        <tr><td>Title Insurance (lender's, buyer pays)</td><td>$1,400</td><td>ALTA lender policy</td></tr>
+        <tr><td>Owner's Title Insurance</td><td>$0</td><td>SoCal — seller pays by custom</td></tr>
+        <tr><td>Escrow Fee (buyer's 50%)</td><td>$875</td><td>~$1,750 total split 50/50</td></tr>
+        <tr><td>County Transfer Tax (seller pays)</td><td>$0</td><td>Buyer's share = $0 by custom</td></tr>
+        <tr><td>LA City Transfer Tax (seller pays)</td><td>$0</td><td>Buyer's share = $0 by custom</td></tr>
+        <tr><td>Home Inspection</td><td>$500</td><td></td></tr>
+        <tr><td>Prepaid Property Tax (2 months)</td><td>$1,458</td><td>Based on ~$8,750/yr</td></tr>
+        <tr><td>Prepaid Homeowners Insurance</td><td>$1,800</td><td>First year premium</td></tr>
+        <tr><td><strong>Estimated Total Cash to Close</strong></td><td><strong>~$150,883</strong></td><td>Excl. seller-paid items</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FAQ -->
+  <div class="cc-section">
+    <h2>Frequently Asked Questions — California Closing Costs</h2>
+    <% const _faqs = [["What are typical closing costs in California?", "California buyer closing costs typically range from 1% to 3% of the purchase price excluding down payment. On a $700,000 home expect $7,000–$21,000. The largest buyer-paid variable items are lender origination fees, escrow fees (buyer pays half), and title insurance (buyer pays in NorCal)."], ["Who pays transfer tax in California?", "Transfer tax is customarily paid by the seller in California, though this is negotiable. The county rate is $1.10 per $1,000. Many cities add their own tax: Los Angeles city adds $4.50 per $1,000 on all sales; Oakland adds up to $15 per $1,000; San Francisco uses a tiered rate starting at $6.80 per $1,000."], ["Does California require an attorney at closing?", "No. California is an escrow state — a licensed escrow officer at a title company or independent escrow firm handles the closing. No attorney is required, which saves $500–$1,500 compared to attorney-required states."], ["What is the Los Angeles Measure ULA mansion tax?", "Measure ULA (effective April 2023) imposes an additional 4% transfer tax on LA City sales between $5M and $10M, and 5.5% on sales over $10M. This is separate from the standard $5.60/$1,000 combined county/city rate. On a $6M sale, Measure ULA adds $240,000 — making LA one of the most expensive transfer tax jurisdictions nationally."], ["Who pays title insurance in California?", "It depends on the region. In Southern California (LA, Orange, San Diego counties) the seller customarily pays for the owner's title insurance policy. In Northern California (SF Bay Area, Alameda, Santa Clara) the buyer typically pays for the owner's policy. The lender's title insurance is always paid by the buyer in both regions."], ["How does Prop 13 affect closing costs?", "Prop 13 directly affects prepaid property taxes. When a California property sells, it is reassessed to the full purchase price. Your first-year tax bill will reflect the new purchase price at approximately 1.1%–1.25% effective rate — potentially much higher than the prior owner's bill. At closing you typically prepay 2 months of this reassessed amount."], ["What escrow company should I use in California?", "Major California escrow and title companies include First American, Fidelity National Title, Chicago Title, Stewart Title, and Old Republic. In SoCal, the seller's agent often recommends a title/escrow company; in NorCal, the buyer can select. Shopping escrow companies is worthwhile — service fees vary though the underlying title insurance rate is state-regulated."], ["Are California closing costs higher than the national average?", "For buyers, California closing costs are moderate — the main savings are that sellers pay transfer taxes and (in SoCal) owner's title insurance by custom. However, because California home prices are among the highest in the nation, even a modest 1–2% in fees produces large absolute dollar amounts. Lender fees, escrow, and prepaid taxes scale with the purchase price."]]; _faqs.forEach(function(f) { %>
+    <div class="cc-faq-item"><div class="cc-faq-q"><%- f[0] %></div><div class="cc-faq-a"><%- f[1] %></div></div>
+    <% }); %>
+  </div>
+
+  <div class="cc-section">
+    <h2>Related Calculators</h2>
+    <div class="cc-related">
+      <a href="/real-estate/closing-cost-calculator" class="cc-rel">🇺🇸 National Closing Cost Calculator</a>
+      <a href="/real-estate/closing-cost-calculator-texa" class="cc-rel">🤠 Texas Closing Costs</a>
+      <a href="/real-estate/closing-cost-calculator-florida" class="cc-rel">🌴 Florida Closing Costs</a>
+      <a href="/real-estate/mortgage-calculator" class="cc-rel">🏠 Mortgage Calculator</a>
+      <a href="/real-estate/down-payment-calculator" class="cc-rel">⬇️ Down Payment Calculator</a>
+      <a href="/real-estate/cap-rate-calculator" class="cc-rel">📊 Cap Rate Calculator</a>
+      <a href="/real-estate/rent-vs-buy-calculator" class="cc-rel">🆚 Rent vs Buy Calculator</a>
+      <a href="/real-estate/" class="cc-rel">🏘️ All Real Estate Tools</a>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+function fmtC(v){return '$'+Math.round(Math.abs(v)).toLocaleString();}
+function getTransferTax(price, countyVal){
+  // Returns buyer's share — by CA custom buyer pays $0 (seller pays),
+  // but we show the total for reference and set buyer share = 0
+  var rates = {
+    la: 5.60, sf: 6.80, sd: 1.10, orange: 1.10, alameda: 15.0, other: 1.10
+  };
+  var rate = rates[countyVal] || 1.10;
+  return (price / 1000) * rate;
+}
+function calcCC(){
+  var price   = parseFloat(document.getElementById('cc-price').value)||0;
+  var downPct = parseFloat(document.getElementById('cc-down').value)||0;
+  var orig    = parseFloat(document.getElementById('cc-orig').value)||0;
+  var appr    = parseFloat(document.getElementById('cc-appr').value)||0;
+  var title   = parseFloat(document.getElementById('cc-title').value)||0;
+  var escrow  = parseFloat(document.getElementById('cc-escrow').value)||0;
+  var tax     = parseFloat(document.getElementById('cc-tax').value)||0;
+  var hoi     = parseFloat(document.getElementById('cc-hoi').value)||0;
+  var loanType= document.getElementById('cc-type').value;
+  var county  = document.getElementById('ca-county').value;
+
+  var dp      = price * (downPct / 100);
+  var loan    = price - dp;
+  var origFee = loan * (orig / 100);
+  var ttTotal = getTransferTax(price, county);
+  var ttBuyer = 0; // CA custom: seller pays; editable above
+
+  var extra = 0, extraLabel = '';
+  if(loanType==='fha'){extra = loan*0.0175; extraLabel='FHA Upfront MIP (1.75%)';}
+  if(loanType==='va'){var vaRate=downPct>=10?0.0125:downPct>=5?0.015:0.023; extra=loan*vaRate; extraLabel='VA Funding Fee';}
+
+  var taxPrepaid = (tax / 12) * 2;
+  var hoiPrepaid = hoi;
+  var closingCosts = origFee + appr + title + escrow + ttBuyer + extra;
+  var prepaids = taxPrepaid + hoiPrepaid;
+  var total = dp + closingCosts + prepaids;
+  var pct = price > 0 ? ((closingCosts/price)*100).toFixed(1) : 0;
+
+  document.getElementById('cc-total').textContent  = fmtC(total);
+  document.getElementById('cc-dp').textContent      = fmtC(dp);
+  document.getElementById('cc-fees').textContent    = fmtC(closingCosts);
+  document.getElementById('cc-prepaid').textContent = fmtC(prepaids);
+  document.getElementById('cc-pct-line').innerHTML  = 'Closing costs = <strong>'+pct+'%</strong> of purchase price';
+  document.getElementById('cl-dp').textContent      = fmtC(dp);
+  document.getElementById('cl-orig').textContent    = fmtC(origFee);
+  document.getElementById('cl-appr').textContent    = fmtC(appr);
+  document.getElementById('cl-title').textContent   = fmtC(title);
+  document.getElementById('cl-escrow').textContent  = fmtC(escrow);
+  document.getElementById('cl-tt').textContent      = '$0 (seller pays by custom — total: '+fmtC(ttTotal)+')';
+  document.getElementById('cl-tax').textContent     = fmtC(taxPrepaid);
+  document.getElementById('cl-hoi').textContent     = fmtC(hoiPrepaid);
+  document.getElementById('cl-total').textContent   = fmtC(total);
+  var er = document.getElementById('cl-extra-row');
+  if(extra>0){document.getElementById('cl-extra-label').textContent=extraLabel;document.getElementById('cl-extra').textContent=fmtC(extra);er.style.display='flex';}
+  else{er.style.display='none';}
+  document.getElementById('cc-result').style.display='block';
+}
+document.querySelectorAll('#cc-price,#cc-down,#cc-rate,#cc-type,#cc-orig,#cc-appr,#cc-title,#cc-escrow,#ca-county,#ca-region,#cc-tax,#cc-hoi').forEach(function(el){
+  el.addEventListener('input',calcCC);el.addEventListener('change',calcCC);
+});
+document.querySelectorAll('.cc-faq-q').forEach(function(q){
+  q.addEventListener('click',function(){
+    var i=this.closest('.cc-faq-item'),w=i.classList.contains('open');
+    document.querySelectorAll('.cc-faq-item').forEach(function(x){x.classList.remove('open');});
+    if(!w) i.classList.add('open');
+  });
+});
+calcCC();
+</script>
+<%- include('../../partials/footer') %>

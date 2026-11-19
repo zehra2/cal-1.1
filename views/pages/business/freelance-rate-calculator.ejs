@@ -1,0 +1,940 @@
+<%- include('../../partials/header') %>
+<style>
+/* ── Page base ── */
+body { background:#f5f7fa; }
+
+.fr-page-wrap {
+  max-width:1320px; margin:0 auto; padding:2rem 1.5rem 4rem;
+  display:grid; grid-template-columns:220px 1fr 260px; gap:2rem; align-items:start;
+}
+
+/* ══ LEFT TOC ══ */
+.fr-toc {
+  position:sticky; top:6rem; background:#fff; border-radius:12px;
+  border:1px solid #e8edf5; box-shadow:0 2px 12px rgba(0,0,0,.04); overflow:hidden;
+}
+.fr-toc-head {
+  background:linear-gradient(135deg,#0369a1 0%,#075985 100%);
+  color:#fff; padding:1rem 1.25rem; font-weight:700; font-size:.85rem;
+  text-transform:uppercase; letter-spacing:.8px;
+}
+.fr-toc-list { list-style:none; padding:.75rem 0; margin:0; }
+.fr-toc-list li a {
+  display:block; padding:.5rem 1.25rem; font-size:.84rem; color:#475569;
+  text-decoration:none; border-left:3px solid transparent; transition:all .18s; line-height:1.4;
+}
+.fr-toc-list li a:hover,.fr-toc-list li a.fr-toc-active { color:#0369a1; background:#f0f9ff; border-left-color:#0369a1; }
+.fr-toc-div  { height:1px; background:#f1f5f9; margin:.5rem 0; }
+.fr-toc-rlbl { padding:.5rem 1.25rem; font-size:.78rem; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:.5px; }
+.fr-toc-rlist { list-style:none; padding:0; margin:0 0 .75rem; }
+.fr-toc-rlist li a { display:block; padding:.4rem 1.25rem; font-size:.82rem; color:#64748b; text-decoration:none; transition:color .15s; }
+.fr-toc-rlist li a:hover { color:#0369a1; }
+
+/* ══ MAIN ══ */
+.fr-main { min-width:0; }
+
+.fr-hero { margin-bottom:2rem; }
+.fr-hero h1 { font-size:2.1rem; color:#0f172a; margin:0 0 .6rem; line-height:1.25; }
+.fr-hero .fr-desc { font-size:1.05rem; color:#64748b; line-height:1.65; margin:0 0 .75rem; border-left:4px solid #7dd3fc; padding-left:1rem; }
+.fr-breadcrumb { font-size:.8rem; color:#94a3b8; margin-bottom:.75rem; }
+.fr-breadcrumb a { color:#64748b; text-decoration:none; }
+.fr-breadcrumb a:hover { color:#0369a1; }
+
+/* ══ CALCULATOR CARD ══ */
+.fr-card {
+  background:#fff; border-radius:14px; box-shadow:0 4px 24px rgba(0,0,0,.05);
+  border:1px solid #eef2f7; margin-bottom:2.5rem; overflow:hidden;
+}
+.fr-tabs { display:flex; border-bottom:1px solid #e2e8f0; background:#f8fafc; }
+.fr-tab {
+  flex:1; text-align:center; padding:1rem .5rem; font-size:.9rem; font-weight:600;
+  color:#64748b; cursor:pointer; border-bottom:3px solid transparent; transition:all .2s;
+  background:none; border-top:none; border-left:none; border-right:none;
+}
+.fr-tab:hover  { color:#0369a1; background:#f0f9ff; }
+.fr-tab.active { color:#0369a1; border-bottom-color:#0369a1; background:#fff; }
+
+.fr-inner { display:grid; grid-template-columns:1fr 1fr; }
+.fr-form-col { padding:2rem; border-right:1px solid #f0f4fa; }
+.fr-res-col  { padding:2rem; background:linear-gradient(160deg,#f8fafc 0%,#f0f9ff 100%); }
+
+.fr-panel { display:none; }
+.fr-panel.active { display:block; }
+.fr-panel-desc { font-size:.85rem; color:#64748b; margin-bottom:1.5rem; line-height:1.5; }
+
+.fr-field { margin-bottom:1.25rem; }
+.fr-field label { display:block; font-weight:600; font-size:.9rem; color:#1e293b; margin-bottom:.4rem; }
+.fr-field input {
+  width:100%; padding:12px 15px; border:1.5px solid #d1dae8; border-radius:8px;
+  font-size:1rem; color:#0f172a; outline:none; transition:border-color .2s,box-shadow .2s;
+  box-sizing:border-box; background:#fff;
+}
+.fr-field input:focus { border-color:#0369a1; box-shadow:0 0 0 3px rgba(3,105,161,.12); }
+.fr-field .fr-hint { font-size:.76rem; color:#94a3b8; margin-top:.3rem; line-height:1.4; }
+.fr-field .fr-opt  { font-size:.7rem; font-weight:400; color:#94a3b8; margin-left:.3rem; }
+.fr-row2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+.fr-btn {
+  width:100%; background:linear-gradient(135deg,#0369a1 0%,#075985 100%);
+  color:#fff; padding:15px; border:none; border-radius:9px; font-size:1rem;
+  font-weight:700; cursor:pointer; margin-top:.5rem; transition:opacity .2s,transform .15s;
+}
+.fr-btn:hover { opacity:.92; transform:translateY(-1px); }
+
+/* ── Results ── */
+.fr-res-head { font-size:1.15rem; font-weight:700; color:#0f172a; margin:0 0 .25rem; }
+.fr-res-sub  { font-size:.84rem; color:#64748b; margin:0 0 1.25rem; }
+
+.fr-primary-box {
+  background:linear-gradient(135deg,#0369a1,#075985);
+  border-radius:10px; padding:1.35rem 1rem; text-align:center;
+  box-shadow:0 6px 18px rgba(3,105,161,.22); margin-bottom:.75rem;
+}
+.fr-primary-val { display:block; font-size:2.4rem; font-weight:800; color:#fff; line-height:1; margin-bottom:.2rem; }
+.fr-primary-lbl { font-size:.88rem; color:rgba(255,255,255,.8); }
+
+.fr-rate-boxes { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin-bottom:1rem; }
+.fr-rate-box { background:#fff; border:1.5px solid #e8edf5; border-radius:10px; padding:.9rem .75rem; text-align:center; }
+.fr-rate-val { display:block; font-size:1.2rem; font-weight:800; color:#0369a1; margin-bottom:.15rem; }
+.fr-rate-lbl { font-size:.72rem; color:#64748b; font-weight:600; line-height:1.3; }
+
+/* Rate breakdown bar */
+.fr-breakdown { margin-top:1rem; background:#fff; padding:.9rem; border-radius:10px; border:1px solid #e2e8f0; }
+.fr-bkd-title { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; margin-bottom:.5rem; }
+.fr-bkd-rows  { display:flex; flex-direction:column; gap:.4rem; }
+.fr-bkd-row   { display:flex; justify-content:space-between; align-items:center; font-size:.82rem; padding:.25rem 0; border-bottom:1px solid #f8fafc; }
+.fr-bkd-row:last-child { border-bottom:none; font-weight:800; color:#0369a1; }
+.fr-bkd-label { color:#64748b; }
+.fr-bkd-val   { font-weight:600; color:#1e293b; }
+
+/* Viability gauge */
+.fr-gauge { margin-top:1rem; background:#fff; padding:.9rem; border-radius:10px; border:1px solid #e2e8f0; display:none; }
+.fr-gauge.show { display:block; }
+.fr-gauge-title { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; margin-bottom:.5rem; }
+.fr-gauge-bar { display:flex; height:8px; border-radius:4px; overflow:hidden; background:#e2e8f0; position:relative; margin-bottom:.4rem; }
+.fr-gauge-fill { position:absolute; left:0; top:0; height:100%; background:linear-gradient(90deg,#ef4444,#f59e0b,#22c55e); width:100%; }
+.fr-gauge-marker { position:absolute; top:-3px; width:4px; height:14px; background:#0f172a; border-radius:2px; box-shadow:0 0 0 2px #fff; transition:left .4s; }
+.fr-gauge-labels { display:flex; justify-content:space-between; font-size:.69rem; color:#94a3b8; font-weight:600; }
+.fr-gauge-verdict { font-size:.82rem; margin-top:.6rem; color:#475569; line-height:1.5; }
+
+/* ══ CONTENT SECTIONS ══ */
+.fr-section {
+  background:#fff; border-radius:14px; border:1px solid #eef2f7;
+  box-shadow:0 2px 12px rgba(0,0,0,.03); padding:2.25rem;
+  margin-bottom:2rem; scroll-margin-top:6rem;
+}
+.fr-section h2 { font-size:1.65rem; color:#0f172a; margin:0 0 1.25rem; padding-bottom:.75rem; border-bottom:2px solid #f0f4fa; }
+.fr-section h3 { font-size:1.18rem; color:#1e293b; margin:1.75rem 0 .7rem; }
+.fr-section p  { color:#475569; line-height:1.75; margin-bottom:1.25rem; font-size:1rem; }
+.fr-section ul,.fr-section ol { color:#475569; line-height:1.75; padding-left:1.5rem; margin-bottom:1.25rem; }
+.fr-section li { margin-bottom:.5rem; }
+.fr-section strong { color:#1e293b; }
+.fr-section a  { color:#0369a1; }
+
+.fr-formula { background:#0f172a; color:#7dd3fc; font-family:'Courier New',monospace; font-size:1rem; padding:1.1rem 1.4rem; border-radius:8px; margin:1.25rem 0; line-height:1.9; }
+.fr-formula code { display:block; }
+
+.fr-table { width:100%; border-collapse:collapse; border-radius:10px; overflow:hidden; border:1px solid #e8edf5; margin-bottom:1.5rem; }
+.fr-table th { background:#0369a1; color:#fff; padding:13px 16px; text-align:left; font-size:.88rem; font-weight:600; }
+.fr-table td { padding:11px 16px; border-bottom:1px solid #f1f5f9; font-size:.9rem; color:#334155; }
+.fr-table tr:last-child td { border-bottom:none; }
+.fr-table tr:nth-child(even) td { background:#f8fafc; }
+
+.fr-info-box { background:#f0f9ff; border-left:4px solid #0369a1; border-radius:0 8px 8px 0; padding:1rem 1.25rem; margin:1.25rem 0; font-size:.95rem; color:#075985; line-height:1.6; }
+.fr-warn-box { background:#fffbeb; border-left:4px solid #d97706; border-radius:0 8px 8px 0; padding:1rem 1.25rem; margin:1.25rem 0; font-size:.95rem; color:#92400e; line-height:1.6; }
+
+/* FAQ accordion */
+.fr-faq-item { border-bottom:1px solid #f0f4fa; padding-bottom:1.25rem; margin-bottom:1.25rem; }
+.fr-faq-item:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.fr-faq-q { font-size:1.02rem; font-weight:700; color:#0f172a; margin-bottom:.6rem; cursor:pointer; display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; }
+.fr-faq-q::after { content:'+'; font-size:1.3rem; color:#0369a1; flex-shrink:0; }
+.fr-faq-item.open .fr-faq-q::after { content:'−'; }
+.fr-faq-a { color:#475569; line-height:1.7; font-size:.97rem; display:none; }
+.fr-faq-item.open .fr-faq-a { display:block; }
+
+/* ══ RIGHT SIDEBAR ══ */
+.fr-sidebar { position:sticky; top:6rem; display:flex; flex-direction:column; gap:1.25rem; }
+
+.fr-widget { background:#fff; border-radius:12px; border:1px solid #e8edf5; box-shadow:0 4px 18px rgba(0,0,0,.05); overflow:hidden; }
+.fr-widget-head { background:linear-gradient(135deg,#0369a1,#075985); color:#fff; padding:1rem 1.25rem; }
+.fr-widget-title    { font-size:1rem; font-weight:700; }
+.fr-widget-subtitle { font-size:.8rem; color:rgba(255,255,255,.75); }
+.fr-widget-updated  { font-size:.72rem; color:rgba(255,255,255,.6); margin-top:.35rem; }
+
+.fr-rate-rows { padding:.4rem 0; }
+.fr-rate-row  { display:flex; justify-content:space-between; align-items:center; padding:.6rem 1.25rem; border-bottom:1px solid #f8fafc; transition:background .15s; }
+.fr-rate-row:last-child { border-bottom:none; }
+.fr-rate-row:hover { background:#f0f9ff; }
+.fr-rl { font-size:.82rem; font-weight:600; color:#334155; }
+.fr-rs { font-size:.72rem; color:#94a3b8; }
+.fr-rv { font-size:1rem; font-weight:800; color:#0369a1; white-space:nowrap; }
+
+.fr-widget-foot { padding:.85rem 1.25rem; border-top:1px solid #f0f4fa; background:#f8fafc; }
+.fr-widget-foot p { font-size:.75rem; color:#64748b; margin:0 0 .5rem; line-height:1.3; }
+.fr-widget-foot a { font-size:.83rem; font-weight:700; color:#0369a1; text-decoration:none; display:flex; align-items:center; gap:.35rem; }
+.fr-widget-foot a:hover { text-decoration:underline; }
+
+.fr-quick-widget { background:#fff; border-radius:12px; border:1px solid #e8edf5; box-shadow:0 2px 12px rgba(0,0,0,.04); overflow:hidden; }
+.fr-quick-head  { padding:.9rem 1.25rem; background:#f8fafc; border-bottom:1px solid #f0f4fa; font-size:.83rem; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:.5px; }
+.fr-quick-links { list-style:none; padding:.5rem 0; margin:0; }
+.fr-quick-links li a { display:flex; align-items:center; gap:.5rem; padding:.65rem 1.25rem; font-size:.85rem; color:#475569; text-decoration:none; border-left:3px solid transparent; transition:all .15s; font-weight:500; }
+.fr-quick-links li a:hover,.fr-quick-links li a.active { color:#0369a1; background:#f0f9ff; border-left-color:#0369a1; }
+
+/* ── Responsive ── */
+@media(max-width:1200px){ .fr-page-wrap{ grid-template-columns:200px 1fr 240px; } }
+@media(max-width:1024px){
+  .fr-page-wrap{ grid-template-columns:1fr; }
+  .fr-toc,.fr-sidebar{ position:static; }
+  .fr-sidebar{ display:grid; grid-template-columns:1fr 1fr; }
+}
+@media(max-width:768px){
+  .fr-page-wrap{ padding:1rem 1rem 3rem; }
+  .fr-inner{ grid-template-columns:1fr; }
+  .fr-form-col{ border-right:none; border-bottom:1px solid #f0f4fa; }
+  .fr-sidebar{ grid-template-columns:1fr; }
+  .fr-tabs{ flex-direction:column; }
+  .fr-tab{ border-left:3px solid transparent; border-bottom:none; text-align:left; padding:.75rem 1.25rem; }
+  .fr-tab.active{ border-left-color:#0369a1; }
+  .fr-row2{ grid-template-columns:1fr; }
+  .fr-rate-boxes{ grid-template-columns:1fr 1fr; }
+}
+</style>
+
+<main id="main-content">
+<div class="fr-page-wrap">
+
+  <!-- ══ LEFT TOC ══ -->
+  <aside class="fr-toc">
+    <div class="fr-toc-head">📋 In This Article</div>
+    <ul class="fr-toc-list">
+      <li><a href="#calculator" class="fr-toc-active">Freelance Rate Calculator</a></li>
+      <li><a href="#how-to-use">How to Use</a></li>
+      <li><a href="#the-formula">The Rate Formula</a></li>
+      <li><a href="#taxe">US Taxes for Freelancers</a></li>
+      <li><a href="#benchmark"><%= currentYear %> Rate Benchmarks</a></li>
+      <li><a href="#undercharging">Why Freelancers Undercharge</a></li>
+      <li><a href="#raise-rate">How to Raise Your Rate</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="fr-toc-div"></div>
+    <div class="fr-toc-rlbl">Related Tools</div>
+    <ul class="fr-toc-rlist">
+      <li><a href="<%= baseUrl %>/business/profit-margin-calculator">Profit Margin Calculator</a></li>
+      <li><a href="<%= baseUrl %>/business/markup-calculator">Markup Calculator</a></li>
+      <li><a href="<%= baseUrl %>/loan-calculators/business-loan-calculator">Business Loan</a></li>
+      <li><a href="<%= baseUrl %>/ohio/overtime-calculator">Overtime Calculator</a></li>
+    </ul>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <div class="fr-main">
+
+    <!-- HERO -->
+    <div class="fr-hero">
+      <div class="fr-breadcrumb">
+        <a href="<%= baseUrl %>/index.php">Home</a> ›
+        <a href="<%= baseUrl %>/business/">Business</a> ›
+        Freelance Rate Calculator
+      </div>
+      <h1>Freelance Rate Calculator (<%= currentYear %>)</h1>
+      <p class="fr-desc">
+        Calculate your <strong>minimum viable hourly rate</strong>, day rate, and project price — based on
+        your real income goals, US self-employment taxes, business expenses, and actual billable hours.
+        Stop guessing. Start charging what you're worth.
+      </p>
+    </div>
+
+    <!-- ══ CALCULATOR ══ -->
+    <div class="fr-card" id="calculator">
+      <div class="fr-tabs">
+        <button class="fr-tab active" data-panel="fr-p-hourly">⏱ Hourly Rate</button>
+        <button class="fr-tab"        data-panel="fr-p-day">📅 Day Rate</button>
+        <button class="fr-tab"        data-panel="fr-p-project">📦 Project Price</button>
+      </div>
+
+      <div class="fr-inner">
+
+        <!-- FORM COLUMN -->
+        <div class="fr-form-col">
+
+          <!-- Panel: Hourly Rate -->
+          <div id="fr-p-hourly" class="fr-panel active">
+            <p class="fr-panel-desc">Calculate the minimum hourly rate you must charge to hit your income goal after taxes and expenses.</p>
+            <div class="fr-row2">
+              <div class="fr-field">
+                <label for="fr_income">Target Net Income ($/yr)</label>
+                <input type="number" id="fr_income" value="75000" min="1" step="1000">
+                <div class="fr-hint">Take-home pay you want after all taxes</div>
+              </div>
+              <div class="fr-field">
+                <label for="fr_expenses">Annual Business Expenses ($)</label>
+                <input type="number" id="fr_expenses" value="6000" min="0" step="100">
+                <div class="fr-hint">Software, equipment, insurance, accounting</div>
+              </div>
+            </div>
+            <div class="fr-row2">
+              <div class="fr-field">
+                <label for="fr_hours">Billable Hours / Week</label>
+                <input type="number" id="fr_hours" value="25" min="1" max="60" step="1">
+                <div class="fr-hint">Realistic client-facing hours (not total work hours)</div>
+              </div>
+              <div class="fr-field">
+                <label for="fr_tax">Combined Tax Rate (%)</label>
+                <input type="number" id="fr_tax" value="30" min="0" max="60" step="0.5">
+                <div class="fr-hint">SE tax (15.3%) + federal income tax. Typically 25–38% total</div>
+              </div>
+            </div>
+            <div class="fr-row2">
+              <div class="fr-field">
+                <label for="fr_weeks">Working Weeks / Year</label>
+                <input type="number" id="fr_weeks" value="48" min="1" max="52" step="1">
+                <div class="fr-hint">52 minus vacation &amp; sick weeks (default: 48)</div>
+              </div>
+              <div class="fr-field">
+                <label for="fr_buffer">Vacancy Buffer (%) <span class="fr-opt">(optional)</span></label>
+                <input type="number" id="fr_buffer" value="15" min="0" max="50" step="1">
+                <div class="fr-hint">% of time without billable work (gaps, pitching)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel: Day Rate -->
+          <div id="fr-p-day" class="fr-panel">
+            <p class="fr-panel-desc">Find your day rate directly from your hourly rate, or calculate a standalone day rate for client negotiations.</p>
+            <div class="fr-row2">
+              <div class="fr-field">
+                <label for="fr_d_income">Target Net Income ($/yr)</label>
+                <input type="number" id="fr_d_income" value="75000" min="1" step="1000">
+                <div class="fr-hint">What you want to take home after taxes</div>
+              </div>
+              <div class="fr-field">
+                <label for="fr_d_expenses">Annual Business Expenses ($)</label>
+                <input type="number" id="fr_d_expenses" value="6000" min="0" step="100">
+                <div class="fr-hint">All operating costs of your freelance business</div>
+              </div>
+            </div>
+            <div class="fr-row2">
+              <div class="fr-field">
+                <label for="fr_d_hrs_day">Hours per Work Day</label>
+                <input type="number" id="fr_d_hrs_day" value="8" min="1" max="16" step="0.5">
+                <div class="fr-hint">Your billable hours in a day (typically 6–8)</div>
+              </div>
+              <div class="fr-field">
+                <label for="fr_d_tax">Combined Tax Rate (%)</label>
+                <input type="number" id="fr_d_tax" value="30" min="0" max="60" step="0.5">
+                <div class="fr-hint">SE tax + federal + state income tax</div>
+              </div>
+            </div>
+            <div class="fr-row2">
+              <div class="fr-field">
+                <label for="fr_d_days">Billable Days / Year</label>
+                <input type="number" id="fr_d_days" value="200" min="1" max="260" step="1">
+                <div class="fr-hint">260 working days minus vacation, holidays &amp; gaps</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel: Project Price -->
+          <div id="fr-p-project" class="fr-panel">
+            <p class="fr-panel-desc">Turn your hourly rate into a fixed project price. Add a scope creep buffer to protect your margin.</p>
+            <div class="fr-row2">
+              <div class="fr-field">
+                <label for="fr_p_hourly">Your Hourly Rate ($)</label>
+                <input type="number" id="fr_p_hourly" value="95" min="1" step="1">
+                <div class="fr-hint">Your calculated or market hourly rate</div>
+              </div>
+              <div class="fr-field">
+                <label for="fr_p_hours">Estimated Project Hours</label>
+                <input type="number" id="fr_p_hours" value="40" min="1" step="1">
+                <div class="fr-hint">Your realistic estimate for this project</div>
+              </div>
+            </div>
+            <div class="fr-row2">
+              <div class="fr-field">
+                <label for="fr_p_buffer">Scope Creep Buffer (%)</label>
+                <input type="number" id="fr_p_buffer" value="20" min="0" max="100" step="5">
+                <div class="fr-hint">Add 15–25% to protect against scope expansion</div>
+              </div>
+              <div class="fr-field">
+                <label for="fr_p_revisions">Revision Rounds Included</label>
+                <input type="number" id="fr_p_revisions" value="2" min="0" max="20" step="1">
+                <div class="fr-hint">Each revision round adds ~10% of base time</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="fr-btn" id="fr-calc-btn">⚡ Calculate My Rate</button>
+        </div>
+
+        <!-- RESULTS COLUMN -->
+        <div class="fr-res-col">
+          <h3 class="fr-res-head">Your Rate</h3>
+          <p class="fr-res-sub" id="fr-res-sub">Based on your inputs</p>
+
+          <div class="fr-primary-box">
+            <span class="fr-primary-val" id="fr-primary-val">$95/hr</span>
+            <span class="fr-primary-lbl" id="fr-primary-lbl">Minimum Hourly Rate</span>
+          </div>
+
+          <div class="fr-rate-boxes" id="fr-rate-boxes">
+            <div class="fr-rate-box">
+              <span class="fr-rate-val" id="fr-box1-val">$760</span>
+              <span class="fr-rate-lbl" id="fr-box1-lbl">Day Rate (8 hrs)</span>
+            </div>
+            <div class="fr-rate-box">
+              <span class="fr-rate-val" id="fr-box2-val">$15,200</span>
+              <span class="fr-rate-lbl" id="fr-box2-lbl">Monthly Revenue</span>
+            </div>
+            <div class="fr-rate-box">
+              <span class="fr-rate-val" id="fr-box3-val">$182,400</span>
+              <span class="fr-rate-lbl" id="fr-box3-lbl">Annual Revenue Target</span>
+            </div>
+            <div class="fr-rate-box">
+              <span class="fr-rate-val" id="fr-box4-val">$75,000</span>
+              <span class="fr-rate-lbl" id="fr-box4-lbl">Est. Take-Home</span>
+            </div>
+          </div>
+
+          <div class="fr-breakdown">
+            <div class="fr-bkd-title">Revenue Breakdown</div>
+            <div class="fr-bkd-row" id="fr-bkd-row">
+              <div class="fr-bkd-row"><span class="fr-bkd-label">Your Take-Home Goal</span><span class="fr-bkd-val" id="bkd-income">$75,000</span></div>
+              <div class="fr-bkd-row"><span class="fr-bkd-label">Business Expenses</span><span class="fr-bkd-val" id="bkd-expenses">$6,000</span></div>
+              <div class="fr-bkd-row"><span class="fr-bkd-label">Taxes (est.)</span><span class="fr-bkd-val" id="bkd-taxes">$34,714</span></div>
+              <div class="fr-bkd-row"><span class="fr-bkd-label">Vacancy Buffer</span><span class="fr-bkd-val" id="bkd-buffer">$15,000</span></div>
+              <div class="fr-bkd-row"><span class="fr-bkd-label">→ Gross Revenue Needed</span><span class="fr-bkd-val" id="bkd-gross">$182,400</span></div>
+            </div>
+          </div>
+
+          <div class="fr-gauge" id="fr-gauge">
+            <div class="fr-gauge-title">Market Rate Positioning</div>
+            <div class="fr-gauge-bar">
+              <div class="fr-gauge-fill"></div>
+              <div class="fr-gauge-marker" id="fr-gauge-marker"></div>
+            </div>
+            <div class="fr-gauge-labels">
+              <span>Entry ($20/hr)</span>
+              <span>Senior ($200/hr)</span>
+            </div>
+            <div class="fr-gauge-verdict" id="fr-gauge-verdict"></div>
+          </div>
+
+          <p style="margin-top:.75rem;font-size:.74rem;color:#64748b;">
+            *Minimum rate only — charge more based on your market value and specialization.
+          </p>
+        </div>
+      </div>
+    </div><!-- /fr-card -->
+
+
+    <!-- ══ HOW TO USE ══ -->
+    <section class="fr-section" id="how-to-use">
+      <h2>How to Use This Freelance Rate Calculator</h2>
+      <p>There are three modes. Use <strong>Hourly Rate</strong> to find your minimum viable per-hour charge. Use <strong>Day Rate</strong> for clients who book you by the day. Use <strong>Project Price</strong> to convert your hourly rate into a fixed-fee quote with scope creep protection.</p>
+
+      <h3>Hourly Rate Mode — Step by Step</h3>
+      <ol style="padding-left:1.5rem;color:#475569;line-height:1.85;">
+        <li><strong>Target Net Income:</strong> Enter the after-tax, after-expense take-home pay you want. Not your revenue target — your actual spendable income goal.</li>
+        <li><strong>Annual Business Expenses:</strong> Every cost of running your freelance business: software, hardware, professional liability insurance, accounting, courses, marketing. Be thorough — these are all costs you must earn before paying yourself.</li>
+        <li><strong>Billable Hours per Week:</strong> Be honest. Most full-time freelancers bill <strong>20–25 hours/week</strong> out of a 40-hour work week. The rest disappears into emails, proposals, invoicing, and admin.</li>
+        <li><strong>Combined Tax Rate:</strong> US freelancers pay 15.3% self-employment tax plus federal income tax. Start with 30% if you're unsure — it's a safe estimate for most single-filer US freelancers earning $60K–$120K.</li>
+        <li><strong>Working Weeks:</strong> Subtract your vacation weeks, sick days, and major holidays. 48 is a realistic default for most US freelancers.</li>
+        <li><strong>Vacancy Buffer:</strong> The % of billable time you expect to <em>not</em> be working due to client gaps, project delays, or time spent pitching. 10–20% is typical. New freelancers should use 20–30%.</li>
+      </ol>
+
+      <div class="fr-info-box">
+        💡 <strong>Key insight:</strong> The calculator gives you your <em>minimum viable rate</em> — the floor below which you cannot profitably work. Your actual market rate should be <strong>higher</strong> based on your skills, specialization, and the value you deliver to clients. If clients never push back, you're undercharging.
+      </div>
+    </section>
+
+    <!-- ══ THE FORMULA ══ -->
+    <section class="fr-section" id="the-formula">
+      <h2>The Freelance Rate Formula (Explained)</h2>
+      <p>Most freelancers calculate their rate the wrong way: they divide a desired salary by 2,080 hours and think they're done. That ignores taxes, expenses, unpaid time, and the reality of freelance work. Here is the correct approach:</p>
+
+      <h3>Step 1 — Calculate Gross Revenue Needed</h3>
+      <div class="fr-formula">
+        <code>Gross Revenue = (Net Income + Expenses) / (1 − Tax Rate)</code>
+      </div>
+      <p>Example: You want $75,000 net, have $6,000 in expenses, and pay 30% combined tax rate.</p>
+      <div class="fr-formula">
+        <code>Gross Revenue = ($75,000 + $6,000) / (1 − 0.30) = $81,000 / 0.70 = $115,714</code>
+      </div>
+
+      <h3>Step 2 — Add the Vacancy Buffer</h3>
+      <div class="fr-formula">
+        <code>Revenue Needed = Gross Revenue / (1 − Vacancy Buffer %)</code>
+        <code>Example (15% buffer): $115,714 / 0.85 = $136,134</code>
+      </div>
+
+      <h3>Step 3 — Calculate Annual Billable Hours</h3>
+      <div class="fr-formula">
+        <code>Annual Billable Hours = Billable Hrs/Week × Working Weeks/Year</code>
+        <code>Example: 25 hrs/week × 48 weeks = 1,200 billable hours/year</code>
+      </div>
+
+      <h3>Step 4 — Divide to Get Hourly Rate</h3>
+      <div class="fr-formula">
+        <code>Hourly Rate = Revenue Needed / Annual Billable Hours</code>
+        <code>Example: $136,134 / 1,200 = $113.44/hour</code>
+      </div>
+
+      <div class="fr-warn-box">
+        <strong>The $28/hr trap:</strong> A freelancer who wants $60,000/year calculates $60,000 / 2,080 hours = $28.85/hr. But after 15.3% SE tax + 12% income tax + expenses + unpaid time, their actual take-home at $28.85/hr is closer to <strong>$18–$20/hr</strong> — less than many entry-level employees. The correct minimum rate for a $60,000 net income goal is typically $55–$70/hr depending on billable hours and expenses.
+      </div>
+    </section>
+
+    <!-- ══ US TAXES ══ -->
+    <section class="fr-section" id="taxe">
+      <h2>US Taxes for Freelancers — What You Actually Owe</h2>
+      <p>Tax is the single biggest expense most new freelancers forget to build into their rates. Unlike employees who have taxes withheld automatically, freelancers are responsible for paying all of the following:</p>
+
+      <h3>Self-Employment Tax (SE Tax) — 15.3%</h3>
+      <p>Every US freelancer pays 15.3% self-employment tax on net self-employment income. This covers Social Security (12.4%) and Medicare (2.9%). As a W-2 employee, your employer pays half of this — as a freelancer, you pay the full amount. You can deduct half of SE tax from your adjusted gross income, which reduces your federal income tax slightly.</p>
+
+      <h3>Federal Income Tax</h3>
+      <p>On top of SE tax, you pay regular federal income tax on your net earnings (after the SE tax deduction). For most US freelancers earning $50K–$150K net, the effective federal income tax rate is 12–22%.</p>
+
+      <table class="fr-table">
+        <thead><tr><th>Net Freelance Income</th><th>Est. SE Tax</th><th>Est. Federal Income Tax</th><th>Est. Combined Rate</th></tr></thead>
+        <tbody>
+          <tr><td>$30,000</td><td>~$4,239</td><td>~$1,200</td><td><strong>~18%</strong></td></tr>
+          <tr><td>$50,000</td><td>~$7,065</td><td>~$4,000</td><td><strong>~22%</strong></td></tr>
+          <tr><td>$75,000</td><td>~$10,597</td><td>~$8,500</td><td><strong>~26%</strong></td></tr>
+          <tr><td>$100,000</td><td>~$14,130</td><td>~$14,000</td><td><strong>~28%</strong></td></tr>
+          <tr><td>$150,000</td><td>~$18,228</td><td>~$28,000</td><td><strong>~31%</strong></td></tr>
+          <tr><td>$200,000</td><td>~$18,228</td><td>~$46,000</td><td><strong>~32%</strong></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.82rem;color:#64748b;margin-top:.5rem;">*Estimates for single filers with standard deduction, <%= currentYear %>. Does not include state income tax (add 3–10% for most states). Always consult a CPA for your specific situation.</p>
+
+      <h3>Quarterly Estimated Tax Payments</h3>
+      <p>As a freelancer, you must make quarterly estimated tax payments to the IRS (typically due in April, June, September, and January). Failing to do so results in an underpayment penalty. A simple rule: <strong>set aside 25–35% of every payment you receive</strong> into a separate savings account designated for taxes.</p>
+
+      <div class="fr-info-box">
+        💡 <strong>Tax deductions lower your effective rate:</strong> Many freelance business expenses are tax-deductible — home office, equipment, software, health insurance premiums, retirement contributions (Solo 401k or SEP-IRA up to $69,000 in <%= currentYear %>), professional development, and business travel. A CPA who specializes in self-employed clients typically pays for themselves many times over.
+      </div>
+    </section>
+
+    <!-- ══ BENCHMARKS ══ -->
+    <section class="fr-section" id="benchmark">
+      <h2><%= currentYear %> US Freelance Rate Benchmarks by Field</h2>
+      <p>Use these ranges to sanity-check whether your calculated minimum rate aligns with what the market will actually bear. If your minimum rate is above the market range, you need to either reduce expenses, increase billable hours, or target higher-budget clients.</p>
+
+      <table class="fr-table">
+        <thead>
+          <tr><th>Specialty</th><th>Entry Level</th><th>Mid-Level</th><th>Senior / Expert</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Software Development</strong></td>       <td>$50 – $75/hr</td>  <td>$90 – $130/hr</td> <td>$150 – $300+/hr</td></tr>
+          <tr><td><strong>UI/UX Design</strong></td>               <td>$45 – $70/hr</td>  <td>$75 – $110/hr</td> <td>$120 – $200/hr</td></tr>
+          <tr><td><strong>Graphic Design</strong></td>             <td>$30 – $50/hr</td>  <td>$50 – $85/hr</td>  <td>$90 – $150/hr</td></tr>
+          <tr><td><strong>Copywriting / Content</strong></td>      <td>$35 – $55/hr</td>  <td>$60 – $100/hr</td> <td>$110 – $200/hr</td></tr>
+          <tr><td><strong>Digital Marketing / SEO</strong></td>    <td>$40 – $65/hr</td>  <td>$70 – $110/hr</td> <td>$120 – $200/hr</td></tr>
+          <tr><td><strong>Video Production / Editing</strong></td> <td>$40 – $65/hr</td>  <td>$70 – $100/hr</td> <td>$100 – $175/hr</td></tr>
+          <tr><td><strong>Business Consulting</strong></td>        <td>$75 – $100/hr</td> <td>$110 – $175/hr</td><td>$200 – $400+/hr</td></tr>
+          <tr><td><strong>Bookkeeping / Accounting</strong></td>   <td>$30 – $50/hr</td>  <td>$55 – $80/hr</td>  <td>$85 – $150/hr</td></tr>
+          <tr><td><strong>Virtual Assistant</strong></td>          <td>$20 – $35/hr</td>  <td>$35 – $55/hr</td>  <td>$60 – $90/hr</td></tr>
+          <tr><td><strong>Project Management</strong></td>         <td>$55 – $75/hr</td>  <td>$80 – $120/hr</td> <td>$130 – $200/hr</td></tr>
+          <tr><td><strong>Data Science / Analytics</strong></td>   <td>$65 – $90/hr</td>  <td>$100 – $150/hr</td><td>$160 – $300+/hr</td></tr>
+          <tr><td><strong>Legal / Compliance (JD)</strong></td>    <td>$100 – $150/hr</td><td>$175 – $275/hr</td><td>$300 – $600+/hr</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.82rem;color:#64748b;margin-top:.5rem;">Source: aggregated from Upwork, Toptal, Bureau of Labor Statistics, and freelance community surveys, <%= currentYear %>. Rates represent US domestic market. Rates vary by platform, niche, and client type.</p>
+    </section>
+
+    <!-- ══ WHY FREELANCERS UNDERCHARGE ══ -->
+    <section class="fr-section" id="undercharging">
+      <h2>Why Most Freelancers Undercharge (And How to Stop)</h2>
+      <p>The vast majority of freelancers — especially those transitioning from employment — set their rates too low. Here are the six most common mistakes:</p>
+
+      <h3>1. Using the Salary-to-Hourly Shortcut</h3>
+      <p>Dividing a $60,000 salary by 2,080 hours = $28.85/hr. But this ignores that employees also receive paid vacation, employer-paid taxes (7.65% FICA match), health benefits, equipment, and retirement contributions. The true cost to replace a $60,000 employee is $80,000–$90,000. Your freelance rate must cover all of those costs yourself.</p>
+
+      <h3>2. Forgetting the Utilization Gap</h3>
+      <p>A 40-hour work week does not produce 40 billable hours. Time goes to: email and client communication (~5 hrs), proposals and pitching (~3 hrs), invoicing and admin (~2 hrs), professional development (~2 hrs), and marketing (~3 hrs). <strong>That leaves roughly 25 billable hours</strong> — not 40.</p>
+
+      <h3>3. Anchoring to Platform Rates</h3>
+      <p>Sites like Fiverr and Upwork display low rates from global competition. US freelancers targeting US clients with US-level budgets can and should charge US market rates. The client paying $15/hr on Fiverr is not the same client budget as the US SMB or agency paying $100–$150/hr for quality work.</p>
+
+      <h3>4. Fear of Losing the Client</h3>
+      <p>Research consistently shows that <strong>price increases rarely lose clients</strong> in the way freelancers fear. If a client is truly price-sensitive, they will negotiate — but most will accept a well-justified rate increase, especially from a trusted freelancer who delivers quality work. If they don't, they free up capacity for higher-paying clients.</p>
+
+      <h3>5. Not Accounting for Unpaid Gaps</h3>
+      <p>Freelancers don't get paid between contracts. A week of no work is a week of zero income — but rent, software subscriptions, and health insurance still come due. That's why the vacancy buffer input in this calculator is critical. A 20% buffer means you must earn 25% more per billable hour than you would without gaps.</p>
+
+      <h3>6. Ignoring Scope Creep</h3>
+      <p>Projects almost always expand. "One small change" accumulates into hours of unpaid work. Fixed-project pricing must include a scope buffer (15–25%) and a clearly-written contract that defines what's included and what triggers additional billing.</p>
+    </section>
+
+    <!-- ══ HOW TO RAISE YOUR RATE ══ -->
+    <section class="fr-section" id="raise-rate">
+      <h2>How to Raise Your Freelance Rate</h2>
+
+      <h3>1. Niche Down</h3>
+      <p>A generalist web developer charges $50–$75/hr. A web developer who specializes in Shopify Plus for DTC e-commerce brands charges $120–$175/hr — for effectively the same technical skill set. <strong>Specialization is the fastest path to a higher rate</strong> because you eliminate comparison shopping and become the obvious choice for a specific problem.</p>
+
+      <h3>2. Lead With Value, Not Hours</h3>
+      <p>Framing: "I charge $95/hr" invites clients to mentally multiply by hours and find it expensive. Framing: "My website redesign package for small service businesses is $4,800 and typically generates 30–50% more inbound leads within 90 day" focuses on the outcome, not your time. Outcome-based positioning unlocks higher rates because you're selling results, not labor.</p>
+
+      <h3>3. The Annual Rate Increase</h3>
+      <p>Give existing clients at least 60 days notice of a rate increase. Frame it as annual market adjustments (which it is). Most loyal clients expect and accept 5–15% annual increases. Losing a price-sensitive client frees capacity to find a higher-paying one. If you haven't raised your rate in 2+ years, you've effectively taken a pay cut due to inflation.</p>
+
+      <h3>4. Document Your Results</h3>
+      <p>Keep a portfolio of quantifiable outcomes: "$X in revenue generated," "reduced processing time by Y%," "increased organic traffic by Z%." Concrete results justify premium rates and make proposals easier to close. A client who sees documented ROI views your rate as an investment, not a cost.</p>
+
+      <div class="fr-info-box">
+        💡 <strong>Rate increase math:</strong> Raising your rate from $75/hr to $90/hr is a 20% increase. If it causes you to lose 10% of your clients, your effective earnings go up — because you now earn more per hour from the 90% who stay. You also have freed capacity to find clients who value your work at the higher rate.
+      </div>
+    </section>
+
+    <!-- ══ FAQ ══ -->
+    <section class="fr-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="fr-faq-item open">
+        <div class="fr-faq-q">What is a good freelance hourly rate in <%= currentYear %>?</div>
+        <div class="fr-faq-a">It depends entirely on your field and experience. In <%= currentYear %>, US freelance rates range from $20–$35/hr for entry-level virtual assistants to $150–$300+/hr for senior software engineers, consultants, and specialized experts. Mid-level professionals across most fields charge $60–$120/hr. The "right" rate is one that covers your income goal, taxes, and expenses — and that the market will pay for your specific skills. Use the benchmark table above as a reference point.</div>
+      </div>
+
+      <div class="fr-faq-item">
+        <div class="fr-faq-q">How do I calculate my freelance rate from a salary?</div>
+        <div class="fr-faq-a">Start with your desired net annual income (not gross salary). Add your business expenses. Divide by (1 − your combined tax rate) to get gross revenue needed. Add a vacancy buffer for unpaid time. Divide by your annual billable hours (billable hrs/week × working weeks/year). The full formula is: <strong>Hourly Rate = [(Net Income + Expenses) / (1 − Tax Rate) / (1 − Buffer)] / Annual Billable Hours</strong>. This calculator handles all of that automatically — just enter your numbers and hit Calculate.</div>
+      </div>
+
+      <div class="fr-faq-item">
+        <div class="fr-faq-q">What is the US self-employment tax rate for freelancers?</div>
+        <div class="fr-faq-a">US freelancers pay 15.3% self-employment (SE) tax on net self-employment income — covering Social Security (12.4%) and Medicare (2.9%). You can deduct half of this SE tax from your adjusted gross income. On top of SE tax, you pay federal income tax. For most US freelancers, the combined effective rate is 25–35% depending on income level. State income tax adds another 3–10% in most states. Always set aside at least 30% of every client payment until you know your actual rate.</div>
+      </div>
+
+      <div class="fr-faq-item">
+        <div class="fr-faq-q">How many billable hours per week should I plan for?</div>
+        <div class="fr-faq-a">Most experienced full-time freelancers realistically bill 20–25 hours per week out of a nominal 40-hour work week. The remaining ~15–20 hours go to client communication, proposals, invoicing, bookkeeping, marketing, and professional development. New freelancers often over-estimate this number. If you're unsure, start with 20 billable hours/week and adjust based on your actual tracked time over the first few months.</div>
+      </div>
+
+      <div class="fr-faq-item">
+        <div class="fr-faq-q">How do I price a freelance project?</div>
+        <div class="fr-faq-a">Estimate your total project hours honestly, then multiply by your hourly rate. Add a scope creep buffer of 15–25% to protect against inevitable project expansion. Add a factor for revision rounds (each round typically adds ~10% of base time). Formula: <strong>Project Price = (Estimated Hours + Revision Hours) × Hourly Rate × (1 + Buffer %)</strong>. The Project Price tab in this calculator handles this automatically. Always include a clear scope definition in your contract to prevent unlimited revisions.</div>
+      </div>
+
+      <div class="fr-faq-item">
+        <div class="fr-faq-q">Should I charge more than my minimum rate?</div>
+        <div class="fr-faq-a">Yes — always. The minimum rate from this calculator is your survival floor, not your market rate. Your actual rate should be higher based on your specialization, the value you deliver, the client's budget, and what comparable freelancers charge in your field. Use the minimum as your hard floor; pitch at your market rate. A simple test: if clients never push back on your rate, you are almost certainly undercharging.</div>
+      </div>
+
+      <div class="fr-faq-item">
+        <div class="fr-faq-q">What business expenses should I include?</div>
+        <div class="fr-faq-a">Common deductible freelance business expenses: software subscriptions (Adobe, Figma, Slack, project management tools), hardware and equipment, home office deduction (dedicated workspace), professional liability / E&amp;O insurance, health insurance premiums (often 100% deductible for self-employed), accounting and bookkeeping fees, professional development, marketing and website costs, and retirement contributions (Solo 401k or SEP-IRA). Include all of these in your expenses input — they all reduce your take-home if you don't account for them in your rate.</div>
+      </div>
+
+      <div class="fr-faq-item">
+        <div class="fr-faq-q">How do I calculate a day rate from my hourly rate?</div>
+        <div class="fr-faq-a">The simplest approach: Day Rate = Hourly Rate × Billable Hours Per Day. For a standard 8-hour day: Day Rate = Hourly Rate × 8. However, most freelancers add a small premium (10–20%) to day rates over their hourly equivalent — because day bookings offer certainty of income and the client benefits from your full focused attention. The Day Rate tab in this calculator computes your standalone day rate directly from your income goals.</div>
+      </div>
+
+    </section>
+
+  </div><!-- /fr-main -->
+
+  <!-- ══ RIGHT SIDEBAR ══ -->
+  <aside class="fr-sidebar">
+
+    <!-- Market Rate Widget -->
+    <div class="fr-widget">
+      <div class="fr-widget-head">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span class="fr-widget-title">US Freelance Rate Snapshot</span>
+        </div>
+        <div class="fr-widget-subtitle">Median hourly rates by field</div>
+        <div class="fr-widget-updated" id="fr-widget-updated">Updated: <%= currentDateShort %></div>
+      </div>
+      <div class="fr-rate-rows">
+        <div class="fr-rate-row">
+          <div><div class="fr-rl">Software Development</div><div class="fr-rs">Mid-level US median</div></div>
+          <div style="text-align:right;"><div class="fr-rv">$110/hr</div></div>
+        </div>
+        <div class="fr-rate-row">
+          <div><div class="fr-rl">UI/UX Design</div><div class="fr-rs">Mid-level US median</div></div>
+          <div style="text-align:right;"><div class="fr-rv">$88/hr</div></div>
+        </div>
+        <div class="fr-rate-row">
+          <div><div class="fr-rl">Copywriting</div><div class="fr-rs">Mid-level US median</div></div>
+          <div style="text-align:right;"><div class="fr-rv">$78/hr</div></div>
+        </div>
+        <div class="fr-rate-row" style="background:#f0f9ff;">
+          <div><div class="fr-rl">Digital Marketing</div><div class="fr-rs">Mid-level US median</div></div>
+          <div style="text-align:right;"><div class="fr-rv">$85/hr</div></div>
+        </div>
+        <div class="fr-rate-row">
+          <div><div class="fr-rl">Graphic Design</div><div class="fr-rs">Mid-level US median</div></div>
+          <div style="text-align:right;"><div class="fr-rv">$62/hr</div></div>
+        </div>
+        <div class="fr-rate-row">
+          <div><div class="fr-rl">Bookkeeping</div><div class="fr-rs">Mid-level US median</div></div>
+          <div style="text-align:right;"><div class="fr-rv">$55/hr</div></div>
+        </div>
+      </div>
+      <div class="fr-widget-foot">
+        <p>Rates represent US domestic market, <%= currentYear %>. Senior specialists command 40–100% more than mid-level medians.</p>
+        <a href="https://www.bls.gov/ooh/" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          BLS Occupational Outlook →
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Tools -->
+    <div class="fr-quick-widget">
+      <div class="fr-quick-head">💼 Business Tools</div>
+      <ul class="fr-quick-links">
+        <li><a href="<%= baseUrl %>/business/freelance-rate-calculator" class="active">💻 Freelance Rate Calculator</a></li>
+        <li><a href="<%= baseUrl %>/business/profit-margin-calculator">💹 Profit Margin Calculator</a></li>
+        <li><a href="<%= baseUrl %>/business/markup-calculator">🏷️ Markup Calculator</a></li>
+        <li><a href="<%= baseUrl %>/loan-calculators/business-loan-calculator">🏦 Business Loan</a></li>
+        <li><a href="<%= baseUrl %>/loan-calculators/sba-loan-calculator">📋 SBA Loan</a></li>
+        <li><a href="<%= baseUrl %>/ohio/overtime-calculator">⏰ Overtime Calculator</a></li>
+      </ul>
+    </div>
+
+  </aside>
+
+</div><!-- /fr-page-wrap -->
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const tabs    = document.querySelectorAll('.fr-tab');
+  const panels  = document.querySelectorAll('.fr-panel');
+  const calcBtn = document.getElementById('fr-calc-btn');
+
+  let currentPanel = 'fr-p-hourly';
+
+  // ── Helpers ──
+  const fmtC  = v => '$' + Math.round(v).toLocaleString('en-US');
+  const fmtCd = v => '$' + Number(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+  const fmtCr = v => '$' + Math.round(v).toLocaleString('en-US') + '/hr';
+
+  // ── Tab switching ──
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      currentPanel = tab.getAttribute('data-panel');
+      document.getElementById(currentPanel).classList.add('active');
+      calculate();
+    });
+  });
+
+  // ── Main calculate dispatcher ──
+  function calculate() {
+    if (currentPanel === 'fr-p-hourly')  calcHourly();
+    else if (currentPanel === 'fr-p-day') calcDay();
+    else calcProject();
+  }
+
+  // ── Hourly Rate ──
+  function calcHourly() {
+    const income   = parseFloat(document.getElementById('fr_income').value)   || 0;
+    const expenses = parseFloat(document.getElementById('fr_expenses').value) || 0;
+    const hours    = parseFloat(document.getElementById('fr_hours').value)    || 0;
+    const tax      = parseFloat(document.getElementById('fr_tax').value)      || 0;
+    const weeks    = parseFloat(document.getElementById('fr_weeks').value)    || 0;
+    const buffer   = parseFloat(document.getElementById('fr_buffer').value)   || 0;
+
+    if (income <= 0 || hours <= 0 || weeks <= 0) {
+      document.getElementById('fr-res-sub').textContent = 'Enter valid inputs to calculate.';
+      return;
+    }
+
+    const taxRate    = tax / 100;
+    const bufferRate = buffer / 100;
+
+    // Step 1: gross revenue to cover income + expenses + tax
+    const grossNeeded = (income + expenses) / (1 - taxRate);
+    // Step 2: gross up for vacancy buffer
+    const totalNeeded = bufferRate < 1 ? grossNeeded / (1 - bufferRate) : grossNeeded;
+    // Step 3: annual billable hours
+    const annualHours = hours * weeks;
+    // Step 4: hourly rate
+    const hourlyRate  = annualHours > 0 ? totalNeeded / annualHours : 0;
+    const dayRate     = hourlyRate * 8;
+    const monthlyRev  = totalNeeded / 12;
+    const taxAmt      = grossNeeded - income - expenses;
+    const bufferAmt   = totalNeeded - grossNeeded;
+
+    showPrimary(fmtCr(hourlyRate), 'Minimum Hourly Rate');
+    document.getElementById('fr-box1-val').textContent = fmtC(dayRate);
+    document.getElementById('fr-box1-lbl').textContent = 'Day Rate (8 hrs)';
+    document.getElementById('fr-box2-val').textContent = fmtC(monthlyRev);
+    document.getElementById('fr-box2-lbl').textContent = 'Monthly Revenue Target';
+    document.getElementById('fr-box3-val').textContent = fmtC(totalNeeded);
+    document.getElementById('fr-box3-lbl').textContent = 'Annual Revenue Target';
+    document.getElementById('fr-box4-val').textContent = fmtC(income);
+    document.getElementById('fr-box4-lbl').textContent = 'Est. Take-Home';
+    document.getElementById('fr-res-sub').textContent  = annualHours + ' billable hours/year · ' + hours + ' hrs/week × ' + weeks + ' weeks';
+
+    document.getElementById('bkd-income').textContent   = fmtC(income);
+    document.getElementById('bkd-expenses').textContent = fmtC(expenses);
+    document.getElementById('bkd-taxes').textContent    = fmtC(taxAmt);
+    document.getElementById('bkd-buffer').textContent   = fmtC(bufferAmt);
+    document.getElementById('bkd-gross').textContent    = fmtC(totalNeeded);
+
+    updateGauge(hourlyRate);
+  }
+
+  // ── Day Rate ──
+  function calcDay() {
+    const income   = parseFloat(document.getElementById('fr_d_income').value)    || 0;
+    const expenses = parseFloat(document.getElementById('fr_d_expenses').value)  || 0;
+    const hrsDay   = parseFloat(document.getElementById('fr_d_hrs_day').value)   || 0;
+    const tax      = parseFloat(document.getElementById('fr_d_tax').value)       || 0;
+    const days     = parseFloat(document.getElementById('fr_d_days').value)      || 0;
+
+    if (income <= 0 || days <= 0 || hrsDay <= 0) {
+      document.getElementById('fr-res-sub').textContent = 'Enter valid inputs to calculate.';
+      return;
+    }
+
+    const taxRate     = tax / 100;
+    const grossNeeded = (income + expenses) / (1 - taxRate);
+    const dayRate     = days > 0 ? grossNeeded / days : 0;
+    const hourlyRate  = hrsDay > 0 ? dayRate / hrsDay : 0;
+    const weeklyRev   = grossNeeded / 52;
+    const monthlyRev  = grossNeeded / 12;
+    const taxAmt      = grossNeeded - income - expenses;
+
+    showPrimary(fmtC(dayRate) + '/day', 'Minimum Day Rate');
+    document.getElementById('fr-box1-val').textContent = fmtCr(hourlyRate);
+    document.getElementById('fr-box1-lbl').textContent = 'Implied Hourly Rate';
+    document.getElementById('fr-box2-val').textContent = fmtC(weeklyRev);
+    document.getElementById('fr-box2-lbl').textContent = 'Weekly Revenue (avg)';
+    document.getElementById('fr-box3-val').textContent = fmtC(monthlyRev);
+    document.getElementById('fr-box3-lbl').textContent = 'Monthly Revenue Target';
+    document.getElementById('fr-box4-val').textContent = fmtC(grossNeeded);
+    document.getElementById('fr-box4-lbl').textContent = 'Annual Revenue Target';
+    document.getElementById('fr-res-sub').textContent  = days + ' billable days/year at ' + hrsDay + ' hrs/day';
+
+    document.getElementById('bkd-income').textContent   = fmtC(income);
+    document.getElementById('bkd-expenses').textContent = fmtC(expenses);
+    document.getElementById('bkd-taxes').textContent    = fmtC(taxAmt);
+    document.getElementById('bkd-buffer').textContent   = '—';
+    document.getElementById('bkd-gross').textContent    = fmtC(grossNeeded);
+
+    updateGauge(hourlyRate);
+  }
+
+  // ── Project Price ──
+  function calcProject() {
+    const hourly    = parseFloat(document.getElementById('fr_p_hourly').value)    || 0;
+    const estHours  = parseFloat(document.getElementById('fr_p_hours').value)     || 0;
+    const buffer    = parseFloat(document.getElementById('fr_p_buffer').value)    || 0;
+    const revisions = parseFloat(document.getElementById('fr_p_revisions').value) || 0;
+
+    if (hourly <= 0 || estHours <= 0) {
+      document.getElementById('fr-res-sub').textContent = 'Enter hourly rate and estimated hours.';
+      return;
+    }
+
+    const revHours    = revisions * estHours * 0.10;
+    const totalHours  = estHours + revHours;
+    const basePrice   = totalHours * hourly;
+    const bufferAmt   = basePrice * (buffer / 100);
+    const projectPrice = basePrice + bufferAmt;
+    const minPrice    = estHours * hourly;   // no buffer, no revisions
+    const maxPrice    = projectPrice * 1.15; // 15% above recommended
+
+    showPrimary(fmtC(projectPrice), 'Recommended Project Price');
+    document.getElementById('fr-box1-val').textContent = fmtC(minPrice);
+    document.getElementById('fr-box1-lbl').textContent = 'Minimum (no buffer)';
+    document.getElementById('fr-box2-val').textContent = fmtC(maxPrice);
+    document.getElementById('fr-box2-lbl').textContent = 'Premium Price (+15%)';
+    document.getElementById('fr-box3-val').textContent = Math.round(totalHours) + ' hrs';
+    document.getElementById('fr-box3-lbl').textContent = 'Total Hours (incl. revisions)';
+    document.getElementById('fr-box4-val').textContent = fmtCr(hourly);
+    document.getElementById('fr-box4-lbl').textContent = 'Your Hourly Rate';
+    document.getElementById('fr-res-sub').textContent  = estHours + ' est. hrs + ' + revisions + ' revision rounds + ' + buffer + '% buffer';
+
+    document.getElementById('bkd-income').textContent   = fmtC(estHours * hourly);
+    document.getElementById('bkd-expenses').textContent = fmtC(revHours * hourly);
+    document.getElementById('bkd-taxes').textContent    = fmtC(bufferAmt);
+    document.getElementById('bkd-buffer').textContent   = '—';
+    document.getElementById('bkd-gross').textContent    = fmtC(projectPrice);
+
+    // Relabel breakdown rows for project mode
+    const rows = document.querySelectorAll('.fr-bkd-row .fr-bkd-label');
+    if (rows.length >= 5) {
+      rows[0].textContent = 'Base (Est. Hours × Rate)';
+      rows[1].textContent = 'Revision Rounds';
+      rows[2].textContent = 'Scope Buffer';
+      rows[3].textContent = '';
+      rows[4].textContent = '→ Recommended Project Price';
+    }
+
+    document.getElementById('fr-gauge').classList.remove('show');
+  }
+
+  function showPrimary(val, lbl) {
+    document.getElementById('fr-primary-val').textContent = val;
+    document.getElementById('fr-primary-lbl').textContent = lbl;
+  }
+
+  function updateGauge(rate) {
+    const gauge  = document.getElementById('fr-gauge');
+    const marker = document.getElementById('fr-gauge-marker');
+    const verdict = document.getElementById('fr-gauge-verdict');
+    gauge.classList.add('show');
+
+    // Scale: $20 = 0%, $200 = 100%
+    let pct = ((rate - 20) / (200 - 20)) * 100;
+    pct = Math.max(0, Math.min(100, pct));
+    marker.style.left = pct + '%';
+
+    let msg = '';
+    if (rate < 40)       msg = '<strong>Entry-level range.</strong> Viable for VAs, basic data entry, and very junior work. Most US freelance fields require higher rates to be sustainable.';
+    else if (rate < 70)  msg = '<strong>Junior to mid-level range.</strong> Competitive for generalists and moderately experienced freelancers in most fields.';
+    else if (rate < 120) msg = '<strong>Solid mid-level rate.</strong> Typical for experienced freelancers with a defined niche and 3–7 years of experience.';
+    else if (rate < 175) msg = '<strong>Senior range.</strong> Expected for specialists, experts, and consultants with strong portfolios and client outcomes.';
+    else                 msg = '<strong>Expert / Consultant level.</strong> Typical for highly specialized experts, senior strategists, and consultants with proven ROI.';
+    verdict.innerHTML = msg;
+  }
+
+  // ── Auto-calculate on input ──
+  const allInputs = document.querySelectorAll('.fr-field input');
+  allInputs.forEach(el => el.addEventListener('input', calculate));
+  calcBtn.addEventListener('click', calculate);
+  calculate(); // init
+
+  // ── TOC scroll highlight ──
+  const tocLinks = document.querySelectorAll('.fr-toc-list a');
+  const sections = [];
+  tocLinks.forEach(link => {
+    const id  = link.getAttribute('href').replace('#', '');
+    const sec = document.getElementById(id);
+    if (sec) sections.push({ link, sec });
+  });
+  function updateTOC() {
+    const y = window.scrollY + 130;
+    let active = sections[0];
+    sections.forEach(s => { if (s.sec && s.sec.getBoundingClientRect().top + window.scrollY <= y) active = s; });
+    tocLinks.forEach(l => l.classList.remove('fr-toc-active'));
+    if (active) active.link.classList.add('fr-toc-active');
+  }
+  window.addEventListener('scroll', updateTOC, { passive: true });
+  updateTOC();
+
+  // ── FAQ accordion ──
+  document.querySelectorAll('.fr-faq-q').forEach(q => {
+    q.addEventListener('click', function () {
+      const item = this.closest('.fr-faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.fr-faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+});
+</script>
+<%- include('../../partials/footer') %>

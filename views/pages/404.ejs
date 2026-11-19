@@ -1,0 +1,126 @@
+<%- include('../partials/header') %>
+<style>
+.err-wrap {
+  max-width: 800px;
+  margin: 60px auto 80px;
+  padding: 0 20px;
+  text-align: center;
+}
+.err-code {
+  font-size: 5rem;
+  font-weight: 900;
+  color: #2563eb;
+  line-height: 1;
+  margin: 0 0 16px;
+  letter-spacing: -0.04em;
+}
+.err-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 12px;
+}
+.err-desc {
+  font-size: 1.05rem;
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 580px;
+  margin: 0 auto 32px;
+}
+.err-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+.err-btn-primary {
+  background: #2563eb;
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: background 0.15s ease;
+}
+.err-btn-primary:hover {
+  background: #1d4ed8;
+}
+.err-btn-secondary {
+  background: #f1f5f9;
+  color: #1e293b !important;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: background 0.15s ease;
+}
+.err-btn-secondary:hover {
+  background: #e2e8f0;
+}
+.err-cat-box {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.err-cat-box h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 16px;
+  text-align: center;
+}
+.err-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+.err-cat-link {
+  display: block;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 8px;
+  color: #334155;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.err-cat-link:hover {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+</style>
+
+<main id="main-content">
+  <div class="err-wrap">
+    <div class="err-code">404</div>
+    <h1 class="err-title">Page Not Found</h1>
+    <p class="err-desc">The calculator or article you are looking for may have been updated, renamed, or temporarily relocated.</p>
+
+    <div class="err-action">
+      <a href="/" class="err-btn-primary">Return to Homepage</a>
+      <a href="/downloads/" class="err-btn-secondary">Free Excel Templates</a>
+    </div>
+
+    <div class="err-cat-box">
+      <h3>Popular Calculator Categories</h3>
+      <div class="err-cat-grid">
+        <a href="/loan-calculators/" class="err-cat-link">Loan &amp; Mortgage Calculators &rarr;</a>
+        <a href="/real-estate/" class="err-cat-link">Real Estate &amp; Rental Tools &rarr;</a>
+        <a href="/ohio/" class="err-cat-link">Ohio Paycheck &amp; Tax Suite &rarr;</a>
+        <a href="/construction/" class="err-cat-link">Construction Estimators &rarr;</a>
+        <a href="/business/" class="err-cat-link">Business ROI &amp; Finance &rarr;</a>
+        <a href="/downloads/" class="err-cat-link">Excel &amp; PDF Downloads &rarr;</a>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>

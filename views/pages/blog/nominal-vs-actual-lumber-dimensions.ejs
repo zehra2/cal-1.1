@@ -1,0 +1,286 @@
+<%- include('../../partials/header') %>
+<style>
+*{box-sizing:border-box;}body{background:#f8fafc;}
+.blog-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.blog-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}.blog-bc a{color:#64748b;text-decoration:none;}.blog-bc a:hover{color:#1d4ed8;}
+.blog-header{margin-bottom:1.75rem;}.blog-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.blog-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}.blog-meta span{font-size:.82rem;color:#64748b;}.blog-meta strong{color:#1e293b;}
+.blog-badge{background:#dbeafe;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.blog-cat{background:#fef3c7;color:#92400e;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #fde68a;}
+.blog-header .intro{font-size:1.05rem;color:#475569;line-height:1.75;border-left:4px solid #1d4ed8;padding:.9rem 1rem .9rem 1.25rem;background:#f8fbff;border-radius:0 8px 8px 0;margin:0;}
+.snippet-box{background:linear-gradient(135deg,#1d4ed8,#1e40af);border-radius:12px;padding:1.5rem;margin-bottom:1.75rem;color:#fff;}
+.snippet-box .sq{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.7);margin-bottom:.5rem;}
+.snippet-box .sa{font-size:1.02rem;font-weight:600;line-height:1.65;margin:0;}
+.blog-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.blog-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #eff6ff;}
+.blog-section h3{font-size:1.02rem;color:#1e293b;margin:1.35rem 0 .55rem;font-weight:700;}
+.blog-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}.blog-section p:last-child{margin-bottom:0;}
+.blog-section a{color:#1d4ed8;font-weight:600;text-decoration:none;}.blog-section a:hover{text-decoration:underline;}
+.blog-section strong{color:#1e293b;}
+.blog-section ul,.blog-section ol{color:#475569;padding-left:1.4rem;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}.blog-section li{margin-bottom:.45rem;}
+.formula-box{background:#f0fdf4;border:2px solid #16a34a;border-radius:10px;padding:1.1rem 1.35rem;margin:1rem 0;font-family:monospace;font-size:1.05rem;color:#065f46;font-weight:700;line-height:1.6;}
+.blog-table{width:100%;border-collapse:collapse;border-radius:9px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:1.1rem;}
+.blog-table th{background:#1d4ed8;color:#fff;padding:9px 13px;font-size:.84rem;font-weight:600;text-align:left;}
+.blog-table td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:.88rem;color:#334155;}
+.blog-table tr:last-child td{border-bottom:none;}.blog-table tr:nth-child(even) td{background:#f8fafc;}
+.blog-table .hl{color:#1d4ed8;font-weight:700;}.blog-table .g{color:#16a34a;font-weight:700;}.blog-table .r{color:#dc2626;font-weight:700;}
+.blog-info{background:#eff6ff;border-left:4px solid #1d4ed8;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#1e3a8a;line-height:1.65;}
+.blog-warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.93rem;color:#92400e;line-height:1.65;}
+.blog-cta{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:13px;padding:1.75rem;margin-bottom:1.5rem;text-align:center;}
+.blog-cta h3{color:#fff;font-size:1.15rem;font-weight:800;margin:0 0 .5rem;}.blog-cta p{color:#94a3b8;font-size:.9rem;margin:0 0 1rem;line-height:1.55;}
+.blog-cta-btns{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;}
+.blog-cta-btns a{display:inline-block;background:#1d4ed8;color:#fff;padding:9px 20px;border-radius:7px;font-weight:700;font-size:.85rem;text-decoration:none;}
+.blog-cta-btns a:hover{background:#1e40af;}.blog-cta-btns a.sec{background:#334155;}
+.blog-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}.blog-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.blog-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.blog-faq-q::after{content:'+';color:#1d4ed8;font-size:1.2rem;flex-shrink:0;}.blog-faq-item.open .blog-faq-q::after{content:'−';}
+.blog-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}.blog-faq-item.open .blog-faq-a{display:block;}
+.blog-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.1rem;}
+.blog-toc{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;}
+.blog-toc-head{background:#1d4ed8;color:#fff;padding:.9rem 1.25rem;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.blog-toc ul{list-style:none;padding:.5rem 0;margin:0;}
+.blog-toc ul li a{display:block;padding:.5rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+.blog-toc ul li a:hover{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+.blog-related{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;}
+.blog-related-head{padding:.8rem 1.25rem;background:#f8fafc;border-bottom:1px solid #f1f5f9;font-size:.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em;}
+.blog-related ul{list-style:none;padding:.4rem 0;margin:0;}
+.blog-related ul li a{display:block;padding:.55rem 1.25rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.blog-related ul li a:hover{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+@media(max-width:900px){.blog-wrap{grid-template-columns:1fr;}.blog-sidebar{position:static;display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.blog-sidebar{grid-template-columns:1fr;}.blog-header h1{font-size:1.6rem;}}
+</style>
+
+<main id="main-content">
+<div class="blog-wrap">
+<article>
+
+  <div class="blog-bc"><a href="/">Home</a> › <a href="/blog/">Blog</a> › Nominal vs Actual Lumber Dimensions</div>
+
+  <div class="blog-header">
+    <h1>Nominal vs Actual Lumber Dimensions: Board Foot Differences Explained</h1>
+    <div class="blog-meta">
+      <span>By <strong>James Carter</strong> | Construction &amp; Home Improvement Specialist</span>
+      <span class="blog-badge">🕐 Last Updated: July 2026</span>
+      <span class="blog-cat">🪵 Construction &amp; Lumber</span>
+    </div>
+    <p class="intro"><strong>Nominal dimensions</strong> are the labeled size on the tag — such as 2×4. <strong>Actual dimensions</strong> are the finished measurements after drying and planing — typically 1.5×3.5 inches for a standard 2×4. The gap between the two can change your board-foot calculation by 30% or more, which directly affects how much you pay at the lumberyard.</p>
+  </div>
+
+  <div class="snippet-box" id="quick-answer">
+    <div class="sq">Quick Answer</div>
+    <p class="sa">A nominal <strong>2×4×8</strong> = <strong>5.33 board feet</strong> (2 × 4 × 8 / 12).<br>
+    The same board's actual size (1.5 × 3.5 × 8) = <strong>3.5 board feet</strong> — about 34% less.<br>
+    Always confirm which dimensions your supplier uses before estimating cost.</p>
+  </div>
+
+  <div class="blog-section" id="why-different">
+    <h2>Why Are Nominal and Actual Dimensions Different?</h2>
+    <p>Lumber starts life at the sawmill rough-cut to its <strong>nominal size</strong>. A 2×4 is initially cut to approximately 2 inches thick and 4 inches wide. After that, the board goes through two processes that reduce its size:</p>
+    <ol>
+      <li><strong>Kiln drying</strong> — removing moisture causes the wood to shrink slightly.</li>
+      <li><strong>Planing / surfacing (S4S)</strong> — the board is run through a planer to produce smooth, consistent faces and edges, removing another fraction of an inch from each side.</li>
+    </ol>
+    <p>The result is a <strong>finished board</strong> that is noticeably smaller than its nominal name. The nominal name sticks because it refers to the original rough-cut size and has become the industry-standard way to identify and order lumber.</p>
+    <div class="blog-info">💡 <strong>S4S</strong> stands for "Surfaced Four Side" — the most common finished lumber standard you'll find at home improvement stores like Home Depot and Lowe's.</div>
+  </div>
+
+  <div class="blog-section" id="dimension-table">
+    <h2>Nominal vs Actual Lumber Size Chart</h2>
+    <p>The table below shows the most common lumber sizes and their approximate actual finished dimensions.</p>
+    <table class="blog-table">
+      <thead>
+        <tr><th>Nominal Size</th><th>Actual Size (approx.)</th><th>Thickness Difference</th><th>Width Difference</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1 × 2</strong></td><td>0.75 in × 1.5 in</td><td class="r">−0.25 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>1 × 3</strong></td><td>0.75 in × 2.5 in</td><td class="r">−0.25 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>1 × 4</strong></td><td>0.75 in × 3.5 in</td><td class="r">−0.25 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>1 × 6</strong></td><td>0.75 in × 5.5 in</td><td class="r">−0.25 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>1 × 8</strong></td><td>0.75 in × 7.25 in</td><td class="r">−0.25 in</td><td class="r">−0.75 in</td></tr>
+        <tr><td><strong>1 × 10</strong></td><td>0.75 in × 9.25 in</td><td class="r">−0.25 in</td><td class="r">−0.75 in</td></tr>
+        <tr><td><strong>1 × 12</strong></td><td>0.75 in × 11.25 in</td><td class="r">−0.25 in</td><td class="r">−0.75 in</td></tr>
+        <tr><td><strong>2 × 2</strong></td><td>1.5 in × 1.5 in</td><td class="r">−0.5 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>2 × 4</strong></td><td>1.5 in × 3.5 in</td><td class="r">−0.5 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>2 × 6</strong></td><td>1.5 in × 5.5 in</td><td class="r">−0.5 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>2 × 8</strong></td><td>1.5 in × 7.25 in</td><td class="r">−0.5 in</td><td class="r">−0.75 in</td></tr>
+        <tr><td><strong>2 × 10</strong></td><td>1.5 in × 9.25 in</td><td class="r">−0.5 in</td><td class="r">−0.75 in</td></tr>
+        <tr><td><strong>2 × 12</strong></td><td>1.5 in × 11.25 in</td><td class="r">−0.5 in</td><td class="r">−0.75 in</td></tr>
+        <tr><td><strong>4 × 4</strong></td><td>3.5 in × 3.5 in</td><td class="r">−0.5 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>4 × 6</strong></td><td>3.5 in × 5.5 in</td><td class="r">−0.5 in</td><td class="r">−0.5 in</td></tr>
+        <tr><td><strong>6 × 6</strong></td><td>5.5 in × 5.5 in</td><td class="r">−0.5 in</td><td class="r">−0.5 in</td></tr>
+      </tbody>
+    </table>
+    <div class="blog-warn">⚠️ These are standard S4S (Surfaced Four Sides) dimensions for kiln-dried construction lumber. Rough-sawn lumber, green lumber, and hardwood may have different actual dimensions.</div>
+  </div>
+
+  <div class="blog-section" id="board-foot-formula">
+    <h2>Board Foot Formula</h2>
+    <p>Board feet measure <strong>lumber volume</strong>, not surface area or length. One board foot equals <strong>144 cubic inches</strong>.</p>
+    <h3>When length is in feet (most common)</h3>
+    <div class="formula-box">Board Feet = Thickness (in) × Width (in) × Length (ft) A 12</div>
+    <h3>When all dimensions are in inches</h3>
+    <div class="formula-box">Board Feet = Thickness (in) × Width (in) × Length (in) A 144</div>
+    <p>Use the same formula for both nominal and actual calculations — only the input numbers change. The result will differ significantly depending on which dimensions you plug in.</p>
+  </div>
+
+  <div class="blog-section" id="example-2x4">
+    <h2>Worked Example: 2×4×8 Board</h2>
+    <h3>Using nominal dimensions</h3>
+    <div class="formula-box">2 × 4 × 8 / 12 = <strong>5.33 board feet</strong></div>
+    <h3>Using actual dimensions (1.5 × 3.5 × 8)</h3>
+    <div class="formula-box">1.5 × 3.5 × 8 / 12 = <strong>3.5 board feet</strong></div>
+    <p>The difference is <strong>1.83 board feet</strong> — approximately <strong>34% less</strong> when using actual dimensions. For a single board that gap is manageable. For a large framing order of 200+ boards, that difference becomes hundreds of board feet and a significant pricing discrepancy.</p>
+
+    <h3>Board-foot comparison table (8-foot boards)</h3>
+    <table class="blog-table">
+      <thead>
+        <tr><th>Lumber Size</th><th>Length</th><th>Nominal BF</th><th>Approx. Actual Size</th><th>Actual BF</th><th>Difference</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>2 × 4</strong></td><td>8 ft</td><td class="g">5.33</td><td>1.5 × 3.5 in</td><td>3.50</td><td class="r">−34%</td></tr>
+        <tr><td><strong>2 × 6</strong></td><td>8 ft</td><td class="g">8.00</td><td>1.5 × 5.5 in</td><td>5.50</td><td class="r">−31%</td></tr>
+        <tr><td><strong>2 × 8</strong></td><td>8 ft</td><td class="g">10.67</td><td>1.5 × 7.25 in</td><td>7.25</td><td class="r">−32%</td></tr>
+        <tr><td><strong>2 × 10</strong></td><td>8 ft</td><td class="g">13.33</td><td>1.5 × 9.25 in</td><td>9.25</td><td class="r">−31%</td></tr>
+        <tr><td><strong>2 × 12</strong></td><td>8 ft</td><td class="g">16.00</td><td>1.5 × 11.25 in</td><td>11.25</td><td class="r">−30%</td></tr>
+        <tr><td><strong>4 × 4</strong></td><td>8 ft</td><td class="g">10.67</td><td>3.5 × 3.5 in</td><td>8.17</td><td class="r">−23%</td></tr>
+        <tr><td><strong>1 × 6</strong></td><td>8 ft</td><td class="g">4.00</td><td>0.75 × 5.5 in</td><td>2.75</td><td class="r">−31%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="blog-section" id="pricing-impact">
+    <h2>How the Difference Affects Your Lumber Cost</h2>
+    <p>If a supplier prices an <strong>8-foot 2×6</strong> by nominal board feet at <strong>$5.00 per board foot</strong>:</p>
+    <h3>Supplier's calculation (nominal)</h3>
+    <div class="formula-box">2 × 6 × 8 / 12 = 8 board feet → 8 × $5.00 = <strong>$40.00</strong></div>
+    <h3>Your estimate using actual dimensions (incorrect method)</h3>
+    <div class="formula-box">1.5 × 5.5 × 8 / 12 = 5.5 board feet → 5.5 × $5.00 = <strong>$27.50</strong></div>
+    <p>The supplier's invoice will be <strong>$40.00</strong>, but your estimate was <strong>$27.50</strong> — a <strong>$12.50 gap per board</strong>. On an order of 50 boards, that is a <strong>$625 surprise</strong> on your invoice.</p>
+    <div class="blog-warn">⚠️ <strong>Key rule:</strong> Always use the same dimension method as your supplier when estimating cost. Use actual dimensions only when you need to know the physical size of the finished wood — not for pricing.</div>
+  </div>
+
+  <div class="blog-section" id="when-to-use">
+    <h2>When to Use Nominal vs Actual Dimensions</h2>
+    <table class="blog-table">
+      <thead><tr><th>Use Nominal Dimensions When…</th><th>Use Actual Dimensions When…</th></tr></thead>
+      <tbody>
+        <tr><td>Reading a lumberyard price list</td><td>Designing joints, dados, or rabbets</td></tr>
+        <tr><td>Comparing standard lumber sizes</td><td>Calculating finished tabletop or shelf thickness</td></tr>
+        <tr><td>Estimating board-foot cost under supplier's method</td><td>Planning cabinet or furniture dimensions</td></tr>
+        <tr><td>Calculating rough-sawn board footage</td><td>Checking structural clearances</td></tr>
+        <tr><td>Ordering by supplier's quoted quantity</td><td>Determining how much physical material you have</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="blog-section" id="hardwood-exception">
+    <h2>Important Exception: Hardwood and Rough Lumber</h2>
+    <p>There is no single industry-wide rule for every lumber purchase. The nominal vs actual distinction applies mainly to <strong>standard softwood construction lumber</strong> (pine, fir, spruce). Hardwood and specialty lumber follow different conventions.</p>
+    <ul>
+      <li><strong>Rough-sawn hardwood</strong> is typically sold by board feet calculated from its rough dimensions before any surfacing — so the nominal and rough-sawn sizes are essentially the same at the point of sale.</li>
+      <li><strong>Surfaced hardwood (S2S or S4S)</strong> will be smaller than the rough dimensions and may be priced differently by the dealer.</li>
+      <li><strong>Reclaimed lumber, specialty beams, and custom-milled boards</strong> can each use their own measurement practices.</li>
+    </ul>
+    <p>Before placing a large order, ask your supplier these questions:</p>
+    <ol>
+      <li>Are board feet calculated from rough or finished dimensions?</li>
+      <li>Are nominal or actual dimensions used for pricing?</li>
+      <li>Is the price based on the full board before defects are removed?</li>
+      <li>Are S4S or kiln-dried boards measured at a different size than rough stock?</li>
+      <li>Is waste or trim included in the quoted quantity?</li>
+    </ol>
+    <div class="blog-info">💡 Hardwood dealers in cities like Portland, Cincinnati, and Charlotte often use a <strong>Doyle Log Scale</strong> or <strong>International Log Rule</strong> for pricing at the sawmill level — these are different from the standard board-foot formula used for finished lumber.</div>
+  </div>
+
+  <div class="blog-cta">
+    <h3>Calculate Board Feet Instantly</h3>
+    <p>Use the AmericaCalculator Board Foot Calculator — enter your dimensions and get an instant result. Works for nominal and actual dimensions.</p>
+    <div class="blog-cta-btn">
+      <a href="/calculators/board-foot.php">🪵 Board Foot Calculator</a>
+      <a href="/blog/how-to-calculate-board-feet-lumber" class="sec">📖 Board Feet Guide</a>
+      <a href="/construction/concrete-calculator" class="sec">🧱 Concrete Calculator</a>
+    </div>
+  </div>
+
+  <div class="blog-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <% const _faqs = [["What is the actual size of a 2×4?", "A nominal 2×4 typically measures <strong>1.5 inches thick × 3.5 inches wide</strong> after kiln drying and planing. The 8-foot length remains 8 feet."], ["Why are nominal and actual lumber dimensions different?", "Lumber is rough-cut at the mill to its nominal size, then loses material through kiln drying (shrinkage) and planing (surfacing). The nominal name reflects the original rough-cut size; the actual size reflects the finished board."], ["Should I use nominal or actual dimensions to calculate board feet?", "Use the dimensions your supplier specifies. Most lumberyards price standard construction lumber using nominal dimensions. Hardwood dealers often price by rough-sawn dimensions. Always confirm before placing a large order."], ["How many board feet is a 2×4×8?", "Nominal: 2 × 4 × 8 / 12 = <strong>5.33 board feet</strong>. Actual (1.5 × 3.5 × 8): 1.5 × 3.5 × 8 / 12 = <strong>3.5 board feet</strong>."], ["Does nominal vs actual affect the price I pay?", "Yes — significantly. If a supplier prices by nominal board feet but you estimated using actual dimensions, your invoice could be 30–34% higher than expected. Always match the measurement method to your supplier's pricing method."]]; _faqs.forEach(function(f) { %>
+    <div class="blog-faq-item">
+      <div class="blog-faq-q"><%- f[0] %></div>
+      <div class="blog-faq-a"><%- f[1] %></div>
+    </div>
+    <% }); %>
+  </div>
+
+  <div class="blog-section">
+    <h2>Related Articles &amp; Calculators</h2>
+    <ul>
+      <li><a href="/calculators/board-foot.php">Board Foot Calculator</a> — instant board-foot calculation for any lumber dimensions</li>
+      <li><a href="/blog/how-to-calculate-board-feet-lumber">How to Calculate Board Feet of Lumber</a> — full guide to the board foot formula with examples</li>
+      <li><a href="/blog/how-to-calculate-square-feet-of-a-room">How to Calculate Square Feet of a Room</a> — for flooring and surface area estimates</li>
+      <li><a href="/blog/how-to-calculate-square-footage-of-a-building">How to Calculate Square Footage of a Building</a> — for framing and whole-building estimates</li>
+      <li><a href="/construction/concrete-calculator">Concrete Calculator</a> — estimate concrete for foundations and slabs</li>
+      <li><a href="/construction/home-addition-cost-calculator">Home Addition Cost Calculator</a> — estimate full renovation cost by square footage</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:.85rem;color:#94a3b8;"><strong>Disclaimer:</strong> Lumber dimensions and board-foot practices vary by product, supplier, region, and industry. Confirm the calculation method with your lumber dealer before placing a large order.</p>
+  </div>
+
+</article>
+
+<aside class="blog-sidebar">
+  <div class="blog-toc">
+    <div class="blog-toc-head">📋 On This Page</div>
+    <ul>
+      <li><a href="#quick-answer">Quick Answer</a></li>
+      <li><a href="#why-different">Why They Differ</a></li>
+      <li><a href="#dimension-table">Full Size Chart</a></li>
+      <li><a href="#board-foot-formula">Board Foot Formula</a></li>
+      <li><a href="#example-2x4">2×4 Example</a></li>
+      <li><a href="#pricing-impact">Pricing Impact</a></li>
+      <li><a href="#when-to-use">When to Use Each</a></li>
+      <li><a href="#hardwood-exception">Hardwood Exception</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🪵 Lumber Tools</div>
+    <ul>
+      <li><a href="/calculators/board-foot.php">Board Foot Calculator</a></li>
+      <li><a href="/calculators/cubic-yard.php">Cubic Yard Calculator</a></li>
+      <li><a href="/construction/concrete-calculator">Concrete Calculator</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🔗 Related Articles</div>
+    <ul>
+      <li><a href="/blog/how-to-calculate-board-feet-lumber">🪵 Board Feet Guide</a></li>
+      <li><a href="/blog/how-to-calculate-square-feet-of-a-room">🏠 Room Square Footage</a></li>
+      <li><a href="/blog/how-to-calculate-square-footage-of-a-building">🏗️ Building Square Footage</a></li>
+      <li><a href="/blog/how-to-calculate-roof-square-footage">🏠 Roof Square Footage</a></li>
+      <li><a href="/blog/ohio-state-income-tax">📋 Ohio Income Tax</a></li>
+    </ul>
+  </div>
+  <div class="blog-related">
+    <div class="blog-related-head">🧱 Construction Tools</div>
+    <ul>
+      <li><a href="/construction/concrete-calculator">Concrete Calculator</a></li>
+      <li><a href="/construction/concrete-slab-calculator">Concrete Slab</a></li>
+      <li><a href="/construction/home-addition-cost-calculator">Home Addition Cost</a></li>
+      <li><a href="/calculators/stair.php">Stair Calculator</a></li>
+      <li><a href="/calculators/asphalt.php">Asphalt Calculator</a></li>
+    </ul>
+  </div>
+</aside>
+</div>
+</main>
+
+<script>
+document.querySelectorAll('.blog-faq-q').forEach(function(q){
+  q.addEventListener('click',function(){
+    var item=this.closest('.blog-faq-item'),was=item.classList.contains('open');
+    document.querySelectorAll('.blog-faq-item').forEach(function(x){x.classList.remove('open');});
+    if(!was)item.classList.add('open');
+  });
+});
+</script>
+<%- include('../../partials/footer') %>

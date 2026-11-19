@@ -1,0 +1,943 @@
+<%- include('../../partials/header') %>
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     RESOURCE HINTS (Preconnect, DNS-Prefetch) — Speed Optimization
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+<link rel="preconnect" href="https://pagead2.googlesyndication.com">
+<link rel="preconnect" href="https://googleads.g.doubleclick.net">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     SUPPLEMENTAL META (robots directives, author, og:image dimensions, hreflang)
+     Canonical, og:url, og:title, og:description, twitter:card/title/description
+     are already output by includes/header.php — do NOT duplicate them here.
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+<meta name="robot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="author" content="AmericaCalculator.com" />
+<meta name="publisher" content="AmericaCalculator.com" />
+<meta name="last-modified" content="<%= pageUpdated %>" />
+
+<!-- og:image with dimensions (supplements shared header og:image) -->
+<meta property="og:image" content="<%= ogImage %>" />
+<meta property="og:image:width" content="<%= ogImageWidth %>" />
+<meta property="og:image:height" content="<%= ogImageHeight %>" />
+<meta property="og:site_name" content="AmericaCalculator.com" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter card image (supplements shared header twitter:card) -->
+<meta name="twitter:image" content="<%= ogImage %>" />
+<meta name="twitter:site" content="@americacalc" />
+
+<!-- Hreflang -->
+<link rel="alternate" hreflang="en-us" href="<%= canonicalUrl %>" />
+<link rel="alternate" hreflang="x-default" href="<%= canonicalUrl %>" />
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CRITICAL CSS (Above-the-fold only) — Inline for speed, rest in external file
+   ═══════════════════════════════════════════════════════════════════════════════ */
+body{background:#f5f7fa;margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;}
+.coc-wrap{max-width:1320px;margin:0 auto;padding:2rem 1.5rem 4rem;display:grid;grid-template-columns:220px 1fr 260px;gap:2rem;align-items:start;}
+.coc-toc{position:sticky;top:6rem;background:#fff;border-radius:12px;border:1px solid #e8edf5;box-shadow:0 2px 12px rgba(0,0,0,.04);overflow:hidden;}
+.coc-toc-head{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;padding:1rem 1.25rem;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.8px;}
+.coc-toc-list{list-style:none;padding:.75rem 0;margin:0;}
+.coc-toc-list li a{display:block;padding:.5rem 1.25rem;font-size:.84rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .18s;line-height:1.4;}
+.coc-toc-list li a:hover,.coc-toc-list li a.coc-active{color:#2563eb;background:#eff6ff;border-left-color:#2563eb;}
+.coc-toc-div{height:1px;background:#f1f5f9;margin:.5rem 0;}
+.coc-toc-rlbl{padding:.5rem 1.25rem;font-size:.78rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;}
+.coc-toc-rlist{list-style:none;padding:0;margin:0 0 .75rem;}
+.coc-toc-rlist li a{display:block;padding:.4rem 1.25rem;font-size:.82rem;color:#64748b;text-decoration:none;transition:color .15s;}
+.coc-toc-rlist li a:hover{color:#2563eb;}
+.coc-main{min-width:0;}
+.coc-hero{margin-bottom:2rem;}
+.coc-hero h1{font-size:2.1rem;color:#0f172a;margin:0 0 .6rem;line-height:1.25;}
+.coc-desc{font-size:1.05rem;color:#64748b;line-height:1.65;margin:0 0 .75rem;border-left:4px solid #2563eb;padding-left:1rem;}
+.coc-bc{font-size:.8rem;color:#94a3b8;margin-bottom:.75rem;}
+.coc-bc a{color:#64748b;text-decoration:none;}
+.coc-card{background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #eef2f7;margin-bottom:2.5rem;overflow:hidden;}
+.coc-card-head{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:.75rem;}
+.coc-card-head h2{font-size:1.1rem;font-weight:700;margin:0;}
+.coc-inner{display:grid;grid-template-columns:1fr 1fr;}
+.coc-form-col{padding:2rem;border-right:1px solid #f0f4fa;}
+.coc-res-col{padding:2rem;background:linear-gradient(160deg,#eff6ff 0%,#dbeafe 100%);}
+.coc-sec-lbl{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;margin:1.25rem 0 .75rem;padding-bottom:.35rem;border-bottom:1px solid #f1f5f9;}
+.coc-sec-lbl:first-child{margin-top:0;}
+.coc-row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.coc-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.coc-field{margin-bottom:1rem;}
+.coc-field label{display:block;font-size:.88rem;font-weight:600;color:#1e293b;margin-bottom:.4rem;}
+.coc-field input,.coc-field select{width:100%;padding:11px 14px;border:1.5px solid #d1dae8;border-radius:8px;font-size:.95rem;color:#0f172a;outline:none;transition:border-color .2s,box-shadow .2s;box-sizing:border-box;background:#fff;}
+.coc-field input:focus,.coc-field select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+.coc-field .hint{font-size:.74rem;color:#94a3b8;margin-top:.28rem;line-height:1.4;}
+.coc-btn{width:100%;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;padding:14px;border:none;border-radius:9px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:.75rem;transition:opacity .2s,transform .15s;}
+.coc-btn:hover{opacity:.92;transform:translateY(-1px);}
+.coc-res-head{font-size:1.1rem;font-weight:700;color:#0f172a;margin:0 0 .2rem;}
+.coc-res-sub{font-size:.82rem;color:#64748b;margin:0 0 1rem;}
+.coc-hero-result{background:linear-gradient(135deg,#2563eb,#1d4ed8);border-radius:12px;padding:1.5rem 1.25rem;text-align:center;box-shadow:0 6px 20px rgba(37,99,235,.25);margin-bottom:.85rem;}
+.coc-hero-val{display:block;font-size:2.8rem;font-weight:800;color:#fff;line-height:1;margin-bottom:.25rem;}
+.coc-hero-lbl{font-size:.88rem;color:rgba(255,255,255,.85);}
+.coc-gauge-wrap{background:#fff;border:1px solid #bfdbfe;border-radius:10px;padding:.9rem 1rem;margin-bottom:.85rem;}
+.coc-gauge-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;margin-bottom:.55rem;}
+.coc-gauge-bar{height:10px;border-radius:5px;background:linear-gradient(90deg,#dc2626 0%,#f97316 15%,#eab308 35%,#84cc16 55%,#22c55e 75%,#059669 100%);position:relative;margin-bottom:.4rem;}
+.coc-gauge-needle{position:absolute;top:-4px;width:3px;height:18px;background:#0f172a;border-radius:2px;transform:translateX(-50%);transition:left .4s ease;}
+.coc-gauge-scale{display:flex;justify-content:space-between;font-size:.65rem;color:#94a3b8;}
+.coc-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.85rem;}
+.coc-stat{background:#fff;border:1.5px solid #bfdbfe;border-radius:10px;padding:.8rem .75rem;text-align:center;}
+.coc-stat-val{display:block;font-size:1.1rem;font-weight:800;color:#2563eb;margin-bottom:.15rem;}
+.coc-stat.neg .coc-stat-val{color:#dc2626;}
+.coc-stat-lbl{font-size:.7rem;color:#64748b;font-weight:600;line-height:1.3;}
+.coc-bk{background:#fff;border:1px solid #bfdbfe;border-radius:10px;padding:.9rem 1rem;margin-bottom:.75rem;}
+.coc-bk-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;margin-bottom:.5rem;}
+.coc-bk-row{display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid #f0f9ff;font-size:.84rem;}
+.coc-bk-row:last-child{border-bottom:none;}
+.coc-bk-lbl{color:#64748b;}
+.coc-bk-val{font-weight:700;color:#1e293b;}
+.coc-bk-row.neg .coc-bk-val{color:#dc2626;}
+.coc-bk-row.pos .coc-bk-val{color:#059669;}
+.coc-bk-row.sub{padding-left:.75rem;font-size:.8rem;}
+.coc-bk-row.divider{border-top:2px solid #bfdbfe;margin-top:.25rem;padding-top:.5rem;}
+.coc-bk-row.divider .coc-bk-lbl{font-weight:700;color:#0f172a;}
+.coc-bk-row.divider .coc-bk-val{color:#2563eb;font-size:.93rem;}
+.coc-disc{font-size:.72rem;color:#94a3b8;margin-top:.5rem;line-height:1.4;}
+.coc-section{background:#fff;border-radius:14px;border:1px solid #eef2f7;box-shadow:0 2px 12px rgba(0,0,0,.03);padding:2.25rem;margin-bottom:2rem;scroll-margin-top:6rem;}
+.coc-section h2{font-size:1.6rem;color:#0f172a;margin:0 0 1.2rem;padding-bottom:.75rem;border-bottom:2px solid #eff6ff;}
+.coc-section h3{font-size:1.15rem;color:#1e293b;margin:1.6rem 0 .65rem;}
+.coc-section p{color:#475569;line-height:1.75;margin-bottom:1.2rem;font-size:1rem;}
+.coc-section ul,.coc-section ol{color:#475569;line-height:1.75;padding-left:1.5rem;margin-bottom:1.2rem;}
+.coc-section li{margin-bottom:.45rem;}
+.coc-section strong{color:#1e293b;}
+.coc-section a{color:#2563eb;font-weight:600;}
+.coc-formula{background:#0f172a;color:#94a3b8;font-family:'Courier New',monospace;font-size:.95rem;padding:1.1rem 1.4rem;border-radius:8px;margin:1.2rem 0;line-height:2;}
+.coc-formula code{display:block;}
+.coc-formula code span{color:#93c5fd;}
+.coc-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;border:1px solid #e8edf5;margin-bottom:1.5rem;}
+.coc-table th{background:#2563eb;color:#fff;padding:12px 15px;text-align:left;font-size:.86rem;font-weight:600;}
+.coc-table td{padding:10px 15px;border-bottom:1px solid #f1f5f9;font-size:.89rem;color:#334155;}
+.coc-table tr:last-child td{border-bottom:none;}
+.coc-table tr:nth-child(even) td{background:#f8fafc;}
+.coc-info{background:#eff6ff;border-left:4px solid #2563eb;border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin:1.2rem 0;font-size:.94rem;color:#1e3a8a;line-height:1.6;}
+.coc-warn{background:#fffbeb;border-left:4px solid #d97706;border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin:1.2rem 0;font-size:.94rem;color:#92400e;line-height:1.6;}
+.coc-faq-item{border-bottom:1px solid #f0f4fa;padding-bottom:1.2rem;margin-bottom:1.2rem;}
+.coc-faq-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.coc-faq-q{font-size:1rem;font-weight:700;color:#0f172a;margin-bottom:.55rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
+.coc-faq-q::after{content:'+';font-size:1.3rem;color:#2563eb;flex-shrink:0;}
+.coc-faq-item.open .coc-faq-q::after{content:'−';}
+.coc-faq-a{color:#475569;line-height:1.7;font-size:.96rem;display:none;}
+.coc-faq-item.open .coc-faq-a{display:block;}
+.coc-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.25rem;}
+.coc-widget{background:#fff;border-radius:12px;border:1px solid #e8edf5;box-shadow:0 4px 18px rgba(0,0,0,.05);overflow:hidden;}
+.coc-widget-head{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;padding:1rem 1.25rem;}
+.coc-widget-title{font-size:1rem;font-weight:700;}
+.coc-widget-sub{font-size:.78rem;color:rgba(255,255,255,.78);margin-top:.15rem;}
+.coc-widget-upd{font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.3rem;}
+.coc-widget-rows{padding:.35rem 0;}
+.coc-widget-row{display:flex;justify-content:space-between;align-items:center;padding:.55rem 1.25rem;border-bottom:1px solid #f8fafc;transition:background .15s;}
+.coc-widget-row:last-child{border-bottom:none;}
+.coc-widget-row:hover{background:#eff6ff;}
+.coc-wl{font-size:.82rem;font-weight:600;color:#334155;}
+.coc-ws{font-size:.7rem;color:#94a3b8;}
+.coc-wv{font-size:.92rem;font-weight:800;color:#2563eb;text-align:right;}
+.coc-widget-foot{padding:.8rem 1.25rem;border-top:1px solid #f0f4fa;background:#f8fafc;}
+.coc-widget-foot p{font-size:.73rem;color:#64748b;margin:0 0 .45rem;line-height:1.3;}
+.coc-widget-foot a{font-size:.82rem;font-weight:700;color:#2563eb;text-decoration:none;display:flex;align-items:center;gap:.35rem;}
+.coc-widget-foot a:hover{text-decoration:underline;}
+.coc-quick-widget{background:#fff;border-radius:12px;border:1px solid #e8edf5;box-shadow:0 2px 12px rgba(0,0,0,.04);overflow:hidden;}
+.coc-quick-head{padding:.85rem 1.25rem;background:#f8fafc;border-bottom:1px solid #f0f4fa;font-size:.82rem;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:.5px;}
+.coc-quick-links{list-style:none;padding:.45rem 0;margin:0;}
+.coc-quick-links li a{display:flex;align-items:center;gap:.5rem;padding:.6rem 1.25rem;font-size:.84rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;font-weight:500;}
+.coc-quick-links li a:hover,.coc-quick-links li a.active{color:#2563eb;background:#eff6ff;border-left-color:#2563eb;}
+
+/* AdSense Ad Containers */
+.coc-ad-top{margin:1.5rem 0;text-align:center;min-height:90px;}
+.coc-ad-mid{margin:2rem 0;text-align:center;min-height:250px;}
+.coc-ad-bottom{margin:2rem 0;text-align:center;min-height:90px;}
+.coc-ad-sidebar{margin:1rem 0;text-align:center;min-height:600px;}
+
+/* Print styles */
+@media print{
+  .coc-toc,.coc-sidebar,.coc-ad-top,.coc-ad-mid,.coc-ad-bottom,.coc-ad-sidebar{display:none!important;}
+  .coc-wrap{grid-template-columns:1fr!important;}
+  .coc-card{box-shadow:none;border:1px solid #ccc;}
+  body{background:#fff;}
+}
+
+/* Responsive */
+@media(max-width:1200px){.coc-wrap{grid-template-columns:200px 1fr 240px;}}
+@media(max-width:1024px){.coc-wrap{grid-template-columns:1fr;}.coc-toc,.coc-sidebar{position:static;}.coc-sidebar{display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.coc-wrap{padding:1rem 1rem 3rem;}.coc-inner{grid-template-columns:1fr;}.coc-form-col{border-right:none;border-bottom:1px solid #f0f4fa;}.coc-sidebar{grid-template-columns:1fr;}.coc-row2,.coc-row3{grid-template-columns:1fr;}}
+</style>
+
+<main id="main-content">
+<div class="coc-wrap">
+
+  <!-- ══ LEFT TOC ══ -->
+  <aside class="coc-toc" aria-label="Table of Content">
+    <div class="coc-toc-head">📋 In This Article</div>
+    <ul class="coc-toc-list">
+      <li><a href="#calculator" class="coc-active">CoC Return Calculator</a></li>
+      <li><a href="#how-to-use">How to Use</a></li>
+      <li><a href="#what-is-coc">What Is Cash-on-Cash Return?</a></li>
+      <li><a href="#formula">The CoC Formula</a></li>
+      <li><a href="#good-coc">What Is a Good Return?</a></li>
+      <li><a href="#us-benchmark"><%= currentYear %> US Benchmarks</a></li>
+      <li><a href="#coc-vs-cap">CoC vs Cap Rate</a></li>
+      <li><a href="#coc-vs-yield">CoC vs Rental Yield</a></li>
+      <li><a href="#leverage">How Leverage Affects CoC</a></li>
+      <li><a href="#sensitivity">Sensitivity Analysis</a></li>
+      <li><a href="#improve">Improving Your CoC Return</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="coc-toc-div"></div>
+    <div class="coc-toc-rlbl">Real Estate Tools</div>
+    <ul class="coc-toc-rlist">
+      <li><a href="<%= baseUrl %>/real-estate/rental-yield-calculator">Rental Yield Calculator</a></li>
+      <li><a href="<%= baseUrl %>/real-estate/cap-rate-calculator">Cap Rate Calculator</a></li>
+      <li><a href="<%= baseUrl %>/real-estate/noi-calculator">NOI Calculator</a></li>
+      <li><a href="<%= baseUrl %>/real-estate/dscr-calculator">DSCR Calculator</a></li>
+      <li><a href="<%= baseUrl %>/real-estate/">All Real Estate Tools</a></li>
+      <li><a href="<%= baseUrl %>/loan-calculators/mortgage-calculator">Mortgage Calculator</a></li>
+      <li><a href="<%= baseUrl %>/loan-calculators/fha-loan-calculator">FHA Loan Calculator</a></li>
+      <li><a href="<%= baseUrl %>/loan-calculators/">All Loan Calculators</a></li>
+    </ul>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <div class="coc-main">
+
+    <div class="coc-hero">
+      <div class="coc-bc" vocab="https://schema.org/" typeof="BreadcrumbList">
+        <span property="itemListElement" typeof="ListItem">
+          <a property="item" typeof="WebPage" href="<%= baseUrl %>/index.php"><span property="name">Home</span></a>
+          <meta property="position" content="1">
+        </span> ›
+        <span property="itemListElement" typeof="ListItem">
+          <a property="item" typeof="WebPage" href="<%= baseUrl %>/real-estate/"><span property="name">Real Estate</span></a>
+          <meta property="position" content="2">
+        </span> ›
+        <span property="itemListElement" typeof="ListItem">
+          <span property="name">Cash-on-Cash Return Calculator</span>
+          <meta property="position" content="3">
+        </span>
+      </div>
+      <h1>Free Cash-on-Cash Return Calculator for Real Estate (<%= currentYear %>)</h1>
+      <p class="coc-desc coc-speakable-summary">Calculate your <strong>cash-on-cash return</strong> — the most important metric for <strong>leveraged real estate investing</strong>. Enter your purchase price, down payment, mortgage terms, rent, and expenses to see your actual return on the cash you invest. Includes <strong>NOI</strong>, <strong>cap rate</strong>, and <strong>US market benchmarks</strong>.</p>
+      <p style="font-size:.78rem;color:#94a3b8;margin:0;">Last updated: <%= pageUpdated %> · <a href="#faq" style="color:#64748b;text-decoration:underline;">12 FAQs answered</a></p>
+    </div>
+
+    <!-- ══ AD UNIT: ABOVE CALCULATOR ══ -->
+    <div class="coc-ad-top">
+  <!-- america_hero_leaderboard -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2047576600281805"
+     data-ad-slot="6715403966"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+   <script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  
+
+
+
+
+    <!-- ══ CALCULATOR ══ -->
+    <div class="coc-card" id="calculator">
+      <div class="coc-card-head">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <h2>Cash-on-Cash Return Calculator</h2>
+      </div>
+      <div class="coc-inner">
+
+        <!-- FORM -->
+        <div class="coc-form-col">
+
+          <div class="coc-sec-lbl" id="step-1">Purchase Details</div>
+          <div class="coc-row2">
+            <div class="coc-field">
+              <label for="c-price">Purchase Price ($)</label>
+              <input type="number" id="c-price" value="200000" min="0" step="1000" aria-label="Property purchase price in US dollar">
+            </div>
+            <div class="coc-field">
+              <label for="c-down">Down Payment (%)</label>
+              <input type="number" id="c-down" value="20" min="0" max="100" step="0.5" aria-label="Down payment percentage">
+              <div class="hint">Conventional: 20% · FHA: 3.5% · All Cash: 100%</div>
+            </div>
+          </div>
+          <div class="coc-row2">
+            <div class="coc-field">
+              <label for="c-closing">Closing Costs ($)</label>
+              <input type="number" id="c-closing" value="4000" min="0" step="500" aria-label="Closing costs in US dollar">
+              <div class="hint">Typically 2–5% of price</div>
+            </div>
+            <div class="coc-field">
+              <label for="c-repair">Upfront Repairs ($)</label>
+              <input type="number" id="c-repair" value="0" min="0" step="500" aria-label="Upfront repair costs in US dollar">
+              <div class="hint">Rehab before first tenant</div>
+            </div>
+          </div>
+
+          <div class="coc-sec-lbl" id="step-2">Mortgage / Financing</div>
+          <div class="coc-row3">
+            <div class="coc-field">
+              <label for="c-rate">Interest Rate (%)</label>
+              <input type="number" id="c-rate" value="7.25" min="0" max="25" step="0.05" aria-label="Annual mortgage interest rate">
+            </div>
+            <div class="coc-field">
+              <label for="c-term">Loan Term (yrs)</label>
+              <select id="c-term" aria-label="Loan term in year">
+                <option value="30" selected>30 years</option>
+                <option value="20">20 years</option>
+                <option value="15">15 years</option>
+                <option value="10">10 years</option>
+              </select>
+            </div>
+            <div class="coc-field">
+              <label for="c-loan-type">Loan Type</label>
+              <select id="c-loan-type" aria-label="Type of mortgage loan">
+                <option value="conventional" selected>Conventional</option>
+                <option value="fha">FHA (3.5% down)</option>
+                <option value="cash">All Cash</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="coc-sec-lbl" id="step-3">Rental Income</div>
+          <div class="coc-row2">
+            <div class="coc-field">
+              <label for="c-rent">Monthly Rent ($)</label>
+              <input type="number" id="c-rent" value="1500" min="0" step="50" aria-label="Monthly rental income">
+            </div>
+            <div class="coc-field">
+              <label for="c-vacancy">Vacancy Rate (%)</label>
+              <input type="number" id="c-vacancy" value="5" min="0" max="50" step="0.5" aria-label="Expected vacancy rate percentage">
+              <div class="hint">Typical: 5–10% · One month = 8.3%</div>
+            </div>
+          </div>
+
+          <div class="coc-sec-lbl" id="step-4">Annual Operating Expenses</div>
+          <div class="coc-row2">
+            <div class="coc-field">
+              <label for="c-tax">Property Tax ($/yr)</label>
+              <input type="number" id="c-tax" value="2400" min="0" step="100" aria-label="Annual property tax">
+            </div>
+            <div class="coc-field">
+              <label for="c-insurance">Insurance ($/yr)</label>
+              <input type="number" id="c-insurance" value="1200" min="0" step="100" aria-label="Annual insurance premium">
+            </div>
+          </div>
+          <div class="coc-row2">
+            <div class="coc-field">
+              <label for="c-maintenance">Maintenance ($/yr)</label>
+              <input type="number" id="c-maintenance" value="2000" min="0" step="100" aria-label="Annual maintenance budget">
+              <div class="hint">Rule of thumb: 1% of property value</div>
+            </div>
+            <div class="coc-field">
+              <label for="c-mgmt">Management Fee (%)</label>
+              <input type="number" id="c-mgmt" value="10" min="0" max="20" step="0.5" aria-label="Property management fee percentage">
+              <div class="hint">8–12% of effective rent · Self-manage = 0%</div>
+            </div>
+          </div>
+          <div class="coc-row2">
+            <div class="coc-field">
+              <label for="c-hoa">HOA Fees ($/yr)</label>
+              <input type="number" id="c-hoa" value="0" min="0" step="100" aria-label="Annual HOA fee">
+            </div>
+            <div class="coc-field">
+              <label for="c-other">Other Expenses ($/yr)</label>
+              <input type="number" id="c-other" value="0" min="0" step="100" aria-label="Other annual expense">
+              <div class="hint">Utilities, landscaping, snow removal</div>
+            </div>
+          </div>
+
+          <button class="coc-btn" id="coc-calc-btn" aria-label="Calculate cash-on-cash return">⚡ Calculate Cash-on-Cash Return</button>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="coc-res-col" id="step-5">
+          <h3 class="coc-res-head">Your Investment Results</h3>
+          <p class="coc-res-sub" id="coc-res-sub">Adjust inputs and click Calculate to see your cash-on-cash return</p>
+
+          <div class="coc-hero-result" role="region" aria-label="Cash on cash return result">
+            <span class="coc-hero-val" id="res-coc">0.00%</span>
+            <span class="coc-hero-lbl">Cash-on-Cash Return (Annual)</span>
+          </div>
+
+          <!-- CoC gauge -->
+          <div class="coc-gauge-wrap">
+            <div class="coc-gauge-lbl">CoC Return vs US Benchmark</div>
+            <div class="coc-gauge-bar" role="img" aria-label="Cash on cash return benchmark gauge">
+              <div class="coc-gauge-needle" id="coc-needle" style="left:40%;"></div>
+            </div>
+            <div class="coc-gauge-scale">
+              <span>-5%</span><span>0%</span><span>4%</span><span>8%</span><span>12%</span><span>16%+</span>
+            </div>
+          </div>
+          <p id="coc-gauge-verdict" style="font-size:.84rem;font-weight:600;color:#2563eb;margin:.2rem 0 .75rem;text-align:center;"></p>
+
+          <div class="coc-stat-grid">
+            <div class="coc-stat"><span class="coc-stat-val" id="res-cash-invested">$0</span><span class="coc-stat-lbl">Total Cash Invested</span></div>
+            <div class="coc-stat"><span class="coc-stat-val" id="res-annual-cf">$0</span><span class="coc-stat-lbl">Annual Pre-Tax Cash Flow</span></div>
+            <div class="coc-stat"><span class="coc-stat-val" id="res-monthly-cf">$0</span><span class="coc-stat-lbl">Monthly Cash Flow</span></div>
+            <div class="coc-stat"><span class="coc-stat-val" id="res-cap-rate">0.00%</span><span class="coc-stat-lbl">Cap Rate (unlevered)</span></div>
+          </div>
+
+          <div class="coc-bk">
+            <div class="coc-bk-title">Full Investment Breakdown</div>
+            <!-- Cash Invested -->
+            <div class="coc-bk-row"><span class="coc-bk-lbl">Purchase Price</span><span class="coc-bk-val" id="bk-price">—</span></div>
+            <div class="coc-bk-row sub"><span class="coc-bk-lbl">Down Payment</span><span class="coc-bk-val" id="bk-down">—</span></div>
+            <div class="coc-bk-row sub"><span class="coc-bk-lbl">Closing Costs</span><span class="coc-bk-val" id="bk-closing">—</span></div>
+            <div class="coc-bk-row sub"><span class="coc-bk-lbl">Upfront Repairs</span><span class="coc-bk-val" id="bk-repair">—</span></div>
+            <div class="coc-bk-row divider"><span class="coc-bk-lbl">Total Cash Invested</span><span class="coc-bk-val" id="bk-total-cash">—</span></div>
+            <!-- Income -->
+            <div class="coc-bk-row" style="margin-top:.5rem;"><span class="coc-bk-lbl">Gross Annual Rent</span><span class="coc-bk-val" id="bk-gross-rent">—</span></div>
+            <div class="coc-bk-row neg"><span class="coc-bk-lbl">Vacancy Loss</span><span class="coc-bk-val" id="bk-vacancy">—</span></div>
+            <div class="coc-bk-row neg"><span class="coc-bk-lbl">Operating Expenses</span><span class="coc-bk-val" id="bk-expense">—</span></div>
+            <div class="coc-bk-row divider po"><span class="coc-bk-lbl">Net Operating Income (NOI)</span><span class="coc-bk-val" id="bk-noi">—</span></div>
+            <!-- Debt -->
+            <div class="coc-bk-row neg" style="margin-top:.5rem;"><span class="coc-bk-lbl">Annual Debt Service (P+I)</span><span class="coc-bk-val" id="bk-debt">—</span></div>
+            <div class="coc-bk-row sub"><span class="coc-bk-lbl">Monthly Mortgage Payment</span><span class="coc-bk-val" id="bk-monthly-pi">—</span></div>
+            <div class="coc-bk-row divider"><span class="coc-bk-lbl">Annual Pre-Tax Cash Flow</span><span class="coc-bk-val" id="bk-cf">—</span></div>
+            <div class="coc-bk-row divider"><span class="coc-bk-lbl" style="color:#2563eb;font-weight:800;">Cash-on-Cash Return</span><span class="coc-bk-val" style="color:#2563eb;font-size:.97rem;" id="bk-coc">—</span></div>
+          </div>
+
+          <p class="coc-disc">*Pre-tax cash flow only. Does not include appreciation, principal paydown, or tax benefits. Not investment advice. <a href="<%= baseUrl %>/disclaimer" style="color:#94a3b8;text-decoration:underline;"></a>.</p>
+        </div>
+
+      </div>
+    </div><!-- /coc-card -->
+
+    <!-- ══ AD UNIT: BETWEEN CALC AND CONTENT ══ -->
+    <div class="coc-ad-mid">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2047576600281805"
+     data-ad-slot="3163885774"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+    <!-- ══ HOW TO USE ══ -->
+    <section class="coc-section" id="how-to-use">
+      <h2>How to Use the Cash-on-Cash Return Calculator</h2>
+      <p>Follow these 5 simple steps to calculate your <strong>cash-on-cash return</strong> and determine if a real estate investment is worth your money. This free calculator works for <a href="<%= baseUrl %>/real-estate/rental-yield-calculator">rental properties</a>, <a href="<%= baseUrl %>/real-estate/cap-rate-calculator">multifamily deals</a>, and <a href="<%= baseUrl %>/loan-calculators/fha-loan-calculator">FHA-financed investments</a>.</p>
+
+      <ol>
+        <li><strong>Enter Purchase Details</strong> — Input the property price, your down payment percentage (20% for conventional, 3.5% for FHA, or 100% for all-cash), closing costs (typically 2–5%), and any upfront repairs.</li>
+        <li><strong>Enter Mortgage Terms</strong> — Add your interest rate and loan term. At <%= currentYear %> rates of 7–7.5%, leverage significantly impacts your CoC return. Use our <a href="<%= baseUrl %>/loan-calculators/mortgage-calculator">mortgage calculator</a> to explore different scenarios.</li>
+        <li><strong>Enter Rental Income</strong> — Input monthly rent and vacancy rate. The <strong>1% rule</strong> says rent should be ≥1% of purchase price for positive cash flow.</li>
+        <li><strong>Enter Operating Expenses</strong> — Include property tax, insurance, maintenance (use the 1% rule: 1% of property value annually), management fees, and HOA costs.</li>
+        <li><strong>Review Results</strong> — See your CoC return, NOI, cap rate, monthly cash flow, and a benchmark comparison. A <strong>good CoC return is 8–12%</strong> in 2026.</li>
+      </ol>
+
+      <div class="coc-info">
+        💡 <strong>Pro Tip:</strong> Bookmark this page and use the calculator for every property you aAnalyze. Serious investors run the numbers on 10+ properties before making an offer. Use our <a href="<%= baseUrl %>/real-estate/cap-rate-calculator">cap rate calculator</a> alongside this tool for complete analysis.
+      </div>
+    </section>
+
+    <!-- ══ WHAT IS COC ══ -->
+    <section class="coc-section" id="what-is-coc">
+      <h2>What Is Cash-on-Cash Return?</h2>
+      <p>Cash-on-cash return (CoC) is the single most important metric for <strong>leveraged real estate investing</strong>. It measures how much annual pre-tax cash you receive as a percentage of the actual cash you invested — your down payment, closing costs, and upfront repairs.</p>
+      <p>Unlike <a href="<%= baseUrl %>/real-estate/rental-yield-calculator">rental yield</a> (which measures income against the full property value), CoC measures income against <strong>only your money</strong>. This is why leveraging a mortgage can amplify your returns dramatically — you're earning income on a $200,000 asset while only having $44,000 of your own cash at risk.</p>
+      <p>Cash-on-cash is what <strong>SmartAsset</strong>, <strong>BiggerPockets</strong>, and serious real estate investors use to evaluate deals because it answers the most important investor question: <strong>"How hard is my actual money working?"</strong></p>
+
+      <div class="coc-info">
+        💡 <strong>What CoC includes:</strong> Annual pre-tax cash flow after all operating expenses AND mortgage payments, divided by total out-of-pocket cash invested. It does NOT include property appreciation, principal paydown (equity buildup), or tax benefits — all of which further improve your real total return.
+      </div>
+
+      <h3>Why Cash-on-Cash Return Matters in <%= currentYear %></h3>
+      <p>With mortgage rates at 7–7.5% in <%= currentYear %>, many properties that looked like great deals in 2021 now show negative cash flow. The cash-on-cash return calculator helps you:</p>
+      <ul>
+        <li>Quickly screen properties before spending time on due diligence</li>
+        <li>Compare deals across different markets and financing scenarios</li>
+        <li>Understand whether leverage is helping or hurting your returns</li>
+        <li>Identify markets where positive cash flow is still achievable</li>
+        <li>Make data-driven decisions instead of emotional ones</li>
+      </ul>
+    </section>
+
+    <!-- ══ FORMULA ══ -->
+    <section class="coc-section" id="formula">
+      <h2>The Cash-on-Cash Return Formula</h2>
+
+      <div class="coc-formula">
+        <code><span>Cash-on-Cash Return</span> = (Annual Pre-Tax Cash Flow / Total Cash Invested) × 100</code>
+        <code> </code>
+        <code><span>Annual Pre-Tax Cash Flow</span> = NOI − Annual Debt Service</code>
+        <code><span>NOI</span> = Effective Gross Income − All Operating Expenses</code>
+        <code><span>Total Cash Invested</span> = Down Payment + Closing Costs + Upfront Repairs</code>
+      </div>
+
+      <h3>Worked Example: $200,000 Property at 7.25% Interest</h3>
+      <table class="coc-table">
+        <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Purchase Price</td><td>$200,000</td></tr>
+          <tr><td>Down Payment (20%)</td><td>$40,000</td></tr>
+          <tr><td>Closing Costs</td><td>$4,000</td></tr>
+          <tr><td>Upfront Repairs</td><td>$0</td></tr>
+          <tr><td><strong>Total Cash Invested</strong></td><td><strong>$44,000</strong></td></tr>
+          <tr><td colspan="2" style="background:#f8fafc;font-weight:600;color:#475569;">Income</td></tr>
+          <tr><td>Monthly Rent</td><td>$1,500/mo</td></tr>
+          <tr><td>Gross Annual Rent</td><td>$18,000</td></tr>
+          <tr><td>Vacancy (5%)</td><td>−$900</td></tr>
+          <tr><td>Effective Gross Income</td><td>$17,100</td></tr>
+          <tr><td colspan="2" style="background:#f8fafc;font-weight:600;color:#475569;">Operating Expenses</td></tr>
+          <tr><td>Property Tax</td><td>−$2,400</td></tr>
+          <tr><td>Insurance</td><td>−$1,200</td></tr>
+          <tr><td>Maintenance (1%)</td><td>−$2,000</td></tr>
+          <tr><td>Management (10%)</td><td>−$1,710</td></tr>
+          <tr><td><strong>Net Operating Income (NOI)</strong></td><td><strong>$9,790</strong></td></tr>
+          <tr><td colspan="2" style="background:#f8fafc;font-weight:600;color:#475569;">Financing</td></tr>
+          <tr><td>Loan Amount ($160,000 @ 7.25%, 30yr)</td><td>—</td></tr>
+          <tr><td>Annual Mortgage Payment (P+I)</td><td>−$13,107</td></tr>
+          <tr><td><strong>Annual Pre-Tax Cash Flow</strong></td><td style="color:#dc2626;"><strong>−$3,317</strong></td></tr>
+          <tr><td colspan="2" style="background:#eff6ff;"></td></tr>
+          <tr><td><strong>Cash-on-Cash Return</strong></td><td style="color:#dc2626;font-weight:700;font-size:1.05rem;"><strong>−7.5%</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="coc-warn">
+        ⚠️ <strong>This is the reality of the current market.</strong> At 7.25% interest rates with a $200K property renting for $1,500/month, cash flow is negative. This is why sophisticated investors are either (a) buying in higher-yield markets like Cleveland or Memphis, (b) making larger down payments to reduce debt service, (c) waiting for rate drops, or (d) focusing on appreciation markets intentionally accepting negative CoC.
+      </div>
+
+      <h3>What Makes CoC Turn Positive?</h3>
+      <p>For this same $200,000 property to cash flow at break-even (0% CoC), you'd need rent of approximately <strong>$2,000/month</strong> — the <a href="#faq">1% rule</a>. To achieve a 6% CoC at current rates, you'd need either higher rents, a lower purchase price, a larger down payment, or a lower interest rate.</p>
+    </section>
+
+    <!-- ══ GOOD COC ══ -->
+    <section class="coc-section" id="good-coc">
+      <h2>What Is a Good Cash-on-Cash Return in <%= currentYear %>?</h2>
+      <p>What constitutes a "good" CoC return has shifted significantly with rising interest rates. In a 3% rate environment, positive CoC was achievable in many markets. At 7%+ rates, it requires buying in high-yield markets or with substantial equity.</p>
+
+      <table class="coc-table">
+        <thead><tr><th>CoC Return</th><th>Rating</th><th>What It Means</th><th>Typical Markets</th></tr></thead>
+        <tbody>
+          <tr><td style="color:#dc2626;font-weight:700;">Negative</td><td>⚠️ Alligator</td><td>Property costs more than it earns monthly</td><td>SF, NYC, LA, Boston</td></tr>
+          <tr><td style="color:#f97316;font-weight:700;">0–3%</td><td>🟠 Marginal</td><td>Barely cash flows — appreciation bet</td><td>Austin, Nashville, Denver</td></tr>
+          <tr><td style="color:#eab308;font-weight:700;">4–6%</td><td>🟡 Decent</td><td>Positive cash flow — acceptable for some markets</td><td>Charlotte, Raleigh, Atlanta</td></tr>
+          <tr><td style="color:#22c55e;font-weight:700;">7–10%</td><td>🟢 Good</td><td>Strong return — solid cash flow investment</td><td>Indianapolis, Memphis, Birmingham</td></tr>
+          <tr><td style="color:#059669;font-weight:700;">11–15%</td><td>🟢 Excellent</td><td>High cash flow — usually requires secondary markets</td><td>Cleveland, Toledo, Detroit</td></tr>
+          <tr><td style="color:#059669;font-weight:700;">15%+</td><td>🌟 Outstanding</td><td>Exceptional — verify assumptions carefully</td><td>Distressed/BRRRR markets</td></tr>
+        </tbody>
+      </table>
+
+      <div class="coc-info">
+        📊 <strong><%= currentYear %> context:</strong> With mortgage rates at 7–7.5%, achieving 8%+ CoC requires buying in markets where the gross rent-to-price ratio (the "GRM") is favorable. Most analysis points to Midwest and South secondary markets — Cleveland, Memphis, Indianapolis, Cincinnati, Birmingham — as the best opportunities for positive cash flow in the current rate environment.
+      </div>
+    </section>
+
+    <!-- ══ US BENCHMARKS ══ -->
+    <section class="coc-section" id="us-benchmark">
+      <h2><%= currentYear %> Cash-on-Cash Return Benchmarks by US Market</h2>
+      <p>Cash-on-cash return varies dramatically by city based on purchase prices, rent levels, property taxes, and local market conditions. These estimates assume 20% down, 7.25% interest rate, 30-year mortgage, 5% vacancy, and standard expense ratios.</p>
+
+      <table class="coc-table">
+        <thead><tr><th>Market</th><th>Median Price</th><th>Avg Monthly Rent</th><th>Gross Yield</th><th>Est. CoC Return</th><th>Profile</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Cleveland, OH</strong></td><td>~$95K</td><td>~$895</td><td>11.3%</td><td style="color:#059669;font-weight:700;">8–14%</td><td>Maximum cash flow</td></tr>
+          <tr><td><strong>Memphis, TN</strong></td><td>~$175K</td><td>~$1,200</td><td>8–10%</td><td style="color:#22c55e;font-weight:700;">5–10%</td><td>Portfolio builder</td></tr>
+          <tr><td><strong>Indianapolis, IN</strong></td><td>~$275K</td><td>~$1,500</td><td>6–8%</td><td style="color:#22c55e;font-weight:700;">4–8%</td><td>Stable cash flow</td></tr>
+          <tr><td><strong>Birmingham, AL</strong></td><td>~$180K</td><td>~$1,100</td><td>7–9%</td><td style="color:#22c55e;font-weight:700;">4–9%</td><td>High yield South</td></tr>
+          <tr><td><strong>Cincinnati, OH</strong></td><td>~$240K</td><td>~$1,950</td><td>~9.8%</td><td style="color:#22c55e;font-weight:700;">5–10%</td><td>High demand rental</td></tr>
+          <tr><td><strong>Kansas City, MO</strong></td><td>~$285K</td><td>~$1,600</td><td>6–7%</td><td style="color:#eab308;font-weight:700;">3–6%</td><td>Balanced market</td></tr>
+          <tr><td><strong>Austin, TX</strong></td><td>~$500K</td><td>~$2,100</td><td>5–6%</td><td style="color:#f97316;font-weight:700;">0–2%</td><td>Appreciation bet</td></tr>
+          <tr><td><strong>Nashville, TN</strong></td><td>~$480K</td><td>~$1,900</td><td>4.5–5.5%</td><td style="color:#f97316;font-weight:700;">−1 to 1%</td><td>Appreciation bet</td></tr>
+          <tr><td><strong>New York City, NY</strong></td><td>~$750K+</td><td>~$2,800</td><td>3–4%</td><td style="color:#dc2626;font-weight:700;">−5 to −2%</td><td>Negative cash flow</td></tr>
+          <tr><td><strong>San Francisco, CA</strong></td><td>~$1.1M</td><td>~$3,200</td><td>2.5–3.5%</td><td style="color:#dc2626;font-weight:700;">−8 to −4%</td><td>Negative cash flow</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.82rem;color:#64748b;">*Estimates based on 20% down payment, 7.25% rate, 30-year term, 5% vacancy, standard expense ratios. Individual deals vary significantly.</p>
+    </section>
+
+    <!-- ══ COC VS CAP ══ -->
+    <section class="coc-section" id="coc-vs-cap">
+      <h2>Cash-on-Cash Return vs Cap Rate</h2>
+      <p>Cap rate and cash-on-cash return both measure real estate returns, but they answer different questions. Understanding the difference is essential for evaluating any deal.</p>
+
+      <table class="coc-table">
+        <thead><tr><th>Feature</th><th>Cap Rate</th><th>Cash-on-Cash Return</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Formula</strong></td><td>NOI / Property Value</td><td>Annual Cash Flow / Cash Invested</td></tr>
+          <tr><td><strong>Includes mortgage?</strong></td><td>No — unlevered</td><td>Yes — subtracts debt service</td></tr>
+          <tr><td><strong>Denominator</strong></td><td>Full property value</td><td>Your cash only (down + closing costs)</td></tr>
+          <tr><td><strong>Same for all buyers?</strong></td><td>Yes — financing-independent</td><td>No — varies by down payment and rate</td></tr>
+          <tr><td><strong>Best use</strong></td><td>Compare properties regardless of financing</td><td>Evaluate a specific deal with your financing</td></tr>
+          <tr><td><strong>Leverage effect</strong></td><td>Not reflected</td><td>Amplifies CoC (positive or negative)</td></tr>
+          <tr><td><strong>When equal</strong></td><td>—</td><td>When bought all-cash (no mortgage)</td></tr>
+        </tbody>
+      </table>
+
+      <p>A property with a 7% cap rate financed with 20% down at 7.25% might produce a negative CoC — because the mortgage rate exceeds the cap rate. This is called <strong>negative leverage</strong> and is common when rates are high relative to cap rates.</p>
+      <p>When cap rate &gt; mortgage rate: leverage amplifies returns (positive leverage). When cap rate &lt; mortgage rate: leverage hurts returns (negative leverage).</p>
+      <p><a href="<%= baseUrl %>/real-estate/cap-rate-calculator">Calculate Cap Rate →</a></p>
+    </section>
+
+    <!-- ══ COC VS YIELD ══ -->
+    <section class="coc-section" id="coc-vs-yield">
+      <h2>Cash-on-Cash Return vs Rental Yield</h2>
+      <p>Rental yield and cash-on-cash return measure similar things but from different perspectives:</p>
+
+      <table class="coc-table">
+        <thead><tr><th>Feature</th><th>Rental Yield</th><th>Cash-on-Cash Return</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Denominator</strong></td><td>Full property value</td><td>Your cash investment only</td></tr>
+          <tr><td><strong>Includes mortgage payments?</strong></td><td>No</td><td>Yes</td></tr>
+          <tr><td><strong>Best for</strong></td><td>Comparing properties across markets</td><td>Evaluating a specific deal with your financing</td></tr>
+          <tr><td><strong>Leverage impact</strong></td><td>Not reflected</td><td>Positive or negative depending on rate vs yield</td></tr>
+          <tr><td><strong>Example (20% down, 7.25%)</strong></td><td>Net yield: ~6%</td><td>CoC may be negative if mortgage cost &gt; NOI</td></tr>
+        </tbody>
+      </table>
+
+      <p>Use rental yield to <strong>screen and compare markets</strong>. Use cash-on-cash to <strong>evaluate a specific deal after financing</strong>. Every serious investor needs both.</p>
+      <p><a href="<%= baseUrl %>/real-estate/rental-yield-calculator">Calculate Rental Yield →</a></p>
+    </section>
+
+    <!-- ══ LEVERAGE ══ -->
+    <section class="coc-section" id="leverage">
+      <h2>How Leverage Affects Cash-on-Cash Return</h2>
+      <p>The same property can produce vastly different CoC returns depending on how much you borrow. This is both the power and the risk of leverage.</p>
+
+      <h3>Example: $200,000 Property, $1,800/month Rent, $8,000 Annual NOI</h3>
+      <table class="coc-table">
+        <thead><tr><th>Financing Scenario</th><th>Cash Invested</th><th>Annual Debt Service</th><th>Annual Cash Flow</th><th>CoC Return</th></tr></thead>
+        <tbody>
+          <tr><td>All Cash (0% LTV)</td><td>$204,000</td><td>$0</td><td>$8,000</td><td style="color:#eab308;">3.9%</td></tr>
+          <tr><td>25% Down (75% LTV)</td><td>$54,000</td><td>$12,756</td><td>−$4,756</td><td style="color:#dc2626;">−8.8%</td></tr>
+          <tr><td>20% Down (80% LTV)</td><td>$44,000</td><td>$13,107</td><td>−$5,107</td><td style="color:#dc2626;">−11.6%</td></tr>
+          <tr><td>30% Down (70% LTV)</td><td>$64,000</td><td>$12,403</td><td>−$4,403</td><td style="color:#dc2626;">−6.9%</td></tr>
+          <tr><td>50% Down (50% LTV)</td><td>$104,000</td><td>$8,831</td><td>−$831</td><td style="color:#f97316;">−0.8%</td></tr>
+          <tr><td>60% Down (40% LTV)</td><td>$124,000</td><td>$7,064</td><td>+$936</td><td style="color:#22c55e;">+0.8%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.82rem;color:#64748b;">*Assumes 7.25% rate, 30yr term, $8,000 NOI, $4,000 closing costs. Illustrates that at current rates, most leveraged deals on this property type are cash flow negative.</p>
+
+      <div class="coc-warn">
+        ⚠️ <strong>Negative leverage is real in 2026.</strong> When mortgage rates exceed cap rates (a common situation at 7%+ rates), adding leverage hurts rather than helps CoC return. Buying all-cash often produces better CoC than financing at current rates — unless you find properties with very high gross yields.
+      </div>
+    </section>
+
+    <!-- ══ SENSITIVITY ANALYSIS (NEW SECTION) ══ -->
+    <section class="coc-section" id="sensitivity">
+      <h2>Cash-on-Cash Return Sensitivity Analysis</h2>
+      <p>See how changing one variable affects your CoC return while holding everything else constant. This helps you understand which levers matter most for your deal.</p>
+
+      <h3>Interest Rate Sensitivity (All Else Equal)</h3>
+      <table class="coc-table">
+        <thead><tr><th>Interest Rate</th><th>Monthly P+I</th><th>Annual Cash Flow</th><th>CoC Return</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td>5.00%</td><td>$859</td><td>+$2,482</td><td style="color:#22c55e;font-weight:700;">+5.6%</td><td>Baseline</td></tr>
+          <tr><td>6.00%</td><td>$959</td><td>+$1,282</td><td style="color:#22c55e;font-weight:700;">+2.9%</td><td>−2.7pp</td></tr>
+          <tr><td>7.00%</td><td>$1,064</td><td>+$62</td><td style="color:#eab308;font-weight:700;">+0.1%</td><td>−5.5pp</td></tr>
+          <tr><td>7.25%</td><td>$1,092</td><td>−$317</td><td style="color:#dc2626;font-weight:700;">−0.7%</td><td>−6.3pp</td></tr>
+          <tr><td>8.00%</td><td>$1,174</td><td>−$1,198</td><td style="color:#dc2626;font-weight:700;">−2.7%</td><td>−8.3pp</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.82rem;color:#64748b;">*Based on $200K property, 20% down, $1,500/mo rent, standard expenses. Every 1% rate increase reduces CoC by approximately 2.5–3 percentage points.</p>
+
+      <h3>Down Payment Sensitivity</h3>
+      <table class="coc-table">
+        <thead><tr><th>Down Payment</th><th>Cash Invested</th><th>Monthly P+I</th><th>CoC Return</th></tr></thead>
+        <tbody>
+          <tr><td>3.5% (FHA)</td><td>$10,500</td><td>$1,304</td><td style="color:#dc2626;">−23.1%</td></tr>
+          <tr><td>10%</td><td>$24,000</td><td>$1,228</td><td style="color:#dc2626;">−10.2%</td></tr>
+          <tr><td>20%</td><td>$44,000</td><td>$1,092</td><td style="color:#dc2626;">−0.7%</td></tr>
+          <tr><td>25%</td><td>$54,000</td><td>$1,022</td><td style="color:#22c55e;">+1.8%</td></tr>
+          <tr><td>50%</td><td>$104,000</td><td>$682</td><td style="color:#22c55e;">+3.9%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="coc-info">
+        📊 <strong>Key Insight:</strong> At 7.25% rates, you need approximately 25% down to achieve positive CoC on a typical $200K property. With FHA (3.5% down), negative cash flow is severe. This is why many 2026 investors are either going all-cash or waiting for rate drops before leveraging.
+      </div>
+    </section>
+
+    <!-- ══ IMPROVE ══ -->
+    <section class="coc-section" id="improve">
+      <h2>How to Improve Cash-on-Cash Return</h2>
+      <ul>
+        <li><strong>Buy in high-yield markets.</strong> Cleveland, Memphis, Indianapolis, and Cincinnati offer the best gross rent-to-price ratios in the US, making positive CoC achievable even at current rates.</li>
+        <li><strong>Negotiate a lower purchase price.</strong> Every dollar off the price improves both CoC and cap rate. A 5% discount on a $200,000 property saves $10,000 in cash invested and reduces the loan balance.</li>
+        <li><strong>Increase the rent.</strong> Higher rent directly increases NOI and cash flow. Target properties where rent is below market, with the ability to raise it upon turnover.</li>
+        <li><strong>Reduce operating expenses.</strong> Self-managing saves 8–12% management fees. Lower property taxes come from appealing assessments or buying in lower-tax states.</li>
+        <li><strong>Buy points to lower your rate.</strong> Paying 1 point (1% of loan) upfront to reduce the rate by 0.25% can significantly improve long-term CoC if you hold for 5+ years.</li>
+        <li><strong>Use the BRRRR strategy.</strong> Buy, Rehab, Rent, Refinance, Repeat — buying distressed properties below value, renovating, then refinancing to pull cash out can produce very high effective CoC.</li>
+        <li><strong>Add value through renovations.</strong> A $10,000 kitchen update that increases rent by $200/month adds $2,400/year to cash flow — a 24% return on that specific investment.</li>
+        <li><strong>Consider short-term rentals.</strong> Airbnb and VRBO can double or triple gross revenue in high-demand vacation markets, dramatically improving CoC despite higher operating costs.</li>
+      </ul>
+    </section>
+
+    <!-- ══ AD UNIT: BEFORE FAQ ══ -->
+    <div class="coc-ad-bottom">
+      <ins class="adsbygoogle"
+            style="display:block"
+     data-ad-client="ca-pub-2047576600281805"
+     data-ad-slot="7206358557"
+     data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- ══ FAQ ══ -->
+    <section class="coc-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <% const _faqs = [["What is cash-on-cash return in real estate?", "Cash-on-cash return (CoC) measures the annual pre-tax cash flow you receive as a percentage of the total cash you actually invested. Formula: CoC = (Annual Pre-Tax Cash Flow / Total Cash Invested) × 100. Total cash invested = down payment + closing costs + upfront repairs. Annual pre-tax cash flow = NOI minus annual mortgage payments (debt service)."], ["What is a good cash-on-cash return in 2026?", "At 2026 interest rates (7–7.5%), a good CoC is 8%+ in markets where it's achievable. Returns of 4–7% are decent. Negative CoC is common in coastal markets and high-price cities where investors accept it hoping for appreciation. For positive cash flow, focus on Midwest and South secondary markets: Cleveland OH, Memphis TN, Indianapolis IN, Cincinnati OH, and Birmingham AL."], ["What is the cash-on-cash return formula?", "CoC Return = (Annual Pre-Tax Cash Flow / Total Cash Invested) × 100. Annual Pre-Tax Cash Flow = NOI (Net Operating Income) − Annual Debt Service (mortgage P+I payments). Total Cash Invested = Down Payment + Closing Costs + Any Upfront Repair Costs."], ["What is the difference between cash-on-cash return and cap rate?", "Cap rate = NOI / Property Value. It's unlevered — same for any buyer regardless of financing. Cash-on-cash = Cash Flow / Cash Invested. It's levered — accounts for your mortgage and measures return on your specific cash investment. When cap rate > mortgage rate, leverage improves CoC. When cap rate < mortgage rate (negative leverage), borrowing hurts CoC."], ["Can cash-on-cash return be negative?", "Yes, and it's common in high-cost markets. Negative CoC means your mortgage plus expenses exceed rental income — you're paying out of pocket monthly. Many investors in NYC, SF, LA, and Boston accept negative CoC betting on long-term appreciation. This is a valid strategy only if you can sustain the monthly shortfall and have strong conviction in price appreciation."], ["What does total cash invested include?", "Down payment + closing costs (typically 2–5% of purchase price for buyers) + any upfront renovations or repairs paid before the first tenant. It does NOT include the loan amount — only your out-of-pocket cash. The lower your cash investment relative to cash flow, the higher your CoC return."], ["What is the 1% rule in real estate?", "Monthly rent should be at least 1% of purchase price to achieve positive cash flow. A $200,000 property needs $2,000/month rent. At current rates (7.25%), the 1% rule barely achieves break-even CoC. To achieve 6–8% CoC, you often need rent above 1.1–1.3% of price. This is why Cleveland and Memphis, where the rule is achievable, attract cash flow investors."], ["How does cash-on-cash return relate to ROI?", "CoC is often called return on cash or annual cash ROI. However, total ROI on a real estate investment includes CoC return plus principal paydown (equity buildup from mortgage payments) plus appreciation. A property showing negative CoC might still produce 8–12% total ROI if appreciation is strong and equity is building."], ["How does leverage affect cash-on-cash return?", "Leverage amplifies CoC in both directions. When property income exceeds mortgage costs, CoC exceeds cap rate — positive leverage. A 6% cap rate property can yield 10%+ CoC with 75-80% leverage. But if income drops or rates rise, leverage amplifies losses — negative leverage. At 7%+ mortgage rates, many leveraged deals show negative CoC unless bought in high-yield markets."], ["What is negative leverage in real estate?", "Negative leverage occurs when your mortgage interest rate exceeds the property's cap rate. For example, if a property has a 6% cap rate but you finance it at 7.25%, borrowing money hurts your return rather than helping it. Your CoC return will be lower than the cap rate, and may even turn negative. Solutions include larger down payments, buying in higher-yield markets, or waiting for rate drops."], ["How to calculate cash-on-cash return with an FHA loan?", "With an FHA loan (3.5% down), your total cash invested is much lower, which can dramatically increase CoC return if the property cash flows. However, FHA loans include mortgage insurance premiums (MIP) — both upfront (1.75% of loan) and annual (0.55-1.05%). Include these in your operating expenses. Example: $200K property, $7,000 down (3.5%), $3,500 upfront MIP, $2,000 closing costs = $12,500 total cash invested."], ["Is cash-on-cash return the same as ROI?", "No. Cash-on-cash return measures only one year's pre-tax cash flow against your initial cash investment. ROI (Return on Investment) includes everything: cash flow, principal paydown (equity buildup), appreciation, and tax benefits over the entire holding period. Use CoC for annual cash flow analysis; use ROI for total lifetime return."]]; _faqs.forEach(function(faq) { %>
+      <div class="coc-faq-item">
+        <div class="coc-faq-q"><%- faq[0] %></div>
+        <div class="coc-faq-a"><%- faq[1] %></div>
+      </div>
+      <% }); %>
+    </section>
+
+    <!-- ══ RELATED CALCULATORS ══ -->
+    <section class="coc-section" style="padding:1.75rem 2.25rem;">
+      <h2 style="font-size:1.3rem;margin-bottom:1rem;">Related Real Estate Calculators</h2>
+      <p style="color:#64748b;font-size:.95rem;margin-bottom:1.25rem;">Use these tools together for complete investment analysis:</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+        <a href="<%= baseUrl %>/real-estate/rental-yield-calculator" style="display:block;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:1rem;text-decoration:none;color:#1e3a8a;font-weight:600;font-size:.9rem;text-align:center;">🏠 Rental Yield Calculator</a>
+        <a href="<%= baseUrl %>/real-estate/cap-rate-calculator" style="display:block;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:1rem;text-decoration:none;color:#1e3a8a;font-weight:600;font-size:.9rem;text-align:center;">📊 Cap Rate Calculator</a>
+        <a href="<%= baseUrl %>/real-estate/noi-calculator" style="display:block;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:1rem;text-decoration:none;color:#1e3a8a;font-weight:600;font-size:.9rem;text-align:center;">💰 NOI Calculator</a>
+        <a href="<%= baseUrl %>/loan-calculators/mortgage-calculator" style="display:block;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:1rem;text-decoration:none;color:#1e3a8a;font-weight:600;font-size:.9rem;text-align:center;">🏦 Mortgage Calculator</a>
+        <a href="<%= baseUrl %>/loan-calculators/fha-loan-calculator" style="display:block;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:1rem;text-decoration:none;color:#1e3a8a;font-weight:600;font-size:.9rem;text-align:center;">🏠 FHA Loan Calculator</a>
+        <a href="<%= baseUrl %>/real-estate/" style="display:block;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:1rem;text-decoration:none;color:#1e3a8a;font-weight:600;font-size:.9rem;text-align:center;">🏘️ All Real Estate Tools</a>
+      </div>
+    </section>
+
+  </div><!-- /coc-main -->
+
+  <!-- ══ RIGHT SIDEBAR ══ -->
+  <aside class="coc-sidebar">
+
+    <!-- AdSense Sidebar Ad -->
+    <div class="coc-ad-sidebar">
+      <ins class="adsbygoogle"
+             style="display:block"
+     data-ad-client="ca-pub-2047576600281805"
+     data-ad-slot="8659041023"
+     data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <div class="coc-widget">
+      <div class="coc-widget-head">
+        <div class="coc-widget-title">💵 <%= currentYear %> CoC Benchmarks</div>
+        <div class="coc-widget-sub">Est. cash-on-cash by US market</div>
+        <div class="coc-widget-upd">Assumes 20% down · 7.25% rate · 30yr</div>
+      </div>
+      <div class="coc-widget-row">
+        <div class="coc-widget-row"><div><div class="coc-wl">Cleveland, OH</div><div class="coc-w">Max cash flow market</div></div><div class="coc-wv">8–14%</div></div>
+        <div class="coc-widget-row"><div><div class="coc-wl">Memphis, TN</div><div class="coc-w">Portfolio builder</div></div><div class="coc-wv">5–10%</div></div>
+        <div class="coc-widget-row" style="background:#eff6ff;"><div><div class="coc-wl">Indianapolis, IN</div><div class="coc-w">Stable cash flow</div></div><div class="coc-wv">4–8%</div></div>
+        <div class="coc-widget-row"><div><div class="coc-wl">Birmingham, AL</div><div class="coc-w">High yield South</div></div><div class="coc-wv">4–9%</div></div>
+        <div class="coc-widget-row"><div><div class="coc-wl">Austin, TX</div><div class="coc-w">Appreciation market</div></div><div class="coc-wv">0–2%</div></div>
+        <div class="coc-widget-row"><div><div class="coc-wl">New York City, NY</div><div class="coc-w">Negative cash flow</div></div><div style="font-size:.92rem;font-weight:800;color:#dc2626;text-align:right;">−5 to −2%</div></div>
+        <div class="coc-widget-row"><div><div class="coc-wl">San Francisco, CA</div><div class="coc-w">Appreciation play</div></div><div style="font-size:.92rem;font-weight:800;color:#dc2626;text-align:right;">−8 to −4%</div></div>
+      </div>
+      <div class="coc-widget-foot">
+        <p>CoC estimates vary significantly by purchase price, exact rent, and expenses. Use the calculator above for your specific deal.</p>
+        <a href="<%= baseUrl %>/real-estate/rental-yield-calculator">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          Check rental yield first →
+        </a>
+      </div>
+    </div>
+
+    <div class="coc-quick-widget">
+      <div class="coc-quick-head">🏘️ Real Estate Tools</div>
+      <ul class="coc-quick-link">
+        <li><a href="<%= baseUrl %>/real-estate/cash-on-cash-return-calculator" class="active">💵 Cash-on-Cash Return</a></li>
+        <li><a href="<%= baseUrl %>/real-estate/rental-yield-calculator">🏠 Rental Yield Calculator</a></li>
+        <li><a href="<%= baseUrl %>/real-estate/cap-rate-calculator">📊 Cap Rate Calculator</a></li>
+        <li><a href="<%= baseUrl %>/real-estate/noi-calculator">💰 NOI Calculator</a></li>
+        <li><a href="<%= baseUrl %>/real-estate/dscr-calculator">📈 DSCR Calculator</a></li>
+        <li><a href="<%= baseUrl %>/real-estate/">🏘️ All Real Estate Tools</a></li>
+        <li><a href="<%= baseUrl %>/loan-calculators/mortgage-calculator">🏦 Mortgage Calculator</a></li>
+        <li><a href="<%= baseUrl %>/loan-calculators/fha-loan-calculator">🏠 FHA Loan Calculator</a></li>
+        <li><a href="<%= baseUrl %>/loan-calculators/">💳 All Loan Calculators</a></li>
+      </ul>
+    </div>
+  </aside>
+
+</div><!-- /coc-wrap -->
+</main>
+
+<script>
+(function(){
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const fmtC = v => {
+    const abs = Math.abs(Math.round(v));
+    return (v < 0 ? '−' : '') + '$' + abs.toLocaleString('en-US');
+  };
+  const fmtP = v => (v < 0 ? '−' : '') + Math.abs(v).toFixed(2) + '%';
+
+  // Monthly mortgage payment (P+I)
+  function calcMortgagePayment(principal, annualRate, termYears) {
+    if (annualRate === 0) return principal / (termYears * 12);
+    const r = annualRate / 100 / 12;
+    const n = termYears * 12;
+    return principal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  }
+
+  function calculate() {
+    const price       = parseFloat($('c-price').value)       || 0;
+    const downPct     = parseFloat($('c-down').value)        || 0;
+    const closing     = parseFloat($('c-closing').value)     || 0;
+    const repairs     = parseFloat($('c-repairs').value)     || 0;
+    const intRate     = parseFloat($('c-rate').value)        || 0;
+    const termYrs     = parseInt($('c-term').value)          || 30;
+    const loanType    = $('c-loan-type').value;
+    const monthlyRent = parseFloat($('c-rent').value)        || 0;
+    const vacancyPct  = parseFloat($('c-vacancy').value)     || 0;
+    const propTax     = parseFloat($('c-tax').value)         || 0;
+    const insurance   = parseFloat($('c-insurance').value)   || 0;
+    const maintenance = parseFloat($('c-maintenance').value) || 0;
+    const mgmtPct     = parseFloat($('c-mgmt').value)        || 0;
+    const hoa         = parseFloat($('c-hoa').value)         || 0;
+    const other       = parseFloat($('c-other').value)       || 0;
+
+    if (price <= 0) return;
+
+    // Cash invested
+    const downAmt       = price * (downPct / 100);
+    const totalCash     = downAmt + closing + repairs;
+    const loanAmt       = price - downAmt;
+
+    // Debt service
+    let annualDebtService = 0;
+    let monthlyPI = 0;
+    if (loanType !== 'cash' && loanAmt > 0) {
+      monthlyPI        = calcMortgagePayment(loanAmt, intRate, termYrs);
+      annualDebtService = monthlyPI * 12;
+    }
+
+    // Income
+    const grossAnnualRent = monthlyRent * 12;
+    const vacancyLoss     = grossAnnualRent * (vacancyPct / 100);
+    const effectiveRent   = grossAnnualRent - vacancyLoss;
+
+    // Expenses
+    const mgmtFee      = effectiveRent * (mgmtPct / 100);
+    const totalExpenses = propTax + insurance + maintenance + mgmtFee + hoa + other;
+
+    // NOI & CoC
+    const noi      = effectiveRent - totalExpenses;
+    const cashFlow = noi - annualDebtService;
+    const coc      = totalCash > 0 ? (cashFlow / totalCash) * 100 : 0;
+    const capRate  = price > 0 ? (noi / price) * 100 : 0;
+    const monthlyCF = cashFlow / 12;
+
+    // Update results
+    $('res-coc').textContent         = fmtP(coc);
+    $('res-cash-invested').textContent = fmtC(totalCash);
+    $('res-annual-cf').textContent   = fmtC(cashFlow);
+    $('res-monthly-cf').textContent  = fmtC(monthlyCF);
+    $('res-cap-rate').textContent    = fmtP(capRate);
+
+    // CoC color
+    const cocEl = $('res-coc');
+    cocEl.style.color = coc >= 8 ? '#22c55e' : coc >= 4 ? '#eab308' : coc >= 0 ? '#f97316' : '#dc2626';
+
+    // Breakdown
+    $('bk-price').textContent       = fmtC(price);
+    $('bk-down').textContent        = fmtC(downAmt) + ' (' + downPct + '%)';
+    $('bk-closing').textContent     = fmtC(closing);
+    $('bk-repairs').textContent     = fmtC(repairs);
+    $('bk-total-cash').textContent  = fmtC(totalCash);
+    $('bk-gross-rent').textContent  = fmtC(grossAnnualRent);
+    $('bk-vacancy').textContent     = '−' + fmtC(vacancyLoss);
+    $('bk-expenses').textContent    = '−' + fmtC(totalExpenses);
+    $('bk-noi').textContent         = fmtC(noi);
+    $('bk-debt').textContent        = annualDebtService > 0 ? '−' + fmtC(annualDebtService) : '$0 (all cash)';
+    $('bk-monthly-pi').textContent  = monthlyPI > 0 ? fmtC(monthlyPI) + '/mo' : 'None';
+    $('bk-cf').textContent          = fmtC(cashFlow);
+    $('bk-coc').textContent         = fmtP(coc);
+
+    // Cash flow color in breakdown
+    const cfEl = $('bk-cf');
+    cfEl.style.color = cashFlow >= 0 ? '#059669' : '#dc2626';
+    $('bk-coc').style.color = coc >= 4 ? '#059669' : '#dc2626';
+
+    // CoC stats color
+    const cfStatEl = $('res-annual-cf');
+    const moEl = $('res-monthly-cf');
+    [cfStatEl, moEl].forEach(el => el.style.color = cashFlow >= 0 ? '#059669' : '#dc2626');
+
+    // Gauge: map CoC from −10 to 20% → 0–100%
+    const gaugeMin = -10, gaugeMax = 20;
+    const gaugePos = Math.min(100, Math.max(0, ((coc - gaugeMin) / (gaugeMax - gaugeMin)) * 100));
+    $('coc-needle').style.left = gaugePos + '%';
+
+    // Verdict
+    let verdict = '';
+    if      (coc >= 12) verdict = '🌟 Outstanding return — top performer';
+    else if (coc >= 8)  verdict = '🟢 Excellent — strong cash flow investment';
+    else if (coc >= 6)  verdict = '🟢 Good return — solid cash flow deal';
+    else if (coc >= 4)  verdict = '🟡 Decent — marginal positive cash flow';
+    else if (coc >= 0)  verdict = '🟠 Very low CoC — appreciation dependent';
+    else                verdict = '🔴 Negative cash flow — alligator property';
+    $('coc-gauge-verdict').textContent = verdict;
+    $('coc-gauge-verdict').style.color = coc >= 6 ? '#059669' : coc >= 0 ? '#d97706' : '#dc2626';
+
+    $('coc-res-sub').textContent =
+      fmtP(coc) + ' CoC · $' + Math.round(Math.abs(monthlyCF)).toLocaleString() +
+      '/mo cash flow · ' + fmtP(capRate) + ' cap rate';
+  }
+
+  // Wire all inputs
+  document.querySelectorAll('.coc-form-col input, .coc-form-col select').forEach(el => {
+    el.addEventListener('input',  calculate);
+    el.addEventListener('change', calculate);
+  });
+  $('coc-calc-btn').addEventListener('click', calculate);
+  calculate();
+
+  // TOC scroll spy
+  const tocLinks = document.querySelectorAll('.coc-toc-list a');
+  const sections = [];
+  tocLinks.forEach(link => {
+    const id = link.getAttribute('href').replace('#','');
+    const sec = document.getElementById(id);
+    if (sec) sections.push({ link, sec });
+  });
+  function updateTOC() {
+    const y = window.scrollY + 130;
+    let active = sections[0];
+    sections.forEach(s => { if (s.sec && s.sec.getBoundingClientRect().top + window.scrollY <= y) active = s; });
+    tocLinks.forEach(l => l.classList.remove('coc-active'));
+    if (active) active.link.classList.add('coc-active');
+  }
+  window.addEventListener('scroll', updateTOC, { passive: true });
+  updateTOC();
+
+  // FAQ accordion
+  document.querySelectorAll('.coc-faq-q').forEach(q => {
+    q.addEventListener('click', function () {
+      const item    = this.closest('.coc-faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.coc-faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // Track calculator usage for analytics (optional)
+  let calcCount = 0;
+  $('coc-calc-btn').addEventListener('click', function() {
+    calcCount++;
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'calculate_coc', {
+        'event_category': 'calculator',
+        'event_label': 'cash_on_cash_return',
+        'value': calcCount
+      });
+    }
+  });
+})();
+</script>
+<%- include('../../partials/footer') %>

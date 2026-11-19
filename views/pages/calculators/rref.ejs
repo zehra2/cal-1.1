@@ -1,0 +1,103 @@
+<%- include('../../partials/header') %>
+<div class="calculator-page">
+    <h1>RREF Calculator</h1>
+    <p class="description">Calculate the Reduced Row Echelon Form of a matrix using Gaussian elimination.</p>
+
+    <form id="rrefForm" class="calculator-form" onsubmit="event.preventDefault(); computeRref();">
+        <div class="form-group">
+            <label for="rows">Number of Rows:</label>
+            <select id="rows" name="rows" onchange="renderGrid()">
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="cols">Number of Columns:</label>
+            <select id="cols" name="cols" onchange="renderGrid()">
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+
+        <h3>Enter Matrix Values:</h3>
+        <div id="matrixInputs" style="overflow-x: auto;"></div>
+
+        <button type="submit" class="btn">Calculate RREF</button>
+    </form>
+
+    <div id="rrefResult" class="result-section" style="display:none;">
+        <h2>Reduced Row Echelon Form</h2>
+        <div id="rrefTableWrap" style="overflow-x: auto;"></div>
+    </div>
+</div>
+<script>
+function renderGrid() {
+  var rows = parseInt(document.getElementById('rows').value, 10);
+  var cols = parseInt(document.getElementById('cols').value, 10);
+  var wrap = document.getElementById('matrixInputs');
+  var html = '';
+  for (var i = 0; i < rows; i++) {
+    html += '<div style="display:flex;gap:10px;margin-bottom:10px;">';
+    for (var j = 0; j < cols; j++) {
+      html += '<input type="number" step="any" id="cell_' + i + '_' + j + '" style="width:80px;" value="' + (i === j ? '1' : '0') + '">';
+    }
+    html += '</div>';
+  }
+  wrap.innerHTML = html;
+}
+function computeRref() {
+  var rows = parseInt(document.getElementById('rows').value, 10);
+  var cols = parseInt(document.getElementById('cols').value, 10);
+  var m = [];
+  for (var i = 0; i < rows; i++) {
+    var row = [];
+    for (var j = 0; j < cols; j++) {
+      row.push(parseFloat(document.getElementById('cell_' + i + '_' + j).value) || 0);
+    }
+    m.push(row);
+  }
+  var lead = 0;
+  for (var r = 0; r < rows; r++) {
+    if (lead >= cols) break;
+    var idx = r;
+    while (Math.abs(m[idx][lead]) < 1e-12) {
+      idx++;
+      if (idx === rows) {
+        idx = r;
+        lead++;
+        if (lead === cols) break;
+      }
+    }
+    if (lead === cols) break;
+    var tmp = m[idx]; m[idx] = m[r]; m[r] = tmp;
+    var lv = m[r][lead];
+    if (Math.abs(lv) > 1e-12) {
+      for (var c = 0; c < cols; c++) m[r][c] /= lv;
+    }
+    for (var k = 0; k < rows; k++) {
+      if (k !== r) {
+        var f = m[k][lead];
+        for (var c2 = 0; c2 < cols; c2++) m[k][c2] -= f * m[r][c2];
+      }
+    }
+    lead++;
+  }
+  var tbl = '<table style="border-collapse:collapse;margin:20px 0;">';
+  for (var a = 0; a < rows; a++) {
+    tbl += '<tr>';
+    for (var b = 0; b < cols; b++) {
+      var val = Math.abs(m[a][b]) < 1e-10 ? 0 : Math.round(m[a][b] * 10000) / 10000;
+      tbl += '<td style="border:1px solid #ddd;padding:10px;text-align:center;">' + val + '</td>';
+    }
+    tbl += '</tr>';
+  }
+  tbl += '</table>';
+  document.getElementById('rrefTableWrap').innerHTML = tbl;
+  document.getElementById('rrefResult').style.display = 'block';
+}
+renderGrid();
+</script>
+<%- include('../../partials/footer') %>

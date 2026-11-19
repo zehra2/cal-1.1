@@ -1,0 +1,475 @@
+<%- include('../../partials/header') %>
+<style>
+  body { background: #f5f7fa; }
+  .ac-shell { max-width: 1180px; margin: 0 auto; padding: 1.75rem 1.25rem 4rem; }
+  .ac-breadcrumb { font-size: 0.84rem; color: #64748b; margin-bottom: 0.85rem; }
+  .ac-breadcrumb a { color: #2563eb; text-decoration: none; font-weight: 500; }
+  .ac-breadcrumb a:hover { text-decoration: underline; }
+  .ac-hero { margin-bottom: 1.75rem; }
+  .ac-hero h1 { font-size: clamp(1.7rem, 3vw, 2.25rem); color: #0f172a; margin: 0 0 0.65rem; line-height: 1.2; font-weight: 800; }
+  .ac-lead { font-size: 1.03rem; color: #334155; line-height: 1.65; max-width: 860px; margin: 0; }
+  .ac-notice { margin-top: 0.9rem; background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid #1d4ed8; border-radius: 8px; padding: 0.85rem 1.05rem; font-size: 0.9rem; color: #1e3a8a; line-height: 1.55; }
+  .ac-calc-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); overflow: hidden; margin-bottom: 2rem; }
+  .ac-calc-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; }
+  .ac-inputs { padding: 1.75rem; border-right: 1px solid #e2e8f0; }
+  .ac-outputs { padding: 1.75rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; }
+  .ac-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.95rem; }
+  .ac-field { margin-bottom: 1rem; }
+  .ac-field label { display: block; font-size: 0.86rem; font-weight: 700; color: #1e293b; margin-bottom: 0.35rem; }
+  .ac-field input, .ac-field select { width: 100%; padding: 0.68rem 0.82rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.96rem; color: #0f172a; background: #fff; }
+  .ac-field input:focus, .ac-field select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
+  .ac-hint { font-size: 0.77rem; color: #64748b; margin-top: 0.25rem; }
+  .ac-btn-row { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+  .ac-btn-primary { flex: 1; background: #1d4ed8; color: #fff; border: none; border-radius: 8px; padding: 0.78rem 1rem; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+  .ac-btn-primary:hover { background: #1e40af; }
+  .ac-btn-reset { background: #e2e8f0; color: #1e293b; border: none; border-radius: 8px; padding: 0.78rem 1.15rem; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
+  .ac-btn-reset:hover { background: #cbd5e1; }
+  .ac-primary-kpi { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #fff; border-radius: 12px; padding: 1.25rem 1.35rem; }
+  .ac-kpi-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #bfdbfe; font-weight: 700; }
+  .ac-kpi-value { font-size: 2.25rem; font-weight: 800; margin: 0.25rem 0; line-height: 1.1; }
+  .ac-kpi-sub { font-size: 0.88rem; color: #dbeafe; }
+  .ac-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .ac-kpi-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.9rem 1rem; }
+  .ac-kpi-box .lbl { font-size: 0.76rem; font-weight: 700; color: #64748b; text-transform: uppercase; }
+  .ac-kpi-box .val { font-size: 1.28rem; font-weight: 800; color: #0f172a; margin-top: 0.2rem; }
+  .ac-kpi-box .val.pos { color: #047857; }
+  .ac-kpi-box .note { font-size: 0.76rem; color: #64748b; margin-top: 0.15rem; }
+  .ac-breakdown { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; }
+  .ac-breakdown h3 { font-size: 0.9rem; color: #0f172a; margin: 0 0 0.65rem; font-weight: 700; }
+  .ac-brow { display: flex; justify-content: space-between; padding: 0.38rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.88rem; color: #334155; }
+  .ac-brow:last-child { border-bottom: none; }
+  .ac-brow strong { color: #0f172a; }
+  .ac-brow .neg { color: #b91c1c; }
+  .ac-section { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.85rem; margin-bottom: 1.65rem; }
+  .ac-section h2 { font-size: 1.45rem; color: #0f172a; margin: 0 0 0.95rem; padding-bottom: 0.6rem; border-bottom: 2px solid #f1f5f9; font-weight: 800; }
+  .ac-section h3 { font-size: 1.1rem; color: #0f172a; margin: 1.25rem 0 0.45rem; font-weight: 700; }
+  .ac-section p, .ac-section li { color: #334155; line-height: 1.7; font-size: 0.97rem; }
+  .ac-formula { background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #2563eb; border-radius: 8px; padding: 1rem 1.2rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9rem; color: #0f172a; overflow-x: auto; margin: 1rem 0; line-height: 1.7; }
+  .ac-table-wrap { overflow-x: auto; margin-top: 0.75rem; }
+  .ac-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .ac-table th { background: #1e293b; color: #fff; text-align: left; padding: 0.72rem 0.85rem; font-weight: 700; white-space: nowrap; }
+  .ac-table td { padding: 0.68rem 0.85rem; border-bottom: 1px solid #e2e8f0; color: #1e293b; }
+  .ac-table tr:nth-child(even) td { background: #f8fafc; }
+  .ac-ex-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.15rem; margin-top: 0.85rem; }
+  .ac-ex-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.2rem; }
+  .ac-ex-card h3 { margin-top: 0; color: #1e3a8a; font-size: 1.04rem; }
+  .ac-faq-list { display: grid; gap: 0.95rem; }
+  .ac-faq-item { border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.1rem 1.25rem; background: #f8fafc; }
+  .ac-faq-item h3 { margin: 0 0 0.45rem; font-size: 1.02rem; color: #0f172a; }
+  .ac-faq-item p { margin: 0; font-size: 0.94rem; color: #334155; }
+  .ac-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+  .ac-rel-link { display: block; padding: 0.95rem 1.05rem; border: 1px solid #cbd5e1; border-radius: 10px; text-decoration: none; background: #f8fafc; }
+  .ac-rel-link:hover { border-color: #2563eb; background: #eff6ff; }
+  .ac-rel-link strong { display: block; color: #0f172a; font-size: 0.95rem; margin-bottom: 0.22rem; }
+  .ac-rel-link span { display: block; color: #475569; font-size: 0.82rem; line-height: 1.4; }
+  .ac-disclaimer { font-size: 0.82rem; color: #64748b; margin-top: 0.85rem; line-height: 1.55; }
+  @media (max-width: 900px) {
+    .ac-calc-grid, .ac-ex-grid, .ac-related-grid { grid-template-columns: 1fr; }
+    .ac-inputs { border-right: none; border-bottom: 1px solid #e2e8f0; }
+  }
+  @media (max-width: 560px) {
+    .ac-form-row, .ac-kpi-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<main class="ac-shell">
+  <nav class="ac-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> &rsaquo; <a href="/ohio/">Ohio Tax &amp; Paycheck Hub</a> &rsaquo; <span>Ohio Overtime Calculator</span>
+  </nav>
+
+  <header class="ac-hero">
+    <h1>Ohio Overtime Pay Calculator (2026 Gross &amp; Net Take-Home)</h1>
+    <p class="ac-lead">
+      Calculate your Ohio regular pay, time-and-a-half (1.5×) overtime, and optional double-time (2.0×) holiday pay—plus exact 2026 Federal, FICA, Ohio flat 2.75% state tax, and Ohio city tax withholding. See exactly how much extra net cash each overtime hour puts in your pocket.
+    </p>
+    <div class="ac-notice">
+      <strong>Ohio Overtime &amp; 2026 Tax Rules:</strong> Under Ohio Revised Code §4111.03 and the FLSA, non-exempt workers earn <strong>1.5× regular rate for hours worked over 40 in a workweek</strong> (no daily 8-hour trigger in Ohio). For 2026 under Ohio HB 96, Ohio state income tax is <strong>0% up to $26,050</strong> and a flat <strong>2.75% above $26,050</strong>.
+    </div>
+  </header>
+
+  <%- adAboveHero() %>
+
+  <section class="ac-calc-card" aria-label="Ohio Overtime Pay Calculator">
+    <div class="ac-calc-grid">
+      <div class="ac-inputs">
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="ot-rate">Base Hourly Rate ($/hr)</label>
+            <input type="number" id="ot-rate" value="26.00" min="11" max="500" step="0.50">
+            <div class="ac-hint">1.5× OT rate: <strong id="hint-ot-rate">$39.00/hr</strong> | 2.0×: <strong id="hint-dt-rate">$52.00/hr</strong></div>
+          </div>
+          <div class="ac-field">
+            <label for="ot-reg-hrs">Regular Hours (per week)</label>
+            <input type="number" id="ot-reg-hrs" value="40" min="0" max="40" step="0.5">
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="ot-15-hrs">Overtime Hours at 1.5× (per week)</label>
+            <input type="number" id="ot-15-hrs" value="8" min="0" max="60" step="0.5">
+          </div>
+          <div class="ac-field">
+            <label for="ot-20-hrs">Double-Time Hours at 2.0× (optional)</label>
+            <input type="number" id="ot-20-hrs" value="0" min="0" max="40" step="0.5">
+            <div class="ac-hint">Union/holiday premium pay (employer policy)</div>
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="ot-freq">Pay Period Display</label>
+            <select id="ot-freq">
+              <option value="52" selected>Weekly (1-Week Paycheck)</option>
+              <option value="26">Bi-Weekly (2-Week Paycheck)</option>
+            </select>
+          </div>
+          <div class="ac-field">
+            <label for="ot-filing">Federal Filing Status</label>
+            <select id="ot-filing">
+              <option value="single" selected>Single</option>
+              <option value="mfj">Married Filing Jointly</option>
+              <option value="hoh">Head of Household</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="ot-city">Ohio City / Municipal Tax</label>
+            <select id="ot-city">
+              <option value="2.5" selected>Cleveland (2.50%)</option>
+              <option value="2.5_cmh">Columbus (2.50%)</option>
+              <option value="1.8">Cincinnati (1.80%)</option>
+              <option value="2.5_akr">Akron (2.50%)</option>
+              <option value="2.5_tol">Toledo (2.50%)</option>
+              <option value="2.5_day">Dayton (2.50%)</option>
+              <option value="2.75">Youngstown (2.75%)</option>
+              <option value="0">Unincorporated Township (0.00%)</option>
+            </select>
+          </div>
+          <div class="ac-field">
+            <label for="ot-sdit">School District Tax — SDIT (%)</label>
+            <input type="number" id="ot-sdit" value="0" min="0" max="2.5" step="0.25">
+          </div>
+        </div>
+
+        <div class="ac-btn-row">
+          <button type="button" id="ot-calc-btn" class="ac-btn-primary">Calculate Overtime Pay</button>
+          <button type="button" id="ot-reset-btn" class="ac-btn-reset">Reset Defaults</button>
+        </div>
+      </div>
+
+      <div class="ac-outputs" aria-live="polite">
+        <div class="ac-primary-kpi">
+          <div class="ac-kpi-label" id="ot-net-lbl">Estimated Weekly Net Pay (With Overtime)</div>
+          <div class="ac-kpi-value" id="ot-net-val">$1,033.92</div>
+          <div class="ac-kpi-sub" id="ot-net-sub">Total Gross: $1,352.00 ($1,040.00 reg + $312.00 OT)</div>
+        </div>
+
+        <div class="ac-kpi-grid">
+          <div class="ac-kpi-box">
+            <div class="lbl">Extra Net Cash From OT</div>
+            <div class="val pos" id="ot-extra-net">+$203.11</div>
+            <div class="note" id="ot-extra-note">vs. $830.81 net with 0 OT hrs</div>
+          </div>
+          <div class="ac-kpi-box">
+            <div class="lbl">True Net Rate per OT Hour</div>
+            <div class="val pos" id="ot-net-hr">$25.39 / hr</div>
+            <div class="note" id="ot-keep-pct">You keep 65.1% of each OT dollar</div>
+          </div>
+        </div>
+
+        <div class="ac-breakdown">
+          <h3 id="ot-bd-title">Weekly Pay &amp; Tax Withholding Breakdown</h3>
+          <div class="ac-brow"><span>Regular Pay</span><strong id="bd-reg">$1,040.00</strong></div>
+          <div class="ac-brow"><span>Overtime (1.5×) + Double-Time (2.0×)</span><strong id="bd-ot">$312.00</strong></div>
+          <div class="ac-brow"><span>Federal Income Tax Withholding (2026)</span><strong class="neg" id="bd-fed">-$157.58</strong></div>
+          <div class="ac-brow"><span>FICA (6.2% SS + 1.45% Medicare)</span><strong class="neg" id="bd-fica">-$103.43</strong></div>
+          <div class="ac-brow"><span>Ohio State Tax (2026 Flat 2.75% &gt; $26k)</span><strong class="neg" id="bd-oh">-$23.27</strong></div>
+          <div class="ac-brow"><span>Ohio Municipal + School District Tax</span><strong class="neg" id="bd-city">-$33.80</strong></div>
+          <div class="ac-brow"><strong>Estimated Net Take-Home Pay</strong><strong id="bd-net">$1,033.92</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- adMidContent1() %>
+
+  <section class="ac-section">
+    <h2>Ohio Overtime Formulas &amp; 2026 Payroll Withholding Rules</h2>
+    <p>
+      Ohio follows the federal Fair Labor Standards Act (FLSA) 40-hour workweek standard. Unlike California, working a 10-hour or 12-hour shift does not automatically trigger overtime in Ohio unless your cumulative hours exceed 40 in that seven-day workweek.
+    </p>
+    <div class="ac-formula">
+Overtime Hourly Rate ($)  = Base Hourly Rate × 1.5
+Double-Time Rate ($)      = Base Hourly Rate × 2.0 (contract/holiday policy)
+Weekly Gross ($)          = (Reg Hours × Base Rate) + (OT Hours × 1.5 × Base Rate) + (DT Hours × 2.0 × Base Rate)
+
+Incremental Net OT ($)    = Net Pay (With Overtime) − Net Pay (40 Regular Hours Only)
+Net Take-Home per OT Hour = Incremental Net OT ($) ÷ Total Overtime Hours Worked
+    </div>
+    <h3>Why Overtime Paychecks Seem Taxed Heavier (The Annualization Effect)</h3>
+    <ul>
+      <li><strong>No Special "Overtime Tax Rate":</strong> Overtime wages are taxed at the exact same ordinary income brackets as regular wages when you file your return.</li>
+      <li><strong>Why Withholding Jumps Temporarily:</strong> Payroll software calculates each paycheck by assuming you earn that inflated amount every single week of the year (×52). A single 55-hour week can push that week's federal withholding from the 12% bracket into the 22% bracket—any over-withholding is refunded when you file your IRS Form 1040.</li>
+      <li><strong>2026 Ohio Flat Tax Simplifies OT:</strong> Because Ohio's 2026 state rate is a flat <strong>2.75%</strong> on all taxable income over $26,050, working overtime does not push you into a higher Ohio state bracket.</li>
+    </ul>
+  </section>
+
+  <section class="ac-section">
+    <h2>2026 Ohio Overtime Pay Reference Table (Weekly Gross &amp; Net in 2.5% City)</h2>
+    <p>
+      Estimated weekly gross and net take-home pay for a Single filer working in a 2.5% Ohio city (Columbus, Cleveland, Akron, Toledo, or Dayton) under 2026 Federal and Ohio HB 96 tax tables:
+    </p>
+    <div class="ac-table-wrap">
+      <table class="ac-table">
+        <thead>
+          <tr>
+            <th>Base Rate</th>
+            <th>1.5× OT Rate</th>
+            <th>40 Hrs Net (No OT)</th>
+            <th>45 Hrs (5 OT) Gross / Net</th>
+            <th>50 Hrs (10 OT) Gross / Net</th>
+            <th>55 Hrs (15 OT) Gross / Net</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>$18.00/hr</strong></td><td>$27.00/hr</td><td>$597.19</td><td>$855 / <strong>$698.69</strong></td><td>$990 / <strong>$800.19</strong></td><td>$1,125 / <strong>$901.69</strong></td></tr>
+          <tr><td><strong>$20.00/hr</strong></td><td>$30.00/hr</td><td>$657.14</td><td>$950 / <strong>$769.91</strong></td><td>$1,100 / <strong>$882.69</strong></td><td>$1,250 / <strong>$990.51</strong></td></tr>
+          <tr><td><strong>$22.00/hr</strong></td><td>$33.00/hr</td><td>$717.08</td><td>$1,045 / <strong>$841.13</strong></td><td>$1,210 / <strong>$964.45</strong></td><td>$1,375 / <strong>$1,071.88</strong></td></tr>
+          <tr><td><strong>$26.00/hr</strong></td><td>$39.00/hr</td><td>$836.96</td><td>$1,235 / <strong>$980.73</strong></td><td>$1,430 / <strong>$1,107.70</strong></td><td>$1,625 / <strong>$1,234.67</strong></td></tr>
+          <tr><td><strong>$30.00/hr</strong></td><td>$45.00/hr</td><td>$956.85</td><td>$1,425 / <strong>$1,104.45</strong></td><td>$1,650 / <strong>$1,250.95</strong></td><td>$1,875 / <strong>$1,397.45</strong></td></tr>
+          <tr><td><strong>$35.00/hr</strong></td><td>$52.50/hr</td><td>$1,088.18</td><td>$1,663 / <strong>$1,259.10</strong></td><td>$1,925 / <strong>$1,430.02</strong></td><td>$2,188 / <strong>$1,600.94</strong></td></tr>
+          <tr><td><strong>$40.00/hr</strong></td><td>$60.00/hr</td><td>$1,220.61</td><td>$1,900 / <strong>$1,413.75</strong></td><td>$2,200 / <strong>$1,609.08</strong></td><td>$2,500 / <strong>$1,802.27</strong></td></tr>
+          <tr><td><strong>$45.00/hr</strong></td><td>$67.50/hr</td><td>$1,351.05</td><td>$2,138 / <strong>$1,568.40</strong></td><td>$2,475 / <strong>$1,786.38</strong></td><td>$2,813 / <strong>$1,999.38</strong></td></tr>
+          <tr><td><strong>$50.00/hr</strong></td><td>$75.00/hr</td><td>$1,481.01</td><td>$2,375 / <strong>$1,723.05</strong></td><td>$2,750 / <strong>$1,959.98</strong></td><td>$3,125 / <strong>$2,196.60</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <%- adMidContent2() %>
+
+  <section class="ac-section">
+    <h2>Two Worked 2026 Ohio Overtime Examples</h2>
+    <div class="ac-ex-grid">
+      <article class="ac-ex-card">
+        <h3>Example 1: Cleveland Machinist ($26/hr, 48-Hour Week)</h3>
+        <p>
+          A Single manufacturing operator in Cleveland (<strong>2.5% city tax</strong>) earns $26/hr base and works 8 hours of Saturday overtime at $39/hr.
+        </p>
+        <ul>
+          <li><strong>Regular Pay:</strong> 40 × $26.00 = <strong>$1,040.00</strong></li>
+          <li><strong>Overtime Pay:</strong> 8 × $39.00 = <strong>$312.00</strong> (Total Gross: $1,352.00)</li>
+          <li><strong>Total Taxes (Fed + FICA + OH 2.75% + Cleveland 2.5%):</strong> <strong>~$318.08</strong></li>
+          <li><strong>Weekly Net Pay:</strong> <strong>~$1,033.92</strong> — an extra <strong>+$203.11 net</strong> ($25.39 net per OT hour)</li>
+        </ul>
+      </article>
+
+      <article class="ac-ex-card">
+        <h3>Example 2: Dayton Utility Worker ($38/hr, 40 Reg + 10 OT + 4 Holiday Double-Time)</h3>
+        <p>
+          A Married Filing Jointly lineworker in Dayton (<strong>2.5% city tax</strong>) works a storm-response week with 10 hours at 1.5× ($57/hr) and 4 Sunday holiday hours at 2.0× ($76/hr).
+        </p>
+        <ul>
+          <li><strong>Regular + OT + DT Gross:</strong> $1,520 + $570 + $304 = <strong>$2,394.00</strong></li>
+          <li><strong>Total Taxes (MFJ Fed + FICA + OH + Dayton 2.5%):</strong> <strong>~$496.20</strong></li>
+          <li><strong>Weekly Net Pay:</strong> <strong>~$1,897.80</strong> (compared to ~$1,254.00 for a standard 40-hr week)</li>
+          <li><strong>Extra Net Take-Home From Premium Hours:</strong> <strong>+$643.80</strong> (~$45.99 net/hr across the 14 extra hours)</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="ac-section">
+    <h2>Frequently Asked Questions About Ohio Overtime Pay</h2>
+    <div class="ac-faq-list">
+      <div class="ac-faq-item">
+        <h3>1. Does Ohio require overtime pay after 8 hours in a single day?</h3>
+        <p>No. Under Ohio Revised Code §4111.03, overtime is calculated strictly on a <strong>40-hour workweek</strong> basis. You can work four 10-hour shifts (40 hours total) without earning statutory overtime unless a union contract or employer handbook provides daily overtime.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>2. Can working overtime actually make my paycheck smaller?</h3>
+        <p>No—working overtime always increases your net pay. US federal brackets are marginal, meaning higher tax rates only apply to the dollars inside the higher bracket, and Ohio's 2026 state rate is a flat 2.75% above $26,050. You never lose money by working overtime.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>3. Are Ohio municipal city taxes withheld on overtime pay?</h3>
+        <p>Yes. Overtime and double-time pay are treated as qualifying wages for Ohio municipal income taxes (2.5% in Columbus, Cleveland, Akron, Toledo, Dayton; 1.8% in Cincinnati).</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>4. Does PTO or holiday pay count toward the 40-hour overtime threshold in Ohio?</h3>
+        <p>Under Ohio and federal FLSA law, only <strong>hours actually worked</strong> count toward the 40-hour threshold. If you take 8 hours of paid vacation Monday and work 36 hours Tuesday–Friday (44 paid hours total), your employer is not legally required to pay overtime unless company policy states otherwise.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>5. Is double-time pay required on Sundays or holidays in Ohio?</h3>
+        <p>No. Neither Ohio law nor the federal FLSA requires double-time (2.0×) pay for weekends or holidays. Double-time is strictly an employer benefit or collective-bargaining union provision.</p>
+      </div>
+    </div>
+    <p class="ac-disclaimer">
+      Disclaimer: Estimates reflect 2026 IRS withholding brackets and Ohio HB 96 state rates for informational budgeting. Actual paychecks vary by W-4 elections, pre-tax benefits, union dues, and local municipal reciprocity.
+    </p>
+  </section>
+
+  <%- adAfterFAQ() %>
+
+  <section class="ac-section">
+    <h2>Related Ohio &amp; Payroll Calculators</h2>
+    <nav class="ac-related-grid" aria-label="Related Calculators">
+      <a class="ac-rel-link" href="/ohio/hourly-paycheck-calculator">
+        <strong>Ohio Hourly Paycheck Calculator</strong>
+        <span>Full hourly take-home pay with 401(k) and health deductions.</span>
+      </a>
+      <a class="ac-rel-link" href="/ohio/paycheck-calculator">
+        <strong>Ohio Paycheck Calculator</strong>
+        <span>All-in-one Ohio paycheck calculator for 2026 HB 96 rates.</span>
+      </a>
+      <a class="ac-rel-link" href="/ohio/bonus-tax-calculator">
+        <strong>Ohio Bonus Tax Calculator</strong>
+        <span>See how federal supplemental &amp; Ohio city tax hit your bonus.</span>
+      </a>
+      <a class="ac-rel-link" href="/ohio/salary-paycheck-calculator">
+        <strong>Ohio Salary Paycheck Calculator</strong>
+        <span>Break down annual Ohio salaries into weekly or bi-weekly net pay.</span>
+      </a>
+      <a class="ac-rel-link" href="/ohio/payroll-tax-calculator">
+        <strong>Ohio Payroll Tax Calculator</strong>
+        <span>Calculate employer &amp; employee Ohio payroll taxes.</span>
+      </a>
+      <a class="ac-rel-link" href="/texas/paycheck-calculator">
+        <strong>Texas Paycheck Calculator</strong>
+        <span>Compare Ohio overtime take-home against 0% state tax Texas.</span>
+      </a>
+    </nav>
+  </section>
+</main>
+
+<script>
+(function () {
+  var FED_2026 = {
+    single: {
+      std: 15750,
+      brackets: [
+        [12400, 0.10], [50400, 0.12], [105700, 0.22],
+        [201775, 0.24], [256225, 0.32], [640600, 0.35], [Infinity, 0.37]
+      ]
+    },
+    mfj: {
+      std: 31500,
+      brackets: [
+        [24800, 0.10], [100800, 0.12], [211400, 0.22],
+        [403550, 0.24], [512450, 0.32], [768700, 0.35], [Infinity, 0.37]
+      ]
+    },
+    hoh: {
+      std: 23625,
+      brackets: [
+        [17700, 0.10], [67450, 0.12], [105700, 0.22],
+        [201775, 0.24], [256200, 0.32], [640600, 0.35], [Infinity, 0.37]
+      ]
+    }
+  };
+
+  function calcTaxes(annualGross, filing, cityRate, sditRate) {
+    var cfg = FED_2026[filing] || FED_2026.single;
+    var rem = Math.max(0, annualGross - cfg.std);
+    var fed = 0, prev = 0;
+    for (var i = 0; i < cfg.brackets.length; i++) {
+      var cap = cfg.brackets[i][0], r = cfg.brackets[i][1];
+      if (rem <= prev) break;
+      fed += (Math.min(rem, cap) - prev) * r;
+      prev = cap;
+    }
+    var ss = Math.min(annualGross, 176100) * 0.062;
+    var med = annualGross * 0.0145 + Math.max(0, annualGross - (filing === 'mfj' ? 250000 : 200000)) * 0.009;
+    var fica = ss + med;
+
+    var ex = annualGross <= 40000 ? 2400 : (annualGross <= 80000 ? 2150 : 1900);
+    var ohTaxable = Math.max(0, annualGross - ex);
+    var oh = ohTaxable <= 26050 ? 0 : (ohTaxable - 26050) * 0.0275;
+    var local = annualGross * (cityRate + sditRate);
+    return { fed: fed, fica: fica, oh: oh, local: local, net: Math.max(0, annualGross - fed - fica - oh - local) };
+  }
+
+  function fmt(n) {
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function calculate() {
+    var rate = Math.max(0, parseFloat(document.getElementById('ot-rate').value) || 0);
+    var regHrs = Math.max(0, parseFloat(document.getElementById('ot-reg-hrs').value) || 0);
+    var otHrs = Math.max(0, parseFloat(document.getElementById('ot-15-hrs').value) || 0);
+    var dtHrs = Math.max(0, parseFloat(document.getElementById('ot-20-hrs').value) || 0);
+    var freq = parseInt(document.getElementById('ot-freq').value, 10) || 52;
+    var filing = document.getElementById('ot-filing').value;
+    var cityRate = (parseFloat(document.getElementById('ot-city').value) || 0) / 100;
+    var sditRate = Math.max(0, parseFloat(document.getElementById('ot-sdit').value) || 0) / 100;
+
+    document.getElementById('hint-ot-rate').textContent = fmt(rate * 1.5) + '/hr';
+    document.getElementById('hint-dt-rate').textContent = fmt(rate * 2.0) + '/hr';
+
+    var wksPerCheck = freq === 26 ? 2 : 1;
+    var regPay = regHrs * rate * wksPerCheck;
+    var otPay = otHrs * rate * 1.5 * wksPerCheck;
+    var dtPay = dtHrs * rate * 2.0 * wksPerCheck;
+    var premPay = otPay + dtPay;
+    var totalGrossCheck = regPay + premPay;
+
+    var annualTotal = totalGrossCheck * freq;
+    var annualBase = regPay * freq;
+
+    var taxTotal = calcTaxes(annualTotal, filing, cityRate, sditRate);
+    var taxBase = calcTaxes(annualBase, filing, cityRate, sditRate);
+
+    var netCheck = taxTotal.net / freq;
+    var baseNetCheck = taxBase.net / freq;
+    var extraNet = Math.max(0, netCheck - baseNetCheck);
+    var totalPremHrsCheck = (otHrs + dtHrs) * wksPerCheck;
+    var netPerOtHr = totalPremHrsCheck > 0 ? extraNet / totalPremHrsCheck : 0;
+    var keepPct = premPay > 0 ? (extraNet / premPay) * 100 : 0;
+
+    var periodLabel = freq === 26 ? 'Bi-Weekly' : 'Weekly';
+    document.getElementById('ot-net-lbl').textContent = 'Estimated ' + periodLabel + ' Net Pay (With Overtime)';
+    document.getElementById('ot-net-val').textContent = fmt(netCheck);
+    document.getElementById('ot-net-sub').textContent = 'Total Gross: ' + fmt(totalGrossCheck) + ' (' + fmt(regPay) + ' reg + ' + fmt(premPay) + ' OT/DT)';
+
+    document.getElementById('ot-extra-net').textContent = '+' + fmt(extraNet);
+    document.getElementById('ot-extra-note').textContent = 'vs. ' + fmt(baseNetCheck) + ' net with 0 OT hrs';
+    document.getElementById('ot-net-hr').textContent = totalPremHrsCheck > 0 ? fmt(netPerOtHr) + ' / hr' : '—';
+    document.getElementById('ot-keep-pct').textContent = totalPremHrsCheck > 0 ? 'You keep ' + keepPct.toFixed(1) + '% of each OT dollar' : 'Add overtime hours to see net OT rate';
+
+    document.getElementById('ot-bd-title').textContent = periodLabel + ' Pay & Tax Withholding Breakdown';
+    document.getElementById('bd-reg').textContent = fmt(regPay);
+    document.getElementById('bd-ot').textContent = fmt(premPay);
+    document.getElementById('bd-fed').textContent = '-' + fmt(taxTotal.fed / freq);
+    document.getElementById('bd-fica').textContent = '-' + fmt(taxTotal.fica / freq);
+    document.getElementById('bd-oh').textContent = '-' + fmt(taxTotal.oh / freq);
+    document.getElementById('bd-city').textContent = '-' + fmt(taxTotal.local / freq);
+    document.getElementById('bd-net').textContent = fmt(netCheck);
+  }
+
+  ['ot-rate', 'ot-reg-hrs', 'ot-15-hrs', 'ot-20-hrs', 'ot-freq', 'ot-filing', 'ot-city', 'ot-sdit'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', calculate);
+      el.addEventListener('change', calculate);
+    }
+  });
+  document.getElementById('ot-calc-btn').addEventListener('click', calculate);
+  document.getElementById('ot-reset-btn').addEventListener('click', function () {
+    document.getElementById('ot-rate').value = '26.00';
+    document.getElementById('ot-reg-hrs').value = '40';
+    document.getElementById('ot-15-hrs').value = '8';
+    document.getElementById('ot-20-hrs').value = '0';
+    document.getElementById('ot-freq').value = '52';
+    document.getElementById('ot-filing').value = 'single';
+    document.getElementById('ot-city').value = '2.5';
+    document.getElementById('ot-sdit').value = '0';
+    calculate();
+  });
+
+  calculate();
+})();
+</script>
+
+<%- include('../../partials/footer') %>

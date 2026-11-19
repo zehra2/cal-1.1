@@ -1,0 +1,341 @@
+<%- include('../../partials/header') %>
+<style>
+.cd-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 3.5rem;font-family:system-ui,-apple-system,sans-serif;}
+.cd-bc{font-size:.82rem;color:#64748b;margin-bottom:1.25rem;}
+.cd-bc a{color:#2563eb;text-decoration:none;}
+.cd-hero{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#fff;border-radius:16px;padding:2.5rem 2rem;margin-bottom:2rem;}
+.cd-hero h1{font-size:2rem;font-weight:800;margin:0 0 .75rem;}
+.cd-hero p{font-size:1rem;color:#cbd5e1;line-height:1.6;margin:0;max-width:720px;}
+.cd-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2.5rem;}
+.cd-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:2rem;box-shadow:0 4px 16px rgba(0,0,0,.04);}
+.cd-card h2{font-size:1.25rem;color:#0f172a;margin:0 0 1.25rem;font-weight:700;}
+.cd-form-group{margin-bottom:1.25rem;}
+.cd-form-group label{display:block;font-size:.875rem;font-weight:600;color:#334155;margin-bottom:.4rem;}
+.cd-form-group input,.cd-form-group select{width:100%;padding:10px 14px;border:1px solid #cbd5e1;border-radius:8px;font-size:1rem;color:#0f172a;}
+.cd-btn{display:inline-block;width:100%;padding:12px;background:#2563eb;color:#fff;font-weight:700;font-size:1rem;border:none;border-radius:8px;cursor:pointer;transition:background .15s;}
+.cd-btn:hover{background:#1d4ed8;}
+.cd-res-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
+.cd-stat-highlight{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:1.25rem;text-align:center;}
+.cd-stat-val{font-size:2rem;font-weight:800;color:#1d4ed8;}
+.cd-stat-lbl{font-size:.825rem;text-transform:uppercase;letter-spacing:.05em;color:#475569;font-weight:600;}
+.cd-res-row{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid #e2e8f0;font-size:.95rem;}
+.cd-content-section{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:2rem;margin-bottom:2rem;line-height:1.75;color:#334155;}
+.cd-content-section h2{font-size:1.4rem;color:#0f172a;margin:0 0 1rem;font-weight:800;border-bottom:2px solid #eff6ff;padding-bottom:.5rem;}
+.cd-content-section h3{font-size:1.15rem;color:#1e293b;margin:1.5rem 0 .75rem;font-weight:700;}
+.cd-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.92rem;}
+.cd-table th,.cd-table td{padding:10px 14px;border:1px solid #e2e8f0;text-align:left;}
+.cd-table th{background:#f1f5f9;color:#0f172a;font-weight:700;}
+.cd-faq-item{margin-bottom:1rem;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;}
+.cd-faq-q{background:#f8fafc;padding:1rem 1.25rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+.cd-faq-a{padding:1.25rem;color:#475569;line-height:1.7;background:#fff;}
+@media(max-width:768px){.cd-grid{grid-template-columns:1fr;}}
+</style>
+
+<main id="main-content">
+<div class="cd-wrap">
+  <div class="cd-bc"><a href="/">Home</a> &rsaquo; <a href="/loan-calculators/">Loan &amp; Savings Calculators</a> &rsaquo; CD Interest Calculator</div>
+
+  <div class="cd-hero">
+    <h1>Certificate of Deposit (CD) Interest Calculator</h1>
+    <p>Estimate your final balance, total compound interest earned, and effective Annual Percentage Yield (APY) for any CD term with daily, monthly, or quarterly compounding.</p>
+  </div>
+
+  <div class="cd-grid">
+    <div class="cd-card">
+      <h2>Calculate CD Maturity Value</h2>
+      <form method="POST">
+        <div class="cd-form-group">
+          <label for="principal">Initial Deposit Amount ($):</label>
+          <input type="number" step="any" id="principal" name="principal" required value="<%= post.principal ?? '10000' %>">
+        </div>
+        <div class="cd-form-group">
+          <label for="rate">Stated Annual Interest Rate (%):</label>
+          <input type="number" step="0.01" id="rate" name="rate" required value="<%= post.rate ?? '5.00' %>">
+        </div>
+        <div class="cd-form-group">
+          <label for="year">Term Length (in Years):</label>
+          <input type="number" step="0.25" id="year" name="year" required value="<%= post.years ?? '1' %>">
+        </div>
+        <div class="cd-form-group">
+          <label for="compound_frequency">Compounding Frequency:</label>
+          <select id="compound_frequency" name="compound_frequency">
+            <option value="365" <%= (post.compound_frequency ?? '365') == '365' ? 'selected' : '' %>>Daily (365 days/year)</option>
+            <option value="12" <%= (post.compound_frequency ?? '') == '12' ? 'selected' : '' %>>Monthly (12 times/year)</option>
+            <option value="4" <%= (post.compound_frequency ?? '') == '4' ? 'selected' : '' %>>Quarterly (4 times/year)</option>
+            <option value="1" <%= (post.compound_frequency ?? '') == '1' ? 'selected' : '' %>>Annually (Once per year)</option>
+          </select>
+        </div>
+        <button type="submit" class="cd-btn">Calculate Growth &amp; Earnings</button>
+      </form>
+    </div>
+
+    <div class="cd-card">
+      <h2>Investment Summary</h2>
+      <% if (result) { %>
+      <div class="cd-res-box">
+        <div class="cd-stat-highlight">
+          <div class="cd-stat-val">$<%= result.total_amount %></div>
+          <div class="cd-stat-lbl">Final Balance at Maturity</div>
+        </div>
+        <div class="cd-res-row">
+          <span>Initial Deposit:</span>
+          <strong>$<%= result.principal %></strong>
+        </div>
+        <div class="cd-res-row">
+          <span>Total Interest Earned:</span>
+          <strong style="color:#16a34a;">+$<%= result.total_interest %></strong>
+        </div>
+        <div class="cd-res-row">
+          <span>Annual Percentage Yield (APY):</span>
+          <strong><%= result.apy %>%</strong>
+        </div>
+        <div class="cd-res-row">
+          <span>Investment Horizon:</span>
+          <strong><%= result.years %> Years</strong>
+        </div>
+      </div>
+      <% } else { %>
+      <div class="cd-res-box" style="text-align:center;padding:3rem 1.5rem;color:#64748b;">
+        <p style="margin:0 0 1rem;font-size:1.1rem;font-weight:600;color:#0f172a;">Instant Growth Breakdown</p>
+        <p style="margin:0;font-size:.92rem;">Enter your deposit details on the left and click calculate to see complete yield comparisons, APY analysis, and compounding totals.</p>
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="cd-content-section">
+    <h2>Understanding Certificates of Deposit (CDs) in <%= currentYear %></h2>
+    <p>A Certificate of Deposit (CD) is a federally insured promissory savings product offered by banks and credit unions. When you purchase a CD, you agree to leave an upfront lump sum untouched for a predetermined period (known as the term or maturity duration) in exchange for a fixed, guaranteed interest rate that is typically higher than a standard savings account.</p>
+
+    <h3>How CD Compound Interest Works</h3>
+    <p>Unlike simple interest which only calculates returns on your initial principal, CD accounts accrue compound interest. That means the interest you earn is periodically credited to your balance, and subsequent interest calculations apply to both your original deposit and all previously accumulated earnings.</p>
+    <p>The mathematical equation governing CD growth is:</p>
+    <div style="background:#f1f5f9;padding:1rem 1.5rem;border-left:4px solid #2563eb;font-family:monospace;font-size:1.05rem;margin:1rem 0;color:#0f172a;">
+      A = P &times; (1 + r / n)<sup>(n &times; t)</sup>
+    </div>
+    <p>Where:</p>
+    <ul>
+      <li><strong>A</strong> = Final maturity amount (Principal + Cumulative Interest)</li>
+      <li><strong>P</strong> = Initial deposit principal</li>
+      <li><strong>r</strong> = Stated annual nominal interest rate (in decimal format)</li>
+      <li><strong>n</strong> = Number of compounding intervals per year (e.g., 365 for daily, 12 for monthly)</li>
+      <li><strong>t</strong> = Investment duration in years</li>
+    </ul>
+
+    <h3>APY vs. APR: Why Frequency Matters</h3>
+    <p>The Annual Percentage Rate (APR) represents the simple annualized interest rate paid on your CD without taking compounding into account. The Annual Percentage Yield (APY) reflects the actual total rate of return you receive over a 12-month period when compounding is included.</p>
+    <p>Because top online banks compound daily rather than annually, your effective APY will always be slightly higher than the nominal rate. For instance, a 5.00% APR compounding daily yields an effective APY of 5.127%.</p>
+
+    <h3><%= currentYear %> CD Term Yield &amp; Strategy Benchmarks</h3>
+    <table class="cd-table">
+      <thead>
+        <tr>
+          <th>CD Term</th>
+          <th>Typical APY Range</th>
+          <th>Best Used For</th>
+          <th>Liquidity Tradeoff</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>3-Month CD</strong></td>
+          <td>4.25% &ndash; 5.00%</td>
+          <td>Short-term holding, tax money, upcoming travel</td>
+          <td>Very high flexibility; low reinvestment risk</td>
+        </tr>
+        <tr>
+          <td><strong>6-Month CD</strong></td>
+          <td>4.50% &ndash; 5.25%</td>
+          <td>Emergency reserves, home renovation funds</td>
+          <td>Balanced liquidity with competitive yield</td>
+        </tr>
+        <tr>
+          <td><strong>1-Year CD</strong></td>
+          <td>4.75% &ndash; 5.35%</td>
+          <td>Down payment savings, scheduled major purchases</td>
+          <td>Standard sweet spot for locking in peak APY</td>
+        </tr>
+        <tr>
+          <td><strong>3-Year CD</strong></td>
+          <td>4.00% &ndash; 4.60%</td>
+          <td>Long-term capital preservation, income portfolios</td>
+          <td>Rate lock protection against Federal Reserve cuts</td>
+        </tr>
+        <tr>
+          <td><strong>5-Year CD</strong></td>
+          <td>3.75% &ndash; 4.30%</td>
+          <td>Conservative retirement asset allocation</td>
+          <td>Maximum lock-in duration; strict early exit penalties</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Building a CD Ladder Strategy</h3>
+    <p>A CD ladder is a time-tested wealth preservation strategy designed to solve the liquidity dilemma. Instead of placing $50,000 into a single 5-year CD, you split the funds equally into five separate $10,000 CDs maturing in 1, 2, 3, 4, and 5 years.</p>
+    <p>When the 1-year CD matures, you roll it into a new 5-year CD. In year two, the 2-year CD matures and is renewed for 5 years. Within five years, all your CDs earn premium 5-year yields while giving you penalty-free access to 20% of your total capital every twelve months.</p>
+
+    <h3>CD Ladder Example: $50,000 at Current Rates</h3>
+    <table class="cd-table">
+      <thead>
+        <tr>
+          <th>Rung</th>
+          <th>Amount</th>
+          <th>Term</th>
+          <th>Est. APY</th>
+          <th>Interest Earned</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Rung 1</strong></td><td>$10,000</td><td>1 Year</td><td>5.10%</td><td>~$510</td></tr>
+        <tr><td><strong>Rung 2</strong></td><td>$10,000</td><td>2 Years</td><td>4.75%</td><td>~$969</td></tr>
+        <tr><td><strong>Rung 3</strong></td><td>$10,000</td><td>3 Years</td><td>4.40%</td><td>~$1,381</td></tr>
+        <tr><td><strong>Rung 4</strong></td><td>$10,000</td><td>4 Years</td><td>4.20%</td><td>~$1,793</td></tr>
+        <tr><td><strong>Rung 5</strong></td><td>$10,000</td><td>5 Years</td><td>4.00%</td><td>~$2,167</td></tr>
+        <tr style="background:#eff6ff;"><td colspan="4"><strong>Total Interest Earned</strong></td><td><strong>~$6,820</strong></td></tr>
+      </tbody>
+    </table>
+    <p>After the first year, each maturing rung rolls into a fresh 5-year CD. Within five years, every rung earns the long-term rate while you recover 20% of your capital annually — far superior to a single short-term CD that forces you to accept whatever rate the market offers at renewal.</p>
+  </div>
+
+  <div class="cd-content-section">
+    <h2>CD vs. High-Yield Savings Account (HYSA) — Which Is Right for You?</h2>
+    <p>The most common question American savers face in a high-rate environment is whether to lock money into a Certificate of Deposit or keep it in a high-yield savings account. The answer depends almost entirely on your timeline and how certain you are about when you will need the funds.</p>
+    <p>A high-yield savings account (HYSA) is better when: you need an emergency fund that must be accessible within days; you are not sure of your exact savings horizon; or you expect interest rates to rise further, since HYSA rates float upward automatically when the Fed raises rates.</p>
+    <p>A CD is better when: you have a specific goal with a fixed date (closing on a home in 12 months, tuition due in 18 months); you want a guaranteed rate regardless of Fed policy; or you want to lock in a current peak rate before an anticipated rate-cutting cycle reduces HYSA yields.</p>
+    <table class="cd-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Certificate of Deposit (CD)</th>
+          <th>High-Yield Savings Account</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Rate Type</strong></td><td>Fixed for the full term</td><td>Variable — changes with the Fed rate</td></tr>
+        <tr><td><strong>Liquidity</strong></td><td>Locked until maturity</td><td>Access funds anytime</td></tr>
+        <tr><td><strong>Penalty</strong></td><td>3–12 months interest if withdrawn early</td><td>None</td></tr>
+        <tr><td><strong>FDIC/NCUA Coverage</strong></td><td>Yes — up to $250,000</td><td>Yes — up to $250,000</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Goal-based savings with a set date</td><td>Emergency fund, flexible reserves</td></tr>
+        <tr><td><strong>Minimum Deposit</strong></td><td>Typically $500–$1,000 at online banks</td><td>Usually $0–$1</td></tr>
+      </tbody>
+    </table>
+    <p>Most financial planners recommend the following split for US households: maintain 3–6 months of living expenses in an HYSA, then direct surplus savings into CDs sized to match your financial milestones. This hybrid approach captures the best of both instruments.</p>
+  </div>
+
+  <div class="cd-content-section">
+    <h2>Early Withdrawal Penalties — What Banks Actually Charge</h2>
+    <p>Before you commit funds to a CD, understand exactly what it costs to exit early. Penalties vary significantly by institution and term length. The table below reflects typical industry ranges for major US banks and credit unions in <%= currentYear %>.</p>
+    <table class="cd-table">
+      <thead>
+        <tr>
+          <th>CD Term</th>
+          <th>Typical Early Withdrawal Penalty</th>
+          <th>Effect on a $10,000 CD at 5% APY</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>3 months</strong></td><td>1 month of simple interest</td><td>Forfeit ~$42</td></tr>
+        <tr><td><strong>6 months</strong></td><td>3 months of simple interest</td><td>Forfeit ~$125</td></tr>
+        <tr><td><strong>1 year</strong></td><td>3 months of simple interest</td><td>Forfeit ~$125</td></tr>
+        <tr><td><strong>2 years</strong></td><td>6 months of simple interest</td><td>Forfeit ~$250</td></tr>
+        <tr><td><strong>3 years</strong></td><td>6 months of simple interest</td><td>Forfeit ~$250</td></tr>
+        <tr><td><strong>5 years</strong></td><td>6–12 months of simple interest</td><td>Forfeit $250–$500</td></tr>
+      </tbody>
+    </table>
+    <p>Key warning: if you break a CD very early — before enough interest has accumulated to cover the penalty — the bank deducts the balance from your principal. You could receive less than your original deposit back. Always calculate your break-even date before opening a long-term CD.</p>
+    <p><strong>No-penalty CDs</strong> eliminate this risk entirely. Offered by online banks like Marcus by Goldman Sachs, Ally, and Discover, they allow a full withdrawal after an initial 7-day holding period with no forfeit. The tradeoff is a slightly lower APY, typically 0.10–0.30 percentage points below comparable fixed-term CDs.</p>
+  </div>
+
+  <div class="cd-content-section">
+    <h2>Are CDs Worth It in <%= currentYear %>?</h2>
+    <p>After the Federal Reserve's aggressive rate-hiking cycle pushed benchmark rates to multi-decade highs, US savers enjoyed CD APYs above 5.00% for the first time since 2007. The critical question for <%= currentYear %> is whether those rates persist, and whether a CD still makes sense relative to money market funds, Treasury bills, or bonds.</p>
+    <p>Here is the honest answer: CDs are worth it when you value certainty and FDIC insurance over maximum yield. A 4.50% guaranteed APY on a 12-month FDIC-insured CD beats the inflation-adjusted return on most traditional savings accounts and carries zero credit risk. You will not beat stock market average returns, but you will not lose principal either — making CDs the right tool for capital you cannot afford to risk.</p>
+    <p>Consider CDs if you:</p>
+    <ul>
+      <li>Have savings earmarked for a specific purchase within 1–3 years</li>
+      <li>Are within 5–10 years of retirement and want to de-risk a portion of your portfolio</li>
+      <li>Anticipate the Fed cutting rates and want to lock in today's higher yields</li>
+      <li>Have already fully funded your emergency fund in a liquid account</li>
+    </ul>
+    <p>Skip CDs if you have high-interest debt (any balance above 7–8% APR) — the math never works in favor of earning 5% on a CD while paying 20% on credit card debt.</p>
+  </div>
+
+  <div class="cd-content-section">
+    <h2>Worked Example: $15,000 at 5.00% APY — 1-Year CD</h2>
+    <p>Let's walk through a real-world calculation using the formula built into this calculator so you can verify results manually.</p>
+    <p><strong>Scenario:</strong> You have $15,000 in cash after selling a used car. You plan to use the funds as part of a down payment in exactly 12 months. You find a 1-year CD at an online bank offering 5.00% APY with daily compounding.</p>
+    <p><strong>Inputs:</strong></p>
+    <ul>
+      <li>Principal (P): $15,000</li>
+      <li>Annual Rate (r): 5.00% → 0.05 in decimal</li>
+      <li>Compounding Frequency (n): 365 (daily)</li>
+      <li>Term (t): 1 year</li>
+    </ul>
+    <p><strong>Calculation:</strong></p>
+    <p>A = $15,000 × (1 + 0.05 / 365)<sup>365 × 1</sup> = $15,000 × (1.0001369...)<sup>365</sup> = $15,000 × 1.05127... = <strong>$15,769.06</strong></p>
+    <p><strong>Result:</strong> At maturity, your $15,000 deposit grows to $15,769.06 — earning <strong>$769.06 in interest</strong> over 12 months. Your effective APY is 5.127% (slightly above the 5.00% nominal rate due to daily compounding). That $769 is taxable ordinary income reported on Form 1099-INT in January of the following year.</p>
+    <p>Compared to a standard bank savings account earning 0.40% APY, the CD earns approximately $709 more — highlighting exactly why rate shopping matters for savers with specific goals and timelines.</p>
+  </div>
+
+  <div class="cd-content-section">
+    <h2>Frequently Asked Questions About CD Interest</h2>
+    <div class="cd-faq-item">
+      <div class="cd-faq-q">Are Certificates of Deposit FDIC or NCUA insured?</div>
+      <div class="cd-faq-a">Yes. CDs issued by FDIC-insured member banks or NCUA-insured credit unions are backed by the full faith and credit of the United States government up to $250,000 per depositor, per institution, for each account ownership category. This makes CDs one of the safest financial instruments in the world.</div>
+    </div>
+    <div class="cd-faq-item">
+      <div class="cd-faq-q">What is the penalty for withdrawing funds before the CD matures?</div>
+      <div class="cd-faq-a">Early withdrawal penalties vary by financial institution and term length. Typically, a CD with a term under 12 months forfeits 3 months of simple interest, while longer terms (3 to 5 years) forfeit 6 to 12 months of interest. If you make an early withdrawal before earning enough interest to cover the penalty, the fee is deducted from your principal.</div>
+    </div>
+    <div class="cd-faq-item">
+      <div class="cd-faq-q">Do I have to pay taxes on CD interest?</div>
+      <div class="cd-faq-a">Yes. In the United States, CD interest is taxed as ordinary income at your marginal federal and state tax rates. Financial institutions issue IRS Form 1099-INT each January detailing the interest credited to your account during the prior tax year, regardless of whether you cashed it out or left it to compound.</div>
+    </div>
+    <div class="cd-faq-item">
+      <div class="cd-faq-q">What is a No-Penalty CD?</div>
+      <div class="cd-faq-a">A No-Penalty CD (also called a liquid CD) gives you the freedom to withdraw your full principal and accrued interest after the initial 7 days of opening without paying any forfeit fee. In exchange for this liquidity, no-penalty CDs usually pay slightly lower APYs than traditional fixed-term certificates.</div>
+    </div>
+    <div class="cd-faq-item">
+      <div class="cd-faq-q">What happens when a CD matures?</div>
+      <div class="cd-faq-a">When your CD reaches its maturity date, banks typically provide a 7 to 10-day "grace period." During this window, you can withdraw your funds, add more money, or transfer the balance to a checking account. If you do nothing, the bank will automatically roll over the balance into a new CD of the same duration at the prevailing market interest rate.</div>
+    </div>
+  </div>
+
+  <!-- Related Tools -->
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+    <h2 style="font-size:1.25rem;color:#0f172a;margin:0 0 1.25rem;">Related Savings &amp; Investment Calculators</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;">
+      <a href="/calculators/retirement-saving" style="display:block;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;text-decoration:none;color:inherit;transition:all .15s;" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='#e2e8f0'">
+        <div style="font-size:1.3rem;margin-bottom:6px;">📈</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">Retirement Savings Calculator</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Calculate how long your savings will last</div>
+      </a>
+      <a href="/calculators/investment-growth-calculator" style="display:block;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;text-decoration:none;color:inherit;transition:all .15s;" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='#e2e8f0'">
+        <div style="font-size:1.3rem;margin-bottom:6px;">💹</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">Investment Growth Calculator</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Compound returns with regular contributions</div>
+      </a>
+      <a href="/loan-calculators/sba-loan-calculator" style="display:block;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;text-decoration:none;color:inherit;transition:all .15s;" onmouseover="this.style.borderColor='#2563eb'" onmouseout="this.style.borderColor='#e2e8f0'">
+        <div style="font-size:1.3rem;margin-bottom:6px;">💼</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">SBA Loan Calculator</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Estimate monthly payments and loan rates</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+document.querySelectorAll('.cd-faq-q').forEach(function(q){
+  q.addEventListener('click', function(){
+    var a = this.nextElementSibling;
+    if(a.style.display === 'none' || a.style.display === ''){
+      a.style.display = 'block';
+    } else {
+      a.style.display = 'none';
+    }
+  });
+});
+</script>
+<%- include('../../partials/footer') %>

@@ -1,0 +1,100 @@
+<%- include('../../partials/header') %>
+<style>
+*{box-sizing:border-box;}
+body{background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;margin:0;}
+a{text-decoration:none;color:inherit;}
+.page-body{max-width:1160px;margin:0 auto;padding:32px 20px 64px;}
+.page-hero{margin-bottom:36px;}
+.page-hero h1{font-size:2rem;font-weight:800;color:#0f172a;margin:0 0 10px;}
+.page-hero p{font-size:1rem;color:#475569;line-height:1.7;margin:0 0 8px;max-width:680px;}
+.breadcrumb{font-size:.82rem;color:#94a3b8;margin-bottom:24px;}
+.breadcrumb a{color:#2563eb;} .breadcrumb a:hover{text-decoration:underline;}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:40px;}
+.calc-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:22px 20px 20px;transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column;}
+.calc-card:hover{box-shadow:0 8px 24px rgba(37,99,235,.1);transform:translateY(-2px);}
+.calc-card-icon{font-size:2rem;margin-bottom:12px;}
+.calc-card h2{font-size:1.05rem;font-weight:700;color:#0f172a;margin:0 0 6px;}
+.calc-card p{font-size:.88rem;color:#64748b;line-height:1.6;margin:0 0 14px;flex:1;}
+.calc-card a.btn{display:inline-block;background:#2563eb;color:#fff;padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:600;text-align:center;}
+.calc-card a.btn:hover{background:#1d4ed8;}
+.info-section{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:28px;margin-bottom:28px;line-height:1.75;color:#334155;}
+.info-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;font-weight:800;border-bottom:2px solid #eff6ff;padding-bottom:.5rem;}
+.info-section h3{font-size:1.1rem;color:#1e293b;margin:1.25rem 0 .5rem;font-weight:700;}
+.expert-note{background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:18px 22px;margin-top:24px;font-size:.9rem;color:#1e40af;line-height:1.6;}
+</style>
+
+<main class="page-body">
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<%= baseUrl %>/">Home</a> &rsaquo; Math Calculators</nav>
+
+  <div class="page-hero">
+    <h1>Free Math &amp; Linear Algebra Calculators (<%= currentYear %>)</h1>
+    <p>Comprehensive step-by-step online math solvers for algebra, matrix transformations, and calculus. Engineered for students, engineers, and researchers seeking instant numerical verification.</p>
+  </div>
+
+  <div class="calc-grid">
+    <div class="calc-card">
+      <div class="calc-card-icon">🔢</div>
+      <h2>RREF Calculator</h2>
+      <p>Reduce any 2x2 to 5x5 matrix to Reduced Row Echelon Form (RREF) step-by-step using Gauss-Jordan elimination. Perfect for solving linear systems.</p>
+      <a href="<%= baseUrl %>/calculators/rref.php" class="btn">Solve RREF &rarr;</a>
+    </div>
+
+    <div class="calc-card">
+      <div class="calc-card-icon">🔲</div>
+      <h2>Determinant Calculator</h2>
+      <p>Calculate determinants of square matrices with step-by-step Laplace expansion. Useful for finding matrix invertibility and eigenvalues.</p>
+      <a href="<%= baseUrl %>/calculators/determinant.php" class="btn">Find Determinant &rarr;</a>
+    </div>
+
+    <div class="calc-card">
+      <div class="calc-card-icon">🔄</div>
+      <h2>Inverse Matrix Calculator</h2>
+      <p>Find the inverse (A&sup1;) of any invertible matrix using augmented Gauss-Jordan elimination, with intermediate operations displayed.</p>
+      <a href="<%= baseUrl %>/calculators/inverse-matrix.php" class="btn">Compute Inverse &rarr;</a>
+    </div>
+
+    <div class="calc-card">
+      <div class="calc-card-icon">➗</div>
+      <h2>Mixed Fraction Calculator</h2>
+      <p>Add, subtract, multiply, and divide mixed numbers and improper fractions. Displays lowest common denominator (LCD) workings.</p>
+      <a href="<%= baseUrl %>/calculators/mixed-fraction.php" class="btn">Calculate Fractions &rarr;</a>
+    </div>
+
+    <div class="calc-card">
+      <div class="calc-card-icon">📈</div>
+      <h2>Partial Derivative Calculator</h2>
+      <p>Compute partial derivatives of multivariable mathematical functions symbolically with respect to x, y, or z with product and chain rule steps.</p>
+      <a href="<%= baseUrl %>/calculators/partial-derivative.php" class="btn">Compute Derivatives &rarr;</a>
+    </div>
+
+    <div class="calc-card">
+      <div class="calc-card-icon">📐</div>
+      <h2>Differential Equation Solver</h2>
+      <p>Solve first-order and second-order ordinary differential equations (ODEs) with integrating factor methods and characteristic roots.</p>
+      <a href="<%= baseUrl %>/calculators/differential-equation.php" class="btn">Solve ODEs &rarr;</a>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <h2>The Foundation of Modern Applied Mathematics</h2>
+    <p>From 3D computer graphics and algorithmic trading to machine learning and aerospace engineering, matrix operations and multivariable calculus represent the mathematical backbone of technological progress. Mastering these principles requires both conceptual understanding and precise computational verification.</p>
+
+    <h3>Linear Algebra in Machine Learning &amp; Computer Science</h3>
+    <p>Matrices are the foundational data structure of artificial intelligence and deep neural networks. When an AI model processes text or images, it converts inputs into high-dimensional vectors and performs billions of matrix multiplications (tensors). Understanding row operations, matrix determinants, and matrix inverses is essential for understanding gradient descent and model optimization.</p>
+
+    <h3>Solving Systems of Linear Equations via RREF</h3>
+    <p>Row Reduced Echelon Form (RREF) uses systematic elementary row operations (swapping rows, multiplying by scalars, and adding linear combinations) to transform complicated coefficient matrices into simple identity formats. This guarantees whether a system has a unique solution, infinitely many solutions, or no feasible solution (inconsistent system).</p>
+
+    <h3>Calculus &amp; Differential Equations in Physical Modeling</h3>
+    <p>Differential equations model dynamic systems where quantities change continuously over time—such as heat diffusion through building materials, population growth, capacitor discharge in electronic circuits, and aerodynamic drag on vehicles. Our analytical solvers break down complex boundary-value problems into straightforward, verifiable steps.</p>
+
+    <h3>Matrix Invertibility, Determinants &amp; Numerical Stability</h3>
+    <p>A fundamental theorem of linear algebra establishes that a square matrix $A$ has a unique inverse $A^{-1}$ if and only if its determinant is non-zero ($\det(A) \neq 0$). When the determinant equals zero, the matrix is singular—representing a transformation that collapses space into a lower dimension, leaving systems of linear equations without a unique solution.</p>
+    <p>In practical computer science and engineering simulations (such as structural truss stress analysis, Kirchhoff circuit mesh analysis, and 3D computer graphics rendering), matrices must also be checked for condition number stability. Ill-conditioned matrices can amplify tiny round-off errors into massive numerical discrepancies, which is why algorithms utilize Gaussian elimination with partial pivoting and QR decomposition for maximum precision.</p>
+  </div>
+
+  <div class="expert-note">
+    <strong>Academic Verification:</strong> All algorithms on AmericaCalculator.com are programmed using verified numerical analysis methods. While designed for rapid homework cross-checking and engineering estimates, always verify mission-critical calculations with peer-reviewed literature.
+  </div>
+</main>
+<%- include('../../partials/footer') %>

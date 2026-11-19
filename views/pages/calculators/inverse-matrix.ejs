@@ -1,0 +1,79 @@
+<%- include('../../partials/header') %>
+<div class="calculator-page">
+    <h1>Inverse Matrix Calculator</h1>
+    <p class="description">Calculate the inverse of a 2×2 or 3×3 square matrix using Gauss-Jordan elimination.</p>
+
+    <form class="calculator-form" onsubmit="event.preventDefault(); computeInv();">
+        <div class="form-group">
+            <label for="invSize">Matrix Size:</label>
+            <select id="invSize" name="size" onchange="renderInvGrid()">
+                <option value="2" selected>2 × 2</option>
+                <option value="3">3 × 3</option>
+            </select>
+        </div>
+        <h3>Enter Matrix Values:</h3>
+        <div id="invInputs" style="overflow-x:auto;"></div>
+        <button type="submit" class="btn">Calculate Inverse</button>
+    </form>
+
+    <div id="invResult" class="result-section" style="display:none;">
+        <h2>Inverse Matrix</h2>
+        <div id="invOut" style="overflow-x:auto;"></div>
+    </div>
+</div>
+<script>
+function renderInvGrid() {
+  var n = parseInt(document.getElementById('invSize').value, 10);
+  var html = '';
+  for (var i = 0; i < n; i++) {
+    html += '<div style="display:flex;gap:10px;margin-bottom:10px;">';
+    for (var j = 0; j < n; j++) {
+      html += '<input type="number" step="any" id="inv_' + i + '_' + j + '" style="width:80px;" value="' + (i === j ? '1' : '0') + '">';
+    }
+    html += '</div>';
+  }
+  document.getElementById('invInputs').innerHTML = html;
+}
+function computeInv() {
+  var n = parseInt(document.getElementById('invSize').value, 10);
+  var aug = [];
+  for (var i = 0; i < n; i++) {
+    var row = [];
+    for (var j = 0; j < n; j++) row.push(parseFloat(document.getElementById('inv_' + i + '_' + j).value) || 0);
+    for (var j2 = 0; j2 < n; j2++) row.push(i === j2 ? 1 : 0);
+    aug.push(row);
+  }
+  for (var c = 0; c < n; c++) {
+    var piv = c;
+    for (var r = c + 1; r < n; r++) if (Math.abs(aug[r][c]) > Math.abs(aug[piv][c])) piv = r;
+    if (Math.abs(aug[piv][c]) < 1e-12) {
+      document.getElementById('invOut').innerHTML = '<p style="color:#dc2626;font-weight:600;">Matrix is singular (determinant is 0) and has no inverse.</p>';
+      document.getElementById('invResult').style.display = 'block';
+      return;
+    }
+    var tmp = aug[c]; aug[c] = aug[piv]; aug[piv] = tmp;
+    var div = aug[c][c];
+    for (var k = 0; k < 2 * n; k++) aug[c][k] /= div;
+    for (var r2 = 0; r2 < n; r2++) {
+      if (r2 !== c) {
+        var f = aug[r2][c];
+        for (var k2 = 0; k2 < 2 * n; k2++) aug[r2][k2] -= f * aug[c][k2];
+      }
+    }
+  }
+  var tbl = '<table style="border-collapse:collapse;margin:20px 0;">';
+  for (var a = 0; a < n; a++) {
+    tbl += '<tr>';
+    for (var b = n; b < 2 * n; b++) {
+      var val = Math.abs(aug[a][b]) < 1e-10 ? 0 : Math.round(aug[a][b] * 10000) / 10000;
+      tbl += '<td style="border:1px solid #ddd;padding:10px;text-align:center;">' + val + '</td>';
+    }
+    tbl += '</tr>';
+  }
+  tbl += '</table>';
+  document.getElementById('invOut').innerHTML = tbl;
+  document.getElementById('invResult').style.display = 'block';
+}
+renderInvGrid();
+</script>
+<%- include('../../partials/footer') %>

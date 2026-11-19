@@ -1,0 +1,336 @@
+<%- include('../../partials/header') %>
+<main id="main-content" class="container">
+  <div class="calculator-header">
+    <h1>North Carolina Closing Cost Calculator (<%= currentYear %>)</h1>
+    <p class="lead-description">
+      Calculate buyer and seller settlement costs across North Carolina. Includes the <strong>NC Excise Stamp Tax ($2 per $1,000)</strong>, Due Diligence fee accounting, mandatory closing attorney fees, and regulated title insurance rates.
+    </p>
+  </div>
+
+  <div class="calculator-layout">
+    <!-- LEFT INPUT PANEL -->
+    <div class="calculator-panel">
+      <h2 class="panel-title">North Carolina Property &amp; Contract Details</h2>
+
+      <div class="form-group">
+        <label for="ncPrice">Property Purchase Price ($):</label>
+        <input type="number" id="ncPrice" class="form-control" value="395000" min="20000" step="5000">
+        <span class="field-hint">Charlotte &amp; Raleigh median residential sales benchmark.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="ncRole">Your Transaction Role:</label>
+        <select id="ncRole" class="form-control">
+          <option value="buyer" selected>Buyer (Purchasing Home)</option>
+          <option value="seller">Seller (Selling Home)</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="groupNcDown">
+        <label for="ncDownPct">Buyer Down Payment (%):</label>
+        <select id="ncDownPct" class="form-control">
+          <option value="5">5% Down Payment</option>
+          <option value="10">10% Down Payment</option>
+          <option value="20" selected>20% Down Payment (Standard)</option>
+          <option value="0">Cash Purchase (0% Financing)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="ncDueDiligence">Due Diligence Fee Paid Upfront ($):</label>
+        <input type="number" id="ncDueDiligence" class="form-control" value="4000" min="0" step="500">
+        <span class="field-hint">Non-refundable fee credited toward purchase price at closing.</span>
+      </div>
+
+      <div class="form-group" id="groupNcComm" style="display:none;">
+        <label for="ncAgentComm">Real Estate Broker Commission (%):</label>
+        <input type="number" id="ncAgentComm" class="form-control" value="5.0" min="0" max="8.0" step="0.5">
+      </div>
+
+      <div class="form-group">
+        <label for="ncAttorney">Closing Attorney Fee ($):</label>
+        <input type="number" id="ncAttorney" class="form-control" value="900" min="0" step="50">
+        <span class="field-hint">Mandatory closing attorney in NC ($750&ndash;$1,200).</span>
+      </div>
+
+      <div class="form-group">
+        <label for="ncAnnualTax">Annual Property Taxes ($):</label>
+        <input type="number" id="ncAnnualTax" class="form-control" value="3150" min="0" step="100">
+        <span class="field-hint">Average NC effective property tax rate (~0.80%&ndash;0.95%).</span>
+      </div>
+    </div>
+
+    <!-- RIGHT RESULTS PANEL -->
+    <div class="calculator-panel results-panel">
+      <h2 class="panel-title">Your Estimated NC Settlement Summary</h2>
+
+      <div class="highlight-metric">
+        <div class="metric-label" id="resNcRoleLabel">Total Buyer Closing Costs</div>
+        <div class="metric-value primary-value" id="resNcTotalCost">$0</div>
+        <div class="metric-sub" id="resNcBottomLine">Estimated Cash Needed at Settlement: $0</div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-title" id="resNcCard1Title">Due Diligence Credit</div>
+          <div class="result-number text-success" id="resNcCard1Val">-$4,000</div>
+          <div class="result-desc" id="resNcCard1Desc">Credited against cash-to-close</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title">Title Insurance (Lender &amp; Owner)</div>
+          <div class="result-number" id="resNcTitleFees">$0</div>
+          <div class="result-desc">Regulated NC title policy</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title">Closing Attorney &amp; Recording</div>
+          <div class="result-number" id="resNcAttorneyRecording">$0</div>
+          <div class="result-desc">Legal counsel + County deed recording</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title" id="resNcCard4Title">Lender &amp; Escrow Prepaids</div>
+          <div class="result-number" id="resNcCard4Val">$0</div>
+          <div class="result-desc" id="resNcCard4Desc">Taxes &amp; Insurance Buffer</div>
+        </div>
+      </div>
+
+      <div class="summary-breakdown">
+        <h3>Itemized North Carolina Settlement Statement</h3>
+        <table class="summary-table">
+          <tr><td>Home Purchase Price:</td><td id="resSumNcPrice">$0</td></tr>
+          <tr id="rowNcDown"><td>Buyer Down Payment:</td><td id="resSumNcDown">$0</td></tr>
+          <tr id="rowNcComm" style="display:none;"><td>Broker Commission (5%):</td><td id="resSumNcComm">$0</td></tr>
+          <tr><td>NC Excise Stamp Tax ($2.00/$1k):</td><td id="resSumNcExcise">$0</td></tr>
+          <tr><td>Title Insurance Policy:</td><td id="resSumNcTitle">$0</td></tr>
+          <tr><td>Closing Attorney Legal Fee:</td><td id="resSumNcAttorney">$0</td></tr>
+          <tr id="rowNcEscrow"><td>Escrow Prepaids (Taxes &amp; Insurance):</td><td id="resSumNcEscrow">$0</td></tr>
+          <tr id="rowNcDdCredit"><td>Less Due Diligence Fee Paid Upfront:</td><td class="text-success" id="resSumNcDdCredit">-$0</td></tr>
+          <tr class="highlight-row"><td><strong id="resSumNcFinalLabel">Total Remaining Cash to Close:</strong></td><td><strong id="resSumNcFinalVal">$0</strong></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT & GUIDES -->
+  <div class="calculator-content-body">
+    <div class="quick-answer-card">
+      <h2>How North Carolina Real Estate Closing Costs Work in <%= currentYear %></h2>
+      <p>
+        In North Carolina, buyer closing costs average <strong>2.0% to 3.5%</strong> when financing, while seller closing costs average <strong>6.0% to 8.0%</strong>. North Carolina operates as an <strong>attorney closing state</strong> and features a distinctive <strong>Due Diligence Fee contract mechanism</strong> alongside the state <strong>Real Estate Excise Stamp Tax ($2.00 per $1,000 paid by the seller)</strong>.
+      </p>
+    </div>
+
+    <h2>The North Carolina Due Diligence Fee Mechanism Explained</h2>
+    <p>
+      In North Carolina standard Offer to Purchase and Contract (Form 2-T), buyers provide a <strong>Due Diligence Fee</strong> directly to the seller upon signing:
+    </p>
+    <ul>
+      <li><strong>Non-Refundable Right to Terminate:</strong> The fee buys the buyer an agreed time period (typically 2 to 4 weeks) to inspect the property, secure financing, conduct appraisals, and terminate for any reason.</li>
+      <li><strong>100% Credited at Closing:</strong> If the transaction proceeds to closing, 100% of the Due Diligence Fee is credited directly toward the purchase price and reduces the buyer's remaining cash needed at the settlement table.</li>
+    </ul>
+
+    <h2>North Carolina Real Estate Excise Stamp Tax Rates</h2>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tax Level</th>
+            <th>Statutory Rate</th>
+            <th>Formula Basis</th>
+            <th>Standard Payer</th>
+            <th>Cost on $395,000 Home</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>NC Real Estate Excise Stamp Tax</strong></td>
+            <td>$1.00 per $500 ($2.00 / $1k)</td>
+            <td>Total Purchase Price</td>
+            <td><strong>Seller</strong></td>
+            <td><strong>$790.00</strong></td>
+          </tr>
+          <tr>
+            <td><strong>County Deed Recording Fee</strong></td>
+            <td>Flat $26 &ndash; $64</td>
+            <td>Per document recorded</td>
+            <td>Buyer / Seller split</td>
+            <td>~$50.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Itemized Buyer vs. Seller Closing Cost Allocation in North Carolina</h2>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Settlement Line Item</th>
+            <th>Buyer Pays</th>
+            <th>Seller Pays</th>
+            <th>Typical Amount Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>NC Excise Stamp Tax</strong></td><td>No</td><td><strong>Yes</strong></td><td>$2.00 per $1,000 of sales price</td></tr>
+          <tr><td><strong>Closing Attorney Legal Fee</strong></td><td><strong>Yes (~$900)</strong></td><td>Yes (~$250 doc prep)</td><td>Independent counsel representation</td></tr>
+          <tr><td><strong>Title Insurance (Lender &amp; Owner)</strong></td><td><strong>Yes</strong></td><td>No</td><td>Promulgated NC rating (~$1,500 on $395k)</td></tr>
+          <tr><td><strong>Boundary Survey &amp; Pest Inspection</strong></td><td><strong>Yes</strong></td><td>No</td><td>$500 &ndash; $750</td></tr>
+          <tr><td><strong>Broker Commission</strong></td><td>No</td><td><strong>Yes</strong></td><td>5.0% to 6.0% of purchase price</td></tr>
+          <tr><td><strong>Property Tax Escrow Prepaids</strong></td><td><strong>Yes</strong></td><td>No</td><td>3 to 5 months property tax cushion</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+        <h2>Due Diligence Fee vs. Earnest Money Deposit: Strategic Distinctions</h2>
+    <p>North Carolina's standard Form 2-T contract is unique among US states because it separates buyer deposits into two distinct financial mechanisms:</p>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr><th>Deposit Type</th><th>Recipient / Holding Entity</th><th>Refundable Upon Termination?</th><th>Credited at Closing?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Due Diligence Fee (DDF)</strong></td><td>Delivered directly to <strong>Seller</strong></td><td><strong>Non-refundable</strong> (except for seller breach)</td><td>Yes &ndash; 100% credited against purchase price</td></tr>
+          <tr><td><strong>Earnest Money Deposit (EMD)</strong></td><td>Held in escrow by <strong>Closing Attorney</strong></td><td><strong>Refundable</strong> if terminated before 5:00 PM on Due Diligence date</td><td>Yes &ndash; 100% credited against purchase price</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+    <div class="faq-item">
+      <h4>How much are closing costs in North Carolina?</h4>
+      <p>In North Carolina, buyer closing costs typically range from 2.0% to 3.5% of the purchase price when financing. Seller closing costs range from 6.0% to 8.0%, driven by real estate broker commissions (5% to 6%), NC excise stamp taxes ($2 per $1,000), and attorney document preparation fees.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the North Carolina Real Estate Excise Stamp Tax rate?</h4>
+      <p>The North Carolina Excise Stamp Tax (deed transfer tax) is $1.00 for each $500 of value, or fraction thereof, equaling an effective rate of 0.20% ($2.00 per $1,000). By state statute (N.C.G.S. 105-228.30), the seller is legally responsible for paying this tax at settlement.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the Due Diligence Fee in North Carolina?</h4>
+      <p>In North Carolina standard real estate contracts (NC REALTORS Form 2-T), the Due Diligence Fee is a non-refundable payment made by the buyer directly to the seller upon contract acceptance. It grants the buyer the unilateral right to terminate the contract during the due diligence period for any reason. At closing, the fee is credited 100% toward the buyer's purchase price and closing costs.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Is an attorney required to close a home sale in North Carolina?</h4>
+      <p>Yes. North Carolina is an attorney closing state. Under NC General Statutes, only a licensed attorney can conduct the title search, prepare legal closing documents, and supervise settlement funds.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Who pays for title insurance in North Carolina?</h4>
+      <p>In North Carolina, the buyer pays for both the Lender Title Insurance Policy and the Owner Title Insurance Policy. Rates are filed with and regulated by the NC Department of Insurance.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How much are closing costs on a $400,000 home in North Carolina?</h4>
+      <p>On a $400,000 home with 20% down ($320,000 loan): A buyer pays ~$9,450 (including $1,550 title insurance, $900 attorney fee, $1,400 lender fees, and $5,600 tax/ins escrow). A seller pays ~$25,100 (including $20,000 commission, $800 excise stamp tax, $300 attorney doc prep, and property tax prorations).</p>
+    </div>
+    <div class="faq-item">
+      <h4>Are there local municipal transfer taxes in North Carolina?</h4>
+      <p>A few specific coastal counties (such as Dare County) impose an additional 1.0% local land transfer tax. However, in the vast majority of NC counties (including Mecklenburg, Wake, Guilford, and Durham), only the standard 0.20% state excise tax applies.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How do property taxes prorate at closing in North Carolina?</h4>
+      <p>NC property taxes are levied on a calendar year basis (January 1 to December 31) and become due on September 1. If closing occurs before taxes are billed, the seller gives the buyer a credit for the days they owned the home; if closing occurs after the seller paid the annual bill, the buyer reimburses the seller.</p>
+    </div>
+
+    <h2>Explore Related State Closing Cost &amp; Mortgage Calculators</h2>
+    <ul>
+      <li><a href="/real-estate/closing-cost-calculator-georgia">Georgia Closing Cost Calculator</a> &mdash; Calculate GA transfer stamps and intangible taxes.</li>
+      <li><a href="/real-estate/closing-cost-calculator-florida">Florida Closing Cost Calculator</a> &mdash; Estimate documentary stamps and non-attorney title settlements in FL.</li>
+      <li><a href="/real-estate/property-tax-calculator">Property Tax Calculator</a> &mdash; Compare North Carolina's ~0.85% effective property tax rate against other states.</li>
+      <li><a href="/real-estate/seller-closing-cost-calculator">Seller Closing Cost Calculator</a> &mdash; Estimate net seller proceeds after broker commissions and deed taxes.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+function calculateNcCosts() {
+  var price = parseFloat(document.getElementById('ncPrice').value) || 0;
+  var role = document.getElementById('ncRole').value;
+  var downPct = (parseFloat(document.getElementById('ncDownPct').value) || 20) / 100;
+  var ddFee = parseFloat(document.getElementById('ncDueDiligence').value) || 0;
+  var commPct = (parseFloat(document.getElementById('ncAgentComm').value) || 5.0) / 100;
+  var attorney = parseFloat(document.getElementById('ncAttorney').value) || 900;
+  var annualTax = parseFloat(document.getElementById('ncAnnualTax').value) || 3150;
+
+  var isBuyer = (role === 'buyer');
+  document.getElementById('groupNcDown').style.display = isBuyer ? 'block' : 'none';
+  document.getElementById('groupNcComm').style.display = isBuyer ? 'none' : 'block';
+  document.getElementById('rowNcDown').style.display = isBuyer ? 'table-row' : 'none';
+  document.getElementById('rowNcComm').style.display = isBuyer ? 'none' : 'table-row';
+  document.getElementById('rowNcEscrow').style.display = isBuyer ? 'table-row' : 'none';
+  document.getElementById('rowNcDdCredit').style.display = isBuyer ? 'table-row' : 'none';
+
+  var downPayment = isBuyer ? (price * downPct) : 0;
+  var loanAmount = isBuyer ? Math.max(0, price - downPayment) : 0;
+
+  // 1. NC Excise Stamp Tax ($1.00 per $500 / $2 per $1k) - Seller
+  var exciseTax = Math.ceil(price / 500) * 1.00;
+
+  // 2. Title Insurance (NC regulated rates)
+  var titleInsurance = Math.max(600, (price * 0.0039) + 150);
+
+  // 3. Broker Commission
+  var commission = isBuyer ? 0 : (price * commPct);
+
+  // 4. Lender Origination & Escrows
+  var lenderFees = loanAmount > 0 ? 1450 : 0;
+  var escrowPrepaids = isBuyer && (loanAmount > 0) ? (annualTax / 12 * 4) + 1100 : 0;
+  var recording = 65;
+
+  var totalCost = 0;
+  var bottomLine = 0;
+
+  if (isBuyer) {
+    totalCost = titleInsurance + attorney + recording + lenderFees + escrowPrepaids;
+    // Cash needed at close = Down payment + Closing costs - Due Diligence fee already paid
+    bottomLine = Math.max(0, downPayment + totalCost - ddFee);
+
+    document.getElementById('resNcRoleLabel').textContent = 'Total Buyer Closing Costs';
+    document.getElementById('resNcBottomLine').textContent = 'Estimated Remaining Cash to Close: $' + Math.round(bottomLine).toLocaleString();
+    document.getElementById('resNcCard1Title').textContent = 'Due Diligence Credit';
+    document.getElementById('resNcCard1Val').textContent = '-$' + Math.round(ddFee).toLocaleString();
+    document.getElementById('resNcCard1Desc').textContent = 'Credited toward cash to close';
+    document.getElementById('resNcTitleFees').textContent = '$' + Math.round(titleInsurance).toLocaleString();
+    document.getElementById('resNcAttorneyRecording').textContent = '$' + Math.round(attorney + recording).toLocaleString();
+    document.getElementById('resNcCard4Title').textContent = 'Lender & Escrow Prepaids';
+    document.getElementById('resNcCard4Val').textContent = '$' + Math.round(lenderFees + escrowPrepaids).toLocaleString();
+    document.getElementById('resNcCard4Desc').textContent = 'Origination + Tax/Ins Buffer';
+    document.getElementById('resSumNcFinalLabel').textContent = 'Total Remaining Cash to Close:';
+    document.getElementById('resSumNcFinalVal').textContent = '$' + Math.round(bottomLine).toLocaleString();
+  } else {
+    totalCost = commission + exciseTax + (attorney * 0.35) + recording;
+    var netProceeds = price - totalCost;
+
+    document.getElementById('resNcRoleLabel').textContent = 'Total Seller Closing Costs';
+    document.getElementById('resNcBottomLine').textContent = 'Estimated Net Sale Proceeds: $' + Math.round(netProceeds).toLocaleString();
+    document.getElementById('resNcCard1Title').textContent = 'NC Excise Stamps ($2/$1k)';
+    document.getElementById('resNcCard1Val').textContent = '$' + Math.round(exciseTax).toLocaleString();
+    document.getElementById('resNcCard1Desc').textContent = '0.20% State Excise Deed Tax';
+    document.getElementById('resNcTitleFees').textContent = '$0 (Paid by Buyer)';
+    document.getElementById('resNcAttorneyRecording').textContent = '$' + Math.round((attorney * 0.35) + recording).toLocaleString();
+    document.getElementById('resNcCard4Title').textContent = 'Broker Commission';
+    document.getElementById('resNcCard4Val').textContent = '$' + Math.round(commission).toLocaleString();
+    document.getElementById('resNcCard4Desc').textContent = (commPct * 100).toFixed(1) + '% Real Estate Commission';
+    document.getElementById('resSumNcFinalLabel').textContent = 'Estimated Net Seller Proceeds:';
+    document.getElementById('resSumNcFinalVal').textContent = '$' + Math.round(netProceeds).toLocaleString();
+  }
+
+  document.getElementById('resNcTotalCost').textContent = '$' + Math.round(totalCost).toLocaleString();
+  document.getElementById('resSumNcPrice').textContent = '$' + Math.round(price).toLocaleString();
+  document.getElementById('resSumNcDown').textContent = '$' + Math.round(downPayment).toLocaleString() + ' (' + (downPct * 100).toFixed(0) + '%)';
+  document.getElementById('resSumNcComm').textContent = '$' + Math.round(commission).toLocaleString();
+  document.getElementById('resSumNcExcise').textContent = '$' + Math.round(isBuyer ? 0 : exciseTax).toLocaleString();
+  document.getElementById('resSumNcTitle').textContent = '$' + Math.round(isBuyer ? titleInsurance : 0).toLocaleString();
+  document.getElementById('resSumNcAttorney').textContent = '$' + Math.round(isBuyer ? attorney : (attorney * 0.35)).toLocaleString();
+  document.getElementById('resSumNcEscrow').textContent = '$' + Math.round(escrowPrepaids).toLocaleString();
+  document.getElementById('resSumNcDdCredit').textContent = '-$' + Math.round(ddFee).toLocaleString();
+}
+
+document.querySelectorAll('#ncPrice, #ncRole, #ncDownPct, #ncDueDiligence, #ncAgentComm, #ncAttorney, #ncAnnualTax').forEach(function(el) {
+  el.addEventListener('input', calculateNcCosts);
+  el.addEventListener('change', calculateNcCosts);
+});
+
+calculateNcCosts();
+</script>
+<%- include('../../partials/footer') %>

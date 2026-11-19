@@ -1,0 +1,288 @@
+{
+  "version": "2026.1",
+  "totalDays": 30,
+  "description": "30-day daily SEO calculator upgrade & creation schedule covering all 100 US Imperial/USD calculators for AmericaCalculator.com ($200+/mo AdSense blueprint).",
+  "days": [
+    {
+      "day": 1,
+      "theme": "Phase 1 GSC Priority Upgrades & Technical SEO Cleanup",
+      "items": [
+        { "slug": "business/solar-roi-calculator", "action": "upgrade", "cluster": "Cluster E", "name": "Solar Panel Payback Period & ROI Calculator", "keyword": "solar panel payback period calculator", "engine": "manual_day1" },
+        { "slug": "construction/concrete-bag-calculator", "action": "upgrade", "cluster": "Cluster A", "name": "Concrete Bag Calculator", "keyword": "concrete bag calculator", "engine": "manual_day1" },
+        { "slug": "ohio/hourly-paycheck-calculator", "action": "upgrade", "cluster": "Cluster H", "name": "Ohio Hourly Paycheck Calculator", "keyword": "ohio hourly paycheck calculator", "engine": "manual_day1" },
+        { "slug": "ohio/overtime-calculator", "action": "upgrade", "cluster": "Cluster H", "name": "Ohio Overtime Calculator", "keyword": "overtime calculator ohio", "engine": "manual_day1" }
+      ]
+    },
+    {
+      "day": 2,
+      "theme": "Cluster A — Concrete Slabs, Sonotubes & Footings",
+      "items": [
+        { "slug": "construction/concrete-slab-calculator", "action": "upgrade", "cluster": "Cluster A", "name": "Concrete Slab Calculator", "keyword": "concrete slab calculator", "engine": "slab" },
+        { "slug": "construction/sonotube-concrete-calculator", "action": "create", "cluster": "Cluster A", "name": "Sonotube & Concrete Column Calculator", "keyword": "sonotube concrete calculator", "engine": "sonotube" },
+        { "slug": "construction/concrete-footing-calculator", "action": "upgrade", "cluster": "Cluster A", "name": "Concrete Footing Calculator", "keyword": "concrete footing calculator", "engine": "footing" }
+      ]
+    },
+    {
+      "day": 3,
+      "theme": "Cluster A — Masonry CMU Blocks, Concrete Stairs & Rebar",
+      "items": [
+        { "slug": "construction/concrete-block-calculator", "action": "create", "cluster": "Cluster A", "name": "Concrete Block (CMU) Wall Calculator", "keyword": "concrete block calculator", "engine": "cmu_block" },
+        { "slug": "construction/concrete-stairs-calculator", "action": "create", "cluster": "Cluster A", "name": "Concrete Stairs Calculator", "keyword": "concrete stairs calculator", "engine": "concrete_stairs" },
+        { "slug": "construction/rebar-calculator", "action": "create", "cluster": "Cluster A", "name": "Rebar Grid & Weight Calculator", "keyword": "rebar calculator", "engine": "rebar" }
+      ]
+    },
+    {
+      "day": 4,
+      "theme": "Cluster A — Aggregates, Asphalt & Mortar",
+      "items": [
+        { "slug": "construction/gravel-calculator", "action": "create", "cluster": "Cluster A", "name": "Gravel & Crushed Stone Calculator", "keyword": "gravel calculator", "engine": "gravel" },
+        { "slug": "construction/asphalt-calculator", "action": "upgrade", "cluster": "Cluster A", "name": "Asphalt Paving Tonnage Calculator", "keyword": "asphalt calculator", "engine": "asphalt" },
+        { "slug": "construction/mortar-calculator", "action": "create", "cluster": "Cluster A", "name": "Mortar Bag Calculator", "keyword": "mortar bag calculator", "engine": "mortar" }
+      ]
+    },
+    {
+      "day": 5,
+      "theme": "Cluster B — Lumber & Structural Framing Core",
+      "items": [
+        { "slug": "construction/board-foot-calculator", "action": "create", "cluster": "Cluster B", "name": "Board Foot Calculator", "keyword": "board foot calculator", "engine": "board_foot" },
+        { "slug": "construction/wall-stud-calculator", "action": "create", "cluster": "Cluster B", "name": "Wall Stud Calculator", "keyword": "wall stud calculator", "engine": "wall_stud" },
+        { "slug": "construction/rafter-calculator", "action": "upgrade", "cluster": "Cluster B", "name": "Roof Rafter Length Calculator", "keyword": "rafter length calculator", "engine": "rafter" }
+      ]
+    },
+    {
+      "day": 6,
+      "theme": "Cluster B — Stairs, Joists & Deck Framing",
+      "items": [
+        { "slug": "construction/stair-calculator", "action": "upgrade", "cluster": "Cluster B", "name": "Stair Stringer Calculator", "keyword": "stair stringer calculator", "engine": "stair_stringer" },
+        { "slug": "construction/floor-joist-calculator", "action": "create", "cluster": "Cluster B", "name": "Floor Joist Calculator", "keyword": "floor joist calculator", "engine": "floor_joist" },
+        { "slug": "construction/deck-board-calculator", "action": "create", "cluster": "Cluster B", "name": "Deck Board Calculator", "keyword": "deck board calculator", "engine": "deck_board" }
+      ]
+    },
+    {
+      "day": 7,
+      "theme": "Cluster B — Balusters, Sheathing, Fencing & Pole Barns",
+      "items": [
+        { "slug": "construction/deck-baluster-calculator", "action": "create", "cluster": "Cluster B", "name": "Deck Baluster Calculator", "keyword": "deck baluster calculator", "engine": "deck_baluster" },
+        { "slug": "construction/plywood-sheathing-calculator", "action": "create", "cluster": "Cluster B", "name": "Plywood & OSB Sheathing Calculator", "keyword": "plywood calculator", "engine": "plywood" },
+        { "slug": "construction/fence-calculator", "action": "create", "cluster": "Cluster B", "name": "Fence Material Calculator", "keyword": "fence material calculator", "engine": "fence" },
+        { "slug": "construction/pole-barn-calculator", "action": "create", "cluster": "Cluster B", "name": "Pole Barn Material & Cost Calculator", "keyword": "pole barn cost calculator", "engine": "pole_barn" }
+      ]
+    },
+    {
+      "day": 8,
+      "theme": "Cluster C — Roofing Shingles, Pitch & Metal Roofing",
+      "items": [
+        { "slug": "construction/roof-shingle-calculator", "action": "create", "cluster": "Cluster C", "name": "Roofing Shingle Bundle Calculator", "keyword": "roofing shingle bundle calculator", "engine": "roof_shingle" },
+        { "slug": "construction/roof-pitch-calculator", "action": "create", "cluster": "Cluster C", "name": "Roof Pitch & Slope Calculator", "keyword": "roof pitch calculator", "engine": "roof_pitch" },
+        { "slug": "construction/metal-roofing-calculator", "action": "create", "cluster": "Cluster C", "name": "Metal Roofing Panel Calculator", "keyword": "metal roofing calculator", "engine": "metal_roof" }
+      ]
+    },
+    {
+      "day": 9,
+      "theme": "Cluster C — Siding & Exterior Envelope",
+      "items": [
+        { "slug": "construction/vinyl-siding-calculator", "action": "create", "cluster": "Cluster C", "name": "Vinyl Siding Calculator", "keyword": "vinyl siding calculator", "engine": "vinyl_siding" },
+        { "slug": "construction/hardie-plank-calculator", "action": "create", "cluster": "Cluster C", "name": "Hardie Plank Fiber Cement Siding Calculator", "keyword": "hardie plank calculator", "engine": "hardie_plank" },
+        { "slug": "construction/gutter-calculator", "action": "create", "cluster": "Cluster C", "name": "Gutter Size & Downspout Calculator", "keyword": "gutter size calculator", "engine": "gutter" }
+      ]
+    },
+    {
+      "day": 10,
+      "theme": "Cluster C & D — Ventilation, Drainage & Drywall",
+      "items": [
+        { "slug": "construction/attic-ventilation-calculator", "action": "create", "cluster": "Cluster C", "name": "Attic Ventilation (NFA) Calculator", "keyword": "attic ventilation calculator", "engine": "attic_vent" },
+        { "slug": "construction/french-drain-calculator", "action": "create", "cluster": "Cluster C", "name": "French Drain Gravel & Pipe Calculator", "keyword": "french drain calculator", "engine": "french_drain" },
+        { "slug": "construction/drywall-calculator", "action": "create", "cluster": "Cluster D", "name": "Drywall Sheet, Mud & Tape Calculator", "keyword": "drywall calculator", "engine": "drywall" }
+      ]
+    },
+    {
+      "day": 11,
+      "theme": "Cluster D — Ceilings & Insulation Systems",
+      "items": [
+        { "slug": "construction/drop-ceiling-calculator", "action": "create", "cluster": "Cluster D", "name": "Drop Ceiling Grid & Tile Calculator", "keyword": "drop ceiling calculator", "engine": "drop_ceiling" },
+        { "slug": "construction/spray-foam-insulation-calculator", "action": "create", "cluster": "Cluster D", "name": "Spray Foam Insulation Board Foot Calculator", "keyword": "spray foam insulation calculator", "engine": "spray_foam" },
+        { "slug": "construction/insulation-calculator", "action": "create", "cluster": "Cluster D", "name": "Attic & Wall Insulation Calculator", "keyword": "insulation calculator", "engine": "insulation" }
+      ]
+    },
+    {
+      "day": 12,
+      "theme": "Cluster D — Flooring, Tile & Interior Finishes",
+      "items": [
+        { "slug": "construction/flooring-calculator", "action": "create", "cluster": "Cluster D", "name": "Flooring Box & Square Footage Calculator", "keyword": "flooring calculator", "engine": "flooring" },
+        { "slug": "construction/tile-calculator", "action": "create", "cluster": "Cluster D", "name": "Tile, Thinset & Grout Calculator", "keyword": "tile and grout calculator", "engine": "tile" },
+        { "slug": "construction/paint-calculator", "action": "create", "cluster": "Cluster D", "name": "Interior & Exterior Paint Gallon Calculator", "keyword": "paint calculator", "engine": "paint" }
+      ]
+    },
+    {
+      "day": 13,
+      "theme": "Cluster D & E — Epoxy, Baseboard & Mulch",
+      "items": [
+        { "slug": "construction/epoxy-floor-calculator", "action": "create", "cluster": "Cluster D", "name": "Epoxy Garage Floor Coating Calculator", "keyword": "epoxy floor calculator", "engine": "epoxy" },
+        { "slug": "construction/baseboard-trim-calculator", "action": "create", "cluster": "Cluster D", "name": "Baseboard & Trim Linear Foot Calculator", "keyword": "baseboard calculator", "engine": "baseboard" },
+        { "slug": "construction/mulch-calculator", "action": "create", "cluster": "Cluster E", "name": "Mulch Cubic Yard & Bag Calculator", "keyword": "mulch calculator", "engine": "mulch" }
+      ]
+    },
+    {
+      "day": 14,
+      "theme": "Cluster E — Topsoil, Pavers & Retaining Walls",
+      "items": [
+        { "slug": "construction/topsoil-calculator", "action": "create", "cluster": "Cluster E", "name": "Topsoil Cubic Yard & Tonnage Calculator", "keyword": "topsoil calculator", "engine": "topsoil" },
+        { "slug": "construction/paver-calculator", "action": "create", "cluster": "Cluster E", "name": "Patio Paver & Base Gravel Calculator", "keyword": "paver calculator", "engine": "paver" },
+        { "slug": "construction/retaining-wall-calculator", "action": "create", "cluster": "Cluster E", "name": "Retaining Wall Block Calculator", "keyword": "retaining wall block calculator", "engine": "retaining_wall" }
+      ]
+    },
+    {
+      "day": 15,
+      "theme": "Cluster E — Sod, Excavation & Electrical",
+      "items": [
+        { "slug": "construction/sod-calculator", "action": "create", "cluster": "Cluster E", "name": "Sod Roll & Pallet Calculator", "keyword": "sod calculator", "engine": "sod" },
+        { "slug": "construction/excavation-calculator", "action": "create", "cluster": "Cluster E", "name": "Excavation Volume & Truck Load Calculator", "keyword": "excavation calculator", "engine": "excavation" },
+        { "slug": "technology/voltage-drop-calculator", "action": "upgrade", "cluster": "Cluster E", "name": "NEC Voltage Drop Calculator", "keyword": "voltage drop calculator", "engine": "voltage_drop" }
+      ]
+    },
+    {
+      "day": 16,
+      "theme": "Cluster E — Conduit Fill, HVAC Mini-Split & Water Heaters",
+      "items": [
+        { "slug": "construction/conduit-fill-calculator", "action": "create", "cluster": "Cluster E", "name": "NEC Conduit Fill Calculator", "keyword": "conduit fill calculator", "engine": "conduit_fill" },
+        { "slug": "construction/mini-split-btu-calculator", "action": "create", "cluster": "Cluster E", "name": "Mini-Split BTU Size Calculator", "keyword": "mini split btu calculator", "engine": "mini_split" },
+        { "slug": "construction/water-heater-size-calculator", "action": "create", "cluster": "Cluster E", "name": "Water Heater Size (FHR & GPM) Calculator", "keyword": "water heater size calculator", "engine": "water_heater" }
+      ]
+    },
+    {
+      "day": 17,
+      "theme": "Cluster E — Home Additions & Second-Story Costs",
+      "items": [
+        { "slug": "construction/home-addition-cost-calculator", "action": "upgrade", "cluster": "Cluster E", "name": "Home Addition Cost Calculator", "keyword": "home addition cost calculator", "engine": "home_addition" },
+        { "slug": "construction/second-story-addition-calculator", "action": "create", "cluster": "Cluster E", "name": "Second Story Addition Cost Calculator", "keyword": "second story addition cost calculator", "engine": "second_story" },
+        { "slug": "loan-calculators/rv-loan-calculator", "action": "upgrade", "cluster": "Cluster F", "name": "RV Loan Payment Calculator", "keyword": "rv loan calculator", "engine": "loan_amort" }
+      ]
+    },
+    {
+      "day": 18,
+      "theme": "Cluster F — Recreational Vehicle & Land Financing",
+      "items": [
+        { "slug": "loan-calculators/travel-trailer-loan-calculator", "action": "create", "cluster": "Cluster F", "name": "Travel Trailer Loan Calculator", "keyword": "travel trailer loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/motorhome-loan-calculator", "action": "create", "cluster": "Cluster F", "name": "Motorhome Loan & Depreciation Calculator", "keyword": "motorhome loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/land-loan-calculator", "action": "upgrade", "cluster": "Cluster F", "name": "Land Loan & Balloon Payoff Calculator", "keyword": "land loan calculator", "engine": "loan_amort" }
+      ]
+    },
+    {
+      "day": 19,
+      "theme": "Cluster F — Specialty Rural & Construction Loans",
+      "items": [
+        { "slug": "loan-calculators/manufactured-home-loan-calculator", "action": "create", "cluster": "Cluster F", "name": "Manufactured & Mobile Home Loan Calculator", "keyword": "manufactured home loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/barndominium-loan-calculator", "action": "create", "cluster": "Cluster F", "name": "Barndominium Construction-to-Perm Loan Calculator", "keyword": "barndominium loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/farm-loan-calculator", "action": "create", "cluster": "Cluster F", "name": "Farm & Agricultural Land Loan Calculator", "keyword": "farm loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/construction-loan-calculator", "action": "create", "cluster": "Cluster F", "name": "Construction Loan Draw Interest Calculator", "keyword": "construction loan calculator", "engine": "loan_amort" }
+      ]
+    },
+    {
+      "day": 20,
+      "theme": "Cluster F — Boat, Commercial Truck & HELOC/CD",
+      "items": [
+        { "slug": "loan-calculators/boat-loan-calculator", "action": "upgrade", "cluster": "Cluster F", "name": "Boat Loan & Ownership Cost Calculator", "keyword": "boat loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/semi-truck-loan-calculator", "action": "create", "cluster": "Cluster F", "name": "Semi-Truck Loan & Cost-Per-Mile Calculator", "keyword": "semi truck loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/interest-only-heloc-calculator", "action": "create", "cluster": "Cluster F", "name": "Interest-Only HELOC Payment Calculator", "keyword": "interest only heloc calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/cd-interest-calculator", "action": "upgrade", "cluster": "Cluster F", "name": "CD Interest & After-Tax APY Calculator", "keyword": "cd interest calculator", "engine": "cd_interest" }
+      ]
+    },
+    {
+      "day": 21,
+      "theme": "Cluster F — SBA 7(a), SBA 504 & Guaranty Fee Hub",
+      "items": [
+        { "slug": "loan-calculators/sba-loan-calculator", "action": "upgrade", "cluster": "Cluster F", "name": "SBA 7(a) Loan Payment Calculator", "keyword": "sba 7a loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/sba-504-loan-calculator", "action": "create", "cluster": "Cluster F", "name": "SBA 504 Loan Blended Payment Calculator", "keyword": "sba 504 loan calculator", "engine": "sba_504" },
+        { "slug": "loan-calculators/sba-guaranty-fee-calculator", "action": "create", "cluster": "Cluster F", "name": "SBA Guaranty Fee Calculator", "keyword": "sba guaranty fee calculator", "engine": "sba_guaranty" }
+      ]
+    },
+    {
+      "day": 22,
+      "theme": "Cluster F — Commercial, Equipment & Hard Money Lending",
+      "items": [
+        { "slug": "loan-calculators/commercial-loan-calculator", "action": "upgrade", "cluster": "Cluster F", "name": "Commercial Real Estate Loan & Balloon Calculator", "keyword": "commercial loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/equipment-loan-calculator", "action": "upgrade", "cluster": "Cluster F", "name": "Equipment Loan & Section 179 Tax Savings Calculator", "keyword": "equipment loan calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/hard-money-loan-calculator", "action": "upgrade", "cluster": "Cluster F", "name": "Hard Money Loan & Holding Cost Calculator", "keyword": "hard money loan calculator", "engine": "hard_money" }
+      ]
+    },
+    {
+      "day": 23,
+      "theme": "Cluster F & G — Seller Financing, MCA & Freight Density",
+      "items": [
+        { "slug": "loan-calculators/seller-financing-calculator", "action": "create", "cluster": "Cluster F", "name": "Seller Financing Note & Balloon Calculator", "keyword": "seller financing calculator", "engine": "loan_amort" },
+        { "slug": "loan-calculators/mca-calculator", "action": "create", "cluster": "Cluster F", "name": "Merchant Cash Advance (MCA) Effective APR Calculator", "keyword": "merchant cash advance calculator", "engine": "mca" },
+        { "slug": "business/freight-class-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "Freight Density & NMFC Class Calculator", "keyword": "freight density calculator", "engine": "freight_class" }
+      ]
+    },
+    {
+      "day": 24,
+      "theme": "Cluster G — E-Commerce, Retail Markup & Rate Caps",
+      "items": [
+        { "slug": "business/amazon-roi-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "Amazon FBA ROI & Net Margin Calculator", "keyword": "amazon roi calculator", "engine": "amazon_roi" },
+        { "slug": "business/markup-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "Retail Markup vs. Gross Margin Calculator", "keyword": "retail markup calculator", "engine": "markup" },
+        { "slug": "business/interest-rate-cap-calculator", "action": "create", "cluster": "Cluster G", "name": "Interest Rate Cap Payment Calculator", "keyword": "rate cap calculator", "engine": "rate_cap" }
+      ]
+    },
+    {
+      "day": 25,
+      "theme": "Cluster G — Core Real Estate Investor Metrics",
+      "items": [
+        { "slug": "real-estate/cap-rate-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "Cap Rate & NOI Valuation Calculator", "keyword": "cap rate calculator", "engine": "cap_rate" },
+        { "slug": "real-estate/cash-on-cash-return-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "Cash-on-Cash Return Calculator", "keyword": "cash on cash return calculator", "engine": "coc_return" },
+        { "slug": "real-estate/dscr-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "DSCR Loan Ratio Calculator", "keyword": "dscr calculator", "engine": "dscr" },
+        { "slug": "real-estate/brrrr-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "BRRRR Strategy Refinance Calculator", "keyword": "brrrr calculator", "engine": "brrrr" }
+      ]
+    },
+    {
+      "day": 26,
+      "theme": "Cluster G — 1031 Exchange, Price-to-Rent, Flipping & Airbnb",
+      "items": [
+        { "slug": "real-estate/1031-exchange-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "1031 Exchange Tax Deferral & Boot Calculator", "keyword": "1031 exchange calculator", "engine": "exchange_1031" },
+        { "slug": "real-estate/price-to-rent-ratio-calculator", "action": "create", "cluster": "Cluster G", "name": "Price-to-Rent Ratio Calculator", "keyword": "price to rent ratio calculator", "engine": "price_to_rent" },
+        { "slug": "real-estate/home-inspection-cost-calculator", "action": "upgrade", "cluster": "Cluster G", "name": "Home Inspection Cost Calculator", "keyword": "home inspection cost calculator", "engine": "home_inspection" },
+        { "slug": "real-estate/house-flipping-calculator", "action": "create", "cluster": "Cluster G", "name": "House Flipping 70% Rule & MAO Calculator", "keyword": "house flipping calculator", "engine": "house_flip" }
+      ]
+    },
+    {
+      "day": 27,
+      "theme": "Cluster G & H — GRM, Airbnb & National/FHA Closing Costs",
+      "items": [
+        { "slug": "real-estate/gross-rent-multiplier-calculator", "action": "create", "cluster": "Cluster G", "name": "Gross Rent Multiplier (GRM) Calculator", "keyword": "gross rent multiplier calculator", "engine": "grm" },
+        { "slug": "real-estate/airbnb-calculator", "action": "create", "cluster": "Cluster G", "name": "Short-Term Rental (Airbnb) Revenue Calculator", "keyword": "airbnb calculator", "engine": "airbnb" },
+        { "slug": "real-estate/closing-cost-calculator", "action": "upgrade", "cluster": "Cluster H", "name": "US Home Closing Cost Calculator (50 States)", "keyword": "closing cost calculator", "engine": "closing_cost" },
+        { "slug": "real-estate/fha-closing-cost-calculator", "action": "create", "cluster": "Cluster H", "name": "FHA Closing Cost & UFMIP Calculator", "keyword": "fha closing cost calculator", "engine": "closing_cost" }
+      ]
+    },
+    {
+      "day": 28,
+      "theme": "Cluster H — Major State Closing Cost Calculators (CA, TX, FL, NY)",
+      "items": [
+        { "slug": "real-estate/closing-cost-calculator-california", "action": "upgrade", "cluster": "Cluster H", "name": "California Closing Cost Calculator", "keyword": "closing cost calculator california", "engine": "closing_cost" },
+        { "slug": "real-estate/closing-cost-calculator-texas", "action": "upgrade", "cluster": "Cluster H", "name": "Texas Closing Cost & Title Insurance Calculator", "keyword": "closing cost calculator texas", "engine": "closing_cost" },
+        { "slug": "real-estate/closing-cost-calculator-florida", "action": "upgrade", "cluster": "Cluster H", "name": "Florida Closing Cost & Doc Stamps Calculator", "keyword": "florida closing cost calculator", "engine": "closing_cost" },
+        { "slug": "real-estate/closing-cost-calculator-new-york", "action": "upgrade", "cluster": "Cluster H", "name": "New York Closing Cost & Mansion Tax Calculator", "keyword": "closing cost calculator new york", "engine": "closing_cost" }
+      ]
+    },
+    {
+      "day": 29,
+      "theme": "Cluster H — Regional State Closing Cost Calculators (PA, OH, WA, MD, WV)",
+      "items": [
+        { "slug": "real-estate/closing-cost-calculator-pennsylvania", "action": "upgrade", "cluster": "Cluster H", "name": "Pennsylvania Closing Cost & Transfer Tax Calculator", "keyword": "closing cost calculator pa", "engine": "closing_cost" },
+        { "slug": "real-estate/closing-cost-calculator-ohio", "action": "upgrade", "cluster": "Cluster H", "name": "Ohio Closing Cost & Conveyance Fee Calculator", "keyword": "ohio closing cost calculator", "engine": "closing_cost" },
+        { "slug": "real-estate/closing-cost-calculator-washington", "action": "create", "cluster": "Cluster H", "name": "Washington State Closing Cost & REET Calculator", "keyword": "closing costs washington state calculator", "engine": "closing_cost" },
+        { "slug": "real-estate/closing-cost-calculator-maryland", "action": "create", "cluster": "Cluster H", "name": "Maryland Closing Cost & Recordation Tax Calculator", "keyword": "closing cost calculator maryland", "engine": "closing_cost" },
+        { "slug": "real-estate/closing-cost-calculator-west-virginia", "action": "create", "cluster": "Cluster H", "name": "West Virginia Closing Cost & Excise Tax Calculator", "keyword": "closing cost calculator west virginia", "engine": "closing_cost" }
+      ]
+    },
+    {
+      "day": 30,
+      "theme": "Cluster H — Final State Paycheck Hub Upgrades (OH, CA, TX)",
+      "items": [
+        { "slug": "ohio/paycheck-calculator", "action": "upgrade", "cluster": "Cluster H", "name": "Ohio Paycheck Calculator (2026 HB 96)", "keyword": "ohio paycheck calculator", "engine": "paycheck" },
+        { "slug": "ohio/bonus-tax-calculator", "action": "upgrade", "cluster": "Cluster H", "name": "Ohio Bonus Tax Calculator (2026)", "keyword": "bonus tax calculator ohio", "engine": "paycheck" },
+        { "slug": "california/paycheck-calculator", "action": "upgrade", "cluster": "Cluster H", "name": "California Paycheck Calculator (2026 SDI)", "keyword": "california paycheck calculator", "engine": "paycheck" },
+        { "slug": "texas/paycheck-calculator", "action": "upgrade", "cluster": "Cluster H", "name": "Texas Paycheck Calculator (2026 0% State Tax)", "keyword": "texas paycheck calculator", "engine": "paycheck" }
+      ]
+    }
+  ]
+}

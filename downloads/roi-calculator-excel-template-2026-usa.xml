@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel">
+
+<Styles>
+ <Style ss:ID="hdr"><Font ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#16a34a" ss:Pattern="Solid"/></Style>
+ <Style ss:ID="subhdr"><Font ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#1e293b" ss:Pattern="Solid"/></Style>
+ <Style ss:ID="label"><Font ss:Bold="1"/><Interior ss:Color="#f0fdf4" ss:Pattern="Solid"/></Style>
+ <Style ss:ID="result"><Font ss:Bold="1" ss:Color="#16a34a"/><Interior ss:Color="#dcfce7" ss:Pattern="Solid"/></Style>
+ <Style ss:ID="pct"><NumberFormat ss:Format="0.00&quot;%&quot;"/></Style>
+ <Style ss:ID="usd"><NumberFormat ss:Format="&quot;$&quot;#,##0.00"/></Style>
+ <Style ss:ID="usd_result"><Font ss:Bold="1" ss:Color="#16a34a"/><Interior ss:Color="#dcfce7" ss:Pattern="Solid"/><NumberFormat ss:Format="&quot;$&quot;#,##0.00"/></Style>
+ <Style ss:ID="pct_result"><Font ss:Bold="1" ss:Color="#16a34a"/><Interior ss:Color="#dcfce7" ss:Pattern="Solid"/><NumberFormat ss:Format="0.00&quot;%&quot;"/></Style>
+ <Style ss:ID="note"><Font ss:Italic="1" ss:Color="#64748b"/><Interior ss:Color="#f8fafc" ss:Pattern="Solid"/></Style>
+</Styles>
+
+<!-- ═══ TAB 1: Basic ROI ═══ -->
+<Worksheet ss:Name="Basic ROI">
+<Table ss:DefaultColumnWidth="160">
+ <Column ss:Width="220"/><Column ss:Width="180"/><Column ss:Width="180"/>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="hdr"><Data ss:Type="String">ROI Calculator 2026 USA — AmericaCalculator.com</Data></Cell></Row>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="subhdr"><Data ss:Type="String">Tab 1: Basic ROI Calculator</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">INPUT</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">NOTES</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Total Investment ($)</Data></Cell><Cell ss:StyleID="usd" ss:Name="BasicInvest"><Data ss:Type="Number">10000</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Purchase price + all acquisition costs</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Total Return ($)</Data></Cell><Cell ss:StyleID="usd" ss:Name="BasicReturn"><Data ss:Type="Number">13500</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Sale proceeds + all income received</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Hold Period (Years)</Data></Cell><Cell ss:Name="BasicYear"><Data ss:Type="Number">3</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Number of years investment was held</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Tax Rate (%)</Data></Cell><Cell ss:Name="BasicTax"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Your effective capital gains tax rate</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">RESULTS</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">FORMULA</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Net Profit ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B6-B5</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Total Return - Total Investment</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">ROI (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=((B6-B5)/B5)*100</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= (Net Profit / Investment) × 100</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Annualized ROI (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=((1+((B6-B5)/B5))^(1/B7)-1)*100</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= ((1+ROI)^(1/Years)-1) × 100</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Tax on Profit ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=(B6-B5)*(B8/100)</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Net Profit × Tax Rate</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">After-Tax Net Profit ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=(B6-B5)*(1-B8/100)</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Net Profit × (1 - Tax Rate)</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">After-Tax ROI (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=((B6-B5)*(1-B8/100)/B5)*100</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= After-Tax Profit / Investment × 100</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Payback Period (Years)</Data></Cell><Cell ss:StyleID="result"><Formula>=B5/((B6-B5)/B7)</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Investment / Annual Profit</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="note"><Data ss:Type="String">Source: AmericaCalculator.com/business/roi-calculator — Free ROI Calculator 2026 USA</Data></Cell></Row>
+</Table>
+</Worksheet>
+
+<!-- ═══ TAB 2: Real Estate ROI ═══ -->
+<Worksheet ss:Name="Real Estate ROI">
+<Table ss:DefaultColumnWidth="160">
+ <Column ss:Width="240"/><Column ss:Width="180"/><Column ss:Width="200"/>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="hdr"><Data ss:Type="String">Real Estate ROI Calculator 2026 USA — AmericaCalculator.com</Data></Cell></Row>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="subhdr"><Data ss:Type="String">Tab 2: Rental Property / Real Estate ROI</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">PURCHASE INPUTS</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">NOTES</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Purchase Price ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">220000</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Full property purchase price</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Down Payment ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">44000</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Typically 20-25% for investment properties</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Closing Costs ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">4500</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Typically 2-5% of purchase price</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Upfront Repairs ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">5000</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Renovation before first tenant</Data></Cell></Row>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">Total Cash Invested ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B6+B7+B8</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Down + Closing + Repairs</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">INCOME INPUTS</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">NOTES</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Monthly Gross Rent ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">1750</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Total rent before any deductions</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Vacancy Rate (%)</Data></Cell><Cell><Data ss:Type="Number">5</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Typical: 5-10% of gross rent</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Annual Property Tax ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">2400</Data></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Annual Insurance ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">1200</Data></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Annual Maintenance ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">2200</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Rule: 1% of property value/yr</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Management Fee (%)</Data></Cell><Cell><Data ss:Type="Number">10</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">8-12% of effective rent</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Monthly Mortgage P+I ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">1165</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Use mortgage calculator to get this</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Annual Appreciation (%)</Data></Cell><Cell><Data ss:Type="Number">3.5</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">US avg ~3-4%/yr historically</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Hold Period (Years)</Data></Cell><Cell><Data ss:Type="Number">5</Data></Cell><Cell></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">RESULTS</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">FORMULA</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Annual Gross Rent ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B12*12</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Monthly × 12</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Effective Gross Income ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B12*12*(1-B13/100)</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Gross Rent × (1 - Vacancy)</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Management Fee ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B12*12*(1-B13/100)*(B17/100)</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Total Annual Expenses ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B14+B15+B16+B26+(B18*12)</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Tax+Ins+Maint+Mgmt+Mortgage</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Annual Net Cash Flow ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B25-B27</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Monthly Cash Flow ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B28/12</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Cash-on-Cash ROI (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=(B28/B10)*100</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Annual Cash Flow / Cash Invested × 100</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">5-Year Appreciation ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B5*(((1+B19/100)^B20)-1)</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Total 5-Year ROI (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=((B28*B20+B31)/B10)*100</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= (Cash Flow + Appreciation) / Invested × 100</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="note"><Data ss:Type="String">Source: AmericaCalculator.com/business/rental-property-roi-calculator</Data></Cell></Row>
+</Table>
+</Worksheet>
+
+<!-- ═══ TAB 3: Marketing ROI ═══ -->
+<Worksheet ss:Name="Marketing ROI">
+<Table ss:DefaultColumnWidth="160">
+ <Column ss:Width="240"/><Column ss:Width="180"/><Column ss:Width="200"/>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="hdr"><Data ss:Type="String">Marketing ROI Calculator 2026 USA — AmericaCalculator.com</Data></Cell></Row>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="subhdr"><Data ss:Type="String">Tab 3: Marketing / Ad Spend ROI</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">INPUT</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">NOTES</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Total Marketing Spend ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">5000</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">All-in campaign cost</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Attributed Revenue ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">22000</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Revenue tracked to this campaign</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Gross Margin (%)</Data></Cell><Cell><Data ss:Type="Number">60</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Your product/service gross margin</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">New Customers Acquired</Data></Cell><Cell><Data ss:Type="Number">45</Data></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Average Customer LTV ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">800</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Lifetime value per customer</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">RESULTS</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">FORMULA</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Net Profit ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B6-B5</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Revenue - Spend</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Gross Profit ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B6*(B7/100)</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Revenue × Gross Margin</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Marketing ROI (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=((B6-B5)/B5)*100</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= (Revenue - Spend) / Spend × 100</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">ROAS (Revenue per $1 spent)</Data></Cell><Cell ss:StyleID="result"><Formula>=B6/B5</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Revenue / Spend (good: 4-6x)</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Cost Per Acquisition ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B5/B8</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Spend / Customers</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">LTV-Based Value ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B8*B9</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">= Customers × LTV</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="note"><Data ss:Type="String">Source: AmericaCalculator.com/business/marketing-roi-calculator | Good ROAS benchmark: 5:1</Data></Cell></Row>
+</Table>
+</Worksheet>
+
+<!-- ═══ TAB 4: Amazon FBA ROI ═══ -->
+<Worksheet ss:Name="Amazon FBA ROI">
+<Table ss:DefaultColumnWidth="160">
+ <Column ss:Width="240"/><Column ss:Width="180"/><Column ss:Width="200"/>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="hdr"><Data ss:Type="String">Amazon FBA ROI Calculator 2026 USA — AmericaCalculator.com</Data></Cell></Row>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="subhdr"><Data ss:Type="String">Tab 4: Amazon FBA True ROI (all fees)</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">INPUT</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">NOTES</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Sale Price ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">29.99</Data></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Units Sold / Month</Data></Cell><Cell><Data ss:Type="Number">150</Data></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Product Cost per Unit ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">6.50</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Manufacturing / wholesale cost</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Inbound Shipping per Unit ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">0.85</Data></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Amazon Referral Fee (%)</Data></Cell><Cell><Data ss:Type="Number">15</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Typically 8-15% by category</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">FBA Fulfillment Fee per Unit ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">4.50</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Small standard avg: $3-5</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Storage Fee per Unit ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">0.35</Data></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Monthly PPC Spend ($)</Data></Cell><Cell ss:StyleID="usd"><Data ss:Type="Number">450</Data></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Return Rate (%)</Data></Cell><Cell><Data ss:Type="Number">3</Data></Cell><Cell></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">RESULTS</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">VALUE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">FORMULA</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Monthly Revenue ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B5*B6</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Product + Shipping Cost ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=(B7+B8)*B6</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Amazon Referral Fee ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B5*(B9/100)*B6</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">FBA + Storage Fees ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=(B10+B11)*B6</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Returns Cost ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B5*(B13/100)*B6*0.2</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Monthly Net Profit ($)</Data></Cell><Cell ss:StyleID="usd_result"><Formula>=B17-(B18+B19+B20+B12+B21)</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Net Margin (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=(B22/B17)*100</Formula></Cell><Cell></Cell></Row>
+ <Row><Cell><Data ss:Type="String">ROI on COGS (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=(B22/B18)*100</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Target: 30%+ on product cost</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">ACOS (%)</Data></Cell><Cell ss:StyleID="pct_result"><Formula>=(B12/B17)*100</Formula></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Target: below your gross margin %</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:MergeAcross="2" ss:StyleID="note"><Data ss:Type="String">Source: AmericaCalculator.com/business/amazon-roi-calculator | Target ROI on COGS: 30-100%+</Data></Cell></Row>
+</Table>
+</Worksheet>
+
+<!-- ═══ TAB 5: ROI Benchmarks ═══ -->
+<Worksheet ss:Name="2026 USA Benchmark">
+<Table ss:DefaultColumnWidth="160">
+ <Column ss:Width="220"/><Column ss:Width="140"/><Column ss:Width="180"/><Column ss:Width="220"/>
+ <Row><Cell ss:MergeAcross="3" ss:StyleID="hdr"><Data ss:Type="String">2026 USA ROI Benchmarks — AmericaCalculator.com</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">INVESTMENT TYPE</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">AVG ROI</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">BENCHMARK</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">NOTES</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">S&amp;P 500 Stock Market</Data></Cell><Cell><Data ss:Type="String">7-10%/yr</Data></Cell><Cell><Data ss:Type="String">Historical average</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Long-term US stock market avg</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Rental Real Estate (cash-on-cash)</Data></Cell><Cell><Data ss:Type="String">8-12%</Data></Cell><Cell><Data ss:Type="String">Good return</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Cleveland OH, Memphis TN lead US</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Marketing / Digital Ads</Data></Cell><Cell><Data ss:Type="String">5:1 ROAS</Data></Cell><Cell><Data ss:Type="String">Industry benchmark</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">$5 revenue per $1 spent</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Solar Panels (after 30% ITC)</Data></Cell><Cell><Data ss:Type="String">10-20%/yr</Data></Cell><Cell><Data ss:Type="String">Annualized</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">CA/AZ: 5-7yr payback; TX: 7-10yr</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Amazon FBA (per product)</Data></Cell><Cell><Data ss:Type="String">30-100%+</Data></Cell><Cell><Data ss:Type="String">On COGS</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Net after all Amazon fees + PPC</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Business Automation / RPA</Data></Cell><Cell><Data ss:Type="String">100-300%</Data></Cell><Cell><Data ss:Type="String">3-year avg</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">6-18 month typical payback</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Email Marketing</Data></Cell><Cell><Data ss:Type="String">$42 per $1</Data></Cell><Cell><Data ss:Type="String">Highest of all channels</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">DMA/Litmus 2024 data</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">SEO (long-term)</Data></Cell><Cell><Data ss:Type="String">$5-$20 per $1</Data></Cell><Cell><Data ss:Type="String">After 12+ months</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Organic traffic compound growth</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:StyleID="label"><Data ss:Type="String">US RENTAL ROI BY MARKET (2026)</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">GROSS YIELD</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">CASH-ON-CASH</Data></Cell><Cell ss:StyleID="label"><Data ss:Type="String">MARKET TYPE</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Cleveland, OH</Data></Cell><Cell><Data ss:Type="String">11.3%</Data></Cell><Cell><Data ss:Type="String">9-14%</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Max cash flow market USA</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Cincinnati, OH</Data></Cell><Cell><Data ss:Type="String">~9.8%</Data></Cell><Cell><Data ss:Type="String">6-10%</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">High demand rental market</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Memphis, TN</Data></Cell><Cell><Data ss:Type="String">8-10%</Data></Cell><Cell><Data ss:Type="String">5-9%</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Portfolio builder</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Detroit, MI</Data></Cell><Cell><Data ss:Type="String">10-15%</Data></Cell><Cell><Data ss:Type="String">8-13%</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">High yield, higher risk</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Indianapolis, IN</Data></Cell><Cell><Data ss:Type="String">6-8%</Data></Cell><Cell><Data ss:Type="String">4-8%</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Stable cash flow</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">Austin, TX</Data></Cell><Cell><Data ss:Type="String">5-6%</Data></Cell><Cell><Data ss:Type="String">0-2%</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Appreciation market</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">New York City, NY</Data></Cell><Cell><Data ss:Type="String">3-4%</Data></Cell><Cell><Data ss:Type="String">Negative</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Appreciation dominant</Data></Cell></Row>
+ <Row><Cell><Data ss:Type="String">US National Average (Q2 2026)</Data></Cell><Cell><Data ss:Type="String">6.71%</Data></Cell><Cell><Data ss:Type="String">3-6%</Data></Cell><Cell ss:StyleID="note"><Data ss:Type="String">Source: Global Property Guide</Data></Cell></Row>
+ <Row/>
+ <Row><Cell ss:MergeAcross="3" ss:StyleID="note"><Data ss:Type="String">Free ROI calculators: AmericaCalculator.com/business/roi-calculator | Results are estimates, not financial advice.</Data></Cell></Row>
+</Table>
+</Worksheet>
+
+</Workbook>

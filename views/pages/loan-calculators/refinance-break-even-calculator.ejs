@@ -1,0 +1,275 @@
+<%- include('../../partials/header') %>
+<style>
+body{background:#f8fafc;}
+.rb-wrap{max-width:1060px;margin:0 auto;padding:2rem 1.25rem 5rem;}
+.rb-bc{font-size:.8rem;color:#94a3b8;margin-bottom:.75rem;}.rb-bc a{color:#64748b;text-decoration:none;}
+.rb-hero h1{font-size:1.85rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.rb-hero p{font-size:.97rem;color:#64748b;line-height:1.65;margin:0 0 .5rem;border-left:3px solid #7c3aed;padding-left:.9rem;}
+.rb-meta{font-size:.78rem;color:#94a3b8;margin-bottom:1.75rem;}
+.rb-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;margin-bottom:1.75rem;}
+.rb-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden;}
+.rb-card-head{background:#4f46e5;color:#fff;padding:1rem 1.5rem;font-size:1rem;font-weight:700;}
+.rb-body{padding:1.5rem;}
+.rb-field{margin-bottom:1rem;}
+.rb-field label{display:block;font-size:.85rem;font-weight:600;color:#1e293b;margin-bottom:.35rem;}
+.rb-field input{width:100%;padding:10px 13px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:.94rem;color:#0f172a;outline:none;background:#fff;transition:border-color .2s;box-sizing:border-box;}
+.rb-field input:focus{border-color:#7c3aed;}
+.rb-field .hint{font-size:.73rem;color:#94a3b8;margin-top:.25rem;}
+.rb-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.rb-sec-lbl{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:1.2rem 0 .7rem;padding-bottom:.3rem;border-bottom:1px solid #f1f5f9;}
+.rb-btn{width:100%;background:#4f46e5;color:#fff;padding:13px;border:none;border-radius:8px;font-size:.97rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:background .2s;}
+.rb-btn:hover{background:#7c3aed;}
+.rb-result{background:#f5f3ff;border:1.5px solid #a5b4fc;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1.25rem;}
+.rb-big{text-align:center;margin-bottom:1rem;}
+.rb-big .val{font-size:2.6rem;font-weight:900;color:#4f46e5;display:block;line-height:1;}
+.rb-big .lbl{font-size:.85rem;color:#64748b;}
+.rb-verdict{padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.92rem;font-weight:600;text-align:center;}
+.rb-verdict.good{background:#f0fdf4;color:#166534;border:1.5px solid #86efac;}
+.rb-verdict.neutral{background:#fffbeb;color:#92400e;border:1.5px solid #fcd34d;}
+.rb-verdict.bad{background:#fff1f2;color:#9f1239;border:1.5px solid #fca5a5;}
+.rb-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;margin-bottom:.85rem;}
+.rb-stat{background:#fff;border-radius:8px;padding:.75rem;text-align:center;border:1px solid #a5b4fc;}
+.rb-stat .sv{display:block;font-size:1.05rem;font-weight:800;color:#4f46e5;}
+.rb-stat .sl{font-size:.69rem;color:#64748b;font-weight:600;line-height:1.3;}
+.rb-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:1.75rem;margin-bottom:1.5rem;}
+.rb-section h2{font-size:1.3rem;color:#0f172a;margin:0 0 .85rem;padding-bottom:.6rem;border-bottom:2px solid #f5f3ff;}
+.rb-section h3{font-size:1.05rem;color:#0f172a;margin:1.25rem 0 .55rem;}
+.rb-section p{color:#475569;line-height:1.72;font-size:.95rem;margin-bottom:.9rem;}
+.rb-section a{color:#7c3aed;font-weight:600;text-decoration:none;}
+.rb-section a:hover{text-decoration:underline;}
+.rb-info{background:#eef2ff;border-left:4px solid #6366f1;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.9rem;color:#312e81;line-height:1.65;}
+.rb-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}
+.rb-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.rb-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.rb-faq-q::after{content:'+';color:#7c3aed;font-size:1.2rem;flex-shrink:0;}
+.rb-faq-item.open .rb-faq-q::after{content:'-';}
+.rb-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.rb-faq-item.open .rb-faq-a{display:block;}
+.rb-related{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.75rem;margin-top:.75rem;}
+.rb-rel{display:block;background:#eef2ff;border:1.5px solid #a5b4fc;border-radius:8px;padding:.75rem 1rem;font-size:.85rem;font-weight:600;color:#4f46e5;text-decoration:none;text-align:center;transition:background .15s;}
+.rb-rel:hover{background:#e0e7ff;}
+@media(max-width:760px){.rb-layout{grid-template-columns:1fr;}.rb-grid,.rb-stats{grid-template-columns:1fr;}.rb-hero h1{font-size:1.5rem;}}
+</style>
+
+<main id="main-content">
+<div class="rb-wrap">
+  <div class="rb-bc">
+    <a href="/">Home</a> &rsaquo;
+    <a href="/loan-calculators/">Loan Calculators</a> &rsaquo;
+    Refinance Break-Even Calculator
+  </div>
+
+  <div class="rb-hero">
+    <h1>Refinance Break-Even Calculator (<%= currentYear %>)</h1>
+    <p>Find out exactly how many months until your refinance savings cover the closing costs &mdash; and whether refinancing makes financial sense at today's rates.</p>
+    <div class="rb-meta">&#9999; By AmericaCalculator Finance Team | Updated <%= currentMonthYear %> | 2026 rate environment guidance included</div>
+  </div>
+
+  <!-- Rate Environment Callout -->
+  <div style="background:linear-gradient(135deg,#1e1b4b 0%,#4f46e5 60%,#7c3aed 100%);border-radius:14px;padding:1.4rem 1.75rem;margin-bottom:1.25rem;border:1px solid #4338ca;box-shadow:0 4px 24px rgba(79,70,229,.2);" id="rb-callout">
+    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem;">
+      <span style="background:#fbbf24;color:#78350f;font-size:.7rem;font-weight:800;padding:2px 9px;border-radius:20px;letter-spacing:.07em;">&#9729; <%= currentYear %> RATE NOTE</span>
+      <span style="color:rgba(255,255,255,.65);font-size:.78rem;">WSJ Prime Rate: 8.50% &mdash; <%= currentMonthYear %></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem;">
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:.75rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;margin-bottom:.3rem;">30-Yr Fixed (avg)</div>
+        <div style="font-size:1.2rem;font-weight:800;color:#a5b4fc;">6.50%&ndash;7.50%</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.6);">Varies by credit score + LTV</div>
+      </div>
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:.75rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;margin-bottom:.3rem;">15-Yr Fixed (avg)</div>
+        <div style="font-size:1.2rem;font-weight:800;color:#a5b4fc;">5.90%&ndash;6.75%</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.6);">~0.5%&ndash;0.75% below 30-yr</div>
+      </div>
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:.75rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;margin-bottom:.3rem;">Break-Even Rule of Thumb</div>
+        <div style="font-size:1.2rem;font-weight:800;color:#c7d2fe;">18&ndash;36 months</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.6);">Typical range for rate-and-term refi</div>
+      </div>
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:.75rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;margin-bottom:.3rem;">Minimum Rate Drop to Refi</div>
+        <div style="font-size:1.2rem;font-weight:800;color:#c7d2fe;">0.5%&ndash;1.0%</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.6);">General guideline for break-even under 3 years</div>
+      </div>
+    </div>
+  </div>
+  <style>@media(max-width:640px){#rb-callout{padding:1rem 1.1rem;}}</style>
+
+  <div class="rb-layout">
+    <!-- Calculator -->
+    <div class="rb-card">
+      <div class="rb-card-head">&#128200; Refinance Break-Even Calculator</div>
+      <div class="rb-body">
+        <div class="rb-sec-lbl">Current Loan</div>
+        <div class="rb-grid">
+          <div class="rb-field"><label>Current Loan Balance ($)</label><input type="number" id="rb-balance" value="380000" min="1000" step="1000"></div>
+          <div class="rb-field"><label>Current Interest Rate (%)</label><input type="number" id="rb-cur-rate" value="7.50" min="0.1" max="30" step="0.05"></div>
+        </div>
+        <div class="rb-field"><label>Months Remaining on Current Loan</label><input type="number" id="rb-months-rem" value="300" min="1" max="360" step="1"><div class="hint">Check your mortgage statement. 300 months = 25 years remaining on a 30-yr loan taken 5 years ago.</div></div>
+
+        <div class="rb-sec-lbl">New Refinanced Loan</div>
+        <div class="rb-grid">
+          <div class="rb-field"><label>New Interest Rate (%)</label><input type="number" id="rb-new-rate" value="6.50" min="0.1" max="30" step="0.05"></div>
+          <div class="rb-field"><label>New Loan Term (Years)</label><input type="number" id="rb-new-term" value="30" min="1" max="50" step="1"></div>
+        </div>
+        <div class="rb-field"><label>Refinance Closing Costs ($)</label><input type="number" id="rb-costs" value="8000" min="0" step="500"><div class="hint">Typical: 2%&ndash;5% of loan balance. Ask lender for Loan Estimate.</div></div>
+
+        <button class="rb-btn" onclick="calcRB()">&#9889; Calculate Break-Even</button>
+
+        <div class="rb-result" id="rb-result" style="display:none;">
+          <div class="rb-big">
+            <span class="val" id="rb-be-months">0</span>
+            <span class="lbl">Months to Break Even</span>
+          </div>
+          <div class="rb-verdict" id="rb-verdict"></div>
+          <div class="rb-stats">
+            <div class="rb-stat"><span class="sv" id="rb-old-pmt">$0</span><span class="sl">Current Monthly P+I</span></div>
+            <div class="rb-stat"><span class="sv" id="rb-new-pmt">$0</span><span class="sl">New Monthly P+I</span></div>
+            <div class="rb-stat"><span class="sv" id="rb-monthly-save">$0</span><span class="sl">Monthly Savings</span></div>
+            <div class="rb-stat"><span class="sv" id="rb-total-save">$0</span><span class="sl">Lifetime Interest Saved</span></div>
+          </div>
+          <div class="rb-info" id="rb-detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- When To Refi Guide -->
+    <div>
+      <div class="rb-section" style="margin-bottom:1.25rem;">
+        <h2>When Does Refinancing Make Sense?</h2>
+        <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:9px;overflow:hidden;font-size:.88rem;">
+          <thead><tr style="background:#4f46e5;color:#fff;"><th style="padding:9px 13px;text-align:left;">Scenario</th><th style="padding:9px 13px;text-align:center;">Verdict</th></tr></thead>
+          <tbody>
+            <tr style="background:#f0fdf4;"><td style="padding:9px 13px;">Rate drops 1%+ and you stay 3+ years</td><td style="padding:9px 13px;text-align:center;color:#166534;font-weight:700;">&#10003; Strong yes</td></tr>
+            <tr><td style="padding:9px 13px;">Rate drops 0.5%&ndash;1% and you stay 2&ndash;3 years</td><td style="padding:9px 13px;text-align:center;color:#92400e;font-weight:700;">&#9888; Maybe &mdash; calculate it</td></tr>
+            <tr style="background:#f8fafc;"><td style="padding:9px 13px;">You want to shorten from 30-yr to 15-yr</td><td style="padding:9px 13px;text-align:center;color:#166534;font-weight:700;">&#10003; Yes if cash flow allows</td></tr>
+            <tr><td style="padding:9px 13px;">You plan to sell in under 2 years</td><td style="padding:9px 13px;text-align:center;color:#9f1239;font-weight:700;">&#10005; Likely not worth it</td></tr>
+            <tr style="background:#f8fafc;"><td style="padding:9px 13px;">Rate drops 0.25% or less</td><td style="padding:9px 13px;text-align:center;color:#9f1239;font-weight:700;">&#10005; Rarely worth it</td></tr>
+            <tr><td style="padding:9px 13px;">High-rate ARM resetting soon</td><td style="padding:9px 13px;text-align:center;color:#166534;font-weight:700;">&#10003; Likely yes &mdash; lock fixed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rb-section">
+        <h2>No-Cost Refinance: Is It Worth It?</h2>
+        <p>A no-cost refinance means zero out-of-pocket closing costs &mdash; but you pay via a higher rate (lender-paid) or by rolling costs into the loan balance. Key trade-offs:</p>
+        <ul style="color:#475569;padding-left:1.4rem;line-height:1.8;font-size:.92rem;">
+          <li><strong>Lender-paid (higher rate):</strong> No upfront cost; you pay slightly more per month forever. Good if selling soon.</li>
+          <li><strong>Rolled-in costs:</strong> Closing costs added to balance; your payment is slightly higher; you pay interest on the costs. Good if cash-poor.</li>
+          <li><strong>Standard refi:</strong> Out-of-pocket costs; lowest long-term cost. Best if staying 5+ years.</li>
+        </ul>
+        <div class="rb-info">&#128161; <strong>Rule of Thumb:</strong> In a no-cost refi, you typically accept a rate 0.125%&ndash;0.25% higher than the standard refi rate in exchange for zero closing costs. If a lender offers 6.50% standard or 6.75% no-cost, you are paying $625/year extra (on $500k) in exchange for avoiding $12,000 in closing costs &mdash; break-even is 19 months.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Sections -->
+  <div class="rb-section">
+    <h2>Rate-and-Term vs Cash-Out Refinance</h2>
+    <p>There are two main types of mortgage refinance, each with a different financial calculus:</p>
+
+    <h3>Rate-and-Term Refinance</h3>
+    <p>Replaces your existing mortgage with one at a lower rate, different term, or both. Your loan balance stays approximately the same. This calculator is designed for rate-and-term scenarios. The primary goal is to reduce monthly payments and/or total interest paid over the life of the loan.</p>
+
+    <h3>Cash-Out Refinance</h3>
+    <p>Replaces your mortgage with a larger loan and you receive the difference in cash. If you owe $300,000 on a $500,000 home, you could refinance for $380,000, take $80,000 cash, and have a new $380,000 mortgage. Cash-out refis are commonly used for:</p>
+    <ul style="color:#475569;padding-left:1.4rem;line-height:1.8;font-size:.95rem;">
+      <li>Home improvements (kitchens, bathrooms, additions) that increase home value</li>
+      <li>Debt consolidation &mdash; replacing high-interest credit card or personal loan debt with mortgage debt at a lower rate</li>
+      <li>Investment property down payments or business capital</li>
+      <li>Education or large planned expenses</li>
+    </ul>
+    <p>Note: Cash-out refis typically carry a slightly higher rate (0.125%&ndash;0.375%) than rate-and-term refis and require at least 20% remaining equity (80% LTV) to avoid PMI on the new loan.</p>
+
+    <h2>How the 2026 Rate Environment Affects Refinance Decisions</h2>
+    <p>In <%= currentYear %>, the refinance opportunity landscape is segmented by when borrowers originally took their loans:</p>
+    <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:9px;overflow:hidden;font-size:.88rem;margin:1rem 0;">
+      <thead><tr style="background:#4f46e5;color:#fff;"><th style="padding:9px 13px;text-align:left;">Original Loan Year</th><th style="padding:9px 13px;">Original Rate</th><th style="padding:9px 13px;">Refinance Incentive</th></tr></thead>
+      <tbody>
+        <tr style="background:#f0fdf4;"><td style="padding:9px 13px;"><strong>2020&ndash;2021</strong></td><td style="padding:9px 13px;">2.5%&ndash;3.5%</td><td style="padding:9px 13px;color:#9f1239;">None &mdash; current rates are significantly higher; lock in and wait</td></tr>
+        <tr><td style="padding:9px 13px;"><strong>2022 (peak)</strong></td><td style="padding:9px 13px;">5.5%&ndash;7.0%</td><td style="padding:9px 13px;color:#92400e;">Minimal &mdash; rates are similar; wait for Fed cuts to widen gap</td></tr>
+        <tr style="background:#f8fafc;"><td style="padding:9px 13px;"><strong>Late 2023</strong></td><td style="padding:9px 13px;">7.5%&ndash;8.0%</td><td style="padding:9px 13px;color:#166534;">Moderate &mdash; dropping to 6.5% saves $200&ndash;$400/month on $400k</td></tr>
+        <tr><td style="padding:9px 13px;"><strong>2024 (high rates)</strong></td><td style="padding:9px 13px;">7.0%&ndash;7.8%</td><td style="padding:9px 13px;color:#166534;">Growing &mdash; watch for 6.0%&ndash;6.5% window for break-even under 2 years</td></tr>
+      </tbody>
+    </table>
+    <div class="rb-info">&#128276; <strong>Rate Watch Tip:</strong> Set up a rate alert with your lender or on Bankrate/Freddie Mac's weekly survey. When 30-year rates drop 0.75%&ndash;1% from your existing rate, run this calculator to see if your break-even is under 24 months. If so, lock immediately &mdash; rates can move fast.</div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="rb-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="rb-faq-item"><div class="rb-faq-q" onclick="this.parentElement.classList.toggle('open')">When does it make sense to refinance?</div><div class="rb-faq-a">Refinancing generally makes sense when your new rate is at least 0.5%&ndash;1% lower, you plan to stay in the home longer than the break-even period (typically 18&ndash;36 months), and you have at least 20% equity. The break-even calculator tells you the exact number of months to recoup closing costs.</div></div>
+    <div class="rb-faq-item"><div class="rb-faq-q" onclick="this.parentElement.classList.toggle('open')">What are typical refinance closing costs?</div><div class="rb-faq-a">Refinance closing costs typically run 2%&ndash;5% of the loan amount. On a $400,000 balance, expect $8,000&ndash;$20,000. Common items include loan origination fee (0%&ndash;1%), appraisal ($500&ndash;$700), title insurance (lender policy required), and recording fees ($100&ndash;$300).</div></div>
+    <div class="rb-faq-item"><div class="rb-faq-q" onclick="this.parentElement.classList.toggle('open')">What is a no-cost refinance?</div><div class="rb-faq-a">A no-cost refinance means no out-of-pocket closing costs. You pay via a higher interest rate (lender-paid closing costs) or by rolling costs into the new loan balance. In a no-cost refi, the break-even point is day 1 since there are no upfront costs &mdash; but your rate is slightly higher.</div></div>
+    <div class="rb-faq-item"><div class="rb-faq-q" onclick="this.parentElement.classList.toggle('open')">Should I refinance to a 15-year or 30-year mortgage?</div><div class="rb-faq-a">A 15-year refinance offers a lower rate (typically 0.5%&ndash;0.75% below 30-year) and massive interest savings, but higher monthly payments. A 30-year refinance maximizes monthly cash flow improvement. On $400,000: 30-year at 6.75% = $2,594/month; 15-year at 6.00% = $3,376/month. The 15-year saves ~$235,000 in total interest but costs $782 more per month.</div></div>
+    <div class="rb-faq-item"><div class="rb-faq-q" onclick="this.parentElement.classList.toggle('open')">Does refinancing reset your amortization schedule?</div><div class="rb-faq-a">Yes. When you refinance, you start a new amortization schedule from the beginning. If you have 20 years remaining and refinance into a 30-year loan, you reset to 30 years. Even with a lower rate, this can mean more total interest over the extended period &mdash; choose a shorter term or make extra payments to counteract this effect.</div></div>
+  </div>
+
+  <!-- Related -->
+  <div class="rb-section">
+    <h2>Related Loan Calculators</h2>
+    <div class="rb-related">
+      <a href="/loan-calculators/amortization-calculator" class="rb-rel">&#128200; Amortization Calculator</a>
+      <a href="/real-estate/mortgage-calculator" class="rb-rel">&#127968; Mortgage Calculator</a>
+      <a href="/loan-calculators/heloc-calculator" class="rb-rel">&#127968; HELOC Calculator</a>
+      <a href="/real-estate/seller-closing-cost-calculator" class="rb-rel">&#127968; Seller Cost Calculator</a>
+      <a href="/loan-calculators/sba-loan-calculator" class="rb-rel">&#127968; SBA Loan Calculator</a>
+      <a href="/loan-calculators/debt-to-income-calculator" class="rb-rel">&#9878; DTI Calculator</a>
+    </div>
+  </div>
+</div>
+</main>
+
+<script>
+function fmt(n){return '$'+Math.round(n).toLocaleString();}
+function calcRB(){
+  var balance  = parseFloat(document.getElementById('rb-balance').value)||0;
+  var curRate  = (parseFloat(document.getElementById('rb-cur-rate').value)||0)/100/12;
+  var mRem     = parseInt(document.getElementById('rb-months-rem').value)||0;
+  var newRate  = (parseFloat(document.getElementById('rb-new-rate').value)||0)/100/12;
+  var newTerm  = (parseInt(document.getElementById('rb-new-term').value)||0)*12;
+  var costs    = parseFloat(document.getElementById('rb-costs').value)||0;
+
+  if(balance<=0||curRate<=0||mRem<=0||newRate<=0||newTerm<=0){alert('Please fill all fields.');return;}
+
+  // Current payment on remaining months
+  var curPmt = curRate===0 ? balance/mRem : balance*curRate*Math.pow(1+curRate,mRem)/(Math.pow(1+curRate,mRem)-1);
+  // New payment
+  var newPmt = newRate===0 ? balance/newTerm : balance*newRate*Math.pow(1+newRate,newTerm)/(Math.pow(1+newRate,newTerm)-1);
+  var monthlySave = curPmt - newPmt;
+
+  // Break-even
+  var beMonths = monthlySave > 0 ? Math.ceil(costs / monthlySave) : 9999;
+
+  // Total interest current loan (remaining)
+  var curTotalInt = (curPmt * mRem) - balance;
+  // Total interest new loan
+  var newTotalInt = (newPmt * newTerm) - balance;
+  var lifetimeSave = curTotalInt - newTotalInt;
+
+  document.getElementById('rb-be-months').textContent = beMonths < 9999 ? beMonths + ' months' : 'Never';
+  document.getElementById('rb-old-pmt').textContent = fmt(curPmt);
+  document.getElementById('rb-new-pmt').textContent = fmt(newPmt);
+  document.getElementById('rb-monthly-save').textContent = monthlySave >= 0 ? fmt(monthlySave) : '-'+fmt(-monthlySave);
+  document.getElementById('rb-total-save').textContent = lifetimeSave > 0 ? fmt(lifetimeSave) : '-'+fmt(-lifetimeSave);
+
+  var verdict = document.getElementById('rb-verdict');
+  var detail  = document.getElementById('rb-detail');
+
+  if(beMonths <= 24 && monthlySave > 0){
+    verdict.className = 'rb-verdict good';
+    verdict.textContent = 'Refinancing looks WORTHWHILE — break-even in under 2 years';
+  } else if(beMonths <= 48 && monthlySave > 0){
+    verdict.className = 'rb-verdict neutral';
+    verdict.textContent = 'Refinancing MAY be worthwhile — depends on how long you stay';
+  } else {
+    verdict.className = 'rb-verdict bad';
+    verdict.textContent = monthlySave <= 0 ? 'New rate is NOT lower — refinancing not recommended at this rate' : 'Break-even is very long — consider only if staying ' + Math.ceil(beMonths/12) + '+ years';
+  }
+
+  detail.innerHTML = 'Monthly savings: <strong>' + fmt(Math.abs(monthlySave)) + '</strong> &nbsp;|&nbsp; Closing costs recovered after <strong>' + (beMonths < 9999 ? beMonths + ' months (' + (beMonths/12).toFixed(1) + ' years)' : 'N/A') + '</strong>' + (lifetimeSave > 0 ? ' &nbsp;|&nbsp; Total interest saved over new loan life: <strong>' + fmt(lifetimeSave) + '</strong>' : ' &nbsp;|&nbsp; Note: Extending term increases total interest paid even with lower rate.');
+
+  document.getElementById('rb-result').style.display = 'block';
+}
+</script>
+<%- include('../../partials/footer') %>

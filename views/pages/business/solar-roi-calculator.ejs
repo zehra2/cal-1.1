@@ -1,0 +1,476 @@
+<%- include('../../partials/header') %>
+<style>
+  body { background: #f5f7fa; }
+  .ac-shell { max-width: 1180px; margin: 0 auto; padding: 1.75rem 1.25rem 4rem; }
+  .ac-breadcrumb { font-size: 0.84rem; color: #64748b; margin-bottom: 0.85rem; }
+  .ac-breadcrumb a { color: #2563eb; text-decoration: none; font-weight: 500; }
+  .ac-breadcrumb a:hover { text-decoration: underline; }
+  .ac-hero { margin-bottom: 1.75rem; }
+  .ac-hero h1 { font-size: clamp(1.7rem, 3vw, 2.25rem); color: #0f172a; margin: 0 0 0.65rem; line-height: 1.2; font-weight: 800; }
+  .ac-lead { font-size: 1.03rem; color: #334155; line-height: 1.65; max-width: 860px; margin: 0; }
+  .ac-notice { margin-top: 0.9rem; background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #d97706; border-radius: 8px; padding: 0.85rem 1.05rem; font-size: 0.9rem; color: #78350f; line-height: 1.55; }
+  .ac-calc-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); overflow: hidden; margin-bottom: 2rem; }
+  .ac-calc-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; }
+  .ac-inputs { padding: 1.75rem; border-right: 1px solid #e2e8f0; }
+  .ac-outputs { padding: 1.75rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; }
+  .ac-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.95rem; }
+  .ac-field { margin-bottom: 1rem; }
+  .ac-field label { display: block; font-size: 0.86rem; font-weight: 700; color: #1e293b; margin-bottom: 0.35rem; }
+  .ac-field input, .ac-field select { width: 100%; padding: 0.68rem 0.82rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.96rem; color: #0f172a; background: #fff; }
+  .ac-field input:focus, .ac-field select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
+  .ac-hint { font-size: 0.77rem; color: #64748b; margin-top: 0.25rem; line-height: 1.4; }
+  .ac-btn-row { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+  .ac-btn-primary { flex: 1; background: #1d4ed8; color: #fff; border: none; border-radius: 8px; padding: 0.78rem 1rem; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+  .ac-btn-primary:hover { background: #1e40af; }
+  .ac-btn-reset { background: #e2e8f0; color: #1e293b; border: none; border-radius: 8px; padding: 0.78rem 1.15rem; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
+  .ac-btn-reset:hover { background: #cbd5e1; }
+  .ac-primary-kpi { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #fff; border-radius: 12px; padding: 1.25rem 1.35rem; }
+  .ac-kpi-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #bfdbfe; font-weight: 700; }
+  .ac-kpi-value { font-size: 2.25rem; font-weight: 800; margin: 0.25rem 0; line-height: 1.1; }
+  .ac-kpi-sub { font-size: 0.88rem; color: #dbeafe; }
+  .ac-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .ac-kpi-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.95rem 1rem; }
+  .ac-kpi-box .lbl { font-size: 0.77rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; }
+  .ac-kpi-box .val { font-size: 1.32rem; font-weight: 800; color: #0f172a; margin-top: 0.22rem; }
+  .ac-kpi-box .val.pos { color: #047857; }
+  .ac-kpi-box .note { font-size: 0.77rem; color: #64748b; margin-top: 0.18rem; }
+  .ac-breakdown { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; }
+  .ac-breakdown h3 { font-size: 0.9rem; color: #0f172a; margin: 0 0 0.65rem; font-weight: 700; }
+  .ac-brow { display: flex; justify-content: space-between; padding: 0.38rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.88rem; color: #334155; }
+  .ac-brow:last-child { border-bottom: none; }
+  .ac-brow strong { color: #0f172a; }
+  .ac-section { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.85rem; margin-bottom: 1.65rem; }
+  .ac-section h2 { font-size: 1.45rem; color: #0f172a; margin: 0 0 0.95rem; padding-bottom: 0.6rem; border-bottom: 2px solid #f1f5f9; font-weight: 800; }
+  .ac-section h3 { font-size: 1.1rem; color: #0f172a; margin: 1.25rem 0 0.45rem; font-weight: 700; }
+  .ac-section p, .ac-section li { color: #334155; line-height: 1.7; font-size: 0.97rem; }
+  .ac-formula { background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #2563eb; border-radius: 8px; padding: 1rem 1.2rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9rem; color: #0f172a; overflow-x: auto; margin: 1rem 0; line-height: 1.7; }
+  .ac-table-wrap { overflow-x: auto; margin-top: 0.75rem; }
+  .ac-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .ac-table th { background: #1e293b; color: #fff; text-align: left; padding: 0.72rem 0.85rem; font-weight: 700; white-space: nowrap; }
+  .ac-table td { padding: 0.68rem 0.85rem; border-bottom: 1px solid #e2e8f0; color: #1e293b; }
+  .ac-table tr:nth-child(even) td { background: #f8fafc; }
+  .ac-ex-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.15rem; margin-top: 0.85rem; }
+  .ac-ex-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.2rem; }
+  .ac-ex-card h3 { margin-top: 0; color: #1e3a8a; font-size: 1.04rem; }
+  .ac-faq-list { display: grid; gap: 0.95rem; }
+  .ac-faq-item { border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.1rem 1.25rem; background: #f8fafc; }
+  .ac-faq-item h3 { margin: 0 0 0.45rem; font-size: 1.02rem; color: #0f172a; }
+  .ac-faq-item p { margin: 0; font-size: 0.94rem; color: #334155; }
+  .ac-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+  .ac-rel-link { display: block; padding: 0.95rem 1.05rem; border: 1px solid #cbd5e1; border-radius: 10px; text-decoration: none; background: #f8fafc; transition: border-color 0.15s, background 0.15s; }
+  .ac-rel-link:hover { border-color: #2563eb; background: #eff6ff; }
+  .ac-rel-link strong { display: block; color: #0f172a; font-size: 0.95rem; margin-bottom: 0.22rem; }
+  .ac-rel-link span { display: block; color: #475569; font-size: 0.82rem; line-height: 1.4; }
+  .ac-disclaimer { font-size: 0.82rem; color: #64748b; margin-top: 0.85rem; line-height: 1.55; }
+  @media (max-width: 900px) {
+    .ac-calc-grid, .ac-ex-grid, .ac-related-grid { grid-template-columns: 1fr; }
+    .ac-inputs { border-right: none; border-bottom: 1px solid #e2e8f0; }
+  }
+  @media (max-width: 560px) {
+    .ac-form-row, .ac-kpi-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<main class="ac-shell">
+  <nav class="ac-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> &rsaquo; <a href="/business/">Business &amp; Energy Calculators</a> &rsaquo; <span>Solar Panel Payback Period &amp; ROI Calculator</span>
+  </nav>
+
+  <header class="ac-hero">
+    <h1>Solar Panel Payback Period &amp; ROI Calculator (2026 US Guide)</h1>
+    <p class="ac-lead">
+      Calculate your real residential or small-commercial solar panel break-even timeline, net system cost, Year-1 utility savings, and 25-year return on investment in US dollars. This estimator accounts for installed cost per watt, local utility rates ($/kWh), utility inflation, panel degradation, inverter replacement, and 2026 incentive rules.
+    </p>
+    <div class="ac-notice">
+      <strong>2026 Federal Tax Credit Update:</strong> The homeowner-direct 30% Residential Clean Energy Credit (IRC Section 25D) expired for customer-owned residential systems placed in service after December 31, 2025. State/utility rebates, SRECs, and commercial/third-party-owned (Section 48E) incentives remain available depending on ownership structure and state.
+    </div>
+  </header>
+
+  <%- adAboveHero() %>
+
+  <section class="ac-calc-card" aria-label="Solar Panel Payback Period Calculator">
+    <div class="ac-calc-grid">
+      <div class="ac-inputs">
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="solar-size">System Size (kW DC)</label>
+            <input type="number" id="solar-size" value="8" min="1" max="250" step="0.5">
+            <div class="ac-hint">Typical US home: 6 kW – 12 kW DC</div>
+          </div>
+          <div class="ac-field">
+            <label for="solar-cpw">Installed Cost ($ per Watt)</label>
+            <input type="number" id="solar-cpw" value="2.95" min="1.5" max="6" step="0.05">
+            <div class="ac-hint">2026 US cash average: $2.65 – $3.35/W</div>
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="solar-prod">Annual Yield (kWh per kW/yr)</label>
+            <input type="number" id="solar-prod" value="1350" min="800" max="2100" step="25">
+            <div class="ac-hint">Midwest/NE: ~1,150–1,300 | Southwest: ~1,550–1,800</div>
+          </div>
+          <div class="ac-field">
+            <label for="solar-rate">Utility Electric Rate ($/kWh)</label>
+            <input type="number" id="solar-rate" value="0.18" min="0.06" max="0.65" step="0.01">
+            <div class="ac-hint">2026 US residential average: ~$0.17–$0.18/kWh</div>
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="solar-ownership">Ownership &amp; 2026 Tax Credit</label>
+            <select id="solar-ownership">
+              <option value="0" selected>Residential Cash / Loan (0% Fed — 25D Expired)</option>
+              <option value="30">Commercial / TPO 48E Pass-Through (30% Credit)</option>
+            </select>
+          </div>
+          <div class="ac-field">
+            <label for="solar-rebate">State / Utility Rebate ($)</label>
+            <input type="number" id="solar-rebate" value="1500" min="0" max="100000" step="100">
+            <div class="ac-hint">Upfront state rebate, battery grant, or utility credit</div>
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="solar-nem">Effective Bill Offset Credit (%)</label>
+            <input type="number" id="solar-nem" value="90" min="40" max="100" step="5">
+            <div class="ac-hint">100% = full 1:1 net metering; 65–80% = reduced export credit</div>
+          </div>
+          <div class="ac-field">
+            <label for="solar-escal">Utility Rate Inflation (%/yr)</label>
+            <input type="number" id="solar-escal" value="3.5" min="0" max="10" step="0.5">
+            <div class="ac-hint">Historical US residential escalation: 3% – 4.5%/yr</div>
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="solar-deg">Panel Degradation (%/yr)</label>
+            <input type="number" id="solar-deg" value="0.5" min="0.2" max="1.2" step="0.1">
+            <div class="ac-hint">Modern N-type/PERC panels degrade ~0.4%–0.5%/yr</div>
+          </div>
+          <div class="ac-field">
+            <label for="solar-maint">Year-12 Inverter &amp; O&amp;M Reserve ($)</label>
+            <input type="number" id="solar-maint" value="2500" min="0" max="20000" step="250">
+            <div class="ac-hint">String inverter replacement or inspection budget</div>
+          </div>
+        </div>
+
+        <div class="ac-btn-row">
+          <button type="button" id="solar-calc-btn" class="ac-btn-primary">Recalculate Payback</button>
+          <button type="button" id="solar-reset-btn" class="ac-btn-reset">Reset Defaults</button>
+        </div>
+      </div>
+
+      <div class="ac-outputs" aria-live="polite">
+        <div class="ac-primary-kpi">
+          <div class="ac-kpi-label">Estimated Payback Period</div>
+          <div class="ac-kpi-value" id="out-payback">10.4 Years</div>
+          <div class="ac-kpi-sub" id="out-payback-sub">Simple payback: 12.6 yrs before utility inflation</div>
+        </div>
+
+        <div class="ac-kpi-grid">
+          <div class="ac-kpi-box">
+            <div class="lbl">Net System Cost</div>
+            <div class="val" id="out-net-cost">$22,100</div>
+            <div class="note" id="out-gross-note">Gross: $23,600</div>
+          </div>
+          <div class="ac-kpi-box">
+            <div class="lbl">Year-1 Electric Savings</div>
+            <div class="val pos" id="out-yr1-save">$1,750</div>
+            <div class="note" id="out-yr1-kwh">10,800 kWh/yr generated</div>
+          </div>
+          <div class="ac-kpi-box">
+            <div class="lbl">25-Year Net Profit</div>
+            <div class="val pos" id="out-25yr-net">$36,920</div>
+            <div class="note" id="out-25yr-gross">Gross savings minus cost &amp; O&amp;M</div>
+          </div>
+          <div class="ac-kpi-box">
+            <div class="lbl">25-Year Total ROI</div>
+            <div class="val" id="out-roi">167.1%</div>
+            <div class="note" id="out-annual-roi">~6.7% simple annual return</div>
+          </div>
+        </div>
+
+        <div class="ac-breakdown">
+          <h3>Cash-Flow Assumptions Summary</h3>
+          <div class="ac-brow"><span>Gross Equipment &amp; Labor Cost</span><strong id="bd-gross">$23,600</strong></div>
+          <div class="ac-brow"><span>Federal Tax Credit (48E if applicable)</span><strong id="bd-fed">$0</strong></div>
+          <div class="ac-brow"><span>State / Utility Upfront Rebate</span><strong id="bd-rebate">$1,500</strong></div>
+          <div class="ac-brow"><span>Effective Rate per kWh Generated</span><strong id="bd-eff-rate">$0.162/kWh</strong></div>
+          <div class="ac-brow"><span>25-Year Cumulative Energy Output</span><strong id="bd-25yr-kwh">254,190 kWh</strong></div>
+          <div class="ac-brow"><span>Levelized Cost of Solar (25-Yr LCOE)</span><strong id="bd-lcoe">$0.097/kWh</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- adMidContent1() %>
+
+  <section class="ac-section">
+    <h2>How Solar Panel Payback Period &amp; 25-Year ROI Are Calculated</h2>
+    <p>
+      Contractors and energy analysts evaluate rooftop solar using both <strong>simple payback</strong> (ignoring future rate hikes) and <strong>inflated cash-flow payback</strong> (accounting for annual utility escalation and panel degradation). Both metrics start with the net installed capital outlay after upfront rebates or qualifying commercial credits.
+    </p>
+    <div class="ac-formula">
+Gross System Cost ($)   = System Size (kW) × 1,000 × Installed Cost ($/W)
+Net System Cost ($)     = Gross Cost − Federal Credit (if eligible) − State/Utility Rebate
+Year-1 Output (kWh)     = System Size (kW) × Annual Yield (kWh/kW/yr)
+Year-1 Savings ($)      = Year-1 Output × Electric Rate ($/kWh) × Effective Bill Offset (%)
+Simple Payback (Years)  = Net System Cost ÷ Year-1 Savings
+
+Year-t Savings ($)      = Year-1 Output × (1 − Degradation)^(t−1) × Electric Rate × (1 + Escalation)^(t−1) × Offset%
+25-Year Net Profit ($)  = Σ(Year 1 to 25 Savings) − Net System Cost − Inverter/O&amp;M Reserve
+25-Year ROI (%)         = (25-Year Net Profit ÷ Net System Cost) × 100
+    </div>
+    <h3>Key Trade &amp; Financial Assumptions Used by US Estimators</h3>
+    <ul>
+      <li><strong>Installed Cost per Watt ($/W):</strong> Cash turnkey quotes in 2026 typically fall between <strong>$2.50 and $3.50 per DC watt</strong> before rebates, depending on roof pitch, electrical main-panel upgrades (200A service swaps add $2,500–$4,500), and local permitting fees.</li>
+      <li><strong>Effective Bill Offset (Net Metering):</strong> Utilities with full 1:1 retail net metering credit exported kilowatt-hours at your retail rate (~95–100% effective value). States with net billing or avoided-cost export tariffs (such as California NEM 3.0 without a battery) reduce effective bill offset to roughly 55–75% unless paired with storage.</li>
+      <li><strong>Inverter &amp; Maintenance Reserve:</strong> Tier-1 monocrystalline modules carry 25-year performance warranties (typically 84–88% output at year 25), whereas string inverters usually need replacement once around years 10–14 ($1,800–$3,500). Microinverters carry 25-year warranties but cost more upfront.</li>
+      <li><strong>Financing Dealer Fees:</strong> Low-APR solar loans (e.g., 3.99%–5.99%) frequently embed 15%–30% dealer origination fees into the principal. Always compare cash price versus financed principal before calculating payback.</li>
+    </ul>
+  </section>
+
+  <section class="ac-section">
+    <h2>2026 US State Solar Payback Benchmark Table (8 kW Cash System)</h2>
+    <p>
+      Because sunlight hours and retail electric tariffs vary sharply across the United States, the exact same 8 kW cash installation ($23,600 gross at $2.95/W, 0% residential federal credit in 2026, 3.5%/yr utility inflation, 0.5%/yr degradation) pays back at very different speeds by state:
+    </p>
+    <div class="ac-table-wrap">
+      <table class="ac-table">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Avg. Yield (kWh/kW)</th>
+            <th>2026 Utility Rate</th>
+            <th>Effective Offset</th>
+            <th>Est. Year-1 Savings</th>
+            <th>Inflated Payback (Cash)</th>
+            <th>Est. 25-Yr Net Profit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>California (PG&amp;E/SCE w/ Battery)</strong></td><td>1,600</td><td>$0.36/kWh</td><td>85%</td><td>$3,917</td><td>6.8 Years*</td><td>$89,400</td></tr>
+          <tr><td><strong>Massachusetts</strong></td><td>1,220</td><td>$0.31/kWh</td><td>95%</td><td>$2,874</td><td>7.4 Years</td><td>$64,100</td></tr>
+          <tr><td><strong>Connecticut</strong></td><td>1,210</td><td>$0.29/kWh</td><td>95%</td><td>$2,667</td><td>7.9 Years</td><td>$57,300</td></tr>
+          <tr><td><strong>New York (Downstate/LI)</strong></td><td>1,240</td><td>$0.26/kWh</td><td>95%</td><td>$2,450</td><td>8.5 Years</td><td>$50,200</td></tr>
+          <tr><td><strong>New Jersey</strong></td><td>1,260</td><td>$0.21/kWh</td><td>95%</td><td>$2,011</td><td>10.0 Years</td><td>$36,100</td></tr>
+          <tr><td><strong>Arizona (APS/SRP)</strong></td><td>1,750</td><td>$0.16/kWh</td><td>80%</td><td>$1,792</td><td>11.0 Years</td><td>$29,000</td></tr>
+          <tr><td><strong>Ohio (AEP / FirstEnergy)</strong></td><td>1,190</td><td>$0.17/kWh</td><td>95%</td><td>$1,537</td><td>12.4 Years</td><td>$20,800</td></tr>
+          <tr><td><strong>Florida (FPL / Duke)</strong></td><td>1,480</td><td>$0.15/kWh</td><td>95%</td><td>$1,687</td><td>11.5 Years</td><td>$25,700</td></tr>
+          <tr><td><strong>Texas (ERCOT Retail)</strong></td><td>1,520</td><td>$0.15/kWh</td><td>80%</td><td>$1,459</td><td>13.0 Years</td><td>$18,300</td></tr>
+          <tr><td><strong>Washington State</strong></td><td>1,100</td><td>$0.12/kWh</td><td>95%</td><td>$1,003</td><td>17.2 Years</td><td>$3,600</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="ac-disclaimer">
+      *California benchmark assumes load-shifting storage; adding a 13.5 kWh battery ($11,000–$14,000 installed) extends gross California cash payback to ~9–11 years. Figures exclude state-specific SREC income (e.g., NJ SuSI, MA SMART, IL Shines) which can cut payback by 2–4 years.
+    </p>
+  </section>
+
+  <%- adMidContent2() %>
+
+  <section class="ac-section">
+    <h2>Two Realistic 2026 Worked Solar Payback Examples</h2>
+    <div class="ac-ex-grid">
+      <article class="ac-ex-card">
+        <h3>Example 1: 8 kW Cash System in Columbus, Ohio</h3>
+        <p>
+          A homeowner in Central Ohio installs an <strong>8 kW DC</strong> roof-mounted array at <strong>$2.90/W</strong> ($23,200 gross). Under 2026 tax rules, there is $0 federal residential credit (Section 25D expired), and local utility net metering credits roughly 95% of energy value at <strong>$0.17/kWh</strong>.
+        </p>
+        <ul>
+          <li><strong>Year-1 Production:</strong> 8 kW × 1,200 kWh/kW = <strong>9,600 kWh</strong></li>
+          <li><strong>Year-1 Electric Savings:</strong> 9,600 × $0.17 × 0.95 = <strong>$1,550/yr</strong></li>
+          <li><strong>Simple Payback:</strong> $23,200 ÷ $1,550 = <strong>15.0 years</strong></li>
+          <li><strong>Inflated Payback (3.5%/yr rate hike, 0.5% deg):</strong> <strong>12.3 years</strong></li>
+          <li><strong>25-Year Net Profit (after $2,500 inverter reserve):</strong> <strong>~$21,600</strong> (~93% ROI)</li>
+        </ul>
+      </article>
+
+      <article class="ac-ex-card">
+        <h3>Example 2: 20 kW Small-Business Commercial Array (Section 48E Eligible)</h3>
+        <p>
+          An owner-occupied auto shop in New Jersey installs a <strong>20 kW DC</strong> flat-roof commercial array at <strong>$2.75/W</strong> ($55,000 gross). Unlike homeowners, commercial entities still qualify for the <strong>30% Section 48E federal investment tax credit</strong> ($16,500), plus $4,000 in utility incentives.
+        </p>
+        <ul>
+          <li><strong>Net Installed Cost:</strong> $55,000 − $16,500 − $4,000 = <strong>$34,500</strong></li>
+          <li><strong>Year-1 Production:</strong> 20 kW × 1,260 kWh/kW = <strong>25,200 kWh</strong></li>
+          <li><strong>Year-1 Savings ($0.21/kWh, 95% offset):</strong> <strong>$5,027/yr</strong></li>
+          <li><strong>Inflated Payback Period:</strong> <strong>6.3 years</strong> (even before MACRS depreciation)</li>
+          <li><strong>25-Year Net Profit (after $4,500 O&amp;M reserve):</strong> <strong>~$124,000</strong> (~359% ROI)</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="ac-section">
+    <h2>Frequently Asked Questions About Solar Payback in 2026</h2>
+    <div class="ac-faq-list">
+      <div class="ac-faq-item">
+        <h3>1. Is the 30% federal residential solar tax credit still available in 2026?</h3>
+        <p>No. The homeowner-direct 30% Residential Clean Energy Credit under IRC Section 25D expired for residential solar and battery installations placed in service after December 31, 2025. Commercial installations and third-party-owned (TPO) solar leases/PPAs may still utilize the commercial Section 48E tax credit, which providers can partially pass through via lower lease or PPA pricing.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>2. What is a realistic solar panel payback period in the US in 2026?</h3>
+        <p>For a cash-purchased residential system in 2026, realistic payback ranges from <strong>7 to 10 years</strong> in high-rate states (California, Massachusetts, Connecticut, New York) and <strong>11 to 16 years</strong> in moderate-rate Midwest and Southern states ($0.14–$0.17/kWh). In low-rate hydroelectric states ($0.10–$0.12/kWh), payback often exceeds 16 years without state rebates.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>3. How much does net metering affect my solar ROI?</h3>
+        <p>Net metering is often the single biggest factor after your retail electricity rate. Under full 1:1 net metering, every kWh sent to the grid offsets a kWh bought at night. Under net billing tariffs (where exports are credited at wholesale rates of $0.04–$0.08/kWh), payback can lengthen by 3 to 6 years unless you self-consume daytime solar or install battery storage.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>4. Should I replace my roof before installing solar panels?</h3>
+        <p>Yes, if your asphalt shingle roof has fewer than 10–12 years of remaining life. Removing and reinstalling a solar array mid-life for a roof tear-off typically costs <strong>$3,000 to $6,500</strong> in crane and electrician labor, which can erase 2 to 4 years of solar savings.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>5. Why do low-interest solar loans often have a worse ROI than cash?</h3>
+        <p>Many 25-year solar loans advertised at 3.99%–5.99% APR include hidden dealer fees of 18%–30% added directly to the loan balance. A $24,000 cash quote can balloon to $31,000 financed. Always request the installer's cash price and compare it against a standard home equity line or credit union loan with zero dealer fee.</p>
+      </div>
+    </div>
+    <p class="ac-disclaimer">
+      Disclaimer: Results are engineering and financial estimates for educational planning only—not formal contractor bids, utility tariff guarantees, or tax advice. Confirm site shading (PVWatts/helioscope), local utility interconnection tariffs, and tax eligibility with a licensed installer and CPA.
+    </p>
+  </section>
+
+  <%- adAfterFAQ() %>
+
+  <section class="ac-section">
+    <h2>Related Energy, Construction &amp; ROI Calculators</h2>
+    <nav class="ac-related-grid" aria-label="Related Calculators">
+      <a class="ac-rel-link" href="/business/roi-calculator">
+        <strong>ROI Calculator</strong>
+        <span>Compute total return, annualized CAGR, and payback for capital investments.</span>
+      </a>
+      <a class="ac-rel-link" href="/technology/voltage-drop-calculator">
+        <strong>Voltage Drop Calculator</strong>
+        <span>Size copper or aluminum DC/AC wire gauges to NEC 3% voltage drop limits.</span>
+      </a>
+      <a class="ac-rel-link" href="/business/break-even-calculator">
+        <strong>Break-Even Analysis Calculator</strong>
+        <span>Find exact unit and revenue break-even thresholds for business projects.</span>
+      </a>
+      <a class="ac-rel-link" href="/construction/home-addition-cost-calculator">
+        <strong>Home Addition Cost Calculator</strong>
+        <span>Estimate residential addition budgets by square footage and US region.</span>
+      </a>
+      <a class="ac-rel-link" href="/real-estate/roi-calculator">
+        <strong>Real Estate ROI Calculator</strong>
+        <span>Compare property upgrade returns, equity buildup, and cash-on-cash yield.</span>
+      </a>
+      <a class="ac-rel-link" href="/loan-calculators/heloc-calculator">
+        <strong>HELOC Payment Calculator</strong>
+        <span>Compare financing a cash solar install via home equity vs. a solar loan.</span>
+      </a>
+    </nav>
+  </section>
+</main>
+
+<script>
+(function () {
+  var DEFAULTS = {
+    size: 8, cpw: 2.95, prod: 1350, rate: 0.18, ownership: '0',
+    rebate: 1500, nem: 90, escal: 3.5, deg: 0.5, maint: 2500
+  };
+  var els = {
+    size: document.getElementById('solar-size'),
+    cpw: document.getElementById('solar-cpw'),
+    prod: document.getElementById('solar-prod'),
+    rate: document.getElementById('solar-rate'),
+    ownership: document.getElementById('solar-ownership'),
+    rebate: document.getElementById('solar-rebate'),
+    nem: document.getElementById('solar-nem'),
+    escal: document.getElementById('solar-escal'),
+    deg: document.getElementById('solar-deg'),
+    maint: document.getElementById('solar-maint')
+  };
+
+  function fmtUSD(n) {
+    var sign = n < 0 ? '-' : '';
+    return sign + '$' + Math.round(Math.abs(n)).toLocaleString('en-US');
+  }
+
+  function calculate() {
+    var size = Math.max(0.5, parseFloat(els.size.value) || 0);
+    var cpw = Math.max(0.5, parseFloat(els.cpw.value) || 0);
+    var prod = Math.max(100, parseFloat(els.prod.value) || 0);
+    var rate = Math.max(0.01, parseFloat(els.rate.value) || 0);
+    var creditPct = parseFloat(els.ownership.value) || 0;
+    var rebate = Math.max(0, parseFloat(els.rebate.value) || 0);
+    var nem = Math.min(100, Math.max(10, parseFloat(els.nem.value) || 90)) / 100;
+    var escal = Math.max(0, parseFloat(els.escal.value) || 0) / 100;
+    var deg = Math.max(0, parseFloat(els.deg.value) || 0) / 100;
+    var maint = Math.max(0, parseFloat(els.maint.value) || 0);
+
+    var grossCost = size * 1000 * cpw;
+    var fedCredit = grossCost * (creditPct / 100);
+    var netCost = Math.max(0, grossCost - fedCredit - rebate);
+
+    var yr1Kwh = size * prod;
+    var effRate = rate * nem;
+    var yr1Savings = yr1Kwh * effRate;
+    var simplePayback = yr1Savings > 0 ? netCost / yr1Savings : 0;
+
+    var cumSavings = 0;
+    var cumKwh = 0;
+    var paybackYear = null;
+    for (var y = 1; y <= 25; y++) {
+      var yearKwh = yr1Kwh * Math.pow(1 - deg, y - 1);
+      var yearRate = effRate * Math.pow(1 + escal, y - 1);
+      var yearSave = yearKwh * yearRate;
+      var prevCum = cumSavings;
+      cumSavings += yearSave;
+      cumKwh += yearKwh;
+      if (paybackYear === null && cumSavings >= netCost && yearSave > 0) {
+        paybackYear = (y - 1) + ((netCost - prevCum) / yearSave);
+      }
+    }
+
+    var net25 = cumSavings - netCost - maint;
+    var roiPct = netCost > 0 ? (net25 / netCost) * 100 : 0;
+    var lcoe = cumKwh > 0 ? (netCost + maint) / cumKwh : 0;
+
+    document.getElementById('out-payback').textContent =
+      paybackYear !== null ? paybackYear.toFixed(1) + ' Years' : '25+ Years';
+    document.getElementById('out-payback-sub').textContent =
+      'Simple payback: ' + simplePayback.toFixed(1) + ' yrs (before ' + (escal * 100).toFixed(1) + '%/yr rate inflation)';
+
+    document.getElementById('out-net-cost').textContent = fmtUSD(netCost);
+    document.getElementById('out-gross-note').textContent = 'Gross installed: ' + fmtUSD(grossCost);
+
+    document.getElementById('out-yr1-save').textContent = fmtUSD(yr1Savings);
+    document.getElementById('out-yr1-kwh').textContent = Math.round(yr1Kwh).toLocaleString('en-US') + ' kWh/yr generated';
+
+    var netEl = document.getElementById('out-25yr-net');
+    netEl.textContent = fmtUSD(net25);
+    netEl.style.color = net25 >= 0 ? '#047857' : '#b91c1c';
+    document.getElementById('out-25yr-gross').textContent = 'Cumulative savings: ' + fmtUSD(cumSavings);
+
+    document.getElementById('out-roi').textContent = roiPct.toFixed(1) + '%';
+    document.getElementById('out-annual-roi').textContent = '~' + (roiPct / 25).toFixed(1) + '% avg annual return';
+
+    document.getElementById('bd-gross').textContent = fmtUSD(grossCost);
+    document.getElementById('bd-fed').textContent = '-' + fmtUSD(fedCredit);
+    document.getElementById('bd-rebate').textContent = '-' + fmtUSD(rebate);
+    document.getElementById('bd-eff-rate').textContent = '$' + effRate.toFixed(3) + '/kWh';
+    document.getElementById('bd-25yr-kwh').textContent = Math.round(cumKwh).toLocaleString('en-US') + ' kWh';
+    document.getElementById('bd-lcoe').textContent = '$' + lcoe.toFixed(3) + '/kWh';
+  }
+
+  Object.keys(els).forEach(function (k) {
+    els[k].addEventListener('input', calculate);
+    els[k].addEventListener('change', calculate);
+  });
+  document.getElementById('solar-calc-btn').addEventListener('click', calculate);
+  document.getElementById('solar-reset-btn').addEventListener('click', function () {
+    Object.keys(DEFAULTS).forEach(function (k) { els[k].value = DEFAULTS[k]; });
+    calculate();
+  });
+
+  calculate();
+})();
+</script>
+
+<%- include('../../partials/footer') %>

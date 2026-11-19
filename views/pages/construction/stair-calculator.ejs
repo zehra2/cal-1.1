@@ -1,0 +1,949 @@
+<%- include('../../partials/header') %>
+<style>
+/* ==========================================================================
+   EXECUTIVE STAIR CALCULATOR DESIGN
+   ========================================================================== */
+body {
+  background-color: #f8fafc;
+  color: #1e293b;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.st-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* Breadcrumb & Hero */
+.st-bc {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+.st-bc a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.st-bc a:hover {
+  color: #1d4ed8;
+}
+.st-hero {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+.st-hero::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -30%;
+  width: 160%;
+  height: 160%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+.st-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #bfdbfe;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  margin-bottom: 0.75rem;
+}
+.st-hero h1 {
+  font-size: 2.2rem;
+  font-weight: 850;
+  color: #ffffff;
+  margin: 0 0 0.6rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.st-hero p {
+  font-size: 1.02rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 800px;
+}
+
+/* ==========================================================================
+   UNIFIED HORIZONTAL CALCULATOR CARD (3 INPUTS IN ONE ROW, ANSWERS IN ONE ROW)
+   ========================================================================== */
+.st-calc-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+  margin-bottom: 2.5rem;
+}
+.st-card-title-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1.5px solid #f1f5f9;
+}
+.st-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.st-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  font-size: 0.72rem;
+  font-weight: 750;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+.st-live-dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: stPulse 1.8s infinite;
+}
+@keyframes stPulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* 1. THREE TEXT BOXES IN ONE ROW */
+.st-input-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.st-input-box {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: all 0.2s ease;
+}
+.st-input-box:focus-within {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.st-input-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 750;
+  color: #334155;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.st-affix-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.st-affix-input input {
+  width: 100%;
+  padding: 10px 38px 10px 12px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.st-affix-input input:focus {
+  border-color: #2563eb;
+}
+.st-affix-unit {
+  position: absolute;
+  right: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  pointer-events: none;
+}
+.st-input-sub {
+  display: block;
+  font-size: 0.74rem;
+  color: #64748b;
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+/* Quick Ceiling Presets */
+.st-preset-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1.75rem;
+  padding: 8px 12px;
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+.st-preset-title {
+  font-size: 0.74rem;
+  font-weight: 750;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+.st-preset-btn {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.st-preset-btn:hover {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+/* 2. ANSWERS IN ONE ROW */
+.st-answer-section {
+  margin-top: 0.5rem;
+}
+.st-answer-header {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.st-answer-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 1.25rem;
+}
+.st-ans-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: transform 0.15s, border-color 0.15s;
+}
+.st-ans-card:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+}
+.st-ans-card.primary {
+  background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+  border-color: #93c5fd;
+}
+.st-ans-card.accent {
+  background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #86efac;
+}
+.st-ans-lbl {
+  font-size: 0.7rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  display: block;
+  margin-bottom: 4px;
+}
+.st-ans-val {
+  font-size: 1.55rem;
+  font-weight: 850;
+  color: #0f172a;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+.st-ans-card.primary .st-ans-val {
+  color: #1d4ed8;
+}
+.st-ans-card.accent .st-ans-val {
+  color: #059669;
+}
+.st-ans-sub {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #64748b;
+  display: block;
+  line-height: 1.3;
+}
+
+/* Secondary Ergonomic Indicator Bar */
+.st-feedback-bar {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.st-fb-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #334155;
+}
+.st-fb-badge {
+  font-size: 0.72rem;
+  font-weight: 750;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.st-badge-ok {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+.st-badge-warn {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+.st-fb-lumber {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Quick Actions */
+.st-actions-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 1rem;
+}
+.st-act-btn {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+  text-decoration: none;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+}
+.st-act-btn:hover {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+/* ==========================================================================
+   ARTICLE CONTENT & REFERENCE TABLES
+   ========================================================================== */
+.st-content-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 2.25rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  line-height: 1.75;
+  color: #334155;
+}
+.st-content-section h2 {
+  font-size: 1.55rem;
+  color: #0f172a;
+  margin: 0 0 1rem;
+  font-weight: 850;
+  border-bottom: 2px solid #eff6ff;
+  padding-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+.st-content-section h3 {
+  font-size: 1.15rem;
+  color: #1e293b;
+  margin: 1.6rem 0 0.65rem;
+  font-weight: 750;
+}
+.st-content-section p {
+  margin: 0 0 1.25rem;
+  font-size: 0.96rem;
+  color: #475569;
+}
+.st-table-wrap {
+  overflow-x: auto;
+  margin: 1.25rem 0 1.5rem;
+}
+.st-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.st-table th, .st-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  text-align: left;
+}
+.st-table th {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 750;
+  border-bottom: 2px solid #e2e8f0;
+}
+.st-table tr:nth-child(even) td {
+  background: #fbfcfe;
+}
+.st-formula-box {
+  background: #f1f5f9;
+  border-left: 4px solid #2563eb;
+  padding: 1rem 1.25rem;
+  font-family: monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+/* FAQ Accordion */
+.st-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1rem;
+}
+.st-faq-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+  transition: border-color 0.2s;
+}
+.st-faq-card.open {
+  border-color: #bfdbfe;
+}
+.st-faq-q {
+  background: #f8fafc;
+  padding: 14px 18px;
+  font-weight: 750;
+  font-size: 0.96rem;
+  color: #0f172a;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.st-faq-q:hover {
+  background: #f1f5f9;
+}
+.st-faq-q::after {
+  content: '+';
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin-left: 12px;
+}
+.st-faq-card.open .st-faq-q::after {
+  content: '−';
+}
+.st-faq-a {
+  padding: 16px 18px;
+  color: #475569;
+  line-height: 1.7;
+  font-size: 0.92rem;
+  display: none;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+}
+.st-faq-card.open .st-faq-a {
+  display: block;
+}
+
+/* Related Tools Grid */
+.st-related-wrap {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.st-related-title {
+  font-size: 1.25rem;
+  color: #0f172a;
+  font-weight: 800;
+  margin: 0 0 1.25rem;
+}
+.st-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.st-related-card {
+  display: block;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.15s;
+}
+.st-related-card:hover {
+  border-color: #2563eb;
+  transform: translateY(-2px);
+  background: #ffffff;
+}
+
+/* Print Styles */
+@media print {
+  header, footer, .st-bc, .st-preset-bar, .st-actions-bar, .st-related-wrap {
+    display: none !important;
+  }
+  .st-wrap { padding: 0; max-width: 100%; }
+  .st-calc-card { border: none; box-shadow: none; padding: 0; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 960px) {
+  .st-answer-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .st-hero h1 { font-size: 1.75rem; }
+  .st-calc-card { padding: 1.5rem 1.25rem; }
+  .st-input-row { grid-template-columns: 1fr; }
+  .st-answer-row { grid-template-columns: repeat(2, 1fr); }
+  .st-feedback-bar { flex-direction: column; align-items: flex-start; }
+  .st-content-section { padding: 1.5rem 1.25rem; }
+}
+@media (max-width: 480px) {
+  .st-answer-row { grid-template-columns: 1fr; }
+}
+</style>
+
+<main id="main-content">
+<div class="st-wrap">
+
+  <!-- Breadcrumb Navigation -->
+  <nav class="st-bc" aria-label="Breadcrumb">
+    <a href="<%= baseUrl %>/">Home</a>
+    <span>/</span>
+    <a href="<%= baseUrl %>/construction/">Construction</a>
+    <span>/</span>
+    <span>Stair Calculator</span>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="st-hero">
+    <div class="st-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Updated for <%= currentYear %> IRC Building Code Standards
+    </div>
+    <h1>Stair Rise, Run &amp; Stringer Calculator</h1>
+    <p>
+      Calculate code-compliant stair geometry including exact riser height, tread count, horizontal run footprint, 2x12 stringer cut length, and incline angle with instant real-time feedback.
+    </p>
+  </header>
+
+  <!-- ========================================================================
+       UNIFIED CALCULATOR CARD: 3 INPUTS IN ONE ROW, ANSWERS IN ONE ROW
+       ======================================================================== -->
+  <section class="st-calc-card" aria-label="Staircase Geometry Engine">
+    
+    <div class="st-card-title-wrap">
+      <h2 class="st-card-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><path d="M6 20h14M6 14h10M6 8h6M4 4h4v16H4z"/></svg>
+        Staircase Input Dimensions
+      </h2>
+      <div class="st-live-badge">
+        <span class="st-live-dot"></span>
+        Live Interactive Calculation
+      </div>
+    </div>
+
+    <!-- 1. THREE TEXT BOXES IN ONE ROW -->
+    <div class="st-input-row">
+      <!-- Input Box 1 -->
+      <div class="st-input-box">
+        <label for="total_rise" class="st-input-label">1. Total Vertical Rise</label>
+        <div class="st-affix-input">
+          <input type="number" step="0.125" id="total_rise" name="total_rise" value="<%= init_total_rise %>" min="10" max="300" oninput="calcStairs()">
+          <span class="st-affix-unit">in</span>
+        </div>
+        <span class="st-input-sub">Finished lower floor to finished upper floor (e.g., 9 ft = 108").</span>
+      </div>
+
+      <!-- Input Box 2 -->
+      <div class="st-input-box">
+        <label for="ideal_rise" class="st-input-label">2. Target Rise per Step</label>
+        <div class="st-affix-input">
+          <input type="number" step="0.1" id="ideal_rise" name="ideal_rise" value="<%= init_ideal_rise %>" min="4" max="9" oninput="calcStairs()">
+          <span class="st-affix-unit">in</span>
+        </div>
+        <span class="st-input-sub">IRC Maximum: 7.75". Ideal ergonomic target: 7.0" to 7.5".</span>
+      </div>
+
+      <!-- Input Box 3 -->
+      <div class="st-input-box">
+        <label for="ideal_run" class="st-input-label">3. Target Tread Run</label>
+        <div class="st-affix-input">
+          <input type="number" step="0.25" id="ideal_run" name="ideal_run" value="<%= init_ideal_run %>" min="8" max="18" oninput="calcStairs()">
+          <span class="st-affix-unit">in</span>
+        </div>
+        <span class="st-input-sub">IRC Minimum: 10.0". Standard residential: 10.5" to 11.0".</span>
+      </div>
+    </div>
+
+    <!-- Quick Height Preset Chips -->
+    <div class="st-preset-bar">
+      <span class="st-preset-title">Standard Heights:</span>
+      <button type="button" class="st-preset-btn" onclick="stSetHeight(96)">8 ft Ceiling (96")</button>
+      <button type="button" class="st-preset-btn" onclick="stSetHeight(102)">8.5 ft Ceiling (102")</button>
+      <button type="button" class="st-preset-btn" onclick="stSetHeight(108)">9 ft Ceiling (108")</button>
+      <button type="button" class="st-preset-btn" onclick="stSetHeight(120)">10 ft Ceiling (120")</button>
+      <button type="button" class="st-preset-btn" onclick="stSetHeight(36)">3 ft Deck / Porch (36")</button>
+    </div>
+
+    <!-- 2. ANSWERS IN ONE ROW -->
+    <div class="st-answer-section">
+      <div class="st-answer-header">
+        <span>Calculated Staircase Specifications</span>
+        <span style="font-weight:600;color:#64748b;">IRC Section R311.7 Standard</span>
+      </div>
+
+      <div class="st-answer-row">
+        <!-- Answer 1: Risers / Steps -->
+        <div class="st-ans-card primary">
+          <span class="st-ans-lbl">Steps (Risers)</span>
+          <div class="st-ans-val" id="res_num_risers"><%= num_risers %> Risers</div>
+          <span class="st-ans-sub">Exact: <strong id="res_actual_rise"><%= Number(actual_rise).toFixed(3) %></strong>" rise</span>
+        </div>
+
+        <!-- Answer 2: Treads -->
+        <div class="st-ans-card">
+          <span class="st-ans-lbl">Treads (Steps)</span>
+          <div class="st-ans-val" id="res_num_treads"><%= num_treads %> Treads</div>
+          <span class="st-ans-sub"><span id="res_tread_depth"><%= init_ideal_run %></span>" tread depth</span>
+        </div>
+
+        <!-- Answer 3: Total Horizontal Run -->
+        <div class="st-ans-card">
+          <span class="st-ans-lbl">Total Run Footprint</span>
+          <div class="st-ans-val" id="res_total_run"><%= Number(total_run).toFixed(1) %>"</div>
+          <span class="st-ans-sub"><strong id="res_total_run_ft"><%= (total_run / 12).toFixed(2) %></strong> ft horizontal</span>
+        </div>
+
+        <!-- Answer 4: Stringer Length -->
+        <div class="st-ans-card">
+          <span class="st-ans-lbl">Stringer Cut Length</span>
+          <div class="st-ans-val" id="res_stringer"><%= Number(stringer_length).toFixed(1) %>"</div>
+          <span class="st-ans-sub"><strong id="res_stringer_ft"><%= (stringer_length / 12).toFixed(2) %></strong> ft diagonal</span>
+        </div>
+
+        <!-- Answer 5: Incline Angle & Code Status -->
+        <div class="st-ans-card accent">
+          <span class="st-ans-lbl">Incline Angle</span>
+          <div class="st-ans-val" id="res_angle"><%= Number(angle).toFixed(1) %>&deg;</div>
+          <span class="st-ans-sub" id="res_code_badge">✓ IRC Code Pass</span>
+        </div>
+      </div>
+
+      <!-- Secondary Feedback / Ergonomics & Lumber Bar -->
+      <div class="st-feedback-bar">
+        <div class="st-fb-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>Comfort Rule (2R + T): <strong id="res_comfort">25.9"</strong> &mdash; <span id="res_comfort_desc" style="color:#059669;font-weight:700;">Ideal Stride Comfort</span></span>
+        </div>
+        <div class="st-fb-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span>Recommended Lumber: <strong class="st-fb-lumber" id="res_lumber">Order 16 ft 2x12 boards</strong></span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="st-actions-bar">
+        <button type="button" class="st-act-btn" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print Stair Specs
+        </button>
+        <button type="button" class="st-act-btn" onclick="stReset()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"/><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3"/></svg>
+          Reset
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========================================================================
+       SUPPORTING ARTICLE CONTENT & IRC CODE SPECIFICATIONS
+       ======================================================================== -->
+  <article class="st-content-section">
+    <h2>International Residential Code (IRC) Stair Guidelines</h2>
+    <p>Building a safe, code-compliant staircase requires precise adherence to the International Residential Code (IRC R311.7). Uniformity is the single most critical safety requirement: the greatest riser height within any flight of stairs cannot exceed the smallest by more than <strong>3/8 inch (9.5 mm)</strong>.</p>
+
+    <h3>Core Residential Stair Specifications</h3>
+    <div class="st-table-wrap">
+      <table class="st-table">
+        <thead>
+          <tr>
+            <th>Stair Component</th>
+            <th>IRC Code Requirement</th>
+            <th>Ergonomic Best Practice</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Riser Height</strong></td>
+            <td>Maximum 7-3/4 inches (196 mm)</td>
+            <td>7.0 to 7.5 inches</td>
+          </tr>
+          <tr>
+            <td><strong>Tread Run</strong></td>
+            <td>Minimum 10.0 inches (254 mm)</td>
+            <td>10.5 to 11.0 inches</td>
+          </tr>
+          <tr>
+            <td><strong>Stair Width</strong></td>
+            <td>Minimum 36 inches clear width</td>
+            <td>38 to 42 inches</td>
+          </tr>
+          <tr>
+            <td><strong>Headroom Clearance</strong></td>
+            <td>Minimum 6 ft 8 in (80 inches)</td>
+            <td>7 ft 0 in (84 inches)</td>
+          </tr>
+          <tr>
+            <td><strong>Handrail Height</strong></td>
+            <td>34 to 38 inches vertically from tread</td>
+            <td>36 inches</td>
+          </tr>
+          <tr>
+            <td><strong>Stringer Lumber</strong></td>
+            <td>2x12 dimensional lumber with 3.5" throat</td>
+            <td>Solid No. 2 Douglas Fir or SPF</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The Ergonomic Comfort Rule (2R + T)</h3>
+    <p>For centuries, carpenters and architects have relied on Blondel's Formula to verify that stair proportions provide a natural, effortless walking stride:</p>
+    <div class="st-formula-box">
+      2 &times; Rise(in) + 1 &times; Tread(in) = 24 to 25.5 inches
+    </div>
+    <p>If your calculated rise is 7.25 inches, the ideal tread depth is: 25 - (2 &times; 7.25) = 10.5 inches.</p>
+
+    <h3>Stringer Board Selection &amp; Cutting</h3>
+    <p>Stair stringers bear the entire structural load of the staircase. Always use <strong>2x12 No. 2 dimensional lumber</strong> free of large knots. After cutting your riser and tread notches, ensure the uncut throat of the stringer retains at least <strong>3.5 inches of continuous solid lumber</strong>. For exterior decks or stairs wider than 36 inches, install stringers every 16 inches on center (minimum 3 stringers).</p>
+
+    <!-- FAQ Accordion -->
+    <h2 style="margin-top:2.5rem;">Frequently Asked Questions About Stair Framing</h2>
+    <div class="st-faq-list">
+
+      <div class="st-faq-card open">
+        <div class="st-faq-q" onclick="stToggleFaq(this)">What is the maximum stair riser height allowed by building code?</div>
+        <div class="st-faq-a">Under Section R311.7.5.1 of the International Residential Code (IRC), the maximum riser height for residential stairs is 7-3/4 inches (196 mm). Commercial staircases governed by the IBC allow a maximum rise of 7 inches.</div>
+      </div>
+
+      <div class="st-faq-card">
+        <div class="st-faq-q" onclick="stToggleFaq(this)">What is the minimum tread depth for stairs?</div>
+        <div class="st-faq-a">The IRC mandates a minimum tread depth of 10 inches (254 mm) measured horizontally from the nosing of one step to the nosing of the next. When treads are less than 11 inches, a 3/4-inch to 1-1/4-inch nosing projection is required.</div>
+      </div>
+
+      <div class="st-faq-card">
+        <div class="st-faq-q" onclick="stToggleFaq(this)">What is the standard rule for comfortable stair proportions?</div>
+        <div class="st-faq-a">The traditional rule of thumb (Blondel formula) states that 2 × Rise + 1 × Run should equal between 24 and 25.5 inches. For example, a 7.25-inch rise with a 10.5-inch run equals 25 inches, representing the ergonomic gold standard.</div>
+      </div>
+
+      <div class="st-faq-card">
+        <div class="st-faq-q" onclick="stToggleFaq(this)">What lumber size is required for cutting stair stringers?</div>
+        <div class="st-faq-a">Stair stringers must be cut from 2x12 dimensional lumber. After cutting out the notches for the treads and risers, building codes require at least 3.5 inches of solid uncut wood (the stringer throat) along the back edge to maintain structural integrity.</div>
+      </div>
+
+      <div class="st-faq-card">
+        <div class="st-faq-q" onclick="stToggleFaq(this)">How much headroom is required above a staircase?</div>
+        <div class="st-faq-a">The IRC requires a minimum headroom clearance of 6 feet 8 inches (80 inches / 2,032 mm) measured vertically from the leading edge of the stair tread nosing to the ceiling plane directly above.</div>
+      </div>
+
+      <div class="st-faq-card">
+        <div class="st-faq-q" onclick="stToggleFaq(this)">Why is the bottom riser cut shorter than the other risers?</div>
+        <div class="st-faq-a">When installing finished tread material (such as 1-inch oak or 5/4-inch deck boards), you must deduct the thickness of the tread from the bottom of the stringer. If you do not trim the bottom of the stringer, your first step will be too tall and your top step will be too short, creating a dangerous code violation.</div>
+      </div>
+
+      <div class="st-faq-card">
+        <div class="st-faq-q" onclick="stToggleFaq(this)">When is a stair landing required by building code?</div>
+        <div class="st-faq-a">Under the IRC, a floor or landing is required at the top and bottom of each stairway. Additionally, a flight of stairs cannot have a vertical rise greater than 147 inches (12 feet 3 inches) between floor levels or landings without an intermediate landing.</div>
+      </div>
+
+      <div class="st-faq-card">
+        <div class="st-faq-q" onclick="stToggleFaq(this)">What is the difference between open and closed stringers?</div>
+        <div class="st-faq-a">An open (cut) stringer has triangular saw cuts where the treads and risers rest on top of the board. A closed (housed) stringer has routed grooves or cleat supports on the inside face where the treads and risers slide into the wood, concealing the step edges.</div>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- Related Tools -->
+  <aside class="st-related-wrap">
+    <h2 class="st-related-title">Related Construction &amp; Carpentry Calculators</h2>
+    <div class="st-related-grid">
+      <a href="/construction/home-addition-cost-calculator" class="st-related-card">
+        <div style="font-size:1.3rem;margin-bottom:6px;">📐</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">Home Addition Cost</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Square foot estimating &amp; itemized trade costs</div>
+      </a>
+      <a href="/construction/concrete-calculator" class="st-related-card">
+        <div style="font-size:1.3rem;margin-bottom:6px;">🏗️</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">Concrete Calculator Hub</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Footing, slab, and staircase landing concrete</div>
+      </a>
+      <a href="/construction/linear-feet-calculator" class="st-related-card">
+        <div style="font-size:1.3rem;margin-bottom:6px;">📏</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">Linear Feet Calculator</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Lumber, trim, and riser board converter</div>
+      </a>
+      <a href="/construction/asphalt-calculator" class="st-related-card">
+        <div style="font-size:1.3rem;margin-bottom:6px;">🛣️</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">Asphalt Calculator</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Driveway and walkway material estimation</div>
+      </a>
+    </div>
+  </aside>
+
+</div>
+</main>
+
+<script>
+// ==========================================================================
+// REAL-TIME STAIR CALCULATOR JAVASCRIPT ENGINE
+// ==========================================================================
+
+function calcStairs() {
+  const totalRise = parseFloat(document.getElementById('total_rise').value) || 0;
+  const idealRise = parseFloat(document.getElementById('ideal_rise').value) || 7.5;
+  const idealRun  = parseFloat(document.getElementById('ideal_run').value) || 10.5;
+
+  if (totalRise <= 0 || idealRise <= 0 || idealRun <= 0) return;
+
+  const numRisers = Math.max(1, Math.round(totalRise / idealRise));
+  const actualRise = totalRise / numRisers;
+  const numTreads  = Math.max(0, numRisers - 1);
+  const totalRun   = numTreads * idealRun;
+  const stringerLength = Math.sqrt(Math.pow(totalRise, 2) + Math.pow(totalRun, 2));
+  const angle = totalRun > 0 ? Math.atan(totalRise / totalRun) * (180 / Math.PI) : 0;
+  const comfort = (2 * actualRise) + idealRun;
+
+  // Update Answer Row Elements
+  document.getElementById('res_num_risers').textContent = numRisers + ' Risers';
+  document.getElementById('res_actual_rise').textContent = actualRise.toFixed(2);
+  document.getElementById('res_num_treads').textContent  = numTreads + ' Treads';
+  document.getElementById('res_tread_depth').textContent = idealRun.toFixed(1);
+  document.getElementById('res_total_run').textContent   = totalRun.toFixed(1) + '"';
+  document.getElementById('res_total_run_ft').textContent = (totalRun / 12).toFixed(2);
+  document.getElementById('res_stringer').textContent    = stringerLength.toFixed(1) + '"';
+  document.getElementById('res_stringer_ft').textContent = (stringerLength / 12).toFixed(2);
+  document.getElementById('res_angle').textContent       = angle.toFixed(1) + '°';
+
+  // Code Status Check
+  const isCodeCompliant = actualRise <= 7.75 && idealRun >= 10.0;
+  const badgeEl = document.getElementById('res_code_badge');
+  if (isCodeCompliant) {
+    badgeEl.textContent = '✓ IRC Code Pass';
+    badgeEl.style.color = '#059669';
+  } else {
+    badgeEl.textContent = '⚠️ Check IRC Code';
+    badgeEl.style.color = '#dc2626';
+  }
+
+  // Comfort Rule (2R + T)
+  document.getElementById('res_comfort').textContent = comfort.toFixed(1) + '"';
+  const comfortDescEl = document.getElementById('res_comfort_desc');
+  if (comfort >= 24 && comfort <= 25.5) {
+    comfortDescEl.textContent = 'Ideal Stride Comfort';
+    comfortDescEl.style.color = '#059669';
+  } else if (comfort < 24) {
+    comfortDescEl.textContent = 'Shallow / Short Stride';
+    comfortDescEl.style.color = '#b45309';
+  } else {
+    comfortDescEl.textContent = 'Steep / Long Stride';
+    comfortDescEl.style.color = '#b45309';
+  }
+
+  // Lumber Length Recommendation
+  const minLumberFt = Math.ceil((stringerLength / 12) + 0.5);
+  // Standard lumber lengths are even numbers (10, 12, 14, 16, 18, 20)
+  const standardLumberFt = minLumberFt % 2 === 0 ? minLumberFt : minLumberFt + 1;
+  document.getElementById('res_lumber').textContent = 'Order ' + Math.max(8, standardLumberFt) + ' ft 2x12 boards';
+}
+
+function stSetHeight(inches) {
+  document.getElementById('total_rise').value = inches;
+  calcStairs();
+}
+
+function stReset() {
+  document.getElementById('total_rise').value = 108;
+  document.getElementById('ideal_rise').value = 7.5;
+  document.getElementById('ideal_run').value = 10.5;
+  calcStairs();
+}
+
+function stToggleFaq(el) {
+  const card = el.closest('.st-faq-card');
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.st-faq-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) card.classList.add('open');
+}
+
+// Initial calculation on page load
+document.addEventListener('DOMContentLoaded', function() {
+  calcStairs();
+});
+</script>
+<%- include('../../partials/footer') %>

@@ -1,0 +1,26 @@
+<%- include('../../partials/header') %>
+<div class="calculator-page">
+    <h1>Partial Derivative Calculator</h1>
+    <p class="description">Calculate partial derivatives of multivariable functions with respect to any variable.</p>
+    
+    <div class="info-section">
+        <h2>How to Use</h2>
+        <p>Enter your multivariable function (e.g., x^2 + y^2, x*y + z^3) and specify which variable to differentiate with respect to (x, y, or z).</p>
+        
+        <h3>Common Partial Derivative Rules:</h3>
+        <ul>
+            <li>∂/∂x (x^n) = n*x^(n-1)</li>
+            <li>∂/∂x (x*y) = y (treat y as constant)</li>
+            <li>∂/∂x (sin(x)) = cos(x)</li>
+            <li>∂/∂x (e^x) = e^x</li>
+        </ul>
+        
+        <h3>Example Functions:</h3>
+        <ul>
+            <li>f(x,y) = x² + y² → ∂f/∂x = 2x, ∂f/∂y = 2y</li>
+            <li>f(x,y) = xy → ∂f/∂x = y, ∂f/∂y = x</li>
+            <li>f(x,y) = x²y³ → ∂f/∂x = 2xy³, ∂f/∂y = 3x²y²</li>
+        </ul>
+    </div>
+</div>
+<%- include('../../partials/footer') %>

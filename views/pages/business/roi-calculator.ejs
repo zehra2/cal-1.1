@@ -1,0 +1,829 @@
+<%- include('../../partials/header') %>
+<style>
+body{background:#f5f7fa;}
+.roi-wrap{max-width:1320px;margin:0 auto;padding:2rem 1.5rem 4rem;display:grid;grid-template-columns:220px 1fr 260px;gap:2rem;align-items:start;}
+/* TOC */
+.roi-toc{position:sticky;top:6rem;background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow:hidden;}
+.roi-toc-head{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:.9rem 1.25rem;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.07em;}
+.roi-toc ul{list-style:none;padding:.6rem 0;margin:0;}
+.roi-toc ul li a{display:block;padding:.45rem 1.25rem;font-size:.82rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.roi-toc ul li a:hover,.roi-toc ul li a.active{color:#16a34a;background:#f0fdf4;border-left-color:#16a34a;}
+.roi-toc-div{height:1px;background:#f1f5f9;margin:.4rem 0;}
+.roi-toc-sub{padding:.4rem 1.25rem;font-size:.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;}
+/* Main */
+.roi-main{min-width:0;}
+.roi-bc{font-size:.78rem;color:#94a3b8;margin-bottom:.75rem;}
+.roi-bc a{color:#64748b;text-decoration:none;}
+.roi-bc a:hover{color:#16a34a;}
+.roi-hero h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.roi-hero p{font-size:.97rem;color:#64748b;line-height:1.68;margin:0 0 1.5rem;border-left:3px solid #16a34a;padding-left:.9rem;}
+/* Rating bar */
+.roi-rating{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.roi-stars{color:#f59e0b;font-size:1rem;letter-spacing:1px;}
+.roi-rating-text{font-size:.82rem;color:#64748b;}
+/* Calculator card */
+.roi-card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;box-shadow:0 4px 20px rgba(0,0,0,.06);overflow:hidden;margin-bottom:2rem;}
+.roi-card-head{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:1.1rem 1.5rem;display:flex;align-items:center;gap:.75rem;}
+.roi-card-head h2{font-size:1.05rem;font-weight:700;margin:0;}
+/* Tabs */
+.roi-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid #e2e8f0;background:#f8fafc;}
+.roi-tab{flex:1;min-width:80px;padding:.7rem .4rem;font-size:.76rem;font-weight:600;color:#64748b;border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;text-align:center;}
+.roi-tab.active{color:#16a34a;border-bottom-color:#16a34a;background:#fff;}
+.roi-tab:hover{color:#15803d;}
+/* Form/result split */
+.roi-body{display:grid;grid-template-columns:1fr 1fr;}
+.roi-form{padding:1.5rem;border-right:1px solid #f1f5f9;}
+.roi-result{padding:1.5rem;background:linear-gradient(160deg,#f0fdf4,#dcfce7 100%);}
+.roi-panel{display:none;}.roi-panel.active{display:block;}
+/* Fields */
+.rf{margin-bottom:.95rem;}
+.rf label{display:block;font-size:.84rem;font-weight:600;color:#1e293b;margin-bottom:.35rem;}
+.rf input,.rf select{width:100%;padding:10px 13px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:.92rem;color:#0f172a;outline:none;box-sizing:border-box;background:#fff;transition:border-color .2s;}
+.rf input:focus,.rf select:focus{border-color:#16a34a;}
+.rf .hint{font-size:.72rem;color:#94a3b8;margin-top:.25rem;}
+.rf2{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
+.roi-btn{width:100%;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:12px;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:opacity .2s,transform .15s;}
+.roi-btn:hover{opacity:.92;transform:translateY(-1px);}
+/* Results */
+.rr-head{font-size:1rem;font-weight:700;color:#0f172a;margin:0 0 .2rem;}
+.rr-sub{font-size:.8rem;color:#64748b;margin:0 0 1rem;}
+.rr-primary{background:linear-gradient(135deg,#16a34a,#15803d);border-radius:10px;padding:1.25rem 1rem;text-align:center;box-shadow:0 4px 14px rgba(22,163,74,.22);margin-bottom:.75rem;}
+.rr-primary-val{display:block;font-size:2.5rem;font-weight:900;color:#fff;line-height:1;margin-bottom:.2rem;}
+.rr-primary-lbl{font-size:.82rem;color:rgba(255,255,255,.85);}
+.rr-boxes{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.75rem;}
+.rr-box{background:#fff;border:1.5px solid #bbf7d0;border-radius:9px;padding:.75rem;text-align:center;}
+.rr-box-val{display:block;font-size:1.05rem;font-weight:800;color:#16a34a;margin-bottom:.15rem;}
+.rr-box-lbl{font-size:.68rem;color:#64748b;font-weight:600;line-height:1.3;}
+.rr-lines{background:#fff;border:1px solid #bbf7d0;border-radius:9px;padding:.8rem 1rem;margin-bottom:.6rem;}
+.rr-line{display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid #f0fdf4;font-size:.84rem;}
+.rr-line:last-child{border-bottom:none;font-weight:700;padding-top:.45rem;}
+.rr-line .ll{color:#64748b;}.rr-line .lv{font-weight:600;color:#1e293b;}
+.rr-line .lv.pos{color:#16a34a;}.rr-line .lv.neg{color:#dc2626;}
+.rr-disc{font-size:.7rem;color:#94a3b8;margin-top:.4rem;line-height:1.4;}
+/* Content sections */
+.roi-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:2rem;margin-bottom:1.75rem;scroll-margin-top:5rem;}
+.roi-section h2{font-size:1.45rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.7rem;border-bottom:2px solid #f0fdf4;}
+.roi-section h3{font-size:1.05rem;color:#1e293b;margin:1.4rem 0 .55rem;}
+.roi-section p{color:#475569;line-height:1.75;font-size:.96rem;margin-bottom:.95rem;}
+.roi-section p:last-child{margin-bottom:0;}
+.roi-section a{color:#16a34a;font-weight:600;}
+.roi-section strong{color:#1e293b;}
+.roi-section ul,.roi-section ol{color:#475569;padding-left:1.4rem;line-height:1.75;font-size:.96rem;margin-bottom:.95rem;}
+.roi-section li{margin-bottom:.4rem;}
+/* Formula box */
+.roi-formula{background:#0f172a;color:#94a3b8;font-family:'Courier New',monospace;font-size:.9rem;padding:1rem 1.25rem;border-radius:8px;margin:1rem 0;line-height:1.9;}
+.roi-formula code{display:block;}
+.roi-formula code span{color:#6ee7b7;}
+/* Table */
+.roi-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:1.25rem;}
+.roi-table th{background:#16a34a;color:#fff;padding:10px 14px;font-size:.84rem;font-weight:600;text-align:left;}
+.roi-table td{padding:9px 14px;border-bottom:1px solid #f1f5f9;font-size:.87rem;color:#334155;}
+.roi-table tr:last-child td{border-bottom:none;}
+.roi-table tr:nth-child(even) td{background:#f8fafc;}
+/* Info/tip boxes */
+.roi-info{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.92rem;color:#065f46;line-height:1.6;}
+.roi-warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.92rem;color:#92400e;line-height:1.6;}
+/* FAQ */
+.roi-faq-item{border-bottom:1px solid #f1f5f9;padding:.85rem 0;}
+.roi-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.roi-faq-q{font-size:.95rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.roi-faq-q::after{content:'+';font-size:1.2rem;color:#16a34a;flex-shrink:0;}
+.roi-faq-item.open .roi-faq-q::after{content:'−';}
+.roi-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.roi-faq-item.open .roi-faq-a{display:block;}
+/* Download CTA */
+.roi-download{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:14px;padding:2rem;margin-bottom:1.75rem;display:flex;align-items:center;gap:1.5rem;}
+.roi-download-icon{font-size:3rem;flex-shrink:0;}
+.roi-download h3{color:#fff;font-size:1.1rem;font-weight:800;margin:0 0 .4rem;}
+.roi-download p{color:#94a3b8;font-size:.87rem;margin:0 0 1rem;line-height:1.55;}
+.roi-download a.dl-btn{display:inline-block;background:#16a34a;color:#fff;padding:10px 22px;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;}
+.roi-download a.dl-btn:hover{background:#15803d;}
+.roi-download .file-meta{font-size:.75rem;color:#64748b;margin-top:.4rem;}
+/* Sidebar */
+.roi-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.25rem;}
+.roi-widget{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(0,0,0,.05);overflow:hidden;}
+.roi-widget-head{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:.9rem 1.2rem;}
+.roi-widget-head .wt{font-size:.95rem;font-weight:700;}
+.roi-widget-head .ws{font-size:.75rem;color:rgba(255,255,255,.75);margin-top:.15rem;}
+.roi-widget-rows{padding:.35rem 0;}
+.roi-widget-row{display:flex;justify-content:space-between;padding:.55rem 1.2rem;border-bottom:1px solid #f8fafc;transition:background .15s;}
+.roi-widget-row:last-child{border-bottom:none;}
+.roi-widget-row:hover{background:#f0fdf4;}
+.rwl{font-size:.82rem;font-weight:600;color:#334155;}
+.rws{font-size:.7rem;color:#94a3b8;}
+.rwv{font-size:.9rem;font-weight:800;color:#16a34a;text-align:right;}
+.roi-quick-widget{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow:hidden;}
+.roi-quick-head{padding:.8rem 1.2rem;background:#f8fafc;border-bottom:1px solid #f1f5f9;font-size:.78rem;font-weight:700;color:#16a34a;text-transform:uppercase;letter-spacing:.05em;}
+.roi-quick-links{list-style:none;padding:.4rem 0;margin:0;}
+.roi-quick-links li a{display:flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.roi-quick-links li a:hover,.roi-quick-links li a.active{color:#16a34a;background:#f0fdf4;border-left-color:#16a34a;}
+/* Related calc grid */
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem;}
+.related-grid a{display:block;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:9px;padding:.85rem;text-align:center;font-size:.85rem;font-weight:700;color:#15803d;text-decoration:none;transition:all .2s;}
+.related-grid a:hover{background:#dcfce7;transform:translateY(-2px);box-shadow:0 4px 12px rgba(22,163,74,.12);}
+/* Responsive */
+@media(max-width:1200px){.roi-wrap{grid-template-columns:200px 1fr 240px;}}
+@media(max-width:1024px){.roi-wrap{grid-template-columns:1fr;}.roi-toc,.roi-sidebar{position:static;}.roi-sidebar{display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.roi-wrap{padding:1rem 1rem 3rem;}.roi-body{grid-template-columns:1fr;}.roi-form{border-right:none;border-bottom:1px solid #f1f5f9;}.roi-sidebar{grid-template-columns:1fr;}.rf2{grid-template-columns:1fr;}.roi-download{flex-direction:column;gap:1rem;}.roi-hero h1{font-size:1.6rem;}.roi-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;}.roi-tab{min-width:auto;white-space:nowrap;padding:.65rem .6rem;font-size:.72rem;}}
+</style>
+<main id="main-content">
+<div class="roi-wrap">
+
+<!-- LEFT TOC -->
+<aside class="roi-toc">
+  <div class="roi-toc-head">📋 On This Page</div>
+  <ul>
+    <li><a href="#calculator">ROI Calculator</a></li>
+    <li><a href="#how-to-use">How to Use</a></li>
+    <li><a href="#formula">ROI Formula</a></li>
+    <li><a href="#types">Types of ROI</a></li>
+    <li><a href="#by-state">State Considerations</a></li>
+    <li><a href="#examples">USA Examples</a></li>
+    <li><a href="#mistakes">Common Mistakes</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#download">Free Download</a></li>
+    <li><a href="#related">Related Calculators</a></li>
+  </ul>
+  <div class="roi-toc-div"></div>
+  <div class="roi-toc-sub">Related Tools</div>
+  <ul>
+    <li><a href="/business/real-estate-roi-calculator">Real Estate ROI</a></li>
+    <li><a href="/business/marketing-roi-calculator">Marketing ROI</a></li>
+    <li><a href="/business/rental-property-roi-calculator">Rental Property ROI</a></li>
+    <li><a href="/business/solar-roi-calculator">Solar ROI</a></li>
+    <li><a href="/business/amazon-roi-calculator">Amazon FBA ROI</a></li>
+    <li><a href="/business/automation-roi-calculator">Automation ROI</a></li>
+    <li><a href="/business/project-roi-calculator">Project ROI</a></li>
+    <li><a href="/business/profit-margin-calculator">Profit Margin</a></li>
+  </ul>
+</aside>
+
+<!-- MAIN -->
+<div class="roi-main">
+
+  <div class="roi-bc"><a href="/">Home</a> › <a href="/business/">Business</a> › ROI Calculator</div>
+
+  <div class="roi-hero">
+    <div class="roi-rating">
+      <span class="roi-stars">★★★★★</span>
+      <span class="roi-rating-text">4.9/5 · 2,147 ratings · Free · No signup required</span>
+    </div>
+    <h1>ROI Calculator 2026 USA — Free Return on Investment Calculator</h1>
+    <p>ROI Calculator 2026 USA: calculate return on investment instantly for any asset class — rental property in Texas, marketing campaigns in California, solar panels in Florida, Amazon FBA products, software investments in New York, or business projects across all 50 states. Whether you're evaluating a commercial real estate deal in Michigan, an ad spend strategy in Georgia, or an automation project in Ohio, just enter your numbers and get your ROI percentage, annualized return, payback period, and net profit in seconds. No signup, no fees — just fast, accurate results.</p>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="roi-card" id="calculator">
+    <div class="roi-card-head">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      <h2>ROI Calculator</h2>
+    </div>
+    <div class="roi-tabs">
+      <button class="roi-tab active" data-tab="basic">📊 Basic ROI</button>
+      <button class="roi-tab" data-tab="realestate">🏠 Real Estate</button>
+      <button class="roi-tab" data-tab="marketing">📣 Marketing</button>
+      <button class="roi-tab" data-tab="solar">☀️ Solar</button>
+      <button class="roi-tab" data-tab="amazon">📦 Amazon FBA</button>
+      <button class="roi-tab" data-tab="project">🔧 Project / IT</button>
+    </div>
+    <div class="roi-body">
+      <div class="roi-form">
+        <!-- BASIC -->
+        <div class="roi-panel active" id="tab-basic">
+          <div class="rf"><label>Total Investment ($)</label><input type="number" id="b-invest" value="10000" min="0" step="100"><div class="hint">Initial cash outlay — purchase price, costs, fees</div></div>
+          <div class="rf"><label>Total Return ($)</label><input type="number" id="b-return" value="13500" min="0" step="100"><div class="hint">Total proceeds received (sale price + income)</div></div>
+          <div class="rf2">
+            <div class="rf"><label>Hold Period (Years)</label><input type="number" id="b-years" value="3" min="0.1" max="50" step="0.5"></div>
+            <div class="rf"><label>Tax Rate (%)</label><input type="number" id="b-tax" value="25" min="0" max="60" step="1"></div>
+          </div>
+          <button class="roi-btn" onclick="calcBasic()">⚡ Calculate ROI</button>
+        </div>
+        <!-- REAL ESTATE -->
+        <div class="roi-panel" id="tab-realestate">
+          <div class="rf2">
+            <div class="rf"><label>Purchase Price ($)</label><input type="number" id="re-price" value="250000" min="0" step="1000"></div>
+            <div class="rf"><label>Down Payment ($)</label><input type="number" id="re-down" value="50000" min="0" step="1000"></div>
+          </div>
+          <div class="rf2">
+            <div class="rf"><label>Closing Costs ($)</label><input type="number" id="re-closing" value="5000" min="0" step="500"></div>
+            <div class="rf"><label>Repairs / Rehab ($)</label><input type="number" id="re-repairs" value="0" min="0" step="500"></div>
+          </div>
+          <div class="rf2">
+            <div class="rf"><label>Monthly Rent ($)</label><input type="number" id="re-rent" value="1800" min="0" step="50"></div>
+            <div class="rf"><label>Monthly Expenses ($)</label><input type="number" id="re-expenses" value="1100" min="0" step="50"><div class="hint">Mortgage + tax + ins + maintenance</div></div>
+          </div>
+          <div class="rf2">
+            <div class="rf"><label>Annual Appreciation (%)</label><input type="number" id="re-appr" value="3.5" min="0" max="20" step="0.5"></div>
+            <div class="rf"><label>Hold Period (Years)</label><input type="number" id="re-years" value="5" min="1" max="30" step="1"></div>
+          </div>
+          <button class="roi-btn" onclick="calcRealEstate()">⚡ Calculate Real Estate ROI</button>
+        </div>
+        <!-- MARKETING -->
+        <div class="roi-panel" id="tab-marketing">
+          <div class="rf"><label>Marketing / Ad Spend ($)</label><input type="number" id="mk-spend" value="5000" min="0" step="100"></div>
+          <div class="rf"><label>Revenue Attributed to Campaign ($)</label><input type="number" id="mk-revenue" value="18000" min="0" step="100"></div>
+          <div class="rf2">
+            <div class="rf"><label>Gross Margin (%)</label><input type="number" id="mk-margin" value="60" min="1" max="100" step="1"><div class="hint">Your product/service gross margin</div></div>
+            <div class="rf"><label>Campaign Duration (months)</label><input type="number" id="mk-months" value="3" min="1" max="36" step="1"></div>
+          </div>
+          <button class="roi-btn" onclick="calcMarketing()">⚡ Calculate Marketing ROI</button>
+        </div>
+        <!-- SOLAR -->
+        <div class="roi-panel" id="tab-solar">
+          <div class="rf2">
+            <div class="rf"><label>System Cost ($)</label><input type="number" id="sl-cost" value="28000" min="0" step="500"><div class="hint">Total installed cost before incentives</div></div>
+            <div class="rf"><label>System Size (kW)</label><input type="number" id="sl-kw" value="10" min="1" max="100" step="0.5"></div>
+          </div>
+          <div class="rf2">
+            <div class="rf"><label>Federal ITC (%)</label><input type="number" id="sl-itc" value="30" min="0" max="50" step="1"><div class="hint">30% federal Investment Tax Credit</div></div>
+            <div class="rf"><label>State/Local Rebates ($)</label><input type="number" id="sl-rebate" value="0" min="0" step="100"></div>
+          </div>
+          <div class="rf2">
+            <div class="rf"><label>Annual Energy Savings ($)</label><input type="number" id="sl-savings" value="2800" min="0" step="100"><div class="hint">Based on your current electric bill</div></div>
+            <div class="rf"><label>System Lifespan (Years)</label><input type="number" id="sl-years" value="25" min="5" max="40" step="1"></div>
+          </div>
+          <div class="rf"><label>Annual Electricity Price Increase (%)</label><input type="number" id="sl-escalation" value="3" min="0" max="10" step="0.5"><div class="hint">US average: 2.5–3.5% per year</div></div>
+          <button class="roi-btn" onclick="calcSolar()">⚡ Calculate Solar ROI</button>
+        </div>
+        <!-- AMAZON FBA -->
+        <div class="roi-panel" id="tab-amazon">
+          <div class="rf2">
+            <div class="rf"><label>Product Cost per Unit ($)</label><input type="number" id="az-cost" value="8" min="0" step="0.5"><div class="hint">Manufacturing + shipping to Amazon</div></div>
+            <div class="rf"><label>Selling Price per Unit ($)</label><input type="number" id="az-price" value="24.99" min="0" step="0.5"></div>
+          </div>
+          <div class="rf2">
+            <div class="rf"><label>Amazon Referral Fee (%)</label><input type="number" id="az-referral" value="15" min="0" max="45" step="1"><div class="hint">Typically 8–15%</div></div>
+            <div class="rf"><label>FBA Fulfillment Fee ($)</label><input type="number" id="az-fba" value="4.75" min="0" step="0.25"><div class="hint">Per unit (avg $3–$6)</div></div>
+          </div>
+          <div class="rf2">
+            <div class="rf"><label>PPC Advertising per Unit ($)</label><input type="number" id="az-ppc" value="2.50" min="0" step="0.25"></div>
+            <div class="rf"><label>Monthly Units Sold</label><input type="number" id="az-units" value="300" min="1" step="10"></div>
+          </div>
+          <div class="rf"><label>Other Costs per Unit ($)</label><input type="number" id="az-other" value="1" min="0" step="0.25"><div class="hint">Storage, prep, returns, labels</div></div>
+          <button class="roi-btn" onclick="calcAmazon()">⚡ Calculate Amazon FBA ROI</button>
+        </div>
+        <!-- PROJECT -->
+        <div class="roi-panel" id="tab-project">
+          <div class="rf"><label>Total Project Cost ($)</label><input type="number" id="pj-cost" value="50000" min="0" step="1000"><div class="hint">Labor + software + hardware + implementation</div></div>
+          <div class="rf"><label>Annual Benefits / Savings ($)</label><input type="number" id="pj-benefits" value="25000" min="0" step="1000"><div class="hint">Cost savings + revenue gains + productivity value</div></div>
+          <div class="rf2">
+            <div class="rf"><label>Project Duration (Years)</label><input type="number" id="pj-years" value="3" min="1" max="20" step="1"></div>
+            <div class="rf"><label>Discount Rate (%)</label><input type="number" id="pj-discount" value="8" min="0" max="30" step="0.5"><div class="hint">Your cost of capital / hurdle rate</div></div>
+          </div>
+          <button class="roi-btn" onclick="calcProject()">⚡ Calculate Project ROI</button>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="roi-result">
+        <p class="rr-head">Your ROI Results</p>
+        <p class="rr-sub" id="roi-sub">Adjust inputs and click Calculate</p>
+        <div class="rr-primary">
+          <span class="rr-primary-val" id="roi-pct">0.00%</span>
+          <span class="rr-primary-lbl">Return on Investment (ROI)</span>
+        </div>
+        <div class="rr-boxes">
+          <div class="rr-box"><span class="rr-box-val" id="roi-net">$0</span><span class="rr-box-lbl">Net Profit</span></div>
+          <div class="rr-box"><span class="rr-box-val" id="roi-payback">0.0 yrs</span><span class="rr-box-lbl">Payback Period</span></div>
+          <div class="rr-box"><span class="rr-box-val" id="roi-annualized">0.00%</span><span class="rr-box-lbl">Annualized ROI</span></div>
+          <div class="rr-box"><span class="rr-box-val" id="roi-after-tax">0.00%</span><span class="rr-box-lbl">After-Tax ROI</span></div>
+        </div>
+        <div class="rr-lines" id="roi-breakdown">
+          <div class="rr-line"><span class="ll">Total Investment</span><span class="lv" id="rl-invest">—</span></div>
+          <div class="rr-line"><span class="ll">Total Return</span><span class="lv pos" id="rl-return">—</span></div>
+          <div class="rr-line"><span class="ll">Net Profit</span><span class="lv pos" id="rl-net">—</span></div>
+          <div class="rr-line"><span class="ll">Tax on Profit</span><span class="lv neg" id="rl-tax">—</span></div>
+          <div class="rr-line"><span class="ll">After-Tax Net Profit</span><span class="lv" id="rl-aftertax">—</span></div>
+          <div class="rr-line"><span class="ll">ROI</span><span class="lv pos" id="rl-roi">—</span></div>
+        </div>
+        <p class="rr-disc">*Estimates only. Consult a qualified financial advisor before making investment decisions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO USE -->
+  <section class="roi-section" id="how-to-use">
+    <h2>How to Use This ROI Calculator</h2>
+    <p>Using this ROI calculator is straightforward. Choose the tab that matches your investment type, enter your numbers, and click Calculate. Results update instantly — no page reload needed.</p>
+
+    <h3>Step 1: Select Your Investment Type</h3>
+    <p>Click one of the six tabs: <strong>Basic ROI</strong> for general investments, <strong>Real Estate</strong> for property deals (great for investors in Texas, Florida, and Ohio), <strong>Marketing</strong> for ad campaigns and SEO, <strong>Solar</strong> for solar panel installations (popular in California, Arizona, and North Carolina), <strong>Amazon FBA</strong> for product sellers, or <strong>Project / IT</strong> for business software and automation investments.</p>
+
+    <h3>Step 2: Enter Your Numbers</h3>
+    <p>Fill in the required fields. Each input has a hint explaining what to enter. Use actual dollar amounts — no abbreviations. Include <em>all</em> costs, not just the purchase price. Overlooking closing costs, fees, or holding expenses is the #1 reason ROI calculations are inaccurate.</p>
+
+    <h3>Step 3: Review Your Results</h3>
+    <p>Your results appear instantly on the right side (or below on mobile). You'll see your <strong>ROI percentage</strong>, <strong>annualized ROI (CAGR)</strong>, <strong>net profit</strong>, <strong>payback period</strong>, and <strong>after-tax return</strong>. The breakdown panel shows a line-by-line summary of each calculation step.</p>
+
+    <div class="roi-info">💡 <strong>Pro Tip:</strong> Adjust different scenarios by changing inputs in real time. Compare a rental property in Michigan vs. one in Pennsylvania, or a $5,000 Google Ads campaign vs. a $5,000 SEO investment. Side-by-side comparisons help you allocate capital where the ROI is strongest.</div>
+  </section>
+
+  <!-- FORMULA -->
+  <section class="roi-section" id="formula">
+    <h2>ROI Formula Explained in Plain English</h2>
+    <p>At its core, ROI answers one question: <em>how much did you make relative to what you spent?</em> It's the single most important metric for any investor, business owner, or marketer in the USA.</p>
+    <div class="roi-formula">
+      <code><span>ROI</span> = (Net Profit / Total Investment) × 100</code>
+      <code><span>Net Profit</span> = Total Return − Total Investment</code>
+      <code>Example: Invest $10,000 → Receive $13,000 → Net Profit $3,000</code>
+      <code><span>ROI</span> = ($3,000 / $10,000) × 100 = <span>30%</span></code>
+    </div>
+
+    <h3>Annualized ROI (CAGR)</h3>
+    <p>Simple ROI doesn't account for how long your money was tied up. A 30% return over 3 years is very different from 30% in 6 months. Annualized ROI (also called CAGR — Compound Annual Growth Rate) puts all investments on a level playing field.</p>
+    <div class="roi-formula">
+      <code><span>Annualized ROI</span> = ((1 + ROI)^(1/Years) − 1) × 100</code>
+      <code>Example: 30% ROI over 3 years → Annualized ROI = <span>9.14%/yr</span></code>
+    </div>
+
+    <h3>After-Tax ROI</h3>
+    <p>Always calculate after-tax ROI for a realistic picture — because the IRS always gets its share. Capital gains tax, ordinary income tax, depreciation recapture, and state income taxes all reduce your actual return. In states like Texas and Florida (0% state income tax), after-tax ROI is naturally higher than in California (up to 13.3%) or New York (up to 10.9%).</p>
+    <div class="roi-formula">
+      <code><span>After-Tax Net Profit</span> = Net Profit × (1 − Tax Rate)</code>
+      <code><span>After-Tax ROI</span> = (After-Tax Net Profit / Investment) × 100</code>
+    </div>
+
+    <h3>How to Calculate ROI in Excel</h3>
+    <p>Many investors prefer tracking ROI in spreadsheets. Here's the simplest Excel formula for return on investment:</p>
+    <div class="roi-formula">
+      <code>Cell A1: Net Profit (e.g., 3000)</code>
+      <code>Cell B1: Total Investment (e.g., 10000)</code>
+      <code>Cell C1: <span>=A1/B1*100</span> → Result: <span>30%</span></code>
+      <code>Annualized: <span>=((1+(A1/B1))^(1/3)-1)*100</span> → <span>9.14%</span></code>
+    </div>
+    <p>For a more robust setup, <a href="#download">download our free Excel ROI template</a> with pre-built formulas for all investment types, or read our complete step-by-step tutorial on <a href="/blog/how-to-calculate-roi" style="font-weight:700;text-decoration:underline;">how to calculate ROI across real estate, marketing, and Amazon FBA</a>.</p>
+
+    <div class="roi-info">💡 <strong>Payback Period</strong> = Total Investment / Annual Net Profit. A $10,000 investment generating $3,000/year pays back in 3.33 years. The shorter the payback, the lower your risk exposure.</div>
+  </section>
+
+  <!-- TYPES -->
+  <section class="roi-section" id="types">
+    <h2>Different Types of ROI Calculators — Which One Do You Need?</h2>
+    <p>ROI applies to virtually every type of investment, but the inputs and benchmarks differ significantly. Here's a breakdown of the most common ROI calculator types used by investors and businesses across the USA:</p>
+    <table class="roi-table">
+      <thead><tr><th>Investment Type</th><th>What ROI Measures</th><th>Good ROI Benchmark (USA)</th><th>Calculator</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Real Estate</strong></td><td>Cash-on-cash return + appreciation</td><td>8–12% annually</td><td><a href="/business/real-estate-roi-calculator">Real Estate ROI →</a></td></tr>
+        <tr><td><strong>Rental Property</strong></td><td>Monthly cash flow vs cash invested</td><td>6–10% cash-on-cash</td><td><a href="/business/rental-property-roi-calculator">Rental ROI →</a></td></tr>
+        <tr><td><strong>Marketing / Ad Spend</strong></td><td>Revenue per dollar of ad spend</td><td>5:1 ratio ($5 return per $1)</td><td><a href="/business/marketing-roi-calculator">Marketing ROI →</a></td></tr>
+        <tr><td><strong>Solar Panels</strong></td><td>Energy savings vs installation cost</td><td>10–20% annually (after ITC)</td><td><a href="/business/solar-roi-calculator">Solar ROI →</a></td></tr>
+        <tr><td><strong>Amazon FBA</strong></td><td>Net profit vs product + fees investment</td><td>30–100% per product</td><td><a href="/business/amazon-roi-calculator">Amazon ROI →</a></td></tr>
+        <tr><td><strong>Automation / Software</strong></td><td>Cost savings vs implementation cost</td><td>100–400% over 3 years</td><td><a href="/business/automation-roi-calculator">Automation ROI →</a></td></tr>
+        <tr><td><strong>IT / Project</strong></td><td>Business benefits vs total project cost</td><td>Varies by project type</td><td><a href="/business/project-roi-calculator">Project ROI →</a></td></tr>
+        <tr><td><strong>SEO</strong></td><td>Organic traffic value vs SEO investment</td><td>$5–$20 return per $1 spent</td><td><a href="/business/marketing-roi-calculator">SEO ROI →</a></td></tr>
+        <tr><td><strong>Commercial Real Estate</strong></td><td>Net operating income vs total cost</td><td>5–10% cap rate</td><td><a href="/real-estate/cap-rate-calculator">Cap Rate →</a></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Real Estate ROI Calculator</h3>
+    <p>The <a href="/business/real-estate-roi-calculator">real estate ROI calculator</a> is the most popular variant on this site. It factors in purchase price, down payment, closing costs, rental income, expenses, appreciation, and equity buildup. Real estate ROI is particularly relevant for investors in high-growth markets like Dallas (Texas), Atlanta (Georgia), Charlotte (North Carolina), and Columbus (Ohio).</p>
+
+    <h3>Marketing ROI Calculator</h3>
+    <p>Use the <a href="/business/marketing-roi-calculator">marketing ROI calculator</a> for Google Ads, Facebook Ads, SEO campaigns, email marketing, and influencer partnerships. It accounts for campaign spend, attributed revenue, and gross margin to give you true marketing ROI — not just ROAS. Essential for digital marketing teams in competitive US markets like New York, Los Angeles, and Chicago.</p>
+
+    <h3>Solar ROI Calculator</h3>
+    <p>The <a href="/business/solar-roi-calculator">solar ROI calculator</a> helps homeowners and businesses evaluate the return on solar panel installations. With the 30% federal Investment Tax Credit (ITC) still available, solar ROI is strongest in sun-rich states like California, Florida, Arizona, Texas, and North Carolina.</p>
+
+    <h3>Amazon FBA ROI Calculator</h3>
+    <p>The <a href="/business/amazon-roi-calculator">Amazon ROI calculator</a> accounts for product cost, Amazon referral fees, FBA fulfillment fees, storage costs, PPC advertising, and returns. Serious Amazon sellers target 30%+ net ROI per product to build a sustainable FBA business.</p>
+
+    <h3>Software &amp; Automation ROI Calculator</h3>
+    <p>The <a href="/business/automation-roi-calculator">automation ROI calculator</a> helps businesses evaluate technology investments like CRM systems, ERP software, AI tools, and process automation. It uses Net Present Value (NPV) to account for the time value of money over the project's lifespan — critical for large enterprise investments in states like Illinois, Pennsylvania, and Michigan where manufacturing automation is booming.</p>
+  </section>
+
+  <!-- STATE-SPECIFIC -->
+  <section class="roi-section" id="by-state">
+    <h2>State-Specific ROI Considerations (2026 USA)</h2>
+    <p>ROI varies significantly by state due to property taxes, income tax rates, energy costs, incentive programs, and local market conditions. Understanding these differences is critical for maximizing your investment returns across the USA.</p>
+
+    <h3>Texas ROI Considerations</h3>
+    <p>Texas has <strong>no state income tax</strong>, which directly boosts after-tax investment ROI across the board. However, property taxes are among the highest in the nation (averaging 1.6–2.5% of assessed value), which compresses rental property net yield. Real estate investors in Austin, Dallas, Houston, and San Antonio benefit from strong population growth (Texas added more residents than any other state), but face compressed cap rates (4–5.5%) in hot markets. Solar ROI in Texas is increasingly strong due to high electricity rates in the ERCOT grid — combined with the federal 30% ITC, payback periods of 7–9 years are achievable.</p>
+
+    <h3>California ROI Considerations</h3>
+    <p>California's top state income tax rate of 13.3% is the highest in the nation, significantly reducing after-tax investment returns. However, <strong>solar panel ROI in California is exceptional</strong> — with electricity rates of $0.25–$0.40/kWh (the highest in the continental US), NEM 3.0 net metering, and the federal ITC, payback periods as short as 5–7 years are common. Real estate appreciation in coastal markets (Los Angeles, San Francisco, San Diego) can push total ROI higher, but low cap rates (3–4%) mean negative monthly cash flow is common. Marketing ROI benchmarks in California tend to require higher budgets due to market competition, but the affluent consumer base often delivers strong conversion rates.</p>
+
+    <h3>Florida ROI Considerations</h3>
+    <p>Florida has <strong>no state income tax</strong>, making it one of the top states for investment ROI after taxes. Short-term rental (Airbnb/VRBO) ROI in Miami, Orlando, Tampa, and Key West can reach 15–25% annually thanks to massive tourism demand. Rental yield in secondary Florida markets like Jacksonville, Ocala, Lakeland, and Fort Myers averages 7–9% gross. Florida also offers no inheritance tax and favorable LLC formation laws, improving overall investment returns. Solar ROI is growing rapidly in the Sunshine State, with increasing utility rates driving 8–10 year payback periods.</p>
+
+    <h3>Michigan ROI Considerations</h3>
+    <p>Michigan offers some of the <strong>highest rental yields</strong> in the nation. Detroit and surrounding markets like Grand Rapids, Flint, and Lansing regularly show gross yields of 10–15%, with cash-on-cash returns of 8–12% achievable. Michigan's flat 4.25% state income tax is moderate compared to coastal states. Manufacturing and <a href="/business/automation-roi-calculator">automation ROI</a> is particularly strong in Michigan given the region's automotive industry labor costs and available state incentives for AI, robotics, and Industry 4.0 implementation.</p>
+
+    <h3>New York ROI Considerations</h3>
+    <p>New York City real estate has extremely low cap rates (3–4%) but a strong appreciation history, making it a long-term play rather than a cash-flow investment. State income tax up to 10.9% — plus NYC's own income tax (up to 3.876%) — reduces after-tax ROI substantially. Marketing ROI benchmarks in NYC typically require higher cost-per-acquisition due to market saturation. However, New York's robust technology and financial services sectors provide excellent <a href="/business/automation-roi-calculator">software ROI</a> and project-based returns.</p>
+
+    <h3>Ohio ROI Considerations</h3>
+    <p>Ohio consistently ranks as one of the <strong>best states for rental property ROI</strong> in the entire country. Cleveland, Cincinnati, Columbus, and Toledo show gross rental yields of 9–12%, and cash-on-cash returns of 7–11% are achievable with conventional financing. Ohio's progressive income tax (max ~3.99%) is moderate. Columbus is a standout for marketing ROI due to lower CPM rates than coastal markets, and Cincinnati's growing tech sector provides strong automation ROI opportunities.</p>
+
+    <h3>Georgia ROI Considerations</h3>
+    <p>Atlanta's explosive growth makes Georgia one of the most attractive states for real estate ROI. Cap rates of 5–7% combined with 8–12% annual appreciation in growth corridors (Midtown, Buckhead, and outer suburbs like Alpharetta and Kennesaw) produce excellent total returns. Georgia's flat 5.49% income tax rate (recently reduced from the former graduated scale) is competitive, and the state's favorable business climate and low cost of living attract both employers and investors. Amazon FBA sellers based in Georgia benefit from proximity to major Amazon fulfillment centers, reducing inbound shipping costs.</p>
+
+    <h3>North Carolina ROI Considerations</h3>
+    <p>Charlotte and Raleigh-Durham are two of the fastest-growing metros in the USA, driving strong real estate appreciation (7–10% in growth corridors) alongside reasonable rental yields (6–8% gross). North Carolina's flat 4.5% income tax is among the lowest of states that levy an income tax. <strong>Solar ROI in North Carolina</strong> is notable — the state historically ranked #2 in the US for solar capacity, and utility co-op credits plus the federal ITC make residential solar payback achievable in 7–10 years.</p>
+
+    <h3>Pennsylvania ROI Considerations</h3>
+    <p>Philadelphia and Pittsburgh offer above-average rental ROI (7–11% gross yield) with a low flat state income tax (3.07% — one of the lowest in the country). Pennsylvania's manufacturing sector provides high ROI on automation and software investments. Home improvement and fix-and-flip ROI is strong in Pennsylvania markets where renovation costs are materially lower than in neighboring New York or New Jersey, yet resale values can reach 70–90% of comparable coastal markets.</p>
+
+    <h3>Illinois ROI Considerations</h3>
+    <p>Illinois presents a mixed picture. Chicago-area investors face high property taxes (1.5–3%) that compress net rental yields, and the state's flat 4.95% income tax adds to the burden. However, <strong>commercial real estate near Chicago's logistics hubs</strong> (O'Hare, Joliet, Romeoville) offers strong ROI driven by e-commerce distribution demand. Industrial cap rates of 5.5–7% and triple-net lease structures make Chicago-area commercial properties attractive for investors who understand the market. Marketing ROI in Chicago is solid due to a large consumer market with moderate CPMs compared to NYC or LA.</p>
+
+    <div class="roi-info">💡 <strong>No-income-tax states</strong> for maximum after-tax ROI: Texas, Florida, Nevada, Washington, Wyoming, South Dakota, Alaska, New Hampshire (no wage tax), and Tennessee. Investment income earned in these states avoids state-level taxation entirely.</div>
+  </section>
+
+  <!-- EXAMPLES -->
+  <section class="roi-section" id="examples">
+    <h2>Practical USA ROI Examples with Real Numbers</h2>
+    <p>Theory is important, but real numbers make it actionable. Here are five concrete ROI examples using actual market data from popular US investment scenarios:</p>
+
+    <h3>Example 1: Rental Property in Cleveland, Ohio</h3>
+    <table class="roi-table">
+      <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Purchase Price</td><td>$95,000</td></tr>
+        <tr><td>Down Payment (25%)</td><td>$23,750</td></tr>
+        <tr><td>Closing Costs + Repairs</td><td>$4,500</td></tr>
+        <tr><td>Total Cash Invested</td><td>$28,250</td></tr>
+        <tr><td>Monthly Rent</td><td>$925</td></tr>
+        <tr><td>Monthly Expenses (mortgage + tax + ins + maint)</td><td>$680</td></tr>
+        <tr><td>Monthly Cash Flow</td><td>$245</td></tr>
+        <tr><td>Annual Cash Flow</td><td>$2,940</td></tr>
+        <tr><td><strong>Cash-on-Cash ROI</strong></td><td><strong>10.4%</strong></td></tr>
+        <tr><td>5-Year Appreciation (3.5%/yr)</td><td>+$18,200</td></tr>
+        <tr><td><strong>Total 5-Year ROI</strong></td><td><strong>74.7%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Example 2: Google Ads Campaign — Dallas, Texas</h3>
+    <table class="roi-table">
+      <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly Ad Spend</td><td>$3,500</td></tr>
+        <tr><td>Attributed Monthly Revenue</td><td>$21,000</td></tr>
+        <tr><td>Gross Margin</td><td>55%</td></tr>
+        <tr><td>Gross Profit from Campaign</td><td>$11,550</td></tr>
+        <tr><td>Net Profit (revenue − ad spend)</td><td>$17,500</td></tr>
+        <tr><td><strong>Marketing ROI</strong></td><td><strong>400%</strong></td></tr>
+        <tr><td><strong>ROAS (Revenue per $1 spent)</strong></td><td><strong>6:1</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="roi-info">💡 In Texas with no state income tax, the business keeps more of this $17,500 profit compared to the same scenario in California or New York.</div>
+
+    <h3>Example 3: Solar Panel Installation — Phoenix, Arizona</h3>
+    <table class="roi-table">
+      <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>System Cost (10 kW)</td><td>$28,000</td></tr>
+        <tr><td>Federal ITC (30%)</td><td>−$8,400</td></tr>
+        <tr><td>Net Investment After ITC</td><td>$19,600</td></tr>
+        <tr><td>Year 1 Energy Savings</td><td>$2,800</td></tr>
+        <tr><td>Payback Period</td><td>~7 years</td></tr>
+        <tr><td>25-Year Total Savings (w/ 3% escalation)</td><td>$101,800+</td></tr>
+        <tr><td><strong>25-Year ROI</strong></td><td><strong>419%</strong></td></tr>
+        <tr><td><strong>Annualized ROI</strong></td><td><strong>6.8%/yr</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Example 4: Amazon FBA Product Launch</h3>
+    <table class="roi-table">
+      <thead><tr><th>Item</th><th>Per Unit</th></tr></thead>
+      <tbody>
+        <tr><td>Product Cost (manufactured + shipped)</td><td>$8.00</td></tr>
+        <tr><td>Amazon Selling Price</td><td>$24.99</td></tr>
+        <tr><td>Amazon Referral Fee (15%)</td><td>−$3.75</td></tr>
+        <tr><td>FBA Fulfillment Fee</td><td>−$4.75</td></tr>
+        <tr><td>PPC Advertising</td><td>−$2.50</td></tr>
+        <tr><td>Storage + Prep + Returns</td><td>−$1.00</td></tr>
+        <tr><td>Total Cost per Unit</td><td>$20.00</td></tr>
+        <tr><td><strong>Net Profit per Unit</strong></td><td><strong>$4.99</strong></td></tr>
+        <tr><td><strong>ROI per Unit</strong></td><td><strong>33.2%</strong></td></tr>
+        <tr><td>Monthly Profit (300 units)</td><td>$1,497</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Example 5: Business Automation Project — Chicago, Illinois</h3>
+    <table class="roi-table">
+      <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Total Project Cost (software + implementation + training)</td><td>$75,000</td></tr>
+        <tr><td>Annual Labor Savings</td><td>$42,000</td></tr>
+        <tr><td>Annual Error Reduction Savings</td><td>$8,000</td></tr>
+        <tr><td>Total Annual Benefits</td><td>$50,000</td></tr>
+        <tr><td>Payback Period</td><td>1.5 years</td></tr>
+        <tr><td><strong>3-Year ROI</strong></td><td><strong>100%</strong></td></tr>
+        <tr><td><strong>3-Year NPV (at 8% discount)</strong></td><td><strong>$53,850</strong></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- MISTAKES -->
+  <section class="roi-section" id="mistakes">
+    <h2>Common Mistakes When Calculating ROI</h2>
+    <p>Even experienced investors and business owners make these errors. Avoid them to get accurate, reliable ROI figures:</p>
+    <ul>
+      <li><strong>Ignoring all costs.</strong> Only counting the purchase price and forgetting closing costs, repairs, holding costs, and selling costs can make ROI look 30–50% better than reality. Always use <em>total</em> investment, not just the sticker price.</li>
+      <li><strong>Using gross rent, not net income.</strong> A 10% gross rental yield in Michigan often drops to 5–6% net after vacancy, maintenance, property management, insurance, and taxes. Always use net operating income for real estate ROI calculations.</li>
+      <li><strong>Skipping taxes.</strong> Capital gains tax, income tax on rental income, depreciation recapture, and state-level taxes all eat into returns. A 30% ROI at a 25% combined tax rate drops to a 22.5% after-tax ROI. This is why our calculator includes a tax rate input.</li>
+      <li><strong>Not annualizing.</strong> A 50% ROI over 5 years sounds great but is only 8.4% annualized — potentially below the S&P 500 average. Always compare investments on an annualized basis to make fair comparisons.</li>
+      <li><strong>Confusing ROI with cash-on-cash return.</strong> ROI measures total return on total investment. Cash-on-cash return measures annual cash flow against cash invested (your down payment). Both metrics matter for leveraged real estate deals — use our <a href="/real-estate/cash-on-cash-return-calculator">cash-on-cash calculator</a> for the latter.</li>
+      <li><strong>Ignoring the time value of money.</strong> For projects lasting more than 2–3 years, use Net Present Value (NPV) or Internal Rate of Return (IRR). $25,000 received in Year 5 is worth significantly less than $25,000 today at any reasonable discount rate.</li>
+      <li><strong>Attributing all revenue to one campaign.</strong> Marketing ROI is only accurate when attribution is correct. Use UTM parameters, promo codes, or multi-touch attribution models to avoid inflated figures. This is especially important for SEO ROI calculations where organic traffic compounds over time.</li>
+      <li><strong>Forgetting opportunity cost.</strong> Money invested in a 5% ROI asset is money not invested elsewhere. Always compare against your best alternative use of capital — for most US investors, that benchmark is the S&P 500's historical 7–10% average annual return.</li>
+    </ul>
+    <div class="roi-warn">⚠️ <strong>Amazon FBA sellers:</strong> A common error is calculating ROI on product cost only, forgetting Amazon's FBA fulfillment fee (avg $3–$6/unit), referral fee (8–15%), monthly storage fee, PPC advertising spend, prep costs, and return processing costs. Always calculate on total landed cost. Use the Amazon FBA tab above or our dedicated <a href="/business/amazon-roi-calculator" style="color:#92400e;text-decoration:underline;">Amazon ROI calculator</a> for accurate results.</div>
+    <div class="roi-warn">⚠️ <strong>Solar investors:</strong> Don't forget to factor in the 30% federal Investment Tax Credit (ITC) when calculating net investment. Also account for annual electricity price increases (averaging 3% nationally), which <em>increase</em> your savings over time and significantly improve long-term ROI.</div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="roi-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <% const _faqs = [["How do you calculate ROI?", "ROI = (Net Profit / Total Investment) × 100. Net profit equals your total return minus your total investment cost. Example: invest $10,000, receive $13,000 back → net profit = $3,000 → ROI = 30%. For multi-year investments, also calculate annualized ROI using the CAGR formula: ((1 + ROI)^(1/Years) − 1) × 100. Use the calculator above for instant, accurate results."], ["How is ROI calculated for rental property?", "Rental property ROI = (Annual Net Cash Flow / Total Cash Invested) × 100. Annual net cash flow = gross annual rent minus vacancy (typically 5–8%), property taxes, insurance, maintenance (budget 1% of property value annually), property management fees (8–10%), and mortgage principal &amp; interest payments. Total cash invested = down payment + closing costs + upfront repairs. In strong rental markets like Ohio, Michigan, and Georgia, 8–12% cash-on-cash returns are achievable."], ["How do you calculate ROI in Excel?", "In Excel: enter your net profit in A1, total investment in B1, then use the formula =A1/B1*100 in C1. For annualized ROI: =((1+(A1/B1))^(1/years)-1)*100. For rental property ROI: create columns for monthly income, expenses, and cash flow, then sum annually and divide by total cash invested. <a href=\"#download\">Download our free Excel ROI template</a> with pre-built formulas for all investment types."], ["How do you calculate marketing ROI?", "Marketing ROI = ((Revenue Attributed to Campaign − Campaign Cost) / Campaign Cost) × 100. Example: a $5,000 Google Ads campaign generates $18,000 in tracked revenue → Marketing ROI = ($13,000 / $5,000) × 100 = 260%. The industry benchmark is a 5:1 ROAS minimum ($5 revenue per $1 spent). Always use UTM tracking, Google Analytics 4 attribution, or CRM data to ensure accurate measurement. Try our <a href=\"/business/marketing-roi-calculator\">marketing ROI calculator</a> for detailed analysis."], ["How do you calculate ROI in real estate?", "Real estate ROI has two components: (1) Cash-on-cash ROI = Annual Cash Flow / Cash Invested × 100 — this measures your annual return on actual cash deployed. (2) Total ROI includes property appreciation, equity buildup through mortgage paydown, and any tax benefits like depreciation. For a $250,000 property with 20% down ($50,000 + $5,000 closing costs), $2,400/yr net cash flow, and 3.5% annual appreciation over 5 years, total ROI can reach 60–80%. States like Texas and Florida (no state income tax) produce higher after-tax ROI."], ["How do you calculate ROI for a project or IT investment?", "Project ROI = ((Total Benefits − Total Costs) / Total Costs) × 100. Benefits include revenue generated, cost savings, productivity improvements, and risk reduction. For large enterprise projects, use Net Present Value (NPV) to discount future benefits by your cost of capital (typically 8–12% for US businesses). Example: a $50,000 automation project generating $25,000/year in savings over 3 years has a simple ROI of 50%, but the NPV-adjusted ROI accounts for the time value of those future savings."], ["How do you calculate Amazon FBA ROI?", "Amazon FBA ROI = ((Revenue − Total Costs) / Total Costs) × 100. Total costs must include: product cost (sourcing + manufacturing), Amazon referral fee (8–15%), FBA fulfillment fee (avg $3–$6/unit), monthly storage fees, PPC advertising spend, prep/labeling, and return processing costs. Target 30%+ ROI per product to build a sustainable business. Top Amazon FBA sellers achieve 50–100%+ ROI per product. Use our <a href=\"/business/amazon-roi-calculator\">Amazon ROI calculator</a> for a detailed breakdown."], ["How do you calculate digital marketing ROI and influencer ROI?", "Digital marketing ROI = ((Attributed Revenue − Marketing Spend) / Marketing Spend) × 100. Track revenue using UTM parameters, Google Analytics, or your CRM. Industry average digital marketing ROI is 5:1 ($5 earned per $1 spent). For influencer campaigns: Influencer ROI = ((Revenue from Promo Code − Influencer Fee) / Influencer Fee) × 100. Also measure Earned Media Value (EMV) = total impressions × industry CPM to capture brand awareness value beyond direct sales."], ["What is a good ROI in 2026?", "Benchmarks vary by asset class in the USA: S&amp;P 500 (historical average): 7–10% annually. Rental real estate: 8–12% cash-on-cash in strong markets (Ohio, Michigan, Georgia). Marketing campaigns: 5:1 ROAS minimum. Solar panels: 10–20% annualized after the 30% ITC. Amazon FBA: 30–100%+ per product. Business automation: 100–400% over 3 years. A \"good\" ROI always depends on the risk level — higher risk should demand proportionally higher returns."], ["What is the difference between ROI, IRR, and CAGR?", "ROI is a simple percentage of total profit vs total cost — it doesn't account for time. CAGR (Compound Annual Growth Rate) annualizes the ROI to show a per-year return, making it easy to compare investments of different durations. IRR (Internal Rate of Return) is the annualized rate at which the Net Present Value of all cash flows equals zero — it accounts for the timing and size of each individual cash flow. For simple investments, use ROI or CAGR. For complex multi-year projects with uneven cash flows (common in commercial real estate and software projects), IRR is more accurate."]]; _faqs.forEach(function(f) { %>
+    <div class="roi-faq-item">
+      <div class="roi-faq-q"><%- f[0] %></div>
+      <div class="roi-faq-a"><%- f[1] %></div>
+    </div>
+    <% }); %>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <div class="roi-download" id="download">
+    <div class="roi-download-icon">📥</div>
+    <div>
+      <h3>Free ROI Calculator Excel Template 2026 — USA Edition</h3>
+      <p>Download our professionally designed Excel ROI template with 5 pre-built tabs: Basic ROI, Real Estate ROI (with cash-on-cash and total return), Marketing ROI (with ROAS), Amazon FBA ROI (with per-unit breakdown), and Project ROI (with NPV analysis). Includes state tax adjustment cells, visual charts, and step-by-step instructions. Works in Microsoft Excel, Google Sheets, and LibreOffice Calc.</p>
+      <a href="/downloads/roi-calculator-excel-template-2026-usa" class="dl-btn">⬇ Download Free Excel Template</a>
+      <div class="file-meta">📄 roi-calculator-excel-template-2026-usa.xlsx · Excel Spreadsheet · 5 Tabs · Free · No email required</div>
+    </div>
+  </div>
+
+  <!-- RELATED -->
+  <section class="roi-section" id="related">
+    <h2>Related Calculators</h2>
+    <p>Explore our full suite of business and investment calculators — each designed for a specific use case and optimized for US investors:</p>
+    <div class="related-grid">
+      <a href="/business/real-estate-roi-calculator">🏠 Real Estate ROI</a>
+      <a href="/business/marketing-roi-calculator">📣 Marketing ROI</a>
+      <a href="/business/rental-property-roi-calculator">🏘️ Rental Property ROI</a>
+      <a href="/business/solar-roi-calculator">☀️ Solar ROI</a>
+      <a href="/business/amazon-roi-calculator">📦 Amazon FBA ROI</a>
+      <a href="/business/automation-roi-calculator">🤖 Automation ROI</a>
+      <a href="/business/project-roi-calculator">🔧 Project ROI</a>
+      <a href="/business/profit-margin-calculator">📈 Profit Margin</a>
+      <a href="/business/break-even-calculator">⚖️ Break-Even Analysis</a>
+      <a href="/business/ltv-cac-calculator">📊 LTV:CAC Ratio</a>
+      <a href="/real-estate/cap-rate-calculator">🏢 Cap Rate</a>
+      <a href="/real-estate/cash-on-cash-return-calculator">💰 Cash-on-Cash</a>
+    </div>
+  </section>
+
+</div><!-- /roi-main -->
+
+<!-- SIDEBAR -->
+<aside class="roi-sidebar">
+  <div class="roi-widget">
+    <div class="roi-widget-head">
+      <div class="wt">📊 ROI Benchmarks 2026</div>
+      <div class="ws">USA averages by investment type</div>
+    </div>
+    <div class="roi-widget-rows">
+      <div class="roi-widget-row"><div><div class="rwl">S&amp;P 500 Stock Market</div><div class="rws">Historical annual avg</div></div><div class="rwv">7–10%</div></div>
+      <div class="roi-widget-row"><div><div class="rwl">Rental Real Estate</div><div class="rws">Cash-on-cash, US avg</div></div><div class="rwv">8–12%</div></div>
+      <div class="roi-widget-row"><div><div class="rwl">Marketing / Digital Ads</div><div class="rws">Revenue per $1 spent</div></div><div class="rwv">5:1</div></div>
+      <div class="roi-widget-row"><div><div class="rwl">Solar Panels</div><div class="rws">After ITC, annualized</div></div><div class="rwv">10–20%</div></div>
+      <div class="roi-widget-row"><div><div class="rwl">Amazon FBA Product</div><div class="rws">Per product net ROI</div></div><div class="rwv">30–100%</div></div>
+      <div class="roi-widget-row"><div><div class="rwl">Business Automation</div><div class="rws">3-year average</div></div><div class="rwv">100–400%</div></div>
+      <div class="roi-widget-row"><div><div class="rwl">SEO Campaign</div><div class="rws">Long-term organic ROI</div></div><div class="rwv">$5–$20 per $1</div></div>
+      <div class="roi-widget-row"><div><div class="rwl">Commercial Real Estate</div><div class="rws">Average US cap rate</div></div><div class="rwv">5–10%</div></div>
+    </div>
+  </div>
+  <div class="roi-quick-widget">
+    <div class="roi-quick-head">🔗 ROI Calculators</div>
+    <ul class="roi-quick-links">
+      <li><a href="/business/roi-calculator" class="active">📊 ROI Calculator</a></li>
+      <li><a href="/business/real-estate-roi-calculator">🏠 Real Estate ROI</a></li>
+      <li><a href="/business/rental-property-roi-calculator">🏘️ Rental Property ROI</a></li>
+      <li><a href="/business/marketing-roi-calculator">📣 Marketing ROI</a></li>
+      <li><a href="/business/solar-roi-calculator">☀️ Solar ROI</a></li>
+      <li><a href="/business/amazon-roi-calculator">📦 Amazon FBA ROI</a></li>
+      <li><a href="/business/automation-roi-calculator">🤖 Automation ROI</a></li>
+      <li><a href="/business/project-roi-calculator">🔧 Project ROI</a></li>
+      <li><a href="/business/profit-margin-calculator">📈 Profit Margin</a></li>
+      <li><a href="/business/markup-calculator">🏷️ Markup Calculator</a></li>
+      <li><a href="/business/break-even-calculator">⚖️ Break-Even</a></li>
+    </ul>
+  </div>
+  <div class="roi-quick-widget">
+    <div class="roi-quick-head">📚 Related Investment Guides</div>
+    <ul class="roi-quick-links">
+      <li><a href="/blog/how-to-calculate-roi">📖 How to Calculate ROI (2026 Guide)</a></li>
+      <li><a href="/blog/what-is-a-good-cap-rate">🏢 What Is a Good Cap Rate?</a></li>
+      <li><a href="/blog/what-is-a-good-cash-on-cash-return">💵 Good Cash-on-Cash Return</a></li>
+      <li><a href="/blog/how-to-calculate-cap-rate">📊 How to Calculate Cap Rate</a></li>
+    </ul>
+  </div>
+</aside>
+
+</div><!-- /roi-wrap -->
+</main>
+
+<script>
+(function(){
+  /* ── Helpers ── */
+  var fmtC = function(v){return (v<0?'−':'')+'$'+Math.round(Math.abs(v)).toLocaleString('en-US');};
+  var fmtD = function(v){return (v<0?'−':'')+'$'+Math.abs(v).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');};
+  var fmtP = function(v){return (v<0?'−':'')+Math.abs(v).toFixed(2)+'%';};
+  var $ = function(id){return document.getElementById(id);};
+
+  function setResults(roi, net, invest, ret, years, taxRate, extra){
+    var annualized = years>0 ? (Math.pow(1+roi/100,1/years)-1)*100 : roi;
+    var payback    = net>0 ? invest/(net/years) : 0;
+    var afterTaxNet= net*(1-taxRate/100);
+    var afterTaxROI= invest>0 ? (afterTaxNet/invest)*100 : 0;
+    $('roi-pct').textContent      = fmtP(roi);
+    $('roi-pct').style.color      = roi>=0?'#fff':'#fca5a5';
+    $('roi-net').textContent      = fmtC(net);
+    $('roi-payback').textContent  = payback>0 ? payback.toFixed(1)+' yrs' : '—';
+    $('roi-annualized').textContent = fmtP(annualized);
+    $('roi-after-tax').textContent  = fmtP(afterTaxROI);
+    $('rl-invest').textContent    = fmtC(invest);
+    $('rl-return').textContent    = fmtC(ret);
+    $('rl-net').textContent       = fmtC(net);
+    $('rl-net').className         = 'lv '+(net>=0?'pos':'neg');
+    $('rl-tax').textContent       = '−'+fmtC(net*(taxRate/100));
+    $('rl-aftertax').textContent  = fmtC(afterTaxNet);
+    $('rl-aftertax').className    = 'lv '+(afterTaxNet>=0?'pos':'neg');
+    $('rl-roi').textContent       = fmtP(roi);
+    $('rl-roi').className         = 'lv '+(roi>=0?'pos':'neg');
+  }
+
+  /* ── Basic ROI ── */
+  window.calcBasic = function(){
+    var invest = parseFloat($('b-invest').value)||0;
+    var ret    = parseFloat($('b-return').value)||0;
+    var years  = parseFloat($('b-years').value)||1;
+    var tax    = parseFloat($('b-tax').value)||0;
+    var net    = ret-invest;
+    var roi    = invest>0?(net/invest)*100:0;
+    setResults(roi,net,invest,ret,years,tax);
+    $('roi-sub').textContent='Basic ROI · '+years+' yr hold · '+tax+'% tax';
+  };
+
+  /* ── Real Estate ROI ── */
+  window.calcRealEstate = function(){
+    var price    = parseFloat($('re-price').value)||0;
+    var down     = parseFloat($('re-down').value)||0;
+    var closing  = parseFloat($('re-closing').value)||0;
+    var repairs  = parseFloat($('re-repairs').value)||0;
+    var rent     = parseFloat($('re-rent').value)||0;
+    var expenses = parseFloat($('re-expenses').value)||0;
+    var appr     = parseFloat($('re-appr').value)||0;
+    var years    = parseInt($('re-years').value)||1;
+    var cashInvested = down+closing+repairs;
+    var annualCF    = (rent-expenses)*12;
+    var totalCF     = annualCF*years;
+    var salePrice   = price*Math.pow(1+appr/100,years);
+    var apprGain    = salePrice-price;
+    var totalReturn = cashInvested+totalCF+apprGain;
+    var net  = totalCF+apprGain;
+    var roi  = cashInvested>0?(net/cashInvested)*100:0;
+    var cocRoi= cashInvested>0?(annualCF/cashInvested)*100:0;
+    setResults(roi,net,cashInvested,totalReturn,years,0);
+    $('roi-sub').textContent='Real Estate ROI · CoC: '+cocRoi.toFixed(1)+'%/yr · '+years+' yr hold';
+  };
+
+  /* ── Marketing ROI ── */
+  window.calcMarketing = function(){
+    var spend   = parseFloat($('mk-spend').value)||0;
+    var revenue = parseFloat($('mk-revenue').value)||0;
+    var margin  = parseFloat($('mk-margin').value)||100;
+    var months  = parseInt($('mk-months').value)||1;
+    var grossProfit = revenue*(margin/100);
+    var net  = revenue-spend;
+    var roi  = spend>0?(net/spend)*100:0;
+    var roas = spend>0?revenue/spend:0;
+    setResults(roi,net,spend,revenue,months/12,0);
+    $('roi-sub').textContent='Marketing ROI · ROAS: '+roas.toFixed(2)+'x · Gross profit: '+fmtC(grossProfit);
+  };
+
+  /* ── Solar ROI ── */
+  window.calcSolar = function(){
+    var cost      = parseFloat($('sl-cost').value)||0;
+    var kw        = parseFloat($('sl-kw').value)||10;
+    var itc       = parseFloat($('sl-itc').value)||30;
+    var rebate    = parseFloat($('sl-rebate').value)||0;
+    var savings   = parseFloat($('sl-savings').value)||0;
+    var years     = parseInt($('sl-years').value)||25;
+    var escalation= parseFloat($('sl-escalation').value)||3;
+
+    var netCost = cost - (cost * itc/100) - rebate;
+    var totalSavings = 0;
+    var paybackYear = 0;
+    var cumulative = 0;
+    for(var i=1;i<=years;i++){
+      var yearSaving = savings * Math.pow(1+escalation/100, i-1);
+      totalSavings += yearSaving;
+      cumulative += yearSaving;
+      if(paybackYear===0 && cumulative >= netCost) paybackYear = i;
+    }
+    var net = totalSavings - netCost;
+    var roi = netCost>0 ? (net/netCost)*100 : 0;
+    var annRoi = years>0 ? (Math.pow(1+roi/100,1/years)-1)*100 : roi;
+    setResults(roi,net,netCost,netCost+totalSavings,years,0);
+    $('roi-sub').textContent='Solar ROI · Payback: '+(paybackYear>0?paybackYear+' yrs':'N/A')+' · '+kw+' kW system';
+  };
+
+  /* ── Amazon FBA ROI ── */
+  window.calcAmazon = function(){
+    var prodCost  = parseFloat($('az-cost').value)||0;
+    var price     = parseFloat($('az-price').value)||0;
+    var referral  = parseFloat($('az-referral').value)||15;
+    var fbaFee    = parseFloat($('az-fba').value)||0;
+    var ppc       = parseFloat($('az-ppc').value)||0;
+    var units     = parseInt($('az-units').value)||1;
+    var other     = parseFloat($('az-other').value)||0;
+
+    var referralFee = price * (referral/100);
+    var totalCostPerUnit = prodCost + referralFee + fbaFee + ppc + other;
+    var profitPerUnit = price - totalCostPerUnit;
+    var roiPerUnit = totalCostPerUnit>0 ? (profitPerUnit/totalCostPerUnit)*100 : 0;
+    var monthlyProfit = profitPerUnit * units;
+    var monthlyRevenue = price * units;
+    var monthlyInvest = totalCostPerUnit * units;
+
+    setResults(roiPerUnit, monthlyProfit, monthlyInvest, monthlyRevenue, 1/12, 0);
+    $('roi-sub').textContent='Amazon FBA · '+fmtD(profitPerUnit)+'/unit profit · '+fmtC(monthlyProfit)+'/mo';
+  };
+
+  /* ── Project ROI ── */
+  window.calcProject = function(){
+    var cost     = parseFloat($('pj-cost').value)||0;
+    var benefits = parseFloat($('pj-benefits').value)||0;
+    var years    = parseInt($('pj-years').value)||1;
+    var discount = parseFloat($('pj-discount').value)||0;
+    var totalBen = benefits*years;
+    var net  = totalBen-cost;
+    var roi  = cost>0?(net/cost)*100:0;
+    // NPV
+    var r = discount/100;
+    var npv = -cost;
+    for(var i=1;i<=years;i++) npv += benefits/Math.pow(1+r,i);
+    setResults(roi,net,cost,cost+totalBen,years,0);
+    $('roi-sub').textContent='Project ROI · NPV: '+fmtC(npv)+' · '+years+' yr project';
+  };
+
+  /* ── Tab switching ── */
+  document.querySelectorAll('.roi-tab').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.roi-tab').forEach(function(b){b.classList.remove('active');});
+      document.querySelectorAll('.roi-panel').forEach(function(p){p.classList.remove('active');});
+      btn.classList.add('active');
+      var t = btn.getAttribute('data-tab');
+      var panel = $('tab-' + t);
+      if (panel) panel.classList.add('active');
+      if (t === 'basic') calcBasic();
+      else if (t === 'realestate') calcRealEstate();
+      else if (t === 'marketing') calcMarketing();
+      else if (t === 'solar') calcSolar();
+      else if (t === 'amazon') calcAmazon();
+      else if (t === 'project') calcProject();
+    });
+  });
+
+  /* ── Live input real-time calculation listeners ── */
+  document.querySelectorAll('#tab-basic input').forEach(function(el){ el.addEventListener('input', calcBasic); el.addEventListener('change', calcBasic); });
+  document.querySelectorAll('#tab-realestate input').forEach(function(el){ el.addEventListener('input', calcRealEstate); el.addEventListener('change', calcRealEstate); });
+  document.querySelectorAll('#tab-marketing input').forEach(function(el){ el.addEventListener('input', calcMarketing); el.addEventListener('change', calcMarketing); });
+  document.querySelectorAll('#tab-solar input').forEach(function(el){ el.addEventListener('input', calcSolar); el.addEventListener('change', calcSolar); });
+  document.querySelectorAll('#tab-amazon input').forEach(function(el){ el.addEventListener('input', calcAmazon); el.addEventListener('change', calcAmazon); });
+  document.querySelectorAll('#tab-project input').forEach(function(el){ el.addEventListener('input', calcProject); el.addEventListener('change', calcProject); });
+
+  /* ── FAQ ── */
+  document.querySelectorAll('.roi-faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=this.closest('.roi-faq-item'), was=item.classList.contains('open');
+      document.querySelectorAll('.roi-faq-item').forEach(function(i){i.classList.remove('open');});
+      if(!was) item.classList.add('open');
+    });
+  });
+
+  /* ── TOC scroll spy ── */
+  var links=document.querySelectorAll('.roi-toc a');
+  var secs=[];
+  links.forEach(function(a){
+    var href=a.getAttribute('href');
+    if(!href || href.charAt(0)!=='#') return;
+    var id=href.replace('#','');
+    var el=document.getElementById(id);
+    if(el) secs.push({a:a,el:el});
+  });
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY+140;
+    var cur=secs[0];
+    secs.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=y)cur=s;});
+    links.forEach(function(a){a.classList.remove('active');});
+    if(cur) cur.a.classList.add('active');
+  },{passive:true});
+
+  /* Initial calc */
+  calcBasic();
+})();
+</script>
+<%- include('../../partials/footer') %>

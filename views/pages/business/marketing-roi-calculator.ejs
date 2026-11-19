@@ -1,0 +1,921 @@
+<%- include('../../partials/header') %>
+<style>
+/* Page Specific Enhancements */
+.calc-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+.calc-breadcrumbs {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+.calc-breadcrumbs a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+.calc-breadcrumbs a:hover {
+  text-decoration: underline;
+}
+.calculator-header {
+  margin-bottom: 1.75rem;
+}
+.calculator-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0 0 0.5rem;
+}
+.calculator-header .lead-description {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 950px;
+  border-left: 4px solid #1d4ed8;
+  padding-left: 1rem;
+}
+
+/* Two-Column Side-by-Side Calculator Grid (Above the Fold) */
+.calculator-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2.5rem;
+  overflow: visible;
+}
+.calculator-panel {
+  padding: 1.75rem;
+}
+.calculator-panel:first-child {
+  border-right: 1px solid #f1f5f9;
+}
+.results-panel {
+  background: linear-gradient(165deg, #f8fbff 0%, #eef5ff 100%);
+  border-radius: 0 14px 14px 0;
+  position: sticky;
+  top: 90px;
+  align-self: start;
+}
+.panel-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #1e293b;
+  margin-bottom: 0.35rem;
+}
+.form-control {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #0f172a;
+  outline: none;
+  background: #ffffff;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus {
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+.field-hint {
+  font-size: 0.74rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+  display: block;
+  line-height: 1.35;
+}
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Primary Highlight Metric */
+.highlight-metric {
+  background: linear-gradient(135deg, #1d4ed8, #0f5fa8);
+  border-radius: 12px;
+  padding: 1.25rem 1.25rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(29, 78, 216, 0.22);
+}
+.metric-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+.metric-value {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.metric-sub {
+  font-size: 0.82rem;
+  color: #e0e7ff;
+  margin-top: 0.4rem;
+  font-weight: 600;
+}
+
+/* 4-Card Performance Grid */
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 1.2rem;
+}
+.result-card {
+  background: #ffffff;
+  border: 1.5px solid #dbeafe;
+  border-radius: 9px;
+  padding: 0.85rem 0.95rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.result-card:hover {
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+.result-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.25rem;
+}
+.result-number {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1d4ed8;
+  line-height: 1.15;
+  margin-bottom: 0.2rem;
+}
+.result-desc {
+  font-size: 0.72rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+.success-card {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+.text-success { color: #16a34a !important; }
+.text-danger  { color: #dc2626 !important; }
+.text-info    { color: #0284c7 !important; }
+
+/* Financial Breakdown Table */
+.summary-breakdown {
+  background: #ffffff;
+  border: 1.5px solid #dbeafe;
+  border-radius: 10px;
+  padding: 1rem 1.15rem;
+}
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+.summary-table td {
+  padding: 0.42rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  color: #475569;
+}
+.summary-table tr:last-child td {
+  border-bottom: none;
+}
+.summary-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: #0f172a;
+}
+.highlight-row td {
+  background: #f0fdf4;
+  color: #166534 !important;
+  font-weight: 700;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+}
+
+/* Action Buttons */
+.btn-calc {
+  flex: 1;
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  color: #ffffff;
+  border: none;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.btn-calc:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+.btn-reset {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  color: #475569;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.btn-reset:hover {
+  background: #f1f5f9;
+}
+
+/* Editorial & Benchmarks Content */
+.content-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  padding: 2rem;
+  margin-bottom: 1.75rem;
+}
+.content-card h2 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+.content-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 1.35rem 0 0.5rem;
+}
+.content-card p {
+  color: #475569;
+  line-height: 1.72;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+.content-card p:last-child {
+  margin-bottom: 0;
+}
+.content-card strong {
+  color: #0f172a;
+}
+.content-card a {
+  color: #1d4ed8;
+  font-weight: 600;
+  text-decoration: none;
+}
+.content-card a:hover {
+  text-decoration: underline;
+}
+
+/* Callout Box */
+.formula-callout {
+  background: #eff6ff;
+  border: 1.5px solid #bfdbfe;
+  border-left: 5px solid #1d4ed8;
+  border-radius: 0 10px 10px 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.formula-callout h3 {
+  margin: 0 0 0.5rem;
+  color: #1e40af;
+  font-size: 1.1rem;
+}
+.formula-callout code {
+  display: block;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 0.92rem;
+  color: #0f172a;
+  margin-top: 0.5rem;
+}
+
+/* Tables */
+.responsive-table {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+.benchmark-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.88rem;
+}
+.benchmark-table th {
+  background: #1e3a5f;
+  color: #ffffff;
+  padding: 10px 14px;
+  font-weight: 700;
+  text-align: left;
+}
+.benchmark-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+.benchmark-table tr:last-child td {
+  border-bottom: none;
+}
+.benchmark-table tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+/* FAQ Accordion */
+.faq-box {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.9rem 0;
+}
+.faq-box:last-child {
+  border-bottom: none;
+}
+.faq-question {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  user-select: none;
+}
+.faq-question::after {
+  content: '+';
+  font-size: 1.3rem;
+  color: #1d4ed8;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.faq-box.open .faq-question::after {
+  content: '−';
+}
+.faq-answer {
+  display: none;
+  color: #475569;
+  font-size: 0.92rem;
+  line-height: 1.68;
+  padding-top: 0.55rem;
+}
+.faq-box.open .faq-answer {
+  display: block;
+}
+
+/* Internal Hub Links */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.tool-link-card {
+  display: block;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 9px;
+  padding: 1rem 1.15rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.tool-link-card:hover {
+  border-color: #1d4ed8;
+  background: #eff6ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.08);
+}
+.tool-link-card .tool-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tool-link-card .tool-desc {
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 900px) {
+  .calculator-layout {
+    grid-template-columns: 1fr;
+  }
+  .calculator-panel:first-child {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .results-panel {
+    border-radius: 0 0 14px 14px;
+    position: static;
+  }
+}
+@media (max-width: 580px) {
+  .calculator-header h1 {
+    font-size: 1.55rem;
+  }
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+  .calculator-panel {
+    padding: 1.25rem;
+  }
+  .content-card {
+    padding: 1.25rem;
+  }
+}
+</style>
+
+<main id="main-content">
+<div class="calc-container">
+  <!-- Breadcrumbs -->
+  <div class="calc-breadcrumbs">
+    <a href="/">Home</a> › <a href="/business/">Business</a> › <a href="/business/roi-calculator">ROI Calculator</a> › Marketing ROI Calculator
+  </div>
+
+  <!-- Hero Header -->
+  <div class="calculator-header">
+    <h1>Marketing ROI Calculator (<%= currentYear %>)</h1>
+    <p class="lead-description">
+      Calculate <strong>Return on Marketing Investment (ROMI)</strong>, <strong>Return on Ad Spend (ROAS)</strong>, <strong>Customer Acquisition Cost (CAC)</strong>, and <strong>Margin-Adjusted Net Profit</strong> across Google Ads, Meta Ads, SEO, email marketing, and influencer campaigns with real-time live results.
+    </p>
+  </div>
+
+  <!-- 2-COLUMN SIDE-BY-SIDE CALCULATOR (ABOVE THE FOLD — NO NEED TO SCROLL DOWN) -->
+  <div class="calculator-layout">
+    <!-- LEFT INPUT PANEL -->
+    <div class="calculator-panel">
+      <h2 class="panel-title"><span>📣</span> Campaign &amp; Spend Inputs</h2>
+
+      <div class="form-group">
+        <label for="mk-type">Channel / Campaign Preset</label>
+        <select id="mk-type" class="form-control">
+          <option value="paid" data-spend="5000" data-rev="22000" data-margin="60" data-cust="45" data-ltv="800" data-months="3">Paid Ads (Google Search, Meta, PPC)</option>
+          <option value="seo" data-spend="3500" data-rev="28000" data-margin="70" data-cust="70" data-ltv="950" data-months="6">SEO &amp; Organic Search</option>
+          <option value="email" data-spend="1200" data-rev="18000" data-margin="65" data-cust="60" data-ltv="750" data-months="3">Email Marketing &amp; Lifecycle</option>
+          <option value="social" data-spend="4000" data-rev="16000" data-margin="55" data-cust="35" data-ltv="700" data-months="2">Paid Social / TikTok Ads</option>
+          <option value="influencer" data-spend="6000" data-rev="30000" data-margin="60" data-cust="50" data-ltv="850" data-months="2">Influencer &amp; Creator Marketing</option>
+          <option value="custom">Custom Omnichannel Campaign</option>
+        </select>
+        <span class="field-hint">Select a preset to auto-load industry averages or enter your numbers below.</span>
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label for="mk-spend">Total Marketing Spend ($)</label>
+          <input type="number" id="mk-spend" class="form-control" value="5000" min="0" step="100">
+          <span class="field-hint">Ad budget, agency fees &amp; tools</span>
+        </div>
+        <div class="form-group">
+          <label for="mk-rev">Attributed Revenue ($)</label>
+          <input type="number" id="mk-rev" class="form-control" value="22000" min="0" step="100">
+          <span class="field-hint">Gross sales driven by campaign</span>
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label for="mk-margin">Product Gross Margin (%)</label>
+          <input type="number" id="mk-margin" class="form-control" value="60" min="1" max="100" step="1">
+          <span class="field-hint">Profit margin after COGS/fulfillment</span>
+        </div>
+        <div class="form-group">
+          <label for="mk-month">Duration (Months)</label>
+          <input type="number" id="mk-month" class="form-control" value="3" min="1" max="60" step="1">
+          <span class="field-hint">Campaign measurement window</span>
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label for="mk-cust">New Customers Acquired</label>
+          <input type="number" id="mk-cust" class="form-control" value="45" min="0" step="1">
+          <span class="field-hint">Paying accounts or orders</span>
+        </div>
+        <div class="form-group">
+          <label for="mk-ltv">Average Customer LTV ($)</label>
+          <input type="number" id="mk-ltv" class="form-control" value="800" min="0" step="50">
+          <span class="field-hint">Lifetime value per customer</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:0.75rem;">
+        <button type="button" class="btn-calc" onclick="calcMK()">⚡ Calculate Marketing ROI</button>
+        <button type="button" class="btn-reset" onclick="resetDefaults()">Reset</button>
+      </div>
+    </div>
+
+    <!-- RIGHT RESULTS PANEL (PINNED STICKY ALONGSIDE INPUTS) -->
+    <div class="calculator-panel results-panel" id="mk-results-panel">
+      <h2 class="panel-title"><span>📊</span> Campaign Performance Scorecard</h2>
+
+      <div class="highlight-metric">
+        <div class="metric-label">Return on Marketing Investment (ROMI)</div>
+        <div class="metric-value" id="mk-roi">+340.0%</div>
+        <div class="metric-sub" id="mk-roi-badge">Strong Profitability • High Scalability</div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-title">ROAS (Return on Ad Spend)</div>
+          <div class="result-number" id="mk-roas">4.40×</div>
+          <div class="result-desc" id="mk-roas-sub">$4.40 revenue per $1 spent</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title">Cost Per Acquisition (CAC)</div>
+          <div class="result-number" id="mk-cpa">$111.11</div>
+          <div class="result-desc">Per paying customer</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-title">Gross Profit (Margin-Adj.)</div>
+          <div class="result-number text-success" id="mk-gp">$13,200</div>
+          <div class="result-desc" id="mk-gp-desc">Revenue × 60% Margin</div>
+        </div>
+
+        <div class="result-card success-card">
+          <div class="result-title">Net Profit After Ad Spend</div>
+          <div class="result-number" id="mk-net">$8,200</div>
+          <div class="result-desc">Gross Profit − Total Spend</div>
+        </div>
+      </div>
+
+      <div class="summary-breakdown">
+        <h3 style="font-size:0.86rem;font-weight:700;color:#0f172a;margin:0 0 0.65rem;text-transform:uppercase;letter-spacing:0.04em;">Campaign Financial Breakdown</h3>
+        <table class="summary-table">
+          <tr><td>Total Marketing Spend:</td><td id="mkl-spend">$5,000</td></tr>
+          <tr><td>Attributed Gross Revenue:</td><td id="mkl-rev">$22,000</td></tr>
+          <tr><td>Gross Profit (Margin-Adjusted):</td><td id="mkl-gp" class="text-success">$13,200</td></tr>
+          <tr><td>Top-Line Net Cash Return (Rev − Spend):</td><td id="mkl-topline-net" class="text-success">$17,000</td></tr>
+          <tr class="highlight-row"><td><strong>Net Campaign Profit (After COGS &amp; Spend):</strong></td><td><strong id="mkl-net-table" class="text-success">$8,200</strong></td></tr>
+          <tr><td>Top-Line Marketing ROI (ROMI):</td><td><strong id="mkl-roi" class="text-success">+340.0%</strong></td></tr>
+          <tr><td>Margin-Adjusted Marketing ROI:</td><td><strong id="mkl-margin-roi" class="text-success">+164.0%</strong></td></tr>
+          <tr><td>Blended Return on Ad Spend (ROAS):</td><td><strong id="mkl-roas-table">4.40×</strong></td></tr>
+          <tr><td>Customer Acquisition Cost (CAC):</td><td id="mkl-cac-table">$111.11</td></tr>
+          <tr><td>Customer Lifetime Value (LTV):</td><td id="mkl-ltv-table">$800</td></tr>
+          <tr class="highlight-row"><td><strong>LTV-to-CAC Health Ratio:</strong></td><td><strong id="mkl-ltv-cac-table" class="text-info">7.20× (Scalable)</strong></td></tr>
+          <tr><td>Total Lifetime Value Created:</td><td id="mk-ltv-roi">$36,000</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: BENCHMARKS TABLE -->
+  <div class="content-card">
+    <h2>Marketing ROI Benchmarks by Channel (<%= currentYear %> USA)</h2>
+    <p>Benchmark averages compiled across Google Ads, Meta Ads Manager, Klaviyo, and HubSpot digital marketing campaigns in the United States:</p>
+    <div class="responsive-table">
+      <table class="benchmark-table">
+        <thead>
+          <tr>
+            <th>Channel</th>
+            <th>Avg ROAS</th>
+            <th>Avg ROI (ROMI)</th>
+            <th>Payback Speed</th>
+            <th>Strategic Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Email Marketing &amp; SMS</strong></td>
+            <td>36–42:1</td>
+            <td>3,500%–4,100%</td>
+            <td>Immediate (1–7 days)</td>
+            <td>Retention, repeat purchases, automated cart recovery.</td>
+          </tr>
+          <tr>
+            <td><strong>SEO &amp; Organic Search</strong></td>
+            <td>5–20:1</td>
+            <td>400%–1,900%</td>
+            <td>Compounding (6–12 months)</td>
+            <td>Sustainable evergreen traffic with near-zero marginal cost.</td>
+          </tr>
+          <tr>
+            <td><strong>Google Ads (Search PPC)</strong></td>
+            <td>2.5–5:1</td>
+            <td>150%–400%</td>
+            <td>Immediate (Days)</td>
+            <td>High-intent purchase capture (legal, medical, e-commerce).</td>
+          </tr>
+          <tr>
+            <td><strong>Meta Ads (Facebook &amp; Instagram)</strong></td>
+            <td>2–4:1</td>
+            <td>100%–300%</td>
+            <td>Fast (Weeks)</td>
+            <td>Visual product discovery, DTC e-commerce, retargeting.</td>
+          </tr>
+          <tr>
+            <td><strong>Influencer Marketing</strong></td>
+            <td>5–11:1</td>
+            <td>400%–1,000%</td>
+            <td>Fast (1–30 days)</td>
+            <td>Social proof, affiliate promo codes, earned media value.</td>
+          </tr>
+          <tr>
+            <td><strong>TikTok &amp; Short-Form Video Ads</strong></td>
+            <td>1.8–3.5:1</td>
+            <td>80%–250%</td>
+            <td>Fast (Days)</td>
+            <td>Viral discovery, Gen Z and Millennial impulsive purchases.</td>
+          </tr>
+          <tr>
+            <td><strong>YouTube Video Advertising</strong></td>
+            <td>2–4:1</td>
+            <td>100%–300%</td>
+            <td>Moderate (1–3 months)</td>
+            <td>In-depth consideration, SaaS demos, brand authority.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-callout">
+      <h3>Core Marketing ROI &amp; ROAS Formulas</h3>
+      <p>Use these mathematical standards when evaluating campaign performance:</p>
+      <code>Marketing ROI (%) = ((Attributed Revenue − Marketing Spend) ÷ Marketing Spend) × 100</code>
+      <code>Margin-Adjusted ROI (%) = (((Revenue × Gross Margin %) − Marketing Spend) ÷ Marketing Spend) × 100</code>
+      <code>ROAS (Return on Ad Spend) = Attributed Revenue ÷ Total Marketing Spend</code>
+      <code>Customer Acquisition Cost (CAC) = Total Marketing Spend ÷ New Paying Customers</code>
+      <code>Break-Even ROAS = 1 ÷ Gross Margin Percentage</code>
+    </div>
+  </div>
+
+  <!-- SECTION 2: UNIT ECONOMICS & LTV:CAC -->
+  <div class="content-card">
+    <h2>The Golden Standard: LTV-to-CAC Ratio &amp; Payback Velocity</h2>
+    <p>While single-campaign ROAS measures immediate transaction revenue, mature digital marketing teams evaluate growth sustainability using the <strong>LTV:CAC Ratio</strong> (Customer Lifetime Value to Customer Acquisition Cost):</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1.25rem 0;">
+      <div style="background:#f8fafc;padding:1.15rem;border-radius:8px;border-left:4px solid #10b981;">
+        <strong style="color:#0f172a;display:block;margin-bottom:0.35rem;">Optimal Ratio (3:1 to 5:1)</strong>
+        <span style="font-size:0.88rem;color:#475569;line-height:1.55;display:block;">Generating $3 to $5 in gross customer value for every $1 invested in customer acquisition indicates strong product-market fit and healthy profitability.</span>
+      </div>
+      <div style="background:#f8fafc;padding:1.15rem;border-radius:8px;border-left:4px solid #ef4444;">
+        <strong style="color:#0f172a;display:block;margin-bottom:0.35rem;">Danger Zone (&lt; 1.5:1)</strong>
+        <span style="font-size:0.88rem;color:#475569;line-height:1.55;display:block;">You are spending nearly as much to acquire customers as they generate in total lifetime margin, leaving zero capital for payroll, overhead, or expansion.</span>
+      </div>
+      <div style="background:#f8fafc;padding:1.15rem;border-radius:8px;border-left:4px solid #2563eb;">
+        <strong style="color:#0f172a;display:block;margin-bottom:0.35rem;">CAC Payback Target (&lt; 12 Mo)</strong>
+        <span style="font-size:0.88rem;color:#475569;line-height:1.55;display:block;">Capital invested in paid ads or sales outreach should fully return in gross profit within 12 months to avoid exhausting working capital reserves.</span>
+      </div>
+    </div>
+
+    <h3>Marketing Efficiency Ratio (MER) vs. In-Platform ROAS</h3>
+    <p>Following privacy updates such as Apple iOS App Tracking Transparency (ATT) and third-party cookie phaseouts, ad platforms (Meta Ads, Google Ads, TikTok) often double-count sales conversions. To calculate your true marketing return without attribution inflation, monitor your <strong>Blended MER</strong>:</p>
+    <div style="background:#0f172a;color:#6ee7b7;font-family:Consolas,Monaco,monospace;padding:0.9rem 1.15rem;border-radius:8px;font-size:0.9rem;line-height:1.8;margin:0.75rem 0;">
+      Blended MER = Total Top-Line Company Revenue ÷ Total Combined Marketing &amp; Ad Spend
+    </div>
+    <p>A blended MER of 4.0× or greater means marketing expenditure consumes 25% or less of top-line revenue, leaving sufficient operational margin for cost of goods, customer support, and research &amp; development.</p>
+
+    <h3>State-Level Advertising Economics &amp; Tax Efficiency</h3>
+    <p><strong>Texas &amp; Florida:</strong> No state personal income tax and competitive commercial business climates mean lower overhead. Ad costs (CPMs) across Dallas, Houston, and Orlando are typically 20% to 35% lower than New York or Los Angeles, yielding higher effective marketing margins.</p>
+    <p><strong>California &amp; New York:</strong> Higher customer acquisition costs due to competitive bidding, but substantially higher average customer order values and purchasing power, enabling campaigns with higher CAC to remain highly lucrative.</p>
+  </div>
+
+  <!-- SECTION 3: FREQUENTLY ASKED QUESTIONS -->
+  <div class="content-card">
+    <h2>Frequently Asked Questions</h2>
+    <% const _faqs = [["How do you calculate marketing ROI?", "Marketing ROI (ROMI) = ((Revenue − Marketing Cost) ÷ Marketing Cost) × 100. For example, if you spend $5,000 and produce $22,000 in gross revenue, your top-line ROI is (($22,000 − $5,000) ÷ $5,000) × 100 = 340.0%. After deducting product cost of goods (COGS at 60% margin), your true net profit is $8,200 (+164% margin ROI)."], ["What is the difference between ROAS and Marketing ROI?", "ROAS (Return on Ad Spend) is a top-line revenue multiplier calculated as Revenue ÷ Ad Spend. Marketing ROI is a bottom-line profitability percentage that incorporates operating costs: ((Net Profit ÷ Ad Spend) × 100). A 4.0× ROAS with a 20% product margin results in zero net profit after COGS."], ["What is considered a good marketing ROI benchmark in 2026?", "A 5:1 ratio ($5 revenue per $1 spent or 400% ROI) is the recognized standard benchmark for healthy digital marketing campaigns. Email marketing consistently delivers 36:1 to 42:1, while evergreen SEO achieves 5:1 to 20:1 over multi-year horizons."], ["How do you calculate Customer Acquisition Cost (CAC)?", "Customer Acquisition Cost (CAC) = Total Ad Spend & Marketing Expenses ÷ Total New Paying Customers Acquired in that period. If you spend $5,000 to win 45 new clients, your CAC is $5,000 ÷ 45 = $111.11 per customer."], ["What is the ideal LTV:CAC ratio for paid advertising?", "The gold standard for sustainable growth is an LTV:CAC ratio between 3.0× and 5.0×. A ratio below 1.5× strains working capital reserves. A ratio above 5.0× indicates you are underinvesting in marketing and should expand ad spend to capture market share."], ["How do you calculate SEO ROI?", "SEO ROI = ((Organic Revenue − Total SEO Investment) ÷ Total SEO Investment) × 100. Calculate organic revenue by multiplying Organic Sessions × Conversion Rate × Average Order Value. Track this via Google Analytics 4 (GA4) with conversion goal filtering."], ["What is a Break-Even ROAS formula?", "Break-Even ROAS = 1 ÷ Gross Profit Margin %. If your gross profit margin is 50%, your break-even ROAS is 1 ÷ 0.50 = 2.00× (200%). Any campaign delivering higher than 2.0× generates positive cash flow."], ["How do you calculate Influencer Marketing ROI?", "Influencer ROI = ((Attributed Promo Code Revenue − Influencer Fees & Product Costs) ÷ Total Campaign Cost) × 100. Supplement this with Earned Media Value (EMV = Total Impressions × Industry CPM) to evaluate lasting brand equity."], ["What is Marketing Efficiency Ratio (MER) vs in-platform ROAS?", "Marketing Efficiency Ratio (MER) = Total Top-Line Company Revenue ÷ Total Combined Marketing Spend across all channels. MER eliminates attribution overlap caused by Facebook, Google, and TikTok double-claiming the same purchase conversion."]]; _faqs.forEach(function(f) { %>
+    <div class="faq-box">
+      <div class="faq-question"><%= f[0] %></div>
+      <div class="faq-answer"><%= f[1] %></div>
+    </div>
+    <% }); %>
+  </div>
+
+  <!-- SECTION 4: RELATED BUSINESS CALCULATORS -->
+  <div class="content-card">
+    <h2>Related Business &amp; Finance Calculators</h2>
+    <p>Explore our full suite of executive financial calculators to optimize your company unit economics and cash flow:</p>
+    <div class="tools-grid">
+      <a href="/business/ltv-cac-calculator" class="tool-link-card">
+        <div class="tool-title">📈 LTV:CAC Calculator</div>
+        <div class="tool-desc">Measure Customer Lifetime Value, CAC payback period, and unit economics health.</div>
+      </a>
+      <a href="/business/roi-calculator" class="tool-link-card">
+        <div class="tool-title">📊 Full ROI Calculator</div>
+        <div class="tool-desc">Calculate annualized ROI, capital expenditures, and investment payback schedules.</div>
+      </a>
+      <a href="/business/profit-margin-calculator" class="tool-link-card">
+        <div class="tool-title">💰 Profit Margin Calculator</div>
+        <div class="tool-desc">Calculate gross margin, net margin, and operating markup on goods and services.</div>
+      </a>
+      <a href="/business/break-even-calculator" class="tool-link-card">
+        <div class="tool-title">⚖️ Break-Even Calculator</div>
+        <div class="tool-desc">Find your exact unit sales volume and revenue required to reach zero net profit.</div>
+      </a>
+      <a href="/business/markup-calculator" class="tool-link-card">
+        <div class="tool-title">🏷️ Markup Calculator</div>
+        <div class="tool-desc">Convert between cost markup and profit margin for retail pricing strategies.</div>
+      </a>
+      <a href="/business/freelance-rate-calculator" class="tool-link-card">
+        <div class="tool-title">💼 Freelance Rate Calculator</div>
+        <div class="tool-desc">Calculate required hourly and project billing rates covering taxes and expenses.</div>
+      </a>
+    </div>
+  </div>
+</div>
+</main>
+
+<script>
+function fmtC(val) {
+  var sign = val < 0 ? '−$' : '$';
+  return sign + Math.abs(Math.round(val)).toLocaleString('en-US');
+}
+
+function fmtP(val) {
+  var sign = val < 0 ? '−' : '+';
+  return sign + Math.abs(val).toFixed(1) + '%';
+}
+
+function calcMK() {
+  var spend  = parseFloat(document.getElementById('mk-spend').value) || 0;
+  var rev    = parseFloat(document.getElementById('mk-rev').value) || 0;
+  var margin = parseFloat(document.getElementById('mk-margin').value) || 100;
+  var cust   = parseInt(document.getElementById('mk-cust').value, 10) || 0;
+  var ltv    = parseFloat(document.getElementById('mk-ltv').value) || 0;
+  var months = parseInt(document.getElementById('mk-month').value, 10) || 1;
+
+  // Margin-adjusted calculations
+  var grossProfit = rev * (margin / 100);
+  var netProfit   = grossProfit - spend;
+  var topLineNet  = rev - spend;
+
+  // Ratios
+  var roiTopLine = spend > 0 ? (topLineNet / spend) * 100 : 0;
+  var roiMargin  = spend > 0 ? (netProfit / spend) * 100 : 0;
+  var roas       = spend > 0 ? (rev / spend) : 0;
+  var cac        = cust > 0 ? (spend / cust) : 0;
+  var ltvCac     = cac > 0 ? (ltv / cac) : 0;
+  var totalLtv   = cust * ltv;
+
+  // Update Hero Metric
+  var roiEl = document.getElementById('mk-roi');
+  roiEl.textContent = fmtP(roiTopLine);
+  if (roiTopLine < 0) {
+    roiEl.style.color = '#f87171';
+  } else {
+    roiEl.style.color = '#ffffff';
+  }
+
+  // Update Status Badge
+  var badgeEl = document.getElementById('mk-roi-badge');
+  if (roiTopLine >= 400) {
+    badgeEl.textContent = 'Exceptional Return • High Scaling Potential';
+  } else if (roiTopLine >= 200) {
+    badgeEl.textContent = 'Strong Profitability • Healthy Scalability';
+  } else if (roiTopLine >= 100) {
+    badgeEl.textContent = 'Profitable Campaign • Monitor Unit Economics';
+  } else if (roiTopLine > 0) {
+    badgeEl.textContent = 'Marginal Return • Optimize Conversion Funnel';
+  } else if (roiTopLine === 0) {
+    badgeEl.textContent = 'Break-Even Performance';
+  } else {
+    badgeEl.textContent = 'Negative ROI • Review Targeting & Costs';
+  }
+
+  // Update 4 Cards
+  var roasEl = document.getElementById('mk-roas');
+  if (roasEl) roasEl.textContent = roas.toFixed(2) + '×';
+
+  var roasSubEl = document.getElementById('mk-roas-sub');
+  if (roasSubEl) roasSubEl.textContent = '$' + roas.toFixed(2) + ' revenue per $1 spent';
+
+  var cpaEl = document.getElementById('mk-cpa');
+  if (cpaEl) cpaEl.textContent = cust > 0 ? fmtC(cac) : '—';
+
+  var gpEl = document.getElementById('mk-gp');
+  if (gpEl) gpEl.textContent = fmtC(grossProfit);
+
+  var gpDescEl = document.getElementById('mk-gp-desc');
+  if (gpDescEl) gpDescEl.textContent = 'Revenue × ' + margin + '% Margin';
+
+  var netEl = document.getElementById('mk-net');
+  if (netEl) {
+    netEl.textContent = fmtC(netProfit);
+    if (netProfit < 0) {
+      netEl.className = 'result-number text-danger';
+    } else {
+      netEl.className = 'result-number text-success';
+    }
+  }
+
+  // Update Financial Breakdown Table
+  var setTxt = function(id, txt) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = txt;
+  };
+
+  setTxt('mkl-spend', fmtC(spend));
+  setTxt('mkl-rev', fmtC(rev));
+  setTxt('mkl-gp', fmtC(grossProfit));
+  setTxt('mkl-topline-net', fmtC(topLineNet));
+  setTxt('mkl-net-table', fmtC(netProfit));
+  setTxt('mkl-roi', fmtP(roiTopLine));
+  setTxt('mkl-margin-roi', fmtP(roiMargin));
+  setTxt('mkl-roas-table', roas.toFixed(2) + '×');
+  setTxt('mkl-cac-table', cust > 0 ? fmtC(cac) : '—');
+  setTxt('mkl-ltv-table', ltv > 0 ? fmtC(ltv) : '—');
+
+  var ltvCacTxt = '—';
+  if (cust > 0 && ltv > 0 && cac > 0) {
+    var status = ltvCac >= 3 ? ' (Scalable)' : (ltvCac >= 1.5 ? ' (Moderate)' : ' (At Risk)');
+    ltvCacTxt = ltvCac.toFixed(2) + '×' + status;
+  }
+  setTxt('mkl-ltv-cac-table', ltvCacTxt);
+  setTxt('mk-ltv-roi', fmtC(totalLtv));
+}
+
+// Preset Handler
+var typeSelect = document.getElementById('mk-type');
+if (typeSelect) {
+  typeSelect.addEventListener('change', function() {
+    var opt = this.options[this.selectedIndex];
+    if (opt && opt.value !== 'custom') {
+      if (opt.dataset.spend) document.getElementById('mk-spend').value = opt.dataset.spend;
+      if (opt.dataset.rev) document.getElementById('mk-rev').value = opt.dataset.rev;
+      if (opt.dataset.margin) document.getElementById('mk-margin').value = opt.dataset.margin;
+      if (opt.dataset.cust) document.getElementById('mk-cust').value = opt.dataset.cust;
+      if (opt.dataset.ltv) document.getElementById('mk-ltv').value = opt.dataset.ltv;
+      if (opt.dataset.months) document.getElementById('mk-month').value = opt.dataset.months;
+    }
+    calcMK();
+  });
+}
+
+function resetDefaults() {
+  document.getElementById('mk-type').value = 'paid';
+  document.getElementById('mk-spend').value = 5000;
+  document.getElementById('mk-rev').value = 22000;
+  document.getElementById('mk-margin').value = 60;
+  document.getElementById('mk-month').value = 3;
+  document.getElementById('mk-cust').value = 45;
+  document.getElementById('mk-ltv').value = 800;
+  calcMK();
+}
+
+// Bind live events across all inputs
+document.querySelectorAll('#mk-spend, #mk-rev, #mk-margin, #mk-month, #mk-cust, #mk-ltv').forEach(function(input) {
+  input.addEventListener('input', calcMK);
+  input.addEventListener('change', calcMK);
+});
+
+// Run calculation immediately on load
+calcMK();
+
+// FAQ Accordion
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var box = this.closest('.faq-box');
+    var isOpen = box.classList.contains('open');
+    document.querySelectorAll('.faq-box').forEach(function(b) { b.classList.remove('open'); });
+    if (!isOpen) {
+      box.classList.add('open');
+    }
+  });
+});
+</script>
+<%- include('../../partials/footer') %>

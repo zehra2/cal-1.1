@@ -1,0 +1,819 @@
+<%- include('../../partials/header') %>
+<style>
+body{background:#f5f7fa;}
+.vd-wrap{max-width:1320px;margin:0 auto;padding:2rem 1.5rem 4rem;display:grid;grid-template-columns:220px 1fr 260px;gap:2rem;align-items:start;}
+
+/* TOC */
+.vd-toc{position:sticky;top:6rem;background:#fff;border-radius:12px;border:1px solid #e8edf5;box-shadow:0 2px 12px rgba(0,0,0,.04);overflow:hidden;}
+.vd-toc-head{background:linear-gradient(135deg,#1d4ed8 0%,#1e40af 100%);color:#fff;padding:1rem 1.25rem;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.8px;}
+.vd-toc-list{list-style:none;padding:.75rem 0;margin:0;}
+.vd-toc-list li a{display:block;padding:.5rem 1.25rem;font-size:.84rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .18s;line-height:1.4;}
+.vd-toc-list li a:hover,.vd-toc-list li a.vd-active{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+.vd-toc-div{height:1px;background:#f1f5f9;margin:.5rem 0;}
+.vd-toc-rlbl{padding:.5rem 1.25rem;font-size:.78rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;}
+.vd-toc-rlist{list-style:none;padding:0;margin:0 0 .75rem;}
+.vd-toc-rlist li a{display:block;padding:.4rem 1.25rem;font-size:.82rem;color:#64748b;text-decoration:none;transition:color .15s;}
+.vd-toc-rlist li a:hover{color:#1d4ed8;}
+
+/* Main */
+.vd-main{min-width:0;}
+.vd-hero{margin-bottom:2rem;}
+.vd-hero h1{font-size:2.1rem;color:#0f172a;margin:0 0 .6rem;line-height:1.25;}
+.vd-desc{font-size:1.05rem;color:#64748b;line-height:1.65;margin:0 0 .75rem;border-left:4px solid #93c5fd;padding-left:1rem;}
+.vd-bc{font-size:.8rem;color:#94a3b8;margin-bottom:.75rem;}
+.vd-bc a{color:#64748b;text-decoration:none;}
+.vd-bc a:hover{color:#1d4ed8;}
+
+/* Calc card */
+.vd-card{background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid #eef2f7;margin-bottom:2.5rem;overflow:hidden;}
+.vd-tabs{display:flex;border-bottom:1px solid #e2e8f0;background:#f8fafc;}
+.vd-tab{flex:1;text-align:center;padding:1rem .5rem;font-size:.9rem;font-weight:600;color:#64748b;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
+.vd-tab:hover{color:#1d4ed8;background:#eff6ff;}
+.vd-tab.active{color:#1d4ed8;border-bottom-color:#1d4ed8;background:#fff;}
+.vd-inner{display:grid;grid-template-columns:1fr 1fr;}
+.vd-form-col{padding:2rem;border-right:1px solid #f0f4fa;}
+.vd-res-col{padding:2rem;background:linear-gradient(160deg,#f8fafc 0%,#eff6ff 100%);}
+.vd-panel{display:none;}
+.vd-panel.active{display:block;}
+.vd-panel-desc{font-size:.85rem;color:#64748b;margin-bottom:1.5rem;line-height:1.5;}
+
+/* Fields */
+.vd-field{margin-bottom:1.2rem;}
+.vd-field label{display:block;font-weight:600;font-size:.9rem;color:#1e293b;margin-bottom:.4rem;}
+.vd-field input,.vd-field select{width:100%;padding:12px 15px;border:1.5px solid #d1dae8;border-radius:8px;font-size:1rem;color:#0f172a;outline:none;transition:border-color .2s,box-shadow .2s;box-sizing:border-box;background:#fff;}
+.vd-field input:focus,.vd-field select:focus{border-color:#1d4ed8;box-shadow:0 0 0 3px rgba(29,78,216,.12);}
+.vd-field .vd-hint{font-size:.76rem;color:#94a3b8;margin-top:.3rem;line-height:1.4;}
+.vd-row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+.vd-btn{width:100%;background:linear-gradient(135deg,#1d4ed8 0%,#1e40af 100%);color:#fff;padding:15px;border:none;border-radius:9px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:.75rem;transition:opacity .2s,transform .15s;}
+.vd-btn:hover{opacity:.92;transform:translateY(-1px);}
+
+/* Results */
+.vd-res-head{font-size:1.15rem;font-weight:700;color:#0f172a;margin:0 0 .25rem;}
+.vd-res-sub{font-size:.84rem;color:#64748b;margin:0 0 1.25rem;}
+
+.vd-primary{background:linear-gradient(135deg,#1d4ed8,#1e40af);border-radius:10px;padding:1.35rem 1rem;text-align:center;box-shadow:0 6px 18px rgba(29,78,216,.22);margin-bottom:.75rem;}
+.vd-primary-val{display:block;font-size:2.4rem;font-weight:800;color:#fff;line-height:1;margin-bottom:.2rem;}
+.vd-primary-lbl{font-size:.88rem;color:rgba(255,255,255,.8);}
+
+.vd-boxes{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.85rem;}
+.vd-box{background:#fff;border:1.5px solid #e8edf5;border-radius:10px;padding:.85rem .75rem;text-align:center;}
+.vd-box-val{display:block;font-size:1.15rem;font-weight:800;color:#1d4ed8;margin-bottom:.15rem;}
+.vd-box-lbl{font-size:.72rem;color:#64748b;font-weight:600;line-height:1.3;}
+
+/* NEC compliance badge */
+.vd-nec{border-radius:10px;padding:1rem 1.1rem;margin-bottom:.85rem;display:flex;align-items:flex-start;gap:.75rem;}
+.vd-nec.pass{background:#f0fdf4;border:1.5px solid #86efac;}
+.vd-nec.warn{background:#fffbeb;border:1.5px solid #fcd34d;}
+.vd-nec.fail{background:#fff1f2;border:1.5px solid #fca5a5;}
+.vd-nec-icon{font-size:1.4rem;flex-shrink:0;line-height:1;}
+.vd-nec-text{font-size:.88rem;line-height:1.55;}
+.vd-nec-text strong{display:block;font-size:.95rem;margin-bottom:.15rem;}
+
+/* Wire recommendation */
+.vd-rec{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:.9rem 1rem;margin-bottom:.75rem;}
+.vd-rec-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;margin-bottom:.5rem;}
+.vd-rec-row{display:flex;justify-content:space-between;align-items:center;font-size:.84rem;padding:.25rem 0;border-bottom:1px solid #f8fafc;}
+.vd-rec-row:last-child{border-bottom:none;}
+.vd-rec-lbl{color:#64748b;}
+.vd-rec-val{font-weight:700;color:#1e293b;}
+.vd-rec-val.ok{color:#16a34a;}
+.vd-rec-val.ng{color:#dc2626;}
+
+/* Content sections */
+.vd-section{background:#fff;border-radius:14px;border:1px solid #eef2f7;box-shadow:0 2px 12px rgba(0,0,0,.03);padding:2.25rem;margin-bottom:2rem;scroll-margin-top:6rem;}
+.vd-section h2{font-size:1.65rem;color:#0f172a;margin:0 0 1.25rem;padding-bottom:.75rem;border-bottom:2px solid #f0f4fa;}
+.vd-section h3{font-size:1.18rem;color:#1e293b;margin:1.75rem 0 .7rem;}
+.vd-section p{color:#475569;line-height:1.75;margin-bottom:1.25rem;font-size:1rem;}
+.vd-section ul,.vd-section ol{color:#475569;line-height:1.75;padding-left:1.5rem;margin-bottom:1.25rem;}
+.vd-section li{margin-bottom:.5rem;}
+.vd-section strong{color:#1e293b;}
+.vd-section a{color:#1d4ed8;}
+.vd-formula{background:#0f172a;color:#93c5fd;font-family:'Courier New',monospace;font-size:1rem;padding:1.1rem 1.4rem;border-radius:8px;margin:1.25rem 0;line-height:1.9;}
+.vd-formula code{display:block;}
+.vd-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;border:1px solid #e8edf5;margin-bottom:1.5rem;}
+.vd-table th{background:#1d4ed8;color:#fff;padding:13px 16px;text-align:left;font-size:.88rem;font-weight:600;}
+.vd-table td{padding:11px 16px;border-bottom:1px solid #f1f5f9;font-size:.9rem;color:#334155;}
+.vd-table tr:last-child td{border-bottom:none;}
+.vd-table tr:nth-child(even) td{background:#f8fafc;}
+.vd-info{background:#eff6ff;border-left:4px solid #1d4ed8;border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.95rem;color:#1e40af;line-height:1.6;}
+.vd-warn{background:#fffbeb;border-left:4px solid #d97706;border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.95rem;color:#92400e;line-height:1.6;}
+
+/* FAQ */
+.vd-faq-item{border-bottom:1px solid #f0f4fa;padding-bottom:1.25rem;margin-bottom:1.25rem;}
+.vd-faq-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.vd-faq-q{font-size:1.02rem;font-weight:700;color:#0f172a;margin-bottom:.6rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
+.vd-faq-q::after{content:'+';font-size:1.3rem;color:#1d4ed8;flex-shrink:0;}
+.vd-faq-item.open .vd-faq-q::after{content:'−';}
+.vd-faq-a{color:#475569;line-height:1.7;font-size:.97rem;display:none;}
+.vd-faq-item.open .vd-faq-a{display:block;}
+
+/* Sidebar */
+.vd-sidebar{position:sticky;top:6rem;display:flex;flex-direction:column;gap:1.25rem;}
+.vd-widget{background:#fff;border-radius:12px;border:1px solid #e8edf5;box-shadow:0 4px 18px rgba(0,0,0,.05);overflow:hidden;}
+.vd-widget-head{background:linear-gradient(135deg,#1d4ed8,#1e40af);color:#fff;padding:1rem 1.25rem;}
+.vd-widget-title{font-size:1rem;font-weight:700;}
+.vd-widget-sub{font-size:.8rem;color:rgba(255,255,255,.75);}
+.vd-widget-upd{font-size:.72rem;color:rgba(255,255,255,.6);margin-top:.35rem;}
+.vd-widget-rows{padding:.4rem 0;}
+.vd-widget-row{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1.25rem;border-bottom:1px solid #f8fafc;transition:background .15s;}
+.vd-widget-row:last-child{border-bottom:none;}
+.vd-widget-row:hover{background:#eff6ff;}
+.vd-wl{font-size:.82rem;font-weight:600;color:#334155;}
+.vd-ws{font-size:.72rem;color:#94a3b8;}
+.vd-wv{font-size:.95rem;font-weight:800;color:#1d4ed8;white-space:nowrap;text-align:right;}
+.vd-widget-foot{padding:.85rem 1.25rem;border-top:1px solid #f0f4fa;background:#f8fafc;}
+.vd-widget-foot p{font-size:.75rem;color:#64748b;margin:0 0 .5rem;line-height:1.3;}
+.vd-widget-foot a{font-size:.83rem;font-weight:700;color:#1d4ed8;text-decoration:none;display:flex;align-items:center;gap:.35rem;}
+.vd-widget-foot a:hover{text-decoration:underline;}
+.vd-quick-widget{background:#fff;border-radius:12px;border:1px solid #e8edf5;box-shadow:0 2px 12px rgba(0,0,0,.04);overflow:hidden;}
+.vd-quick-head{padding:.9rem 1.25rem;background:#f8fafc;border-bottom:1px solid #f0f4fa;font-size:.83rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;}
+.vd-quick-links{list-style:none;padding:.5rem 0;margin:0;}
+.vd-quick-links li a{display:flex;align-items:center;gap:.5rem;padding:.65rem 1.25rem;font-size:.85rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;font-weight:500;}
+.vd-quick-links li a:hover,.vd-quick-links li a.active{color:#1d4ed8;background:#eff6ff;border-left-color:#1d4ed8;}
+
+/* Responsive */
+@media(max-width:1200px){.vd-wrap{grid-template-columns:200px 1fr 240px;}}
+@media(max-width:1024px){.vd-wrap{grid-template-columns:1fr;}.vd-toc,.vd-sidebar{position:static;}.vd-sidebar{display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.vd-wrap{padding:1rem 1rem 3rem;}.vd-inner{grid-template-columns:1fr;}.vd-form-col{border-right:none;border-bottom:1px solid #f0f4fa;}.vd-sidebar{grid-template-columns:1fr;}.vd-tabs{flex-direction:column;}.vd-tab{border-left:3px solid transparent;border-bottom:none;text-align:left;padding:.75rem 1.25rem;}.vd-tab.active{border-left-color:#1d4ed8;}.vd-row2{grid-template-columns:1fr;}.vd-boxes{grid-template-columns:1fr 1fr;}}
+</style>
+
+<main id="main-content">
+<div class="vd-wrap">
+
+  <!-- LEFT TOC -->
+  <aside class="vd-toc">
+    <div class="vd-toc-head">📋 In This Article</div>
+    <ul class="vd-toc-list">
+      <li><a href="#calculator" class="vd-active">Voltage Drop Calculator</a></li>
+      <li><a href="#how-to-use">How to Use</a></li>
+      <li><a href="#formula">The Formula Explained</a></li>
+      <li><a href="#nec-limit">NEC Limits &amp; Code</a></li>
+      <li><a href="#awg-table">AWG Resistance Table</a></li>
+      <li><a href="#dc-vs-ac">DC vs. AC Calculation</a></li>
+      <li><a href="#reduce-drop">How to Reduce Drop</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="vd-toc-div"></div>
+    <div class="vd-toc-rlbl">Related Tools</div>
+    <ul class="vd-toc-rlist">
+      <li><a href="<%= baseUrl %>/calculators/bottleneck.php">Bottleneck Calculator</a></li>
+      <li><a href="<%= baseUrl %>/construction/home-addition-cost-calculator">Home Addition Cost</a></li>
+      <li><a href="<%= baseUrl %>/calculators/concrete.php">Concrete Calculator</a></li>
+      <li><a href="<%= baseUrl %>/real-estate/cap-rate-calculator">Cap Rate Calculator</a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="vd-main">
+
+    <div class="vd-hero">
+      <div class="vd-bc">
+        <a href="<%= baseUrl %>/index.php">Home</a> ›
+        <a href="<%= baseUrl %>/technology/">Technology</a> ›
+        Voltage Drop Calculator
+      </div>
+      <h1>Voltage Drop Calculator (<%= currentYear %>) – NEC, AWG, AC &amp; DC</h1>
+      <p class="vd-desc">
+        Calculate <strong>voltage drop</strong>, percentage drop, volts at load, and get an instant
+        <strong>NEC compliance check</strong> — for AC single-phase, AC 3-phase, and DC circuits.
+        Includes wire size recommendations and a full AWG resistance reference.
+      </p>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="vd-card" id="calculator">
+      <div class="vd-tab">
+        <button class="vd-tab active" data-panel="vd-ac1">⚡ AC Single-Phase</button>
+        <button class="vd-tab"        data-panel="vd-ac3">🔌 AC 3-Phase</button>
+        <button class="vd-tab"        data-panel="vd-dc">🔋 DC Circuit</button>
+      </div>
+
+      <div class="vd-inner">
+        <!-- FORM -->
+        <div class="vd-form-col">
+
+          <!-- AC Single-Phase -->
+          <div id="vd-ac1" class="vd-panel active">
+            <p class="vd-panel-desc">For residential and commercial single-phase circuits — 120V, 240V outlets, lighting, appliances.</p>
+            <div class="vd-row2">
+              <div class="vd-field">
+                <label for="ac1_voltage">System Voltage (V)</label>
+                <input type="number" id="ac1_voltage" value="120" min="1" step="1">
+                <div class="vd-hint">120V or 240V residential · 208V commercial</div>
+              </div>
+              <div class="vd-field">
+                <label for="ac1_current">Load Current (A)</label>
+                <input type="number" id="ac1_current" value="15" min="0.1" step="0.1">
+                <div class="vd-hint">Amps drawn by the connected load</div>
+              </div>
+            </div>
+            <div class="vd-row2">
+              <div class="vd-field">
+                <label for="ac1_length">One-Way Length (ft)</label>
+                <input type="number" id="ac1_length" value="50" min="1" step="1">
+                <div class="vd-hint">Panel to load — calculator doubles for round-trip</div>
+              </div>
+              <div class="vd-field">
+                <label for="ac1_material">Wire Material</label>
+                <select id="ac1_material">
+                  <option value="copper" selected>Copper</option>
+                  <option value="aluminum">Aluminum</option>
+                </select>
+              </div>
+            </div>
+            <div class="vd-field">
+              <label for="ac1_awg">Wire Gauge (AWG)</label>
+              <select id="ac1_awg">
+                <option value="14">14 AWG</option>
+                <option value="12" selected>12 AWG</option>
+                <option value="10">10 AWG</option>
+                <option value="8">8 AWG</option>
+                <option value="6">6 AWG</option>
+                <option value="4">4 AWG</option>
+                <option value="3">3 AWG</option>
+                <option value="2">2 AWG</option>
+                <option value="1">1 AWG</option>
+                <option value="1/0">1/0 AWG</option>
+                <option value="2/0">2/0 AWG</option>
+                <option value="3/0">3/0 AWG</option>
+                <option value="4/0">4/0 AWG</option>
+              </select>
+              <div class="vd-hint">Larger number = thinner wire = more resistance</div>
+            </div>
+          </div>
+
+          <!-- AC 3-Phase -->
+          <div id="vd-ac3" class="vd-panel">
+            <p class="vd-panel-desc">For commercial and industrial 3-phase systems — 208V, 240V, 480V panels and motors.</p>
+            <div class="vd-row2">
+              <div class="vd-field">
+                <label for="ac3_voltage">Line-to-Line Voltage (V)</label>
+                <input type="number" id="ac3_voltage" value="208" min="1" step="1">
+                <div class="vd-hint">208V · 240V · 480V · 600V</div>
+              </div>
+              <div class="vd-field">
+                <label for="ac3_current">Load Current (A)</label>
+                <input type="number" id="ac3_current" value="30" min="0.1" step="0.1">
+                <div class="vd-hint">Per-phase current (FLA from nameplate)</div>
+              </div>
+            </div>
+            <div class="vd-row2">
+              <div class="vd-field">
+                <label for="ac3_length">One-Way Length (ft)</label>
+                <input type="number" id="ac3_length" value="100" min="1" step="1">
+                <div class="vd-hint">Panel to load, one direction</div>
+              </div>
+              <div class="vd-field">
+                <label for="ac3_material">Wire Material</label>
+                <select id="ac3_material">
+                  <option value="copper" selected>Copper</option>
+                  <option value="aluminum">Aluminum</option>
+                </select>
+              </div>
+            </div>
+            <div class="vd-field">
+              <label for="ac3_awg">Wire Gauge (AWG)</label>
+              <select id="ac3_awg">
+                <option value="14">14 AWG</option>
+                <option value="12">12 AWG</option>
+                <option value="10" selected>10 AWG</option>
+                <option value="8">8 AWG</option>
+                <option value="6">6 AWG</option>
+                <option value="4">4 AWG</option>
+                <option value="3">3 AWG</option>
+                <option value="2">2 AWG</option>
+                <option value="1">1 AWG</option>
+                <option value="1/0">1/0 AWG</option>
+                <option value="2/0">2/0 AWG</option>
+                <option value="3/0">3/0 AWG</option>
+                <option value="4/0">4/0 AWG</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- DC -->
+          <div id="vd-dc" class="vd-panel">
+            <p class="vd-panel-desc">For solar arrays, battery banks, automotive, RV, and marine 12V/24V/48V DC systems.</p>
+            <div class="vd-row2">
+              <div class="vd-field">
+                <label for="dc_voltage">System Voltage (V)</label>
+                <input type="number" id="dc_voltage" value="12" min="1" step="1">
+                <div class="vd-hint">12V · 24V · 48V · custom</div>
+              </div>
+              <div class="vd-field">
+                <label for="dc_current">Load Current (A)</label>
+                <input type="number" id="dc_current" value="20" min="0.1" step="0.1">
+                <div class="vd-hint">Amps drawn by DC load</div>
+              </div>
+            </div>
+            <div class="vd-row2">
+              <div class="vd-field">
+                <label for="dc_length">One-Way Length (ft)</label>
+                <input type="number" id="dc_length" value="20" min="1" step="1">
+                <div class="vd-hint">Battery/source to load — one way</div>
+              </div>
+              <div class="vd-field">
+                <label for="dc_material">Wire Material</label>
+                <select id="dc_material">
+                  <option value="copper" selected>Copper</option>
+                  <option value="aluminum">Aluminum</option>
+                </select>
+              </div>
+            </div>
+            <div class="vd-field">
+              <label for="dc_awg">Wire Gauge (AWG)</label>
+              <select id="dc_awg">
+                <option value="14">14 AWG</option>
+                <option value="12">12 AWG</option>
+                <option value="10">10 AWG</option>
+                <option value="8" selected>8 AWG</option>
+                <option value="6">6 AWG</option>
+                <option value="4">4 AWG</option>
+                <option value="3">3 AWG</option>
+                <option value="2">2 AWG</option>
+                <option value="1">1 AWG</option>
+                <option value="1/0">1/0 AWG</option>
+                <option value="2/0">2/0 AWG</option>
+                <option value="3/0">3/0 AWG</option>
+                <option value="4/0">4/0 AWG</option>
+              </select>
+              <div class="vd-hint">For 12V systems, wire sizing is critical — even short runs at high current drop quickly</div>
+            </div>
+          </div>
+
+          <button class="vd-btn" id="vd-calc-btn">⚡ Calculate Voltage Drop</button>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="vd-res-col">
+          <h3 class="vd-res-head">Results</h3>
+          <p class="vd-res-sub" id="vd-res-sub">Adjust inputs and click Calculate</p>
+
+          <div class="vd-primary">
+            <span class="vd-primary-val" id="vd-drop-v">2.38 V</span>
+            <span class="vd-primary-lbl">Voltage Drop</span>
+          </div>
+
+          <div class="vd-boxe">
+            <div class="vd-box">
+              <span class="vd-box-val" id="vd-drop-pct">1.98%</span>
+              <span class="vd-box-lbl">% Voltage Drop</span>
+            </div>
+            <div class="vd-box">
+              <span class="vd-box-val" id="vd-at-load">117.62 V</span>
+              <span class="vd-box-lbl">Volts at Load</span>
+            </div>
+            <div class="vd-box">
+              <span class="vd-box-val" id="vd-resistance">0.1588 Ω</span>
+              <span class="vd-box-lbl">Total Wire Resistance</span>
+            </div>
+            <div class="vd-box">
+              <span class="vd-box-val" id="vd-power-los">35.7 W</span>
+              <span class="vd-box-lbl">Power Lost in Wire</span>
+            </div>
+          </div>
+
+          <!-- NEC compliance -->
+          <div class="vd-nec pas" id="vd-nec">
+            <div class="vd-nec-icon" id="vd-nec-icon">✅</div>
+            <div class="vd-nec-text">
+              <strong id="vd-nec-title">NEC Compliant — Under 3%</strong>
+              <span id="vd-nec-msg">Meets NEC 210.19 recommendation for branch circuits. No wire size upgrade needed for voltage drop compliance.</span>
+            </div>
+          </div>
+
+          <!-- Wire recommendation -->
+          <div class="vd-rec">
+            <div class="vd-rec-title">Wire Size Recommendation</div>
+            <div class="vd-rec-row"><span class="vd-rec-lbl">Current wire</span><span class="vd-rec-val" id="rec-current">12 AWG copper</span></div>
+            <div class="vd-rec-row"><span class="vd-rec-lbl">Min. for 3% NEC limit</span><span class="vd-rec-val" id="rec-min">12 AWG ✓</span></div>
+            <div class="vd-rec-row"><span class="vd-rec-lbl">Recommended (2% headroom)</span><span class="vd-rec-val" id="rec-rec">10 AWG</span></div>
+          </div>
+
+          <p style="margin-top:.5rem;font-size:.74rem;color:#64748b;">*NEC 210.19 and 215.2 recommendations. Always verify with a licensed electrician for inspected work.</p>
+        </div>
+      </div>
+    </div><!-- /vd-card -->
+
+
+    <!-- HOW TO USE -->
+    <section class="vd-section" id="how-to-use">
+      <h2>How to Use This Voltage Drop Calculator</h2>
+      <p>Three modes cover every common US electrical circuit type. Pick your mode, enter five values, and get an instant NEC compliance check with a wire size upgrade recommendation.</p>
+      <ol style="padding-left:1.5rem;color:#475569;line-height:1.85;">
+        <li><strong>AC Single-Phase</strong> — for all standard US residential circuits: 120V outlets, 240V dryers, ranges, HVAC, sub-panels.</li>
+        <li><strong>AC 3-Phase</strong> — for commercial and industrial panels running 208V, 480V, or 600V motors, HVAC units, and feeder runs.</li>
+        <li><strong>DC Circuit</strong> — for solar arrays, battery banks, RV/marine 12V/24V/48V systems, and automotive wiring where even short runs at high current can drop voltage critically.</li>
+      </ol>
+      <h3>What Each Input Means</h3>
+      <ul>
+        <li><strong>System Voltage</strong> — the supply voltage at the source (panel, battery, inverter). Common: 120V, 240V, 480V AC; 12V, 24V, 48V DC.</li>
+        <li><strong>Load Current (Amps)</strong> — the current the connected device draws. For motors, use the FLA (Full Load Amps) from the nameplate. For resistive loads, divide watts by voltage.</li>
+        <li><strong>One-Way Length</strong> — the distance from panel to load in feet. The calculator automatically doubles this for the complete round-trip conductor path.</li>
+        <li><strong>Wire Material</strong> — copper has lower resistance and is preferred. Aluminum is used for large feeders and service entrances where cost and weight matter.</li>
+        <li><strong>AWG Gauge</strong> — smaller number = thicker wire = less resistance. 14 AWG is minimum for 15A circuits; 12 AWG for 20A; 10 AWG for 30A under NEC 310.</li>
+      </ul>
+      <div class="vd-info">
+        💡 <strong>DC systems drop voltage fast</strong> — a 12V system loses the same absolute voltage as a 120V system, but it's 10× more impactful as a percentage. A 1.2V drop on 12V is 10%; the same drop on 120V is 1%. Always oversize wire on low-voltage DC runs.
+      </div>
+    </section>
+
+    <!-- FORMULA -->
+    <section class="vd-section" id="formula">
+      <h2>Voltage Drop Formula Explained</h2>
+      <p>There are two ways to calculate voltage drop. The NEC standard method uses conductor circular mils (CM); the simplified practical method uses resistance per 1000ft from AWG tables. Both give the same result.</p>
+
+      <h3>Single-Phase AC and DC Formula</h3>
+      <div class="vd-formula">
+        <code>Vdrop = 2 × I × R_per_ft × L</code>
+        <code>  where R_per_ft = AWG resistance (Ω/1000ft) A 1000</code>
+        <code>  L = one-way length in feet</code>
+        <code>  Factor 2 = round-trip path (hot + neutral/return)</code>
+      </div>
+      <p><strong>Example — 120V, 15A, 12 AWG copper, 50 ft one-way:</strong></p>
+      <div class="vd-formula">
+        <code>R = (1.588 / 1000) × 50 × 2 = 0.1588 Ω</code>
+        <code>Vdrop = 15 × 0.1588 = 2.38 V</code>
+        <code>Drop% = (2.38 / 120) × 100 = 1.98% ✓ Under 3%</code>
+      </div>
+
+      <h3>Three-Phase Formula</h3>
+      <div class="vd-formula">
+        <code>Vdrop = √3 × I × R_per_ft × L</code>
+        <code>  √3 = 1.7321 (replaces the factor of 2 in single-phase)</code>
+        <code>  This is the line-to-line voltage drop</code>
+      </div>
+      <p>The √3 factor accounts for the 120° phase angle between conductors in a balanced 3-phase system. Because three conductors share the return path, 3-phase circuits have inherently lower voltage drop than single-phase for the same wire size and current.</p>
+
+      <h3>NEC K-Factor Method (Alternative)</h3>
+      <div class="vd-formula">
+        <code>Vdrop = (2 × K × I × L) A CM</code>
+        <code>  K = 12.9 for copper · K = 21.2 for aluminum</code>
+        <code>  CM = circular mils of the conductor</code>
+        <code>  (Use 1.732 instead of 2 for 3-phase)</code>
+      </div>
+    </section>
+
+    <!-- NEC LIMITS -->
+    <section class="vd-section" id="nec-limit">
+      <h2>NEC Voltage Drop Limits &amp; Code Requirements</h2>
+      <p>The National Electrical Code (NEC) addresses voltage drop in two places — as <em>recommendations</em>, not hard requirements. However, these recommendations are treated as design standards by utilities, engineers, and inspectors.</p>
+
+      <table class="vd-table">
+        <thead><tr><th>Circuit Type</th><th>NEC Reference</th><th>Recommended Max Drop</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Branch Circuits</strong></td>      <td>210.19(A) Info Note 4</td><td><strong>3%</strong></td><td>From panel to outlet/load</td></tr>
+          <tr><td><strong>Feeders</strong></td>              <td>215.2(A) Info Note 2</td> <td><strong>3%</strong></td><td>From service to sub-panel</td></tr>
+          <tr><td><strong>Combined Maximum</strong></td>     <td>Both above combined</td>  <td><strong>5%</strong></td><td>Service entrance to final outlet</td></tr>
+          <tr><td><strong>Sensitive Electronics</strong></td><td>Industry standard</td>    <td><strong>1–2%</strong></td><td>Computers, PLCs, medical</td></tr>
+          <tr><td><strong>Motor Circuits</strong></td>       <td>430.52 + 215.2</td>       <td><strong>3%</strong></td><td>Excess drop causes overheating</td></tr>
+        </tbody>
+      </table>
+
+      <div class="vd-warn">
+        <strong>Important:</strong> NEC voltage drop limits are <em>informational notes</em>, not mandatory code violations. However, a circuit with excessive voltage drop that causes equipment damage or fire could expose the installer to liability. Many AHJs (Authorities Having Jurisdiction) treat 3%/5% as enforceable during inspections. Always design to stay within 3% for branch circuits.
+      </div>
+
+      <h3>Why Voltage Drop Matters Beyond Compliance</h3>
+      <ul>
+        <li><strong>Motors</strong> — draw higher current at lower voltage (torque is proportional to V²), causing overheating and premature failure.</li>
+        <li><strong>LED drivers and smart devices</strong> — voltage-sensitive electronics behave erratically or fail below rated voltage.</li>
+        <li><strong>HVAC and refrigeration</strong> — compressors start harder at low voltage, increasing wear and energy consumption.</li>
+        <li><strong>Solar/battery systems</strong> — excessive DC drop means your panels or batteries deliver less usable power to your inverter.</li>
+      </ul>
+    </section>
+
+    <!-- AWG TABLE -->
+    <section class="vd-section" id="awg-table">
+      <h2>AWG Wire Resistance Reference Table</h2>
+      <p>This table shows the DC resistance per 1,000 feet for copper and aluminum conductors at 75°C (standard NEC calculation temperature). Use these values to verify calculator outputs or perform manual calculations.</p>
+
+      <table class="vd-table">
+        <thead>
+          <tr><th>AWG Size</th><th>Copper (Ω/1000ft)</th><th>Aluminum (Ω/1000ft)</th><th>Typical Use</th><th>Max Amps (60°C)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>14 AWG</strong></td><td>2.525</td><td>4.150</td><td>15A branch circuits, lighting</td><td>15A</td></tr>
+          <tr><td><strong>12 AWG</strong></td><td>1.588</td><td>2.630</td><td>20A outlets, kitchen circuits</td><td>20A</td></tr>
+          <tr><td><strong>10 AWG</strong></td><td>0.999</td><td>1.650</td><td>30A circuits, dryers, HVAC</td><td>30A</td></tr>
+          <tr><td><strong>8 AWG</strong></td> <td>0.628</td><td>1.050</td><td>40A circuits, ranges, sub-feeds</td><td>40A</td></tr>
+          <tr><td><strong>6 AWG</strong></td> <td>0.395</td><td>0.661</td><td>55A circuits, small sub-panels</td><td>55A</td></tr>
+          <tr><td><strong>4 AWG</strong></td> <td>0.249</td><td>0.415</td><td>70A circuits, large sub-panels</td><td>70A</td></tr>
+          <tr><td><strong>3 AWG</strong></td> <td>0.197</td><td>0.329</td><td>85A feeders</td><td>85A</td></tr>
+          <tr><td><strong>2 AWG</strong></td> <td>0.156</td><td>0.261</td><td>95A feeders, service entrances</td><td>95A</td></tr>
+          <tr><td><strong>1 AWG</strong></td> <td>0.124</td><td>0.207</td><td>110A feeders</td><td>110A</td></tr>
+          <tr><td><strong>1/0 AWG</strong></td><td>0.098</td><td>0.164</td><td>125A feeders</td><td>125A</td></tr>
+          <tr><td><strong>2/0 AWG</strong></td><td>0.078</td><td>0.130</td><td>145A feeders, service entrances</td><td>145A</td></tr>
+          <tr><td><strong>3/0 AWG</strong></td><td>0.062</td><td>0.103</td><td>165A service entrances</td><td>165A</td></tr>
+          <tr><td><strong>4/0 AWG</strong></td><td>0.049</td><td>0.082</td><td>195A service entrances, main feeds</td><td>195A</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.82rem;color:#64748b;margin-top:.5rem;">Source: NEC Table 9, resistance at 75°C for stranded conductors. Ampacity ratings from NEC Table 310.16 at 60°C in conduit. Always verify with the current NEC edition for inspected installations.</p>
+    </section>
+
+    <!-- DC vs AC -->
+    <section class="vd-section" id="dc-vs-ac">
+      <h2>DC vs. AC Voltage Drop — Key Differences</h2>
+
+      <h3>DC Systems (Solar, Automotive, Marine)</h3>
+      <p>DC voltage drop is purely resistive — V = I × R, no reactive component. The challenge with DC systems is that low voltages (12V, 24V) amplify the percentage impact of any drop. A 1.2V drop on a 12V system is 10%; on a 120V AC circuit it's only 1%. This is why <strong>solar installers and marine electricians oversize wire aggressively</strong> — staying under 3% on a 12V system with 30A of current and 20 feet of wire requires 6 AWG or larger.</p>
+
+      <h3>AC Single-Phase Systems</h3>
+      <p>For building wire sizes (14 AWG through 4/0 AWG), AC voltage drop is calculated with the same resistive formula as DC. The reactive (inductive) component of impedance is negligible for conductors smaller than 4/0 in typical building wiring runs. The NEC uses resistance values from Table 9 for all practical voltage drop calculations.</p>
+
+      <h3>AC Three-Phase Systems</h3>
+      <p>Three-phase systems are inherently more efficient. The √3 factor instead of 2 means 3-phase drops only 86.6% of the voltage that single-phase would for the same wire, current, and distance. A 480V 3-phase feeder can run much farther than a 240V single-phase circuit with the same voltage drop percentage — which is why industrial facilities standardize on 480V 3-phase distribution.</p>
+
+      <table class="vd-table">
+        <thead><tr><th>System</th><th>Formula Factor</th><th>Same Wire/Current/Distance</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td>DC</td>          <td>× 2 (round trip)</td>    <td>Baseline</td>      <td>Solar, battery, automotive</td></tr>
+          <tr><td>AC Single-Phase</td><td>× 2 (round trip)</td> <td>= DC</td>           <td>Residential, small commercial</td></tr>
+          <tr><td>AC 3-Phase</td>  <td>× √3 (1.732)</td>        <td>13.4% less drop</td><td>Commercial, industrial, motors</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- REDUCE DROP -->
+    <section class="vd-section" id="reduce-drop">
+      <h2>How to Reduce Voltage Drop</h2>
+      <p>When your calculation exceeds 3%, you have four practical options:</p>
+
+      <h3>1. Increase Wire Gauge (Lower AWG Number)</h3>
+      <p>The most direct fix. Going from 12 AWG to 10 AWG reduces resistance by 37%. Going from 12 to 8 AWG reduces it by 60%. Use the wire size recommendation in this calculator to find the minimum AWG for 3% compliance. For critical circuits, size for 2% to leave headroom.</p>
+
+      <h3>2. Increase System Voltage</h3>
+      <p>Voltage drop percentage = Vdrop / V_source. Doubling the voltage on the same circuit cuts the voltage drop percentage in half. This is why 240V circuits can run twice as far as 120V circuits with the same wire size and load. For DC systems, upgrading from 12V to 24V or 48V is the most cost-effective long-run solution.</p>
+
+      <h3>3. Reduce Wire Run Length</h3>
+      <p>Install a sub-panel or distribution point closer to the loads. In a large commercial building or farm, a strategically located sub-panel can cut average run lengths by 50–70%, dramatically reducing voltage drop across all branch circuits without upsizing wire.</p>
+
+      <h3>4. Use Copper Instead of Aluminum</h3>
+      <p>Aluminum has 64% higher resistivity than copper. Switching from aluminum to copper for the same AWG size reduces voltage drop by ~38%. For feeders where aluminum is used for cost savings, upsize by two AWG gauges (e.g., use 2/0 aluminum instead of 2 AWG copper) to approximate equivalent performance.</p>
+
+      <div class="vd-info">
+        💡 <strong>Quick rule of thumb:</strong> When your one-way run in feet exceeds the system voltage (e.g., a 120-foot run on 120V, or a 240-foot run on 240V), voltage drop becomes significant and you should verify your wire size. For 12V DC systems, this threshold is only 12 feet — size wire carefully on all DC runs.
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="vd-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="vd-faq-item open">
+        <div class="vd-faq-q">What is the formula for voltage drop?</div>
+        <div class="vd-faq-a">For single-phase AC and DC: <strong>Vdrop = 2 × I × (R/1000) × L</strong>, where I is current in amps, R is resistance in Ω per 1000ft (from AWG table), and L is the one-way length in feet. The factor of 2 accounts for the round-trip conductor path. For 3-phase AC, replace 2 with √3 (1.732). Percentage drop = (Vdrop / source voltage) × 100.</div>
+      </div>
+
+      <div class="vd-faq-item">
+        <div class="vd-faq-q">What is the maximum voltage drop allowed by NEC?</div>
+        <div class="vd-faq-a">The NEC recommends a maximum of <strong>3% drop on branch circuits</strong> (NEC 210.19 Informational Note 4) and 3% on feeders (NEC 215.2 Informational Note 2), with a combined maximum of <strong>5% from service entrance to the final outlet</strong>. These are recommendations, not mandatory violations — but are treated as design standards by inspectors and engineers. Always design to 3% or less for branch circuits.</div>
+      </div>
+
+      <div class="vd-faq-item">
+        <div class="vd-faq-q">How do I calculate voltage drop across a resistor?</div>
+        <div class="vd-faq-a">Use Ohm's Law: <strong>V = I × R</strong>. Multiply the current through the resistor (amps) by its resistance (ohms). For example: 2A through a 47Ω resistor = 94V drop. For wire resistance, the AWG table in this page gives Ω per 1000ft — divide by 1000 to get Ω per foot, multiply by total wire length (both conductors), then multiply by current.</div>
+      </div>
+
+      <div class="vd-faq-item">
+        <div class="vd-faq-q">Is 4% voltage drop acceptable?</div>
+        <div class="vd-faq-a">A 4% drop on a branch circuit exceeds the NEC 3% recommendation. For most resistive loads (heaters, incandescent lights), it is functionally acceptable. For motors, HVAC compressors, LED drivers, and electronics, 4% can cause overheating, premature failure, and erratic behavior. For inspected work, staying at or below 3% is strongly recommended. Above 5% combined is considered excessive by virtually all codes and standards.</div>
+      </div>
+
+      <div class="vd-faq-item">
+        <div class="vd-faq-q">What is the voltage drop per 100 feet for common wire sizes?</div>
+        <div class="vd-faq-a">For copper wire carrying 15A on a 120V circuit (one-way 100ft): <strong>14 AWG: 7.58V (6.3%)</strong> — fails NEC; <strong>12 AWG: 4.76V (4.0%)</strong> — exceeds 3%; <strong>10 AWG: 3.00V (2.5%)</strong> — passes; <strong>8 AWG: 1.88V (1.6%)</strong> — well within. At 20A on 240V over 100ft: 12 AWG drops 3.2% (borderline); 10 AWG drops 2.0% (passes).</div>
+      </div>
+
+      <div class="vd-faq-item">
+        <div class="vd-faq-q">Why is DC voltage drop more critical than AC?</div>
+        <div class="vd-faq-a">Because low-voltage DC systems (12V, 24V) have the same absolute voltage drop as higher-voltage AC systems, but that drop represents a much higher percentage. A 1.5V drop on 12V = 12.5%; the same drop on 120V = 1.25%. DC loads also typically have tighter voltage tolerances — a 12V motor or LED driver may function poorly below 11V. Always oversize wire on DC runs, especially at 12V.</div>
+      </div>
+
+      <div class="vd-faq-item">
+        <div class="vd-faq-q">How is 3-phase voltage drop calculated differently?</div>
+        <div class="vd-faq-a">For balanced 3-phase circuits, use <strong>√3 (1.732) instead of 2</strong> as the multiplier: Vdrop = 1.732 × I × (R/1000) × L. This accounts for the 120° phase offset between conductors sharing the return path. Three-phase drops approximately 13.4% less voltage than single-phase for identical wire, current, and distance — which is why 3-phase distribution is preferred for long industrial runs.</div>
+      </div>
+
+      <div class="vd-faq-item">
+        <div class="vd-faq-q">What AWG wire do I need for a long run?</div>
+        <div class="vd-faq-a">Use this calculator's wire size recommendation output. As a rule of thumb: when your one-way run in feet exceeds your system voltage (e.g., 120ft on 120V, 240ft on 240V), step up to the next larger wire gauge. For 12V DC systems, even a 12-foot run at 30A requires 6 AWG to stay under 3%. The minimum NEC-compliant gauge is shown in the results above after you calculate.</div>
+      </div>
+
+    </section>
+
+  </div><!-- /vd-main -->
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="vd-sidebar">
+    <div class="vd-widget">
+      <div class="vd-widget-head">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="vd-widget-title">NEC Quick Reference</span>
+        </div>
+        <div class="vd-widget-sub">Voltage drop limits at a glance</div>
+        <div class="vd-widget-upd">Updated: <%= currentDateShort %></div>
+      </div>
+      <div class="vd-widget-row">
+        <div class="vd-widget-row"><div><div class="vd-wl">Branch Circuits</div><div class="vd-w">NEC 210.19 Info Note 4</div></div><div><div class="vd-wv">≤ 3%</div></div></div>
+        <div class="vd-widget-row"><div><div class="vd-wl">Feeders</div><div class="vd-w">NEC 215.2 Info Note 2</div></div><div><div class="vd-wv">≤ 3%</div></div></div>
+        <div class="vd-widget-row" style="background:#eff6ff;"><div><div class="vd-wl">Combined Max</div><div class="vd-w">Service → outlet</div></div><div><div class="vd-wv">≤ 5%</div></div></div>
+        <div class="vd-widget-row"><div><div class="vd-wl">Motors / HVAC</div><div class="vd-w">Industry best practice</div></div><div><div class="vd-wv">≤ 3%</div></div></div>
+        <div class="vd-widget-row"><div><div class="vd-wl">Sensitive Electronics</div><div class="vd-w">PLC, medical, servers</div></div><div><div class="vd-wv">≤ 1–2%</div></div></div>
+      </div>
+      <div class="vd-widget-foot">
+        <p>NEC limits are recommendations, not mandatory violations — but treat them as hard design limits for all inspected work.</p>
+        <a href="https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          NFPA 70 (NEC) →
+        </a>
+      </div>
+    </div>
+
+    <div class="vd-quick-widget">
+      <div class="vd-quick-head">⚡ Technology Tools</div>
+      <ul class="vd-quick-link">
+        <li><a href="<%= baseUrl %>/technology/voltage-drop-calculator" class="active">⚡ Voltage Drop Calculator</a></li>
+        <li><a href="<%= baseUrl %>/calculators/bottleneck.php">💻 Bottleneck Calculator</a></li>
+        <li><a href="<%= baseUrl %>/construction/home-addition-cost-calculator">🏠 Home Addition Cost</a></li>
+        <li><a href="<%= baseUrl %>/calculators/concrete.php">🧱 Concrete Calculator</a></li>
+        <li><a href="<%= baseUrl %>/calculators/stair.php">📐 Stair Calculator</a></li>
+        <li><a href="<%= baseUrl %>/business/profit-margin-calculator">💹 Profit Margin</a></li>
+      </ul>
+    </div>
+  </aside>
+
+</div><!-- /vd-wrap -->
+
+  <!-- Related Calculators -->
+  <div style="max-width:1100px;margin:0 auto 32px;padding:0 20px;">
+    <h2 style="font-size:1.15rem;color:#0f172a;margin:0 0 16px;">Related Technology Calculators</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;">
+      <a href="<%= baseUrl %>/technology/bottleneck-calculator" style="display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;text-decoration:none;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='none'">
+        <div style="font-size:1.4rem;margin-bottom:6px;">🖥️</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">PC Bottleneck Calculator</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Check CPU &amp; GPU compatibility</div>
+      </a>
+      <a href="<%= baseUrl %>/real-estate/closing-cost-calculator" style="display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;text-decoration:none;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='none'">
+        <div style="font-size:1.4rem;margin-bottom:6px;">🏠</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">Closing Cost Calculator</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Estimate US home buying costs</div>
+      </a>
+      <a href="<%= baseUrl %>/construction/concrete-calculator" style="display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;text-decoration:none;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='none'">
+        <div style="font-size:1.4rem;margin-bottom:6px;">🏗️</div>
+        <div style="font-weight:700;color:#0f172a;font-size:.95rem;">Concrete Calculator</div>
+        <div style="color:#64748b;font-size:.82rem;margin-top:4px;">Estimate concrete for any project</div>
+      </a>
+    </div>
+  </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // AWG resistance table (Ω per 1000ft) — copper and aluminum, 75°C
+  const AWG_R = {
+    copper:   {'14':2.525,'12':1.588,'10':0.999,'8':0.628,'6':0.395,'4':0.249,'3':0.197,'2':0.156,'1':0.124,'1/0':0.098,'2/0':0.078,'3/0':0.062,'4/0':0.049},
+    aluminum: {'14':4.150,'12':2.630,'10':1.650,'8':1.050,'6':0.661,'4':0.415,'3':0.329,'2':0.261,'1':0.207,'1/0':0.164,'2/0':0.130,'3/0':0.103,'4/0':0.082},
+  };
+  const AWG_ORDER = ['14','12','10','8','6','4','3','2','1','1/0','2/0','3/0','4/0'];
+
+  const tabs    = document.querySelectorAll('.vd-tab');
+  const panels  = document.querySelectorAll('.vd-panel');
+  const calcBtn = document.getElementById('vd-calc-btn');
+  let mode = 'vd-ac1';
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      mode = tab.getAttribute('data-panel');
+      document.getElementById(mode).classList.add('active');
+      calculate();
+    });
+  });
+
+  function getInputs(prefix) {
+    return {
+      voltage:  parseFloat(document.getElementById(prefix + '_voltage').value)  || 0,
+      current:  parseFloat(document.getElementById(prefix + '_current').value)  || 0,
+      length:   parseFloat(document.getElementById(prefix + '_length').value)   || 0,
+      material: document.getElementById(prefix + '_material').value,
+      awg:      document.getElementById(prefix + '_awg').value,
+    };
+  }
+
+  function calculate() {
+    let v, i, L, mat, awg, factor;
+    if (mode === 'vd-ac1') {
+      const d = getInputs('ac1'); v=d.voltage; i=d.current; L=d.length; mat=d.material; awg=d.awg; factor=2;
+    } else if (mode === 'vd-ac3') {
+      const d = getInputs('ac3'); v=d.voltage; i=d.current; L=d.length; mat=d.material; awg=d.awg; factor=1.7321;
+    } else {
+      const d = getInputs('dc');  v=d.voltage; i=d.current; L=d.length; mat=d.material; awg=d.awg; factor=2;
+    }
+
+    if (v<=0||i<=0||L<=0) return;
+
+    const rPer1000 = AWG_R[mat][awg];
+    const totalR   = (rPer1000 / 1000) * L * factor;
+    const vDrop    = i * totalR;
+    const dropPct  = (vDrop / v) * 100;
+    const atLoad   = v - vDrop;
+    const powerLoss = i * i * totalR;
+
+    // display
+    document.getElementById('vd-drop-v').textContent     = vDrop.toFixed(2) + ' V';
+    document.getElementById('vd-drop-pct').textContent   = dropPct.toFixed(2) + '%';
+    document.getElementById('vd-at-load').textContent    = atLoad.toFixed(2) + ' V';
+    document.getElementById('vd-resistance').textContent = totalR.toFixed(4) + ' Ω';
+    document.getElementById('vd-power-loss').textContent = powerLoss.toFixed(1) + ' W';
+
+    const modeLabel = mode==='vd-ac1' ? 'AC Single-Phase' : mode==='vd-ac3' ? 'AC 3-Phase' : 'DC';
+    document.getElementById('vd-res-sub').textContent =
+      modeLabel + ' · ' + v + 'V · ' + i + 'A · ' + L + 'ft · ' + awg + ' AWG ' + mat;
+
+    // NEC compliance
+    const nec = document.getElementById('vd-nec');
+    const necIcon = document.getElementById('vd-nec-icon');
+    const necTitle = document.getElementById('vd-nec-title');
+    const necMsg   = document.getElementById('vd-nec-msg');
+    nec.className = 'vd-nec';
+    if (dropPct <= 3) {
+      nec.classList.add('pass');
+      necIcon.textContent  = '✅';
+      necTitle.textContent = 'NEC Compliant — ' + dropPct.toFixed(2) + '% (under 3%)';
+      necMsg.textContent   = 'Meets NEC 210.19 recommendation for branch circuits. No wire upgrade needed for voltage drop compliance.';
+    } else if (dropPct <= 5) {
+      nec.classList.add('warn');
+      necIcon.textContent  = '⚠️';
+      necTitle.textContent = 'Exceeds 3% Recommendation — ' + dropPct.toFixed(2) + '%';
+      necMsg.textContent   = 'Above the NEC 3% recommendation. Acceptable for feeders if combined total stays under 5%, but upgrade wire size for branch circuits.';
+    } else {
+      nec.classList.add('fail');
+      necIcon.textContent  = '❌';
+      necTitle.textContent = 'Excessive Drop — ' + dropPct.toFixed(2) + '% (over 5%)';
+      necMsg.textContent   = 'Exceeds NEC 5% combined maximum. Equipment damage, overheating, and code issues likely. Upsize wire significantly.';
+    }
+
+    // Wire size recommendation — find min AWG for 3% and 2%
+    function findMinAWG(targetPct) {
+      for (const gauge of AWG_ORDER) {
+        const r = (AWG_R[mat][gauge] / 1000) * L * factor;
+        const d = (i * r / v) * 100;
+        if (d <= targetPct) return gauge;
+      }
+      return '4/0+';
+    }
+    const min3 = findMinAWG(3);
+    const min2 = findMinAWG(2);
+    const currentIsOk = dropPct <= 3;
+
+    document.getElementById('rec-current').textContent = awg + ' AWG ' + mat;
+    document.getElementById('rec-min').textContent     = min3 + ' AWG' + (currentIsOk ? ' ✓' : ' ← upgrade needed');
+    document.getElementById('rec-rec').textContent     = min2 + ' AWG (2% headroom)';
+    document.getElementById('rec-min').className       = 'vd-rec-val ' + (currentIsOk ? 'ok' : 'ng');
+  }
+
+  // auto-calc on any input change
+  document.querySelectorAll('.vd-field input, .vd-field select').forEach(el => {
+    el.addEventListener('change', calculate);
+    el.addEventListener('input',  calculate);
+  });
+  calcBtn.addEventListener('click', calculate);
+  calculate();
+
+  // TOC scroll
+  const tocLinks = document.querySelectorAll('.vd-toc-list a');
+  const sections = [];
+  tocLinks.forEach(link => {
+    const id  = link.getAttribute('href').replace('#','');
+    const sec = document.getElementById(id);
+    if (sec) sections.push({ link, sec });
+  });
+  function updateTOC() {
+    const y = window.scrollY + 130;
+    let active = sections[0];
+    sections.forEach(s => { if (s.sec && s.sec.getBoundingClientRect().top + window.scrollY <= y) active = s; });
+    tocLinks.forEach(l => l.classList.remove('vd-active'));
+    if (active) active.link.classList.add('vd-active');
+  }
+  window.addEventListener('scroll', updateTOC, { passive: true });
+  updateTOC();
+
+  // FAQ accordion
+  document.querySelectorAll('.vd-faq-q').forEach(q => {
+    q.addEventListener('click', function () {
+      const item    = this.closest('.vd-faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.vd-faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+});
+</script>
+<%- include('../../partials/footer') %>

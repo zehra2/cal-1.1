@@ -1,0 +1,345 @@
+<%- include('../../partials/header') %>
+<style>
+:root {
+  --primary: #d97706;
+  --primary-hover: #b45309;
+  --primary-light: #fffbeb;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+  --white: #ffffff;
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+.main-wrapper { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+.page-title-area { margin-bottom: 2rem; }
+.page-title-area h1 { font-size: 2.1rem; color: var(--slate-900); margin-bottom: 0.5rem; }
+.page-title-area p { color: var(--slate-600); font-size: 1.05rem; }
+.calculator-container { display: grid; grid-template-columns: 1.15fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+.form-panel { background: var(--white); border-radius: var(--radius); padding: 2rem; border: 1px solid var(--slate-200); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+.results-panel { background: #78350f; color: #ffffff; border-radius: var(--radius); padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 25px rgba(120,53,15,0.25); }
+.section-subtitle { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-600); margin-bottom: 0.85rem; }
+.input-group { margin-bottom: 1.25rem; }
+.input-group label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--slate-700); margin-bottom: 0.4rem; }
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-prefix { position: absolute; left: 1rem; color: var(--slate-600); font-weight: 600; }
+.input-suffix { position: absolute; right: 1rem; color: var(--slate-600); font-weight: 600; }
+.input-wrapper input, .input-wrapper select {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
+  border: 1.5px solid var(--slate-200);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+.input-wrapper input:focus, .input-wrapper select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(217,119,6,0.1); }
+.grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.heloc-shock-card {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.heloc-shock-card .label { font-size: 0.82rem; color: #fecaca; font-weight: 700; text-transform: uppercase; }
+.heloc-shock-card .val-main { font-size: 2.5rem; font-weight: 800; color: #fee2e2; margin: 0.25rem 0; line-height: 1; }
+.heloc-shock-card .val-sub { font-size: 0.88rem; color: #fca5a5; }
+.breakdown-row { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 0.55rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row span:first-child { color: #fde68a; }
+.breakdown-row span:last-child { font-weight: 700; color: #ffffff; }
+.calculator-content-body { margin-top: 2.5rem; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+.calculator-content-body h2 { font-size: 1.65rem; color: #0f172a; margin: 2rem 0 1rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; }
+.calculator-content-body h3 { font-size: 1.25rem; color: #1e293b; margin: 1.5rem 0 0.75rem; }
+.calculator-content-body p { color: #475569; font-size: 1.02rem; line-height: 1.75; margin-bottom: 1.25rem; }
+.calculator-content-body ul, .calculator-content-body ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #475569; line-height: 1.75; }
+.calculator-content-body li { margin-bottom: 0.5rem; }
+.table-responsive { overflow-x: auto; margin: 1.5rem 0; }
+.data-table { width: 100%; border-collapse: collapse; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+.data-table th { background: #1e293b; color: #ffffff; padding: 12px 16px; text-align: left; font-size: 0.9rem; }
+.data-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; color: #334155; font-size: 0.92rem; }
+.data-table tr:nth-child(even) td { background: #f8fafc; }
+.quick-answer-card { background: #fffbeb; border-left: 4px solid #d97706; padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem; }
+.quick-answer-card h2 { font-size: 1.35rem; color: #92400e; margin: 0 0 0.5rem; border: none; padding: 0; }
+.quick-answer-card p { color: #b45309; margin: 0; }
+.faq-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+.faq-item h4 { margin: 0 0 0.4rem; color: #0f172a; font-size: 1.05rem; }
+.faq-item p { margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6; }
+@media (max-width: 860px) {
+  .calculator-container { grid-template-columns: 1fr; }
+  .grid-2-col { grid-template-columns: 1fr; }
+}
+</style>
+
+<main class="main-wrapper">
+  <div class="page-title-area">
+    <h1>HELOC Payment &amp; Payment Shock Calculator (<%= currentYear %>)</h1>
+    <p>Calculate your monthly interest-only payments during the 10-year draw period and prepare for the principal repayment jump shock. Model maximum CLTV borrowing capacity.</p>
+  </div>
+
+  <div class="calculator-container">
+    <div class="form-panel">
+      <div class="section-subtitle">1. Home Equity &amp; Line of Credit</div>
+      
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="homeValue">Estimated Home Value</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="homeValue" value="500000" step="10000">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="mortgageBal">Current Mortgage Balance</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="mortgageBal" value="280000" step="5000">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="maxCltv">Max Lender CLTV (%)</label>
+          <div class="input-wrapper">
+            <input type="number" id="maxCltv" value="85" min="50" max="95" step="5" style="padding-left: 1rem;">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="helocDraw">Amount Drawn / Borrowed ($)</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="helocDraw" value="75000" step="5000">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-subtitle" style="margin-top: 1.75rem;">2. HELOC Interest &amp; Term Settings</div>
+
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="helocRate">Variable Interest Rate (APR)</label>
+          <div class="input-wrapper">
+            <input type="number" id="helocRate" value="8.50" step="0.125" style="padding-left: 1rem;">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="drawYears">Draw Period Length</label>
+          <div class="input-wrapper" style="padding-left: 0;">
+            <select id="drawYears" style="padding-left: 1rem;">
+              <option value="10" selected>10 Years (Interest Only)</option>
+              <option value="5">5 Years (Interest Only)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2-col">
+        <div class="input-group">
+          <label for="repayYears">Repayment Period Length</label>
+          <div class="input-wrapper" style="padding-left: 0;">
+            <select id="repayYears" style="padding-left: 1rem;">
+              <option value="20" selected>20 Years (Principal + Interest)</option>
+              <option value="15">15 Years (Principal + Interest)</option>
+              <option value="10">10 Years (Principal + Interest)</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="rateReset">Expected Future Rate Change</label>
+          <div class="input-wrapper">
+            <input type="number" id="rateReset" value="0.0" step="0.25" style="padding-left: 1rem;">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-panel">
+      <div>
+        <div class="heloc-shock-card">
+          <div class="label">Repayment Payment Shock</div>
+          <div class="val-main" id="resRepayPayment">$651 / mo</div>
+          <div class="val-sub" id="resShockPct">+22% monthly payment increase</div>
+        </div>
+
+        <div class="breakdown-row"><span>Interest-Only Draw Payment:</span><span id="resDrawPayment" style="color:#fde68a;">$531 / mo</span></div>
+        <div class="breakdown-row"><span>Maximum Available Credit Line:</span><span id="resMaxLine">$145,000</span></div>
+        <div class="breakdown-row"><span>Combined LTV (CLTV):</span><span id="resCurrentCltv">71.0%</span></div>
+        <div class="breakdown-row"><span>Draw Period Interest Paid:</span><span id="resDrawTotalInterest">$63,750</span></div>
+        <div class="breakdown-row"><span>Repayment Phase Interest:</span><span id="resRepayTotalInterest" style="color:#fbbf24;">$81,240</span></div>
+      </div>
+
+      <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1rem; text-align: center;">
+        <div style="font-size: 0.8rem; color: #fde68a;">Total Lifetime Financing Cost (Principal + Interest):</div>
+        <div style="font-size: 1.35rem; font-weight: 800; color: #fbbf24;" id="resTotalCost">$219,990</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calculator-content-body">
+    <div class="quick-answer-card">
+      <h2>Understanding HELOC Payment Shock in <%= currentYear %></h2>
+      <p>A Home Equity Line of Credit (HELOC) has two distinct phases: an initial <strong>10-year draw period</strong> (where borrowers only pay interest on what they borrow) followed by a <strong>10- to 20-year repayment phase</strong>. When the draw period ends, the monthly payment increases dramatically because you must begin repaying principal on top of interest.</p>
+    </div>
+
+    <h2>Draw vs. Repayment Period Payment Comparison Matrix</h2>
+    <p>The table below illustrates the exact dollar payment jump when a 10-year interest-only draw period resets into a 20-year principal-and-interest repayment period across various loan balances at an 8.50% interest rate:</p>
+
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>HELOC Balance Drawn</th>
+            <th>Draw Phase (Interest-Only)</th>
+            <th>Repayment Phase (20-Yr P&amp;I)</th>
+            <th>Monthly Payment Jump</th>
+            <th>Percentage Shock</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>$25,000</strong></td><td>$177 / mo</td><td>$217 / mo</td><td>+$40 / mo</td><td>+22.6%</td></tr>
+          <tr><td><strong>$50,000</strong></td><td>$354 / mo</td><td>$434 / mo</td><td>+$80 / mo</td><td>+22.6%</td></tr>
+          <tr><td><strong>$75,000</strong></td><td>$531 / mo</td><td>$651 / mo</td><td>+$120 / mo</td><td>+22.6%</td></tr>
+          <tr><td><strong>$100,000</strong></td><td>$708 / mo</td><td>$868 / mo</td><td>+$160 / mo</td><td>+22.6%</td></tr>
+          <tr><td><strong>$150,000</strong></td><td>$1,063 / mo</td><td>$1,302 / mo</td><td>+$239 / mo</td><td>+22.6%</td></tr>
+          <tr><td><strong>$250,000</strong></td><td>$1,771 / mo</td><td>$2,170 / mo</td><td>+$399 / mo</td><td>+22.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>HELOC vs. Home Equity Loan vs. Cash-Out Refinance</h2>
+    <p>Choosing the right equity extraction strategy depends on whether you need flexible revolving funds or a fixed, predictable monthly payment:</p>
+
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>HELOC (Line of Credit)</th>
+            <th>Home Equity Loan (Fixed 2nd)</th>
+            <th>Cash-Out Refinance (1st Lien)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Payout Structure</strong></td><td>Revolving credit line as needed</td><td>Single lump-sum cash disbursement</td><td>Lump sum replacing entire 1st mortgage</td></tr>
+          <tr><td><strong>Interest Rate Type</strong></td><td>Variable (WSJ Prime + Margin)</td><td>Fixed for life of loan</td><td>Fixed (replaces first mortgage rate)</td></tr>
+          <tr><td><strong>Initial Monthly Payment</strong></td><td>Interest-only during 10-yr draw</td><td>Fixed Principal + Interest</td><td>New 30-year or 15-year amortized PITI</td></tr>
+          <tr><td><strong>Closing Costs</strong></td><td>Low / Zero ($0 - $500)</td><td>Moderate ($1,000 - $3,000)</td><td>High ($4,000 - $12,000+ in title/fees)</td></tr>
+          <tr><td><strong>Best Use Case</strong></td><td>Ongoing home renovations, emergency reserve</td><td>One-time debt consolidation, major project</td><td>When prevailing mortgage rates are below your existing loan</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How Prime Rate &amp; Fed Adjustments Impact Your Payment</h2>
+    <p>HELOC interest rates are variable and almost universally indexed to the <strong>Wall Street Journal Prime Rate</strong> (which is typically set 3.00% above the Federal Reserve Federal Funds Target Rate). When the Fed changes monetary policy by 25 basis points (0.25%), your HELOC APR adjusts by the same amount within 1 to 2 billing cycles.</p>
+    <ul>
+      <li><strong>Index + Margin Formula:</strong> Your contract APR = Prime Rate + Lender Margin (e.g., 8.00% Prime + 0.50% Margin = 8.50% APR).</li>
+      <li><strong>Lifetime Interest Caps:</strong> Federal law requires variable-rate residential credit lines to have a maximum lifetime interest rate cap (commonly 18.00% to 24.00%).</li>
+    </ul>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+    <div class="faq-item">
+      <h4>What is HELOC payment shock and how do you prepare for it?</h4>
+      <p>HELOC payment shock occurs when the initial 10-year interest-only draw period ends and the loan enters the 10- or 20-year repayment phase. Monthly payments often jump by 20% to 50% because borrowers must begin paying down principal. You can prepare by making voluntary principal payments during the draw period or refinancing into a fixed-rate loan.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How is the maximum HELOC borrowing amount calculated?</h4>
+      <p>Lenders calculate your borrowing limit using your Combined Loan-to-Value (CLTV) ratio, typically capping total debt at 80% to 85% of your home's appraised value: Max Line = (Home Value × Max CLTV %) - Current Mortgage Balance. On a $500,000 home with an 85% CLTV ($425,000) and a $300,000 mortgage, your maximum limit is $125,000.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the difference between a HELOC and a Home Equity Loan?</h4>
+      <p>A HELOC is a revolving line of credit with a variable interest rate tied to the Prime Rate, allowing you to borrow, repay, and redraw funds as needed. A Home Equity Loan is a closed-end second mortgage that provides a single lump-sum payout at a fixed interest rate with predictable monthly payments.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How does a variable-rate HELOC reset with Prime Rate changes?</h4>
+      <p>Most HELOC interest rates are indexed to the WSJ Prime Rate plus a lender margin. When the Federal Reserve adjusts the federal funds rate, the Prime Rate moves in tandem, causing your variable HELOC APR and monthly payment to adjust immediately on your next billing cycle.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can a lender freeze or reduce your HELOC credit line?</h4>
+      <p>Yes. Under the Truth in Lending Act (Regulation Z), lenders may legally freeze or reduce your available credit line if your home value declines significantly below its appraised value or if there is a material adverse change in your financial circumstances.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Is HELOC interest tax deductible under current IRS rules?</h4>
+      <p>Under IRS rules, HELOC interest is only tax-deductible if the borrowed funds are used exclusively to buy, build, or substantially improve the primary or second home securing the loan. Interest on HELOC funds used for debt consolidation or personal expenses is not deductible.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What credit score and DTI do you need to qualify for a HELOC?</h4>
+      <p>Most prime HELOC lenders require a minimum FICO score of 680 (with 720+ needed for top rates) and a maximum Debt-to-Income (DTI) ratio of 43% to 45%. You also generally need at least 15% to 20% equity remaining in your home.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What are typical HELOC closing costs and annual fees?</h4>
+      <p>Many banks offer 'no-closing-cost' HELOC promotions if you keep the credit line open for at least 24 to 36 months. Standard out-of-pocket costs can otherwise include an automated appraisal ($150-$450), title search ($100-$300), and an annual maintenance fee ($50-$100).</p>
+    </div>
+
+    <h2>Explore Related Home Equity &amp; Refinance Tools</h2>
+    <ul>
+      <li><a href="/real-estate/mortgage-refinance-calculator">Mortgage Refinance Calculator</a> &mdash; Compare refinancing your first mortgage vs taking a second-lien HELOC.</li>
+      <li><a href="/loan-calculators/refinance-break-even-calculator">Refinance Break-Even Calculator</a> &mdash; Calculate how many months to recoup refinance closing costs.</li>
+      <li><a href="/loan-calculators/debt-to-income-calculator">Debt-to-Income (DTI) Calculator</a> &mdash; Check if adding a HELOC pushes your back-end DTI over 43%.</li>
+      <li><a href="/real-estate/mortgage-calculator">Mortgage Payment Calculator</a> &mdash; Calculate first mortgage principal and interest amortization.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+function calculateHeloc() {
+  var homeValue = parseFloat(document.getElementById('homeValue').value) || 0;
+  var mortgageBal = parseFloat(document.getElementById('mortgageBal').value) || 0;
+  var maxCltv = (parseFloat(document.getElementById('maxCltv').value) || 85) / 100;
+  var helocDraw = parseFloat(document.getElementById('helocDraw').value) || 0;
+  var rate = (parseFloat(document.getElementById('helocRate').value) || 8.5) / 100;
+  var drawYears = parseInt(document.getElementById('drawYears').value) || 10;
+  var repayYears = parseInt(document.getElementById('repayYears').value) || 20;
+
+  var maxBorrowingCap = (homeValue * maxCltv) - mortgageBal;
+  var maxLine = Math.max(0, maxBorrowingCap);
+
+  var currentCltv = homeValue > 0 ? ((mortgageBal + helocDraw) / homeValue) * 100 : 0;
+
+  // Draw phase monthly payment (Interest Only)
+  var drawMonthlyPayment = (helocDraw * (rate / 12));
+  var drawTotalInterest = drawMonthlyPayment * (drawYears * 12);
+
+  // Repayment phase monthly payment (Amortized P&I)
+  var r = rate / 12;
+  var n = repayYears * 12;
+  var repayMonthlyPayment = 0;
+  var repayTotalInterest = 0;
+
+  if (r > 0 && n > 0 && helocDraw > 0) {
+    repayMonthlyPayment = helocDraw * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    repayTotalInterest = (repayMonthlyPayment * n) - helocDraw;
+  }
+
+  var shockIncrease = drawMonthlyPayment > 0 ? ((repayMonthlyPayment - drawMonthlyPayment) / drawMonthlyPayment) * 100 : 0;
+  var totalLifetimeCost = helocDraw + drawTotalInterest + repayTotalInterest;
+
+  document.getElementById('resRepayPayment').textContent = '$' + Math.round(repayMonthlyPayment).toLocaleString() + ' / mo';
+  document.getElementById('resShockPct').textContent = '+' + Math.round(shockIncrease) + '% monthly payment increase';
+  document.getElementById('resDrawPayment').textContent = '$' + Math.round(drawMonthlyPayment).toLocaleString() + ' / mo';
+  document.getElementById('resMaxLine').textContent = '$' + Math.round(maxLine).toLocaleString();
+  document.getElementById('resCurrentCltv').textContent = currentCltv.toFixed(1) + '%';
+  document.getElementById('resDrawTotalInterest').textContent = '$' + Math.round(drawTotalInterest).toLocaleString();
+  document.getElementById('resRepayTotalInterest').textContent = '$' + Math.round(repayTotalInterest).toLocaleString();
+  document.getElementById('resTotalCost').textContent = '$' + Math.round(totalLifetimeCost).toLocaleString();
+}
+
+document.querySelectorAll('#homeValue, #mortgageBal, #maxCltv, #helocDraw, #helocRate, #drawYears, #repayYears, #rateReset').forEach(function(el) {
+  el.addEventListener('input', calculateHeloc);
+  el.addEventListener('change', calculateHeloc);
+});
+calculateHeloc();
+</script>
+<%- include('../../partials/footer') %>

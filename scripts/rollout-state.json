@@ -1,0 +1,11 @@
+{
+  "lastCompletedDay": 1,
+  "completedDays": [1],
+  "completedSlugs": [
+    "business/solar-roi-calculator",
+    "construction/concrete-bag-calculator",
+    "ohio/hourly-paycheck-calculator",
+    "ohio/overtime-calculator"
+  ],
+  "lastRunDate": "2026-11-18"
+}

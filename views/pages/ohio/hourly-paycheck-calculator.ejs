@@ -1,0 +1,524 @@
+<%- include('../../partials/header') %>
+<style>
+  body { background: #f5f7fa; }
+  .ac-shell { max-width: 1180px; margin: 0 auto; padding: 1.75rem 1.25rem 4rem; }
+  .ac-breadcrumb { font-size: 0.84rem; color: #64748b; margin-bottom: 0.85rem; }
+  .ac-breadcrumb a { color: #2563eb; text-decoration: none; font-weight: 500; }
+  .ac-breadcrumb a:hover { text-decoration: underline; }
+  .ac-hero { margin-bottom: 1.75rem; }
+  .ac-hero h1 { font-size: clamp(1.7rem, 3vw, 2.25rem); color: #0f172a; margin: 0 0 0.65rem; line-height: 1.2; font-weight: 800; }
+  .ac-lead { font-size: 1.03rem; color: #334155; line-height: 1.65; max-width: 860px; margin: 0; }
+  .ac-notice { margin-top: 0.9rem; background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid #1d4ed8; border-radius: 8px; padding: 0.85rem 1.05rem; font-size: 0.9rem; color: #1e3a8a; line-height: 1.55; }
+  .ac-calc-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); overflow: hidden; margin-bottom: 2rem; }
+  .ac-calc-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; }
+  .ac-inputs { padding: 1.75rem; border-right: 1px solid #e2e8f0; }
+  .ac-outputs { padding: 1.75rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; }
+  .ac-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.95rem; }
+  .ac-field { margin-bottom: 1rem; }
+  .ac-field label { display: block; font-size: 0.86rem; font-weight: 700; color: #1e293b; margin-bottom: 0.35rem; }
+  .ac-field input, .ac-field select { width: 100%; padding: 0.68rem 0.82rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.96rem; color: #0f172a; background: #fff; }
+  .ac-field input:focus, .ac-field select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
+  .ac-hint { font-size: 0.77rem; color: #64748b; margin-top: 0.25rem; }
+  .ac-btn-row { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+  .ac-btn-primary { flex: 1; background: #1d4ed8; color: #fff; border: none; border-radius: 8px; padding: 0.78rem 1rem; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+  .ac-btn-primary:hover { background: #1e40af; }
+  .ac-btn-reset { background: #e2e8f0; color: #1e293b; border: none; border-radius: 8px; padding: 0.78rem 1.15rem; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
+  .ac-btn-reset:hover { background: #cbd5e1; }
+  .ac-primary-kpi { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #fff; border-radius: 12px; padding: 1.25rem 1.35rem; }
+  .ac-kpi-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #bfdbfe; font-weight: 700; }
+  .ac-kpi-value { font-size: 2.25rem; font-weight: 800; margin: 0.25rem 0; line-height: 1.1; }
+  .ac-kpi-sub { font-size: 0.88rem; color: #dbeafe; }
+  .ac-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .ac-kpi-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.9rem 1rem; }
+  .ac-kpi-box .lbl { font-size: 0.76rem; font-weight: 700; color: #64748b; text-transform: uppercase; }
+  .ac-kpi-box .val { font-size: 1.28rem; font-weight: 800; color: #0f172a; margin-top: 0.2rem; }
+  .ac-kpi-box .note { font-size: 0.76rem; color: #64748b; margin-top: 0.15rem; }
+  .ac-breakdown { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; }
+  .ac-breakdown h3 { font-size: 0.9rem; color: #0f172a; margin: 0 0 0.65rem; font-weight: 700; }
+  .ac-brow { display: flex; justify-content: space-between; padding: 0.38rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.88rem; color: #334155; }
+  .ac-brow:last-child { border-bottom: none; }
+  .ac-brow strong { color: #0f172a; }
+  .ac-brow .neg { color: #b91c1c; }
+  .ac-section { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.85rem; margin-bottom: 1.65rem; }
+  .ac-section h2 { font-size: 1.45rem; color: #0f172a; margin: 0 0 0.95rem; padding-bottom: 0.6rem; border-bottom: 2px solid #f1f5f9; font-weight: 800; }
+  .ac-section h3 { font-size: 1.1rem; color: #0f172a; margin: 1.25rem 0 0.45rem; font-weight: 700; }
+  .ac-section p, .ac-section li { color: #334155; line-height: 1.7; font-size: 0.97rem; }
+  .ac-formula { background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #2563eb; border-radius: 8px; padding: 1rem 1.2rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9rem; color: #0f172a; overflow-x: auto; margin: 1rem 0; line-height: 1.7; }
+  .ac-table-wrap { overflow-x: auto; margin-top: 0.75rem; }
+  .ac-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .ac-table th { background: #1e293b; color: #fff; text-align: left; padding: 0.72rem 0.85rem; font-weight: 700; white-space: nowrap; }
+  .ac-table td { padding: 0.68rem 0.85rem; border-bottom: 1px solid #e2e8f0; color: #1e293b; }
+  .ac-table tr:nth-child(even) td { background: #f8fafc; }
+  .ac-ex-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.15rem; margin-top: 0.85rem; }
+  .ac-ex-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.2rem; }
+  .ac-ex-card h3 { margin-top: 0; color: #1e3a8a; font-size: 1.04rem; }
+  .ac-faq-list { display: grid; gap: 0.95rem; }
+  .ac-faq-item { border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.1rem 1.25rem; background: #f8fafc; }
+  .ac-faq-item h3 { margin: 0 0 0.45rem; font-size: 1.02rem; color: #0f172a; }
+  .ac-faq-item p { margin: 0; font-size: 0.94rem; color: #334155; }
+  .ac-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+  .ac-rel-link { display: block; padding: 0.95rem 1.05rem; border: 1px solid #cbd5e1; border-radius: 10px; text-decoration: none; background: #f8fafc; }
+  .ac-rel-link:hover { border-color: #2563eb; background: #eff6ff; }
+  .ac-rel-link strong { display: block; color: #0f172a; font-size: 0.95rem; margin-bottom: 0.22rem; }
+  .ac-rel-link span { display: block; color: #475569; font-size: 0.82rem; line-height: 1.4; }
+  .ac-disclaimer { font-size: 0.82rem; color: #64748b; margin-top: 0.85rem; line-height: 1.55; }
+  @media (max-width: 900px) {
+    .ac-calc-grid, .ac-ex-grid, .ac-related-grid { grid-template-columns: 1fr; }
+    .ac-inputs { border-right: none; border-bottom: 1px solid #e2e8f0; }
+  }
+  @media (max-width: 560px) {
+    .ac-form-row, .ac-kpi-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<main class="ac-shell">
+  <nav class="ac-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> &rsaquo; <a href="/ohio/">Ohio Tax &amp; Paycheck Hub</a> &rsaquo; <span>Ohio Hourly Paycheck Calculator</span>
+  </nav>
+
+  <header class="ac-hero">
+    <h1>Ohio Hourly Paycheck Calculator (2026 Take-Home Pay)</h1>
+    <p class="ac-lead">
+      Calculate your exact 2026 Ohio hourly take-home pay after Federal income tax, Social Security and Medicare (FICA), Ohio's 2026 flat 2.75% state income tax over $26,050, Ohio municipal/city income tax (Columbus, Cleveland, Cincinnati, Akron, Toledo, Dayton), and optional school district tax.
+    </p>
+    <div class="ac-notice">
+      <strong>2026 Ohio Tax Law (HB 96):</strong> Starting with tax year 2026, Ohio eliminated its 3.5% upper bracket and moved to a two-tier flat state income tax: <strong>0% on Ohio taxable income up to $26,050</strong> and a flat <strong>2.75% on income above $26,050</strong>.
+    </div>
+  </header>
+
+  <%- adAboveHero() %>
+
+  <section class="ac-calc-card" aria-label="Ohio Hourly Paycheck Calculator">
+    <div class="ac-calc-grid">
+      <div class="ac-inputs">
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="oh-rate">Hourly Wage ($/hr)</label>
+            <input type="number" id="oh-rate" value="24.00" min="10.70" max="500" step="0.50">
+            <div class="ac-hint">Ohio 2026 minimum wage: $11.00/hr (indexed)</div>
+          </div>
+          <div class="ac-field">
+            <label for="oh-hours">Regular Hours per Week</label>
+            <input type="number" id="oh-hours" value="40" min="1" max="40" step="0.5">
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="oh-ot">Overtime Hours / Week (1.5×)</label>
+            <input type="number" id="oh-ot" value="0" min="0" max="60" step="0.5">
+          </div>
+          <div class="ac-field">
+            <label for="oh-freq">Pay Frequency</label>
+            <select id="oh-freq">
+              <option value="52">Weekly (52 paychecks/yr)</option>
+              <option value="26" selected>Bi-Weekly (26 paychecks/yr)</option>
+              <option value="24">Semi-Monthly (24 paychecks/yr)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="oh-filing">Federal Filing Status</label>
+            <select id="oh-filing">
+              <option value="single" selected>Single</option>
+              <option value="mfj">Married Filing Jointly</option>
+              <option value="hoh">Head of Household</option>
+            </select>
+          </div>
+          <div class="ac-field">
+            <label for="oh-city">Ohio City / Municipal Tax</label>
+            <select id="oh-city">
+              <option value="2.5" selected>Columbus (2.50%)</option>
+              <option value="2.5_cle">Cleveland (2.50%)</option>
+              <option value="1.8">Cincinnati (1.80%)</option>
+              <option value="2.5_akr">Akron (2.50%)</option>
+              <option value="2.5_tol">Toledo (2.50%)</option>
+              <option value="2.5_day">Dayton (2.50%)</option>
+              <option value="2.75">Youngstown (2.75%)</option>
+              <option value="0">Unincorporated Township (0.00%)</option>
+              <option value="custom">Custom Municipal Rate...</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ac-form-row" id="oh-custom-city-row" style="display:none;">
+          <div class="ac-field">
+            <label for="oh-city-custom">Custom Municipal Tax Rate (%)</label>
+            <input type="number" id="oh-city-custom" value="2.0" min="0" max="4" step="0.05">
+          </div>
+          <div class="ac-field"></div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="oh-sdit">School District Tax — SDIT (%)</label>
+            <input type="number" id="oh-sdit" value="0" min="0" max="2.5" step="0.25">
+            <div class="ac-hint">Most big cities: 0% | Certain rural/suburban districts: 0.5%–2.0%</div>
+          </div>
+          <div class="ac-field">
+            <label for="oh-401k">Pre-Tax 401(k) Contribution (%)</label>
+            <input type="number" id="oh-401k" value="5" min="0" max="50" step="1">
+            <div class="ac-hint">Reduces Fed &amp; OH state tax; NOT exempt from OH city tax</div>
+          </div>
+        </div>
+
+        <div class="ac-field">
+          <label for="oh-health">Pre-Tax Health / Dental / HSA ($ per paycheck)</label>
+          <input type="number" id="oh-health" value="65" min="0" max="2000" step="5">
+          <div class="ac-hint">Section 125 cafeteria plan deductions reduce Federal, FICA &amp; OH tax</div>
+        </div>
+
+        <div class="ac-btn-row">
+          <button type="button" id="oh-calc-btn" class="ac-btn-primary">Calculate Paycheck</button>
+          <button type="button" id="oh-reset-btn" class="ac-btn-reset">Reset Defaults</button>
+        </div>
+      </div>
+
+      <div class="ac-outputs" aria-live="polite">
+        <div class="ac-primary-kpi">
+          <div class="ac-kpi-label" id="out-period-lbl">Estimated Bi-Weekly Net Take-Home Pay</div>
+          <div class="ac-kpi-value" id="out-net-pay">$1,422.84</div>
+          <div class="ac-kpi-sub" id="out-net-sub">Gross: $1,920.00 | Effective Net Hourly: $17.79/hr</div>
+        </div>
+
+        <div class="ac-kpi-grid">
+          <div class="ac-kpi-box">
+            <div class="lbl">Annual Gross Pay</div>
+            <div class="val" id="out-ann-gross">$49,920</div>
+            <div class="note" id="out-eff-tax">Total tax rate: 17.5%</div>
+          </div>
+          <div class="ac-kpi-box">
+            <div class="lbl">Annual Net Take-Home</div>
+            <div class="val" id="out-ann-net">$36,994</div>
+            <div class="note" id="out-monthly-net">~$3,083 / month avg</div>
+          </div>
+        </div>
+
+        <div class="ac-breakdown">
+          <h3 id="bd-title">Per-Paycheck Deductions Breakdown (Bi-Weekly)</h3>
+          <div class="ac-brow"><span>Gross Pay (Reg + OT)</span><strong id="bd-gross">$1,920.00</strong></div>
+          <div class="ac-brow"><span>Pre-Tax 401(k) &amp; Section 125 Health</span><strong class="neg" id="bd-pretax">-$161.00</strong></div>
+          <div class="ac-brow"><span>Federal Income Tax (2026)</span><strong class="neg" id="bd-fed">-$127.68</strong></div>
+          <div class="ac-brow"><span>Social Security (6.2%) + Medicare (1.45%)</span><strong class="neg" id="bd-fica">-$141.91</strong></div>
+          <div class="ac-brow"><span>Ohio State Tax (2026 Flat 2.75% &gt; $26,050)</span><strong class="neg" id="bd-oh">-$20.22</strong></div>
+          <div class="ac-brow"><span>Ohio Municipal + School District Tax</span><strong class="neg" id="bd-local">-$46.38</strong></div>
+          <div class="ac-brow"><strong>Estimated Net Take-Home Pay</strong><strong id="bd-net">$1,422.84</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- adMidContent1() %>
+
+  <section class="ac-section">
+    <h2>How Ohio Hourly Paychecks Are Calculated in 2026</h2>
+    <p>
+      Ohio payroll involves up to <strong>five separate layers of tax withholding</strong>: Federal income tax, FICA (Social Security and Medicare), Ohio state income tax, Ohio municipal (city/village) income tax, and—depending on where you live—an Ohio School District Income Tax (SDIT).
+    </p>
+    <div class="ac-formula">
+Weekly Gross ($)        = (Regular Hours × Hourly Rate) + (Overtime Hours × Hourly Rate × 1.5)
+Annual Gross ($)        = Weekly Gross × 52
+Paycheck Gross ($)      = Annual Gross ÷ Pay Periods (52, 26, or 24)
+
+Federal Taxable ($)     = max(0, Annual Gross − Annual 401(k) − Annual Sec. 125 Health − 2026 Std. Deduction)
+Ohio Taxable ($)        = max(0, Annual Gross − Annual 401(k) − Annual Sec. 125 Health − OH Personal Exemption)
+Ohio State Tax (2026)   = $0 if Ohio Taxable ≤ $26,050; else (Ohio Taxable − $26,050) × 0.0275
+
+Ohio Municipal Tax ($)  = (Paycheck Gross − Sec. 125 Health) × Municipal Rate%
+FICA Tax ($)            = (FICA Wages × 0.062 up to $176,100 cap) + (FICA Wages × 0.0145)
+    </div>
+    <h3>Critical Ohio Payroll Rules Most National Calculators Miss</h3>
+    <ul>
+      <li><strong>2026 Ohio Flat 2.75% Rate (HB 96):</strong> Ohio completed its multi-year rate reduction in 2026. The first <strong>$26,050</strong> of Ohio taxable income is taxed at <strong>0%</strong>, and every dollar above $26,050 is taxed at a flat <strong>2.75%</strong> (down from the old 3.5% top bracket).</li>
+      <li><strong>401(k) Contributions Are Taxed by Ohio Cities:</strong> Under Ohio Revised Code Chapter 718, employee elective 401(k) and 403(b) deferrals reduce Federal and Ohio state income tax, <em>but remain subject to Ohio municipal income tax</em> (such as Columbus 2.5%, Cleveland 2.5%, and Cincinnati 1.8%).</li>
+      <li><strong>Work City vs. Home City (RITA / CCA):</strong> Your employer withholds municipal tax for the city where you physically work. If you live in a different Ohio municipality, you may owe a small balance to your home city via RITA or CCA if it does not grant a 100% credit for workplace taxes paid.</li>
+      <li><strong>Ohio Personal Exemptions:</strong> Ohio grants tiered personal exemptions ($2,400 for MAGI ≤ $40,000; $2,150 for $40,001–$80,000; $1,900 above $80,000), which slightly lowers actual state income tax compared to raw gross wages.</li>
+    </ul>
+  </section>
+
+  <section class="ac-section">
+    <h2>2026 Ohio Hourly Paycheck Reference Table (40 Hours/Week, Single Filer)</h2>
+    <p>
+      The reference table below assumes a full-time 40-hour week (2,080 hours/year), Single filer, standard 2026 Federal deduction, 0% 401(k), $0 health deduction, comparing <strong>Columbus/Cleveland (2.5% city tax)</strong> against an <strong>unincorporated Ohio township (0% city tax)</strong>:
+    </p>
+    <div class="ac-table-wrap">
+      <table class="ac-table">
+        <thead>
+          <tr>
+            <th>Hourly Wage</th>
+            <th>Annual Gross</th>
+            <th>Bi-Weekly Gross</th>
+            <th>Fed + FICA / Check</th>
+            <th>OH State (2.75% &gt;$26k)</th>
+            <th>Bi-Weekly Net (2.5% City)</th>
+            <th>Bi-Weekly Net (0% Twp)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>$15.00 / hr</strong></td><td>$31,200</td><td>$1,200.00</td><td>$152.95</td><td>$2.91</td><td><strong>$1,014.14</strong></td><td>$1,044.14</td></tr>
+          <tr><td><strong>$18.00 / hr</strong></td><td>$37,440</td><td>$1,440.00</td><td>$200.11</td><td>$9.51</td><td><strong>$1,194.38</strong></td><td>$1,230.38</td></tr>
+          <tr><td><strong>$20.00 / hr</strong></td><td>$41,600</td><td>$1,600.00</td><td>$231.55</td><td>$14.18</td><td><strong>$1,314.27</strong></td><td>$1,354.27</td></tr>
+          <tr><td><strong>$24.00 / hr</strong></td><td>$49,920</td><td>$1,920.00</td><td>$294.43</td><td>$22.98</td><td><strong>$1,554.59</strong></td><td>$1,602.59</td></tr>
+          <tr><td><strong>$28.00 / hr</strong></td><td>$58,240</td><td>$2,240.00</td><td>$357.31</td><td>$31.78</td><td><strong>$1,794.91</strong></td><td>$1,850.91</td></tr>
+          <tr><td><strong>$32.00 / hr</strong></td><td>$66,560</td><td>$2,560.00</td><td>$430.58</td><td>$40.58</td><td><strong>$2,024.84</strong></td><td>$2,088.84</td></tr>
+          <tr><td><strong>$36.00 / hr</strong></td><td>$74,880</td><td>$2,880.00</td><td>$525.46</td><td>$49.38</td><td><strong>$2,233.16</strong></td><td>$2,305.16</td></tr>
+          <tr><td><strong>$40.00 / hr</strong></td><td>$83,200</td><td>$3,200.00</td><td>$620.34</td><td>$58.44</td><td><strong>$2,441.22</strong></td><td>$2,521.22</td></tr>
+          <tr><td><strong>$50.00 / hr</strong></td><td>$104,000</td><td>$4,000.00</td><td>$857.54</td><td>$80.44</td><td><strong>$2,962.02</strong></td><td>$3,062.02</td></tr>
+          <tr><td><strong>$60.00 / hr</strong></td><td>$124,800</td><td>$4,800.00</td><td>$1,098.42</td><td>$102.44</td><td><strong>$3,479.14</strong></td><td>$3,599.14</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <%- adMidContent2() %>
+
+  <section class="ac-section">
+    <h2>Two Worked 2026 Ohio Hourly Paycheck Examples</h2>
+    <div class="ac-ex-grid">
+      <article class="ac-ex-card">
+        <h3>Example 1: Columbus Warehouse Lead ($24/hr, 40 hrs/wk, 5% 401k)</h3>
+        <p>
+          A Single employee works 40 hours per week in Columbus (<strong>2.5% city tax</strong>), paid bi-weekly, contributing <strong>5% to a traditional 401(k)</strong> and paying <strong>$65/check</strong> for employer health insurance.
+        </p>
+        <ul>
+          <li><strong>Bi-Weekly Gross:</strong> 80 hrs × $24.00 = <strong>$1,920.00</strong> ($49,920/yr)</li>
+          <li><strong>Pre-Tax Deductions:</strong> $96.00 401(k) + $65.00 Health = <strong>$161.00</strong></li>
+          <li><strong>Federal Income Tax + FICA:</strong> ~$127.68 Fed + $141.91 FICA = <strong>$269.59</strong></li>
+          <li><strong>Ohio State (2.75% over $26,050) + Columbus 2.5%:</strong> ~$20.22 State + $46.38 City = <strong>$66.60</strong></li>
+          <li><strong>Net Bi-Weekly Take-Home Pay:</strong> <strong>~$1,422.81</strong> ($17.79 net/hr)</li>
+        </ul>
+      </article>
+
+      <article class="ac-ex-card">
+        <h3>Example 2: Cincinnati HVAC Technician ($35/hr + 6 OT hrs/wk)</h3>
+        <p>
+          A Married Filing Jointly technician works 40 regular hours and 6 overtime hours ($52.50/hr) per week in Cincinnati (<strong>1.8% city tax</strong>), paid weekly, with $120/week family health insurance and 0% 401(k).
+        </p>
+        <ul>
+          <li><strong>Weekly Gross:</strong> (40 × $35) + (6 × $52.50) = <strong>$1,715.00</strong> ($89,180/yr)</li>
+          <li><strong>FICA (on $1,595 taxable wages):</strong> $98.89 SS + $23.13 Medicare = <strong>$122.02</strong></li>
+          <li><strong>Federal Tax (MFJ):</strong> <strong>~$111.79/wk</strong></li>
+          <li><strong>Ohio State + Cincinnati 1.8% City:</strong> ~$29.10 State + $28.71 City = <strong>$57.81</strong></li>
+          <li><strong>Net Weekly Take-Home Pay:</strong> <strong>~$1,303.38/wk</strong></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="ac-section">
+    <h2>Frequently Asked Questions About Ohio Hourly Paychecks</h2>
+    <div class="ac-faq-list">
+      <div class="ac-faq-item">
+        <h3>1. What is the Ohio state income tax rate in 2026?</h3>
+        <p>Under Ohio HB 96, tax year 2026 uses a simplified two-tier flat structure: <strong>0% on Ohio taxable income up to $26,050</strong>, and a flat <strong>2.75% on all income above $26,050</strong>. There is no longer a 3.5% top bracket.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>2. What are the 2026 municipal income tax rates in major Ohio cities?</h3>
+        <p>Major Ohio city rates are <strong>2.5%</strong> in Columbus, Cleveland, Akron, Toledo, and Dayton; <strong>1.8%</strong> in Cincinnati; and <strong>2.75%</strong> in Youngstown. Unincorporated Ohio townships levy 0% municipal income tax.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>3. Why is Ohio city tax still deducted on my 401(k) contribution?</h3>
+        <p>Ohio municipal tax law follows Medicare-wage rules rather than federal income tax rules for retirement deferrals. While your traditional 401(k) lowers Federal and Ohio state withholding, cities like Columbus, Cleveland, and Cincinnati still tax your gross wages before 401(k) deductions.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>4. What is the Ohio School District Income Tax (SDIT)?</h3>
+        <p>Roughly one-third of Ohio's 600+ school districts levy a voter-approved local income tax (typically 0.5% to 2.0%) based on where you <strong>live</strong>, not where you work. Major metro districts (Columbus City, Cleveland Municipal, Cincinnati Public) do not levy SDIT, while many suburban and rural districts do.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>5. How much will I take home on $25 an hour in Ohio?</h3>
+        <p>At $25/hr for 40 hours per week ($52,000/year), a Single worker in Columbus or Cleveland (2.5% city tax) with no pre-tax benefit deductions takes home roughly <strong>$1,615 bi-weekly</strong> (~$41,990/year). In a 0% township, take-home rises to about <strong>$1,665 bi-weekly</strong>.</p>
+      </div>
+    </div>
+    <p class="ac-disclaimer">
+      Disclaimer: Estimates are for paycheck budgeting based on 2026 IRS tax tables and Ohio HB 96 state rates. Actual employer withholding varies with W-4 Step 2–4 adjustments, Ohio IT-4 exemptions, and local RITA/CCA municipal residency credits. Not tax or payroll advice.
+    </p>
+  </section>
+
+  <%- adAfterFAQ() %>
+
+  <section class="ac-section">
+    <h2>Related Ohio &amp; State Paycheck Calculators</h2>
+    <nav class="ac-related-grid" aria-label="Related Calculators">
+      <a class="ac-rel-link" href="/ohio/overtime-calculator">
+        <strong>Ohio Overtime Calculator</strong>
+        <span>Calculate 1.5× overtime &amp; 2.0× double-time take-home pay in Ohio.</span>
+      </a>
+      <a class="ac-rel-link" href="/ohio/paycheck-calculator">
+        <strong>Ohio Paycheck Calculator</strong>
+        <span>Full Ohio payroll estimator for salary and hourly employees.</span>
+      </a>
+      <a class="ac-rel-link" href="/ohio/salary-paycheck-calculator">
+        <strong>Ohio Salary Paycheck Calculator</strong>
+        <span>Convert annual Ohio salary into net bi-weekly and monthly pay.</span>
+      </a>
+      <a class="ac-rel-link" href="/ohio/bonus-tax-calculator">
+        <strong>Ohio Bonus Tax Calculator</strong>
+        <span>Estimate 22% federal supplemental, 2.75% Ohio, and city bonus taxes.</span>
+      </a>
+      <a class="ac-rel-link" href="/ohio/payroll-tax-calculator">
+        <strong>Ohio Payroll Tax Calculator</strong>
+        <span>Estimate employer &amp; employee Ohio payroll withholding totals.</span>
+      </a>
+      <a class="ac-rel-link" href="/pennsylvania/paycheck-calculator">
+        <strong>Pennsylvania Paycheck Calculator</strong>
+        <span>Compare Ohio take-home pay against neighboring Pennsylvania taxes.</span>
+      </a>
+    </nav>
+  </section>
+</main>
+
+<script>
+(function () {
+  var FED_2026 = {
+    single: {
+      std: 15750,
+      brackets: [
+        [12400, 0.10], [50400, 0.12], [105700, 0.22],
+        [201775, 0.24], [256225, 0.32], [640600, 0.35], [Infinity, 0.37]
+      ]
+    },
+    mfj: {
+      std: 31500,
+      brackets: [
+        [24800, 0.10], [100800, 0.12], [211400, 0.22],
+        [403550, 0.24], [512450, 0.32], [768700, 0.35], [Infinity, 0.37]
+      ]
+    },
+    hoh: {
+      std: 23625,
+      brackets: [
+        [17700, 0.10], [67450, 0.12], [105700, 0.22],
+        [201775, 0.24], [256200, 0.32], [640600, 0.35], [Infinity, 0.37]
+      ]
+    }
+  };
+
+  function calcFedTax(taxable, filing) {
+    var cfg = FED_2026[filing] || FED_2026.single;
+    var rem = Math.max(0, taxable - cfg.std);
+    var tax = 0;
+    var prev = 0;
+    for (var i = 0; i < cfg.brackets.length; i++) {
+      var cap = cfg.brackets[i][0];
+      var rate = cfg.brackets[i][1];
+      if (rem <= prev) break;
+      var slice = Math.min(rem, cap) - prev;
+      tax += slice * rate;
+      prev = cap;
+    }
+    return tax;
+  }
+
+  function calcOhioStateTax(ohTaxableBase) {
+    var exemption = ohTaxableBase <= 40000 ? 2400 : (ohTaxableBase <= 80000 ? 2150 : 1900);
+    var ohTaxable = Math.max(0, ohTaxableBase - exemption);
+    if (ohTaxable <= 26050) return 0;
+    return (ohTaxable - 26050) * 0.0275;
+  }
+
+  function getCityRate() {
+    var val = document.getElementById('oh-city').value;
+    if (val === 'custom') return Math.max(0, parseFloat(document.getElementById('oh-city-custom').value) || 0) / 100;
+    return (parseFloat(val) || 0) / 100;
+  }
+
+  function fmt(n) {
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function calculate() {
+    var rate = Math.max(0, parseFloat(document.getElementById('oh-rate').value) || 0);
+    var regHrs = Math.max(0, parseFloat(document.getElementById('oh-hours').value) || 0);
+    var otHrs = Math.max(0, parseFloat(document.getElementById('oh-ot').value) || 0);
+    var freq = parseInt(document.getElementById('oh-freq').value, 10) || 26;
+    var filing = document.getElementById('oh-filing').value;
+    var cityRate = getCityRate();
+    var sditRate = Math.max(0, parseFloat(document.getElementById('oh-sdit').value) || 0) / 100;
+    var k401Pct = Math.max(0, Math.min(50, parseFloat(document.getElementById('oh-401k').value) || 0)) / 100;
+    var healthPerCheck = Math.max(0, parseFloat(document.getElementById('oh-health').value) || 0);
+
+    var weeklyGross = (regHrs * rate) + (otHrs * rate * 1.5);
+    var annualGross = weeklyGross * 52;
+    var checkGross = annualGross / freq;
+
+    var check401k = checkGross * k401Pct;
+    var annual401k = check401k * freq;
+    var annualHealth = healthPerCheck * freq;
+
+    var annualFedWages = Math.max(0, annualGross - annual401k - annualHealth);
+    var annualFicaWages = Math.max(0, annualGross - annualHealth);
+
+    var annualFedTax = calcFedTax(annualFedWages, filing);
+    var annualSS = Math.min(annualFicaWages, 176100) * 0.062;
+    var annualMed = annualFicaWages * 0.0145 + Math.max(0, annualFicaWages - (filing === 'mfj' ? 250000 : 200000)) * 0.009;
+    var annualOhTax = calcOhioStateTax(annualFedWages);
+    var annualCityTax = annualFicaWages * cityRate;
+    var annualSditTax = annualFedWages * sditRate;
+
+    var checkFed = annualFedTax / freq;
+    var checkFica = (annualSS + annualMed) / freq;
+    var checkOh = annualOhTax / freq;
+    var checkLocal = (annualCityTax + annualSditTax) / freq;
+    var checkPreTax = check401k + healthPerCheck;
+    var checkNet = Math.max(0, checkGross - checkPreTax - checkFed - checkFica - checkOh - checkLocal);
+
+    var annualNet = checkNet * freq;
+    var totalHoursPerCheck = ((regHrs + otHrs) * 52) / freq;
+    var effNetHourly = totalHoursPerCheck > 0 ? checkNet / totalHoursPerCheck : 0;
+    var effTaxPct = annualGross > 0 ? ((annualFedTax + annualSS + annualMed + annualOhTax + annualCityTax + annualSditTax) / annualGross) * 100 : 0;
+
+    var periodName = freq === 52 ? 'Weekly' : (freq === 26 ? 'Bi-Weekly' : 'Semi-Monthly');
+    document.getElementById('out-period-lbl').textContent = 'Estimated ' + periodName + ' Net Take-Home Pay';
+    document.getElementById('out-net-pay').textContent = fmt(checkNet);
+    document.getElementById('out-net-sub').textContent = 'Gross: ' + fmt(checkGross) + ' | Effective Net Hourly: ' + fmt(effNetHourly) + '/hr';
+
+    document.getElementById('out-ann-gross').textContent = '$' + Math.round(annualGross).toLocaleString('en-US');
+    document.getElementById('out-eff-tax').textContent = 'Effective tax rate: ' + effTaxPct.toFixed(1) + '%';
+    document.getElementById('out-ann-net').textContent = '$' + Math.round(annualNet).toLocaleString('en-US');
+    document.getElementById('out-monthly-net').textContent = '~$' + Math.round(annualNet / 12).toLocaleString('en-US') + ' / month avg';
+
+    document.getElementById('bd-title').textContent = 'Per-Paycheck Deductions Breakdown (' + periodName + ')';
+    document.getElementById('bd-gross').textContent = fmt(checkGross);
+    document.getElementById('bd-pretax').textContent = '-' + fmt(checkPreTax);
+    document.getElementById('bd-fed').textContent = '-' + fmt(checkFed);
+    document.getElementById('bd-fica').textContent = '-' + fmt(checkFica);
+    document.getElementById('bd-oh').textContent = '-' + fmt(checkOh);
+    document.getElementById('bd-local').textContent = '-' + fmt(checkLocal);
+    document.getElementById('bd-net').textContent = fmt(checkNet);
+  }
+
+  document.getElementById('oh-city').addEventListener('change', function (e) {
+    document.getElementById('oh-custom-city-row').style.display = e.target.value === 'custom' ? 'grid' : 'none';
+    calculate();
+  });
+
+  ['oh-rate', 'oh-hours', 'oh-ot', 'oh-freq', 'oh-filing', 'oh-city-custom', 'oh-sdit', 'oh-401k', 'oh-health'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', calculate);
+      el.addEventListener('change', calculate);
+    }
+  });
+  document.getElementById('oh-calc-btn').addEventListener('click', calculate);
+  document.getElementById('oh-reset-btn').addEventListener('click', function () {
+    document.getElementById('oh-rate').value = '24.00';
+    document.getElementById('oh-hours').value = '40';
+    document.getElementById('oh-ot').value = '0';
+    document.getElementById('oh-freq').value = '26';
+    document.getElementById('oh-filing').value = 'single';
+    document.getElementById('oh-city').value = '2.5';
+    document.getElementById('oh-custom-city-row').style.display = 'none';
+    document.getElementById('oh-city-custom').value = '2.0';
+    document.getElementById('oh-sdit').value = '0';
+    document.getElementById('oh-401k').value = '5';
+    document.getElementById('oh-health').value = '65';
+    calculate();
+  });
+
+  calculate();
+})();
+</script>
+
+<%- include('../../partials/footer') %>

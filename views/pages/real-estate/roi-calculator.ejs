@@ -1,0 +1,225 @@
+<%- include('../../partials/header') %>
+<style>
+body{background:#f8fafc;}
+.rc-wrap{max-width:960px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+.rc-bc{font-size:.8rem;color:#94a3b8;margin-bottom:.75rem;}.rc-bc a{color:#64748b;text-decoration:none;}
+.rc-hero h1{font-size:1.85rem;color:#0f172a;margin:0 0 .5rem;line-height:1.25;}
+.rc-hero p{font-size:.97rem;color:#64748b;line-height:1.65;margin:0 0 1.75rem;border-left:3px solid #7c3aed;padding-left:.9rem;}
+.rc-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden;margin-bottom:1.75rem;}
+.rc-card-head{background:#5b21b6;color:#fff;padding:1rem 1.5rem;font-size:1rem;font-weight:700;}
+.rc-body{padding:1.5rem;}
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.rc-field{margin-bottom:1rem;}
+.rc-field label{display:block;font-size:.85rem;font-weight:600;color:#1e293b;margin-bottom:.35rem;}
+.rc-field input{width:100%;padding:10px 13px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:.94rem;color:#0f172a;outline:none;box-sizing:border-box;background:#fff;transition:border-color .2s;}
+.rc-field input:focus{border-color:#7c3aed;}
+.rc-field .hint{font-size:.73rem;color:#94a3b8;margin-top:.25rem;}
+.rc-btn{width:100%;background:#5b21b6;color:#fff;padding:13px;border:none;border-radius:8px;font-size:.97rem;font-weight:700;cursor:pointer;margin-top:.5rem;}
+.rc-btn:hover{background:#7c3aed;}
+.rc-result{background:#f5f3ff;border:1.5px solid #ddd6fe;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1.25rem;}
+.rc-result-primary{text-align:center;margin-bottom:1rem;}
+.rc-result-primary .val{font-size:2.4rem;font-weight:800;color:#5b21b6;display:block;line-height:1;}
+.rc-result-primary .lbl{font-size:.83rem;color:#64748b;}
+.rc-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;margin-bottom:.85rem;}
+.rc-stat{background:#fff;border-radius:8px;padding:.75rem;text-align:center;border:1px solid #ede9fe;}
+.rc-stat .sv{display:block;font-size:.97rem;font-weight:800;color:#5b21b6;}
+.rc-stat .sl{font-size:.69rem;color:#64748b;font-weight:600;line-height:1.3;}
+.rc-breakdown{background:#fff;border:1px solid #ede9fe;border-radius:8px;padding:.75rem 1rem;}
+.rc-line{display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid #f5f3ff;font-size:.86rem;}
+.rc-line:last-child{border-bottom:none;font-weight:700;}
+.rc-line .ll{color:#64748b;}.rc-line .lv{font-weight:600;color:#1e293b;}
+.rc-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:1.75rem;margin-bottom:1.5rem;}
+.rc-section h2{font-size:1.3rem;color:#0f172a;margin:0 0 .85rem;padding-bottom:.6rem;border-bottom:2px solid #f5f3ff;}
+.rc-section p{color:#475569;line-height:1.72;font-size:.95rem;margin-bottom:.9rem;}
+.rc-section p:last-child{margin-bottom:0;}.rc-section a{color:#7c3aed;font-weight:600;}
+.rc-faq-item{border-bottom:1px solid #f1f5f9;padding:.8rem 0;}
+.rc-faq-item:last-child{border-bottom:none;padding-bottom:0;}
+.rc-faq-q{font-size:.94rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;}
+.rc-faq-q::after{content:'+';color:#7c3aed;font-size:1.2rem;flex-shrink:0;}
+.rc-faq-item.open .rc-faq-q::after{content:'−';}
+.rc-faq-a{display:none;color:#475569;font-size:.9rem;line-height:1.68;padding-top:.5rem;}
+.rc-faq-item.open .rc-faq-a{display:block;}
+.rc-related{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.75rem;margin-top:.75rem;}
+.rc-rel-link{display:block;background:#f5f3ff;border:1.5px solid #ddd6fe;border-radius:8px;padding:.75rem 1rem;font-size:.85rem;font-weight:600;color:#5b21b6;text-decoration:none;text-align:center;}
+.rc-rel-link:hover{background:#ede9fe;}
+@media(max-width:640px){.rc-grid,.rc-stat-grid{grid-template-columns:1fr 1fr;}.rc-hero h1{font-size:1.5rem;}}
+@media(max-width:400px){.rc-stat-grid{grid-template-columns:1fr;}}
+</style>
+<main id="main-content">
+<div class="rc-wrap">
+  <div class="rc-bc"><a href="/">Home</a> › <a href="/real-estate/">Real Estate</a> › ROI Calculator</div>
+  <div class="rc-hero">
+    <h1>Real Estate ROI Calculator (<%= currentYear %>)</h1>
+    <p>Calculate total return on investment for any rental property — including cash flow, appreciation, and mortgage principal paydown.</p>
+  </div>
+  <div class="rc-card">
+    <div class="rc-card-head">📈 Real Estate ROI Calculator</div>
+    <div class="rc-body">
+      <div class="rc-grid">
+        <div class="rc-field"><label>Purchase Price ($)</label><input type="number" id="r-price" value="250000" min="0" step="1000"></div>
+        <div class="rc-field"><label>Down Payment ($)</label><input type="number" id="r-down" value="50000" min="0" step="1000"></div>
+      </div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>Closing Costs ($)</label><input type="number" id="r-closing" value="5000" min="0" step="500"></div>
+        <div class="rc-field"><label>Upfront Repairs ($)</label><input type="number" id="r-repair" value="0" min="0" step="500"></div>
+      </div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>Annual Net Cash Flow ($)</label><input type="number" id="r-cashflow" value="3600" step="100"><div class="hint">Use Cash Flow Calculator above if needed</div></div>
+        <div class="rc-field"><label>Annual Appreciation Rate (%)</label><input type="number" id="r-appr" value="3.5" min="0" max="20" step="0.5"><div class="hint">US avg ~3–4%/yr historically</div></div>
+      </div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>Mortgage Rate (%)</label><input type="number" id="r-rate" value="7.0" min="0" max="20" step="0.05"></div>
+        <div class="rc-field"><label>Loan Term (Years)</label><input type="number" id="r-term" value="30" min="1" max="30" step="1"></div>
+      </div>
+      <div class="rc-grid">
+        <div class="rc-field"><label>Hold Period (Years)</label><input type="number" id="r-hold" value="5" min="1" max="30" step="1"></div>
+        <div class="rc-field"><label>Selling Cost (%)</label><input type="number" id="r-sell" value="6" min="0" max="15" step="0.5"><div class="hint">Agent commissions, closing costs</div></div>
+      </div>
+      <button class="rc-btn" onclick="calcROI()">⚡ Calculate ROI</button>
+      <div class="rc-result" id="r-result" style="display:none;">
+        <div class="rc-result-primary">
+          <span class="val" id="r-roi">0%</span>
+          <span class="lbl">Total Annualized ROI</span>
+        </div>
+        <div class="rc-stat-grid">
+          <div class="rc-stat"><span class="sv" id="r-coc">0%</span><span class="sl">Cash-on-Cash Return</span></div>
+          <div class="rc-stat"><span class="sv" id="r-equity">$0</span><span class="sl">Equity at Sale</span></div>
+          <div class="rc-stat"><span class="sv" id="r-totalcf">$0</span><span class="sl">Total Cash Flow</span></div>
+          <div class="rc-stat"><span class="sv" id="r-profit">$0</span><span class="sl">Total Net Profit</span></div>
+        </div>
+        <div class="rc-breakdown">
+          <div class="rc-line"><span class="ll">Total Cash Invested</span><span class="lv" id="rl-invested">—</span></div>
+          <div class="rc-line"><span class="ll">Cash Flow Over Hold Period</span><span class="lv" id="rl-cf">—</span></div>
+          <div class="rc-line"><span class="ll">Appreciation Gain</span><span class="lv" id="rl-appr">—</span></div>
+          <div class="rc-line"><span class="ll">Principal Paydown</span><span class="lv" id="rl-equity">—</span></div>
+          <div class="rc-line"><span class="ll">Selling Costs</span><span class="lv" style="color:#dc2626;" id="rl-sell">—</span></div>
+          <div class="rc-line"><span class="ll">Net Profit</span><span class="lv" id="rl-profit">—</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="rc-section">
+    <h2>The 4 Pillars of Real Estate Return on Investment (ROI)</h2>
+    <p>Unlike stocks, mutual funds, or precious metals, calculating the true return on investment in real estate involves more than simple price appreciation. A complete real estate ROI analysis incorporates four distinct wealth-building drivers:</p>
+
+    <table style="width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.9rem;">
+      <thead>
+        <tr style="background:#f3e8ff;color:#6b21a8;">
+          <th style="padding:10px 12px;border:1px solid #e9d5ff;text-align:left;">Wealth Engine</th>
+          <th style="padding:10px 12px;border:1px solid #e9d5ff;text-align:left;">How It Generates Return</th>
+          <th style="padding:10px 12px;border:1px solid #e9d5ff;text-align:left;">Typical Annual Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;"><strong>1. Net Rental Cash Flow</strong></td>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;">Spendable income remaining each month after all operating expenses, vacancy reserves, and debt payments.</td>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;">4% &ndash; 8% Cash-on-Cash Return</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;"><strong>2. Price Appreciation</strong></td>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;">Long-term growth in property market value driven by inflation, population inflows, and neighborhood improvements.</td>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;">3% &ndash; 5% long-term historical US average</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;"><strong>3. Principal Loan Paydown</strong></td>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;">Your tenants' rent checks pay down your mortgage principal balance each month, forced-saving equity on your behalf.</td>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;">2% &ndash; 4% annualized equity accumulation</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;"><strong>4. Tax Shelters &amp; Depreciation</strong></td>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;">IRS 27.5-year residential depreciation shields cash flow from income tax, plus Section 1031 tax-deferred exchanges.</td>
+          <td style="padding:10px 12px;border:1px solid #e9d5ff;">Reduces effective federal tax burden to near 0%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>How Leverage Amplifies Real Estate Returns</h3>
+    <p>Financial leverage—borrowing money to acquire an asset—is the catalyst that allows real estate to routinely outpace traditional index fund returns. Consider a real-world scenario:</p>
+    <ul>
+      <li>You purchase a <strong>$300,000 property</strong> putting <strong>20% down ($60,000)</strong>.</li>
+      <li>Over the next 3 years, the home appreciates by a conservative <strong>4% per year</strong>, gaining <strong>$37,459</strong> in value.</li>
+      <li>Because you only invested $60,000 of your own capital, that $37,459 gain represents a <strong>62.4% return on your invested cash</strong>, even before counting 3 years of rental income or loan amortization!</li>
+    </ul>
+
+    <h3>Total ROI vs. Cash-on-Cash Return vs. Internal Rate of Return (IRR)</h3>
+    <p><strong>Total Annualized ROI:</strong> Summarizes all cumulative gains (cash flow + appreciation + equity paydown minus closing/selling costs) divided by the years held. This gives you your holistic investment yield.</p>
+    <p><strong>Cash-on-Cash Return (CoC):</strong> Measures only immediate cash liquidity: <code>Annual Net Cash Flow &divide; Initial Out-of-Pocket Cash</code>.</p>
+    <p><strong>Internal Rate of Return (IRR):</strong> The annualized metric favored by institutional private equity funds because it accounts for the time value of money—dollars received early in year 1 are weighted more heavily than dollars received upon final exit in year 7.</p>
+  </div>
+
+  <div class="rc-section">
+    <h2>Frequently Asked Questions</h2>
+    <p>Total ROI in real estate has four components: <strong>cash flow</strong> (monthly income after expenses), <strong>appreciation</strong> (property value increase), <strong>principal paydown</strong> (equity from mortgage payments), and <strong>tax benefits</strong> (depreciation deductions).</p>
+    <p>Unlike stocks, real estate is leveraged — you control a $250,000 asset with $55,000 of your own money. Even a 3.5% appreciation rate on $250,000 is $8,750/year in value gained while only having $55,000 at risk. This leverage effect significantly boosts annualized ROI.</p>
+  </div>
+
+  <div class="rc-section">
+    <h2>Frequently Asked Questions</h2>
+    <% const _faqs = [["What is a good ROI for rental property?", "A total annual ROI of 8–12% is generally considered good. Cash-on-cash returns of 6–10% are strong in the current market. Markets like Cleveland OH and Memphis TN frequently offer 10–15%+ total ROI for buy-and-hold investors."], ["Does ROI include appreciation?", "Total ROI includes appreciation, cash flow, and principal paydown. Cash-on-cash return only measures current income. Use this calculator to see the complete picture including estimated appreciation over your hold period."], ["What is a realistic appreciation rate?", "US home prices have appreciated an average of 3–4% annually over the long term. High-growth markets like Austin or Nashville have seen 8–12%/year recently. Conservative analysis should use 2–3% to avoid overestimating returns."], ["Should I include principal paydown in ROI?", "Yes. Every mortgage payment reduces your balance and builds equity. On a $200,000 loan at 7% (30yr), you pay down roughly $3,000–$5,000 of principal in the first 5 years — real equity you capture when you sell or refinance."]]; _faqs.forEach(function(f) { %><div class="rc-faq-item"><div class="rc-faq-q"><%- f[0] %></div><div class="rc-faq-a"><%- f[1] %></div></div><% }); %>
+  </div>
+
+  <div class="rc-section">
+    <h2>Related Real Estate Calculators</h2>
+    <div class="rc-related">
+      <a href="/real-estate/cash-flow-calculator" class="rc-rel-link">💵 Cash Flow Calculator</a>
+      <a href="/real-estate/rental-property-calculator" class="rc-rel-link">🏘️ Rental Property Calculator</a>
+      <a href="/real-estate/cash-on-cash-return-calculator" class="rc-rel-link">💰 Cash-on-Cash Return</a>
+      <a href="/real-estate/cap-rate-calculator" class="rc-rel-link">📊 Cap Rate Calculator</a>
+      <a href="/real-estate/1031-exchange-calculator" class="rc-rel-link">🔄 1031 Exchange</a>
+      <a href="/real-estate/" class="rc-rel-link">🏘️ All Real Estate Tools</a>
+    </div>
+  </div>
+</div>
+</main>
+<script>
+function fmtC(v){return (v<0?'−':'')+'$'+Math.round(Math.abs(v)).toLocaleString();}
+function fmtP(v){return v.toFixed(2)+'%';}
+function calcROI(){
+  var price=parseFloat(document.getElementById('r-price').value)||0;
+  var down=parseFloat(document.getElementById('r-down').value)||0;
+  var closing=parseFloat(document.getElementById('r-closing').value)||0;
+  var repairs=parseFloat(document.getElementById('r-repairs').value)||0;
+  var cf=parseFloat(document.getElementById('r-cashflow').value)||0;
+  var appr=parseFloat(document.getElementById('r-appr').value)||0;
+  var rate=parseFloat(document.getElementById('r-rate').value)||0;
+  var term=parseInt(document.getElementById('r-term').value)||30;
+  var hold=parseInt(document.getElementById('r-hold').value)||5;
+  var sellPct=(parseFloat(document.getElementById('r-sell').value)||0)/100;
+  var loanAmt=price-down;
+  var totalCash=down+closing+repairs;
+  // Principal paydown over hold period
+  var r=rate/100/12,n=term*12;
+  var pi=r>0?loanAmt*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1):loanAmt/n;
+  var bal=loanAmt;
+  for(var m=0;m<hold*12;m++){var iP=bal*r;bal-=(pi-iP);}
+  var principalPaid=loanAmt-Math.max(0,bal);
+  // Appreciation
+  var salePrice=price*Math.pow(1+appr/100,hold);
+  var apprGain=salePrice-price;
+  var sellCost=salePrice*sellPct;
+  // Totals
+  var totalCF=cf*hold;
+  var netProfit=totalCF+apprGain+principalPaid-sellCost;
+  var totalROI=totalCash>0?(netProfit/totalCash/hold)*100:0;
+  var coc=totalCash>0?(cf/totalCash)*100:0;
+  document.getElementById('r-roi').textContent=fmtP(totalROI);
+  document.getElementById('r-roi').style.color=totalROI>=0?'#5b21b6':'#dc2626';
+  document.getElementById('r-coc').textContent=fmtP(coc);
+  document.getElementById('r-equity').textContent=fmtC(salePrice-Math.max(0,bal)-sellCost);
+  document.getElementById('r-totalcf').textContent=fmtC(totalCF);
+  document.getElementById('r-profit').textContent=fmtC(netProfit);
+  document.getElementById('rl-invested').textContent=fmtC(totalCash);
+  document.getElementById('rl-cf').textContent=fmtC(totalCF);
+  document.getElementById('rl-appr').textContent=fmtC(apprGain);
+  document.getElementById('rl-equity').textContent=fmtC(principalPaid);
+  document.getElementById('rl-sell').textContent='−'+fmtC(sellCost).replace('−','').replace('$','$');
+  document.getElementById('rl-profit').textContent=fmtC(netProfit);
+  document.getElementById('r-result').style.display='block';
+}
+document.querySelectorAll('#r-price,#r-down,#r-closing,#r-repairs,#r-cashflow,#r-appr,#r-rate,#r-term,#r-hold,#r-sell').forEach(function(el){el.addEventListener('input',calcROI);});
+calcROI();
+document.querySelectorAll('.rc-faq-q').forEach(function(q){q.addEventListener('click',function(){var i=this.closest('.rc-faq-item'),w=i.classList.contains('open');document.querySelectorAll('.rc-faq-item').forEach(function(x){x.classList.remove('open');});if(!w)i.classList.add('open');});});
+</script>
+<%- include('../../partials/footer') %>

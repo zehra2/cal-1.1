@@ -1,0 +1,436 @@
+<%- include('../../partials/header') %>
+<style>
+*{box-sizing:border-box;}
+body{background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;}
+.bl-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem;align-items:start;}
+.bl-bc{font-size:.79rem;color:#94a3b8;margin-bottom:.6rem;}
+.bl-bc a{color:#64748b;text-decoration:none;}.bl-bc a:hover{color:#1d4ed8;}
+/* ── Header ── */
+.bl-header{margin-bottom:1.75rem;}
+.bl-header h1{font-size:2rem;color:#0f172a;margin:0 0 .5rem;line-height:1.2;font-weight:800;}
+.bl-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:.75rem;}
+.bl-meta span{font-size:.82rem;color:#64748b;}
+.bl-badge{background:#dbeafe;color:#1e40af;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #bfdbfe;}
+.bl-cat{background:#fef3c7;color:#92400e;font-size:.74rem;font-weight:700;padding:3px 11px;border-radius:20px;border:1px solid #fde68a;}
+.bl-intro{font-size:1.03rem;color:#475569;line-height:1.75;margin:0;}
+/* ── Quick Answer box ── */
+.qa-box{background:#f0f9ff;border:1.5px solid #7dd3fc;border-radius:12px;padding:1.25rem 1.5rem;margin:1.5rem 0;font-size:.97rem;color:#0c4a6e;line-height:1.7;}
+.qa-box strong{color:#0369a1;}
+/* ── Sections ── */
+.bl-section{background:#fff;border-radius:13px;border:1px solid #e2e8f0;padding:1.85rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.bl-section h2{font-size:1.35rem;color:#0f172a;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid #eff6ff;font-weight:700;}
+.bl-section h3{font-size:1.05rem;color:#1e293b;margin:1.5rem 0 .55rem;font-weight:700;}
+.bl-section p{color:#475569;line-height:1.77;font-size:.97rem;margin-bottom:.9rem;}
+.bl-section p:last-child{margin-bottom:0;}
+.bl-section a{color:#1d4ed8;font-weight:600;text-decoration:none;}.bl-section a:hover{text-decoration:underline;}
+.bl-section strong{color:#1e293b;}
+.bl-section ul,.bl-section ol{color:#475569;line-height:1.77;font-size:.97rem;padding-left:1.4rem;margin-bottom:.9rem;}
+.bl-section li{margin-bottom:.45rem;}
+/* ── Tables ── */
+.tbl-wrap{overflow-x:auto;margin:1rem 0 1.25rem;}
+.bl-table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:520px;}
+.bl-table th{background:#1e293b;color:#e2e8f0;padding:10px 14px;text-align:left;font-weight:600;}
+.bl-table th:first-child{min-width:180px;}
+.bl-table td{padding:9px 14px;border-bottom:1px solid #f1f5f9;color:#334155;vertical-align:top;}
+.bl-table tr:nth-child(even) td{background:#f8fafc;}
+.bl-table tr:last-child td{border-bottom:none;}
+.bl-table td strong{color:#1e293b;}
+/* ── Callouts ── */
+.bl-info{background:#f0f9ff;border-left:4px solid #0ea5e9;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.94rem;color:#0c4a6e;line-height:1.6;}
+.bl-warn{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.94rem;color:#78350f;line-height:1.6;}
+/* ── Scenario comparison boxes ── */
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0 1.25rem;}
+.scenario-box{border-radius:10px;padding:1.25rem;border:1.5px solid #e2e8f0;}
+.scenario-box.a{border-color:#93c5fd;background:#eff6ff;}
+.scenario-box.b{border-color:#86efac;background:#f0fdf4;}
+.scenario-box h4{font-size:.92rem;font-weight:700;color:#0f172a;margin:0 0 .75rem;}
+.scenario-box ul{list-style:none;padding:0;margin:0;font-size:.87rem;color:#475569;}
+.scenario-box ul li{padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.06);}
+.scenario-box ul li:last-child{border-bottom:none;font-weight:700;color:#1e293b;padding-top:.5rem;}
+/* ── Decision flowchart ── */
+.flow-step{display:flex;gap:1rem;margin-bottom:1rem;align-items:flex-start;}
+.flow-num{background:#1e293b;color:#fff;font-weight:800;font-size:.9rem;min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem;}
+.flow-body{flex:1;}
+.flow-body strong{color:#1e293b;display:block;margin-bottom:.35rem;font-size:.97rem;}
+.flow-options{display:flex;flex-wrap:wrap;gap:.5rem;}
+.flow-opt{font-size:.83rem;padding:4px 12px;border-radius:20px;font-weight:600;}
+.flow-opt.green{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;}
+.flow-opt.blue{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe;}
+.flow-opt.amber{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+/* ── CTA ── */
+.cta-box{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:14px;padding:1.5rem 1.75rem;margin:1.5rem 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.cta-box-text h3{color:#f1f5f9;margin:0 0 .3rem;font-size:1.05rem;}
+.cta-box-text p{color:#94a3b8;margin:0;font-size:.86rem;}
+.cta-box-btns{display:flex;gap:.65rem;flex-wrap:wrap;}
+.cta-btn{display:inline-flex;align-items:center;gap:.4rem;color:#fff;padding:.65rem 1.25rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:.87rem;white-space:nowrap;transition:opacity .15s;}
+.cta-btn:hover{opacity:.88;}
+.cta-btn.primary{background:#1d4ed8;}
+.cta-btn.secondary{background:#334155;}
+/* ── FAQ ── */
+.bl-faq-item{border-bottom:1px solid #f0f4fa;padding-bottom:1.1rem;margin-bottom:1.1rem;}
+.bl-faq-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.bl-faq-q{font-size:1rem;font-weight:700;color:#0f172a;margin-bottom:.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;line-height:1.4;}
+.bl-faq-q::after{content:'+';font-size:1.3rem;color:#64748b;flex-shrink:0;line-height:1;}
+.bl-faq-item.open .bl-faq-q::after{content:'−';}
+.bl-faq-a{color:#475569;line-height:1.7;font-size:.95rem;display:none;}
+.bl-faq-item.open .bl-faq-a{display:block;}
+/* ── Sidebar ── */
+.bl-sidebar{position:sticky;top:5.5rem;display:flex;flex-direction:column;gap:1.25rem;}
+.bl-toc{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+.bl-toc-head{background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff;padding:.85rem 1.1rem;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.07em;}
+.bl-toc-list{list-style:none;padding:.5rem 0;margin:0;}
+.bl-toc-list li a{display:block;padding:.45rem 1.1rem;font-size:.83rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.bl-toc-list li a:hover{color:#1d4ed8;background:#f0f7ff;border-left-color:#1d4ed8;}
+.bl-related{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;}
+.bl-related-head{padding:.85rem 1.1rem;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-size:.8rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;}
+.bl-related-links{list-style:none;padding:.5rem 0;margin:0;}
+.bl-related-links li a{display:flex;align-items:center;gap:.55rem;padding:.6rem 1.1rem;font-size:.84rem;color:#475569;text-decoration:none;border-left:3px solid transparent;transition:all .15s;font-weight:500;}
+.bl-related-links li a:hover{color:#1d4ed8;background:#f0f7ff;border-left-color:#1d4ed8;}
+@media(max-width:900px){.bl-wrap{grid-template-columns:1fr;}.bl-sidebar{position:static;}.scenario-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.bl-wrap{padding:1rem 1rem 3rem;}.bl-section{padding:1.25rem;}.bl-header h1{font-size:1.65rem;}.cta-box{flex-direction:column;}}
+</style>
+
+<main id="main-content">
+<div class="bl-wrap">
+
+  <div>
+    <div class="bl-bc"><a href="/">Home</a> º <a href="/blog/">Blog</a> º SBA Loan vs. Conventional Business Loan</div>
+
+    <header class="bl-header">
+      <h1>SBA Loan vs. Conventional Business Loan: Which Is Better for You in <%= currentYear %>?</h1>
+      <div class="bl-meta">
+        <span>Reviewed by the <strong>AmericaCalculator.com editorial team</strong></span>
+        <span class="bl-badge">🕐 Last Updated: September <%= currentYear %></span>
+        <span class="bl-cat">🏦 Business Finance</span>
+      </div>
+      <p class="bl-intro">You need $250,000, $500,000, maybe $1 million to grow your business. The bank says no — or they want 25% down, a 720 credit score, and collateral worth more than the loan itself. An SBA loan sounds easier, but the paperwork is substantial and the closing timeline is 60–90 days. This guide gives you the direct answer: real <%= currentYear %> rates, real approval data, and a 60-second decision framework that tells you which loan to pursue before you waste weeks on the wrong application.</p>
+    </header>
+
+    <!-- Quick Answer -->
+    <div class="qa-box">
+      <strong>Quick Answer:</strong> If you have a 700+ credit score, 3+ years in business, $1M+ revenue, and strong collateral, apply for a <strong>conventional bank loan first</strong> — it's faster and often cheaper. If any of those are missing, an <strong>SBA 7(a) loan</strong> is usually your best path to competitive rates and longer terms. Use our <a href="/loan-calculators/sba-loan-calculator">SBA Loan Calculator</a> to see your exact monthly payment before applying.
+    </div>
+
+    <!-- Section 1 — Why banks reject -->
+    <section class="bl-section" id="rejection">
+      <h2>Why Most Small Businesses Get Rejected by Banks</h2>
+      <p>In 2024, <strong>only 44% of small business loan applicants were fully approved by large banks.</strong> Small banks were better at 52%, but that still means nearly half of applicants walk away empty-handed. The reasons are predictable:</p>
+      <div class="tbl-wrap">
+        <table class="bl-table">
+          <thead><tr><th>Rejection Reason</th><th>What Banks Want</th><th>What Most Small Businesses Have</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Credit score</strong></td><td>720+ FICO</td><td>650–700 FICO</td></tr>
+            <tr><td><strong>Time in business</strong></td><td>3+ years</td><td>1–2 years</td></tr>
+            <tr><td><strong>Annual revenue</strong></td><td>$1M+</td><td>$200K“$500K</td></tr>
+            <tr><td><strong>Down payment</strong></td><td>20–30%</td><td>10–15%</td></tr>
+            <tr><td><strong>Collateral coverage</strong></td><td>1:1 (loan = collateral value)</td><td>Limited collateral</td></tr>
+            <tr><td><strong>Banking relationship</strong></td><td>Existing business account + history</td><td>No prior relationship</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Banks are risk-averse. When a lender puts up 100% of the money with no government backstop, every box must be checked. <strong>This is where SBA loans enter.</strong> The SBA does not lend directly — it guarantees 50–90% of your loan to the bank, reducing lender risk. In exchange, the bank can offer longer terms, lower down payments, and more flexible credit requirements. But SBA loans are not automatically better. Here's how to decide.</p>
+    </section>
+
+    <!-- CTA 1 -->
+    <div class="cta-box">
+      <div class="cta-box-text">
+        <h3>🧮 Run the Numbers Before You Apply</h3>
+        <p>Compare monthly payments across SBA and conventional loan scenarios instantly.</p>
+      </div>
+      <div class="cta-box-btn">
+        <a href="/loan-calculators/sba-loan-calculator" class="cta-btn primary">SBA Loan Calculator →</a>
+        <a href="/loan-calculators/business-loan-calculator" class="cta-btn secondary">Business Loan Calculator →</a>
+      </div>
+    </div>
+
+    <!-- Section 2 — Side by side -->
+    <section class="bl-section" id="comparison">
+      <h2>SBA Loan vs. Conventional Loan: Side-by-Side (<%= currentYear %>)</h2>
+      <div class="tbl-wrap">
+        <table class="bl-table">
+          <thead><tr><th>Feature</th><th>SBA 7(a) Loan</th><th>Conventional Bank Loan</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Who funds it</strong></td><td>SBA-approved bank or lender</td><td>Bank, credit union, or online lender</td></tr>
+            <tr><td><strong>SBA guarantee</strong></td><td>50–90% of loan amount</td><td>None — lender takes 100% risk</td></tr>
+            <tr><td><strong>Max loan amount</strong></td><td>$5 million ($5.5M for 504)</td><td>No set limit; avg ~$663K</td></tr>
+            <tr><td><strong>Interest rate (<%= currentYear %>)</strong></td><td>9%–13% APR (Prime + 2.75%–4.75%)</td><td>8%–12% APR for top borrowers</td></tr>
+            <tr><td><strong>Down payment</strong></td><td>10% minimum</td><td>20–30% typical</td></tr>
+            <tr><td><strong>Credit score minimum</strong></td><td>650–680 (some 620)</td><td>720+ preferred, 700+ minimum</td></tr>
+            <tr><td><strong>Time in business</strong></td><td>2+ years (startups possible)</td><td>3+ years typical</td></tr>
+            <tr><td><strong>Collateral</strong></td><td>Flexible — personal guarantee often sufficient</td><td>1:1 coverage usually required</td></tr>
+            <tr><td><strong>Repayment term</strong></td><td>Up to 10 yrs (working capital), 25 yrs (real estate)</td><td>Up to 5–10 years typical</td></tr>
+            <tr><td><strong>Time to fund</strong></td><td>45–90 days</td><td>30–45 days</td></tr>
+            <tr><td><strong>Approval rate (2024)</strong></td><td>34% fully approved, 25% partially</td><td>44% large bank, 52% small bank</td></tr>
+            <tr><td><strong>Best for</strong></td><td>Working capital, real estate, equipment, acquisitions</td><td>Established businesses, strong credit</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bl-info">💡 <strong>Key insight:</strong> SBA loans are not "easier" — they are <strong>structurally different.</strong> The SBA guarantee allows banks to approve borrowers they would otherwise reject. But if you already qualify for conventional financing, the SBA layer adds paperwork, fees, and 30+ days for minimal benefit.</div>
+    </section>
+
+    <!-- Section 3 — When SBA wins -->
+    <section class="bl-section" id="sba-win">
+      <h2>When SBA Loans Win (4 Scenarios)</h2>
+
+      <h3>1. You Don't Have Full Collateral Coverage</h3>
+      <p>Banks typically require collateral worth at least the loan amount (1:1 coverage). If you're buying a $500,000 business but only have $200,000 in hard assets, a conventional lender declines you. An SBA lender can approve the loan with available collateral plus a personal guarantee — the SBA guarantee fills the gap.</p>
+
+      <h3>2. You Need a Longer Repayment Term</h3>
+      <p>A $500,000 conventional working capital loan at 8% over 5 years = <strong>$10,140/month.</strong></p>
+      <p>The same $500,000 SBA 7(a) loan at 11% over 10 years = <strong>$6,883/month.</strong></p>
+      <p><strong>The SBA loan frees up $3,257/month in cash flow</strong> — even though the interest rate is higher. For cash-flow-constrained businesses, the term matters more than the rate.</p>
+
+      <h3>3. Your Credit Score Is 650–700</h3>
+      <p>Conventional bank loans typically require 720+ FICO. SBA-approved lenders routinely work with borrowers down to 680, and some will go as low as 650 with compensating factors (strong cash flow, collateral, industry experience). That 40–70 point spread is the difference between approved and denied for thousands of businesses.</p>
+
+      <h3>4. You're Buying a Business — Not Just Equipment</h3>
+      <p>SBA 7(a) is one of the only programs that finances <strong>goodwill</strong> — the intangible value of a business's brand, customer relationships, and reputation. Conventional acquisition loans typically only finance hard assets. If you're buying a service business where most value is non-physical, SBA is often your only viable option.</p>
+    </section>
+
+    <!-- Section 4 — When conventional wins -->
+    <section class="bl-section" id="conventional-win">
+      <h2>When Conventional Loans Win (3 Scenarios)</h2>
+
+      <h3>1. You Already Qualify for Bank Financing</h3>
+      <p>If you have 720+ credit, 3+ years in business, $1M+ revenue, and 20%+ equity, walk into your bank first. Conventional loans for top-tier borrowers in <%= currentYear %> run <strong>7–10% APR</strong> versus <strong>10–13% APR</strong> for SBA. The 2–3% rate difference on a $500,000 loan over 10 years = <strong>$25,000–$40,000 in saved interest.</strong> Plus you close in 30–45 days instead of 60–90.</p>
+
+      <h3>2. You Need Funding in Under 30 Days</h3>
+      <p>SBA loans cannot close in 30 days. The paperwork, SBA review, and lender underwriting simply take longer. If you have a time-sensitive opportunity — a discounted equipment purchase, a competitor's distressed inventory, or a payroll emergency — conventional financing or a short-term online lender is the realistic path.</p>
+
+      <h3>3. Your Loan Need Is Under $150,000</h3>
+      <p>SBA loans have fixed costs — packaging fees, SBA guaranty fees (3.0–3.5%), and closing costs — that eat into smaller loans. On a $100,000 loan, these fees can represent 4–6% of the loan amount. An online working capital loan at 12–15% with no fees may actually be cheaper on a total-cost basis. SBA Express loans are faster but rates approach 11.25–13.25%, compressing the advantage.</p>
+    </section>
+
+    <!-- Section 5 — Decision framework -->
+    <section class="bl-section" id="decision-framework">
+      <h2>The 60-Second Decision Framework</h2>
+      <p>Use this before you apply anywhere:</p>
+
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-body">
+          <strong>Check your credit score</strong>
+          <div class="flow-option">
+            <span class="flow-opt green">720+ → Go to Step 2</span>
+            <span class="flow-opt blue">680–719 → Apply SBA first</span>
+            <span class="flow-opt amber">Below 680 → SBA Express or fix credit first</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-body">
+          <strong>Check your time in business</strong>
+          <div class="flow-option">
+            <span class="flow-opt green">3+ years → Go to Step 3</span>
+            <span class="flow-opt blue">2–3 years → Apply SBA first</span>
+            <span class="flow-opt amber">Under 2 years → SBA microloan or online lender</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-body">
+          <strong>Check your collateral position</strong>
+          <div class="flow-option">
+            <span class="flow-opt green">Can cover 100% of loan with hard assets → Apply conventional first</span>
+            <span class="flow-opt blue">Partial collateral or buying goodwill → Apply SBA</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-body">
+          <strong>Check your timeline</strong>
+          <div class="flow-option">
+            <span class="flow-opt amber">Need money in 30 days → Conventional or online lender</span>
+            <span class="flow-opt green">Can wait 60–90 days → SBA or conventional</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bl-info">💡 <strong>The cleanest test:</strong> Apply to your bank for the conventional loan first. If approved at an acceptable rate within 30 days, take it. If declined, counter-offered with bad terms, or waiting more than 30 days for an answer, pivot to SBA 7(a).</div>
+    </section>
+
+    <!-- Section 6 — Rates table -->
+    <section class="bl-section" id="rate">
+      <h2><%= currentYear %> SBA Loan Rates vs. Conventional Rates</h2>
+      <div class="tbl-wrap">
+        <table class="bl-table">
+          <thead><tr><th>Loan Type</th><th>Rate Range (<%= currentYear %>)</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SBA 7(a) Variable</strong></td><td>Prime + 2.25%–2.75% = ~10.0%–10.5%</td><td>Working capital, equipment, acquisitions</td></tr>
+            <tr><td><strong>SBA 7(a) Fixed</strong></td><td>9.75%–14.75%</td><td>Borrowers who want rate certainty</td></tr>
+            <tr><td><strong>SBA 504 (real estate)</strong></td><td>5.0%–7.5% fixed</td><td>Commercial real estate purchase</td></tr>
+            <tr><td><strong>SBA Express</strong></td><td>Prime + 4.5%–6.5% = ~12.0%–14.0%</td><td>Fast funding under $500K</td></tr>
+            <tr><td><strong>Conventional bank term loan</strong></td><td>8%–12%</td><td>Established businesses, strong credit</td></tr>
+            <tr><td><strong>Online term loan</strong></td><td>10%–40%</td><td>Fast funding, lower credit scores</td></tr>
+            <tr><td><strong>Merchant cash advance</strong></td><td>40%–350% equivalent</td><td>Emergency funding only</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:.82rem;color:#64748b;">*Prime rate as of September <%= currentYear %>: approximately 7.5%. SBA rates are not always lower than conventional — the value is in the <em>structure</em>: longer terms, lower down payments, and flexible collateral.</p>
+    </section>
+
+    <!-- Section 7 — SBA 7a vs 504 -->
+    <section class="bl-section" id="sba-program">
+      <h2>SBA 7(a) vs. SBA 504: Which SBA Program?</h2>
+      <p>If you choose SBA, you still have two main programs:</p>
+      <div class="tbl-wrap">
+        <table class="bl-table">
+          <thead><tr><th>Feature</th><th>SBA 7(a)</th><th>SBA 504/CDC</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Max amount</strong></td><td>$5 million</td><td>$5.5M ($10M combined post-July 2026)</td></tr>
+            <tr><td><strong>Use of funds</strong></td><td>Working capital, equipment, real estate, acquisitions, debt refinance</td><td>Real estate and equipment only</td></tr>
+            <tr><td><strong>Interest rate</strong></td><td>Variable (Prime + spread) or fixed</td><td>Fixed, typically 5.0%–7.5%</td></tr>
+            <tr><td><strong>Down payment</strong></td><td>10–20%</td><td>Exactly 10%</td></tr>
+            <tr><td><strong>Structure</strong></td><td>Single lender</td><td>50% bank, 40% CDC, 10% borrower</td></tr>
+            <tr><td><strong>Term</strong></td><td>Up to 10 yrs (working capital), 25 yrs (real estate)</td><td>20–25 yrs (real estate), 10 yrs (equipment)</td></tr>
+            <tr><td><strong>Best for</strong></td><td>General purpose, acquisitions, working capital</td><td>Owner-occupied commercial real estate</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bl-info">📢 <strong>New for <%= currentYear %>:</strong> Effective July 4, 2026, an outstanding 7(a) balance no longer reduces available 504 financing. A business can now access up to $5M in 7(a) AND $5.5M in 504 for a combined <strong>$10.5 million</strong> total SBA financing — a major expansion for growing companies.</div>
+    </section>
+
+    <!-- Section 8 — Real numbers -->
+    <section class="bl-section" id="proof">
+      <h2>Real Numbers: $500,000 Commercial Real Estate Loan Compared</h2>
+      <div class="scenario-grid">
+        <div class="scenario-box a">
+          <h4>Scenario A — Conventional Bank Loan</h4>
+          <ul>
+            <li>Amount: $500,000</li>
+            <li>Rate: 8.5% fixed</li>
+            <li>Term: 20 years</li>
+            <li>Down payment: 25% ($125,000)</li>
+            <li>Monthly payment: $3,416</li>
+            <li>Total interest (20 yr): $320,000</li>
+          </ul>
+        </div>
+        <div class="scenario-box b">
+          <h4>Scenario B — SBA 504 Loan</h4>
+          <ul>
+            <li>Amount: $500,000</li>
+            <li>Rate: 6.0% fixed (CDC portion)</li>
+            <li>Term: 25 years</li>
+            <li>Down payment: 10% ($50,000)</li>
+            <li>Monthly payment: $2,966</li>
+            <li>Total interest (25 yr): $390,000</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Analysis:</strong> The SBA 504 loan saves <strong>$75,000 in upfront cash</strong> and <strong>$450/month in payments</strong> — even though total lifetime interest is higher due to the longer term. For a growing business that needs cash for operations, the SBA structure wins. For a cash-rich business that wants to minimize lifetime interest, the conventional loan wins.</p>
+      <p>Use the <a href="/loan-calculators/sba-loan-calculator">SBA Loan Calculator</a> and <a href="/loan-calculators/business-loan-calculator">Business Loan Calculator</a> to run these scenarios with your exact numbers.</p>
+    </section>
+
+    <!-- Section 9 — FAQ -->
+    <section class="bl-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="bl-faq-item open">
+        <div class="bl-faq-q">Is an SBA loan better than a conventional bank loan?</div>
+        <div class="bl-faq-a">It depends on your business profile. Conventional bank loans offer lower rates (7–10% APR) and faster closing (30–45 days) for established businesses with 720+ credit, $1M+ revenue, and strong collateral. SBA loans offer longer terms (up to 25 years), lower down payments (10%), and more flexible credit requirements (650–680 FICO) — but take 45–90 days to close. If you qualify for conventional, it is usually cheaper. If not, SBA is often your best path to affordable financing.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">What credit score do I need for an SBA loan vs. a conventional loan?</div>
+        <div class="bl-faq-a">Conventional bank loans typically require 720+ FICO, with 700+ as the practical minimum. SBA 7(a) lenders routinely work with borrowers down to 680, and some go as low as 650 with compensating factors (strong cash flow, collateral, industry experience). That 40–70 point spread routinely separates approved from denied.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">How long does it take to get an SBA loan approved in <%= currentYear %>?</div>
+        <div class="bl-faq-a">SBA 7(a) standard loans take 45–90 days from application to funding. SBA Express loans receive a 36-hour lender decision but still take 2–4 weeks for full funding. Conventional bank loans close in 30–45 days. SBA Preferred Lenders can cut the 7(a) timeline to 2–3 weeks by approving entirely in-house without waiting for SBA review. If you need capital in under 30 days, conventional financing or an online lender is the realistic path.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">What are SBA loan interest rates in <%= currentYear %>?</div>
+        <div class="bl-faq-a">SBA 7(a) variable rates are Prime + 2.25%–2.75%, approximately 10.0%–10.5% as of September <%= currentYear %> (Prime ≈ 7.5%). Fixed-rate 7(a) loans range from 9.75%–14.75%. SBA 504 for real estate is 5.0%–7.5% fixed. SBA Express runs 12.0%–14.0%. Conventional bank loans for well-qualified borrowers are 8%–12%. <a href="/loan-calculators/sba-loan-calculator">Use the SBA calculator</a> to see what your specific rate and term produce in monthly payments.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">Can I get an SBA loan with bad credit?</div>
+        <div class="bl-faq-a">SBA loans are not bad-credit loans — the minimum is typically 650–680 FICO. If your score is below 630, you likely will not qualify for SBA or conventional bank financing. Online lenders, revenue-based financing, or equipment financing (using the equipment as collateral) may be alternatives, but expect rates of 15–40%+ APR.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">What is the SBA guarantee fee in <%= currentYear %>?</div>
+        <div class="bl-faq-a">The SBA charges a guarantee fee to offset the cost of the loan guarantee: 0% on loans up to $150,000 (waived since 2023), 3.0% on $150,001–$700,000, and 3.5% on $700,001–$5,000,000. On a $500,000 loan, the fee is $17,500 — usually rolled into the loan amount. This fee enables the lender to offer terms they would not otherwise provide.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">Can a startup get an SBA loan?</div>
+        <div class="bl-faq-a">Yes, but it is harder. The SBA microloan program is designed for startups with loans up to $50,000 (average: $13,000). For standard 7(a) loans, startups need a strong business plan, 20–30% personal equity injection, relevant industry experience, and often collateral. In FY2024, nearly one-third of 7(a) loan funds went to startups or businesses under 2 years old — so it is possible, but competitive.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">What is the maximum SBA loan amount in <%= currentYear %>?</div>
+        <div class="bl-faq-a">The maximum SBA 7(a) loan is $5 million. The maximum SBA 504 loan is $5.5 million. Starting July 4, 2026, these limits no longer offset each other — a business can borrow up to $5 million in 7(a) AND $5.5 million in 504 for a combined $10.5 million total SBA financing. This is a major change that benefits larger growing businesses.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">What is the difference between SBA 7(a) and SBA 504?</div>
+        <div class="bl-faq-a">SBA 7(a) is the general-purpose program covering working capital, equipment, real estate, acquisitions, and debt refinancing. SBA 504 is specifically for owner-occupied commercial real estate and heavy equipment, with lower fixed rates (5–7.5%) but a three-party structure: 50% bank, 40% CDC (Certified Development Company), 10% borrower down payment. If you're buying commercial real estate, compare both programs — 504 often wins on rate and term.</div>
+      </div>
+      <div class="bl-faq-item">
+        <div class="bl-faq-q">Should I apply for a conventional loan or SBA loan first?</div>
+        <div class="bl-faq-a">Apply conventional first if you have 720+ credit, 3+ years in business, $1M+ revenue, and 20%+ equity. If approved within 30 days at a competitive rate, take it. If declined, counter-offered with poor terms, or waiting more than 30 days for an answer, pivot to SBA 7(a). This conventional-first strategy ensures you get the best possible terms while preserving SBA as your fallback.</div>
+      </div>
+    </section>
+
+    <!-- Related calculators -->
+    <section class="bl-section" id="related">
+      <h2>Related Loan Calculators</h2>
+      <ul>
+        <li><a href="/loan-calculators/sba-loan-calculator">SBA Loan Calculator</a> — Monthly payments for SBA 7(a) and 504 loans with full amortization schedule</li>
+        <li><a href="/loan-calculators/business-loan-calculator">Business Loan Calculator</a> — Compare conventional business loan terms and total cost</li>
+        <li><a href="/real-estate/cap-rate-calculator">Cap Rate Calculator</a> — If buying commercial real estate, see your investment return before borrowing</li>
+        <li><a href="/real-estate/cash-on-cash-return-calculator">Cash-on-Cash Return Calculator</a> — Measure your actual cash return on a leveraged real estate purchase</li>
+        <li><a href="/real-estate/rental-yield-calculator">Rental Yield Calculator</a> — Evaluate income potential if buying rental property with your loan</li>
+      </ul>
+    </section>
+
+    <p style="font-size:.8rem;color:#94a3b8;line-height:1.6;margin-top:.5rem;"><em>Disclaimer: This guide is for informational and educational purposes only and does not constitute financial, investment, or lending advice. Loan terms, rates, and approval criteria vary by lender and borrower qualifications. Always consult a qualified financial advisor or SBA-approved lender before making borrowing decisions. Sources: SBA.gov, Federal Reserve Small Business Credit Survey 2024, Bankrate, NerdWallet.</em></p>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="bl-sidebar">
+    <nav class="bl-toc">
+      <div class="bl-toc-head">📋 On This Page</div>
+      <ul class="bl-toc-list">
+        <li><a href="#rejection">Why Banks Reject</a></li>
+        <li><a href="#comparison">Side-by-Side Comparison</a></li>
+        <li><a href="#sba-win">When SBA Wins (4 Scenarios)</a></li>
+        <li><a href="#conventional-win">When Conventional Wins (3 Scenarios)</a></li>
+        <li><a href="#decision-framework">60-Second Decision Framework</a></li>
+        <li><a href="#rate">2026 Rate Comparison</a></li>
+        <li><a href="#sba-program">SBA 7(a) vs. SBA 504</a></li>
+        <li><a href="#proof">Real Numbers: $500K Compared</a></li>
+        <li><a href="#faq">FAQ (10 Questions)</a></li>
+      </ul>
+    </nav>
+    <div class="bl-related">
+      <div class="bl-related-head">🏦 Loan Calculators</div>
+      <ul class="bl-related-link">
+        <li><a href="/loan-calculators/sba-loan-calculator">📋 SBA Loan Calculator</a></li>
+        <li><a href="/loan-calculators/business-loan-calculator">🏦 Business Loan Calculator</a></li>
+        <li><a href="/loan-calculators/personal-loan-calculator">👤 Personal Loan Calculator</a></li>
+        <li><a href="/loan-calculators/land-loan-calculator">🌾 Land Loan Calculator</a></li>
+        <li><a href="/loan-calculators/rv-loan-calculator">🚐 RV Loan Calculator</a></li>
+      </ul>
+    </div>
+    <div class="bl-related">
+      <div class="bl-related-head">📖 Related Guides</div>
+      <ul class="bl-related-link">
+        <li><a href="/blog/ohio-paycheck-calculator-new-job-take-home-pay">💼 Ohio Take-Home Pay Guide</a></li>
+        <li><a href="/real-estate/cap-rate-calculator">📊 Cap Rate Calculator</a></li>
+        <li><a href="/real-estate/cash-on-cash-return-calculator">💰 Cash-on-Cash Return</a></li>
+      </ul>
+    </div>
+  </aside>
+
+</div>
+</main>
+
+<script>
+document.querySelectorAll('.bl-faq-q').forEach(function(q){
+  q.addEventListener('click',function(){
+    var item=this.closest('.bl-faq-item'),was=item.classList.contains('open');
+    document.querySelectorAll('.bl-faq-item').forEach(function(x){x.classList.remove('open');});
+    if(!was) item.classList.add('open');
+  });
+});
+</script>
+<%- include('../../partials/footer') %>

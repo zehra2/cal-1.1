@@ -1,0 +1,63 @@
+name: 30-Day Automated SEO Calculator Rollout
+
+on:
+  schedule:
+    # Runs daily at 09:00 UTC (04:00/05:00 US Eastern) for 30 days until Day 30 completes
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    inputs:
+      day:
+        description: 'Optional specific day number (1-30) to run instead of auto-advancing'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-30-day-rollout
+  cancel-in-progress: false
+
+jobs:
+  daily-rollout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run daily SEO calculator rollout
+        env:
+          MANUAL_DAY: ${{ github.event.inputs.day }}
+        run: |
+          if [ -n "$MANUAL_DAY" ]; then
+            npx tsx scripts/daily-seo-rollout.ts --day="$MANUAL_DAY"
+          else
+            npx tsx scripts/daily-seo-rollout.ts
+          fi
+
+      - name: Verify TypeScript build & EJS templates
+        run: npm run build
+
+      - name: Commit and push daily SEO updates
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit (rollout already completed or up to date)."
+            exit 0
+          fi
+          DAY_NUM=$(node -e "console.log(JSON.parse(require('fs').readFileSync('scripts/rollout-state.json','utf8')).lastCompletedDay)")
+          git config user.name "AmericaCalculator SEO Bot"
+          git config user.email "seo-bot@americacalculator.com"
+          git add views/pages src/pages-meta.json sitemap.xml llms.txt robots.txt server.ts scripts/rollout-state.json
+          git commit -m "chore(seo): day ${DAY_NUM}/30 automated calculator rollout, schema & sitemap sync"
+          git push origin HEAD

@@ -1,0 +1,85 @@
+<%- include('../../partials/header') %>
+<div class="calculator-page">
+    <h1>Mixed Fraction Calculator</h1>
+    <p class="description">Add, subtract, multiply, and divide mixed fractions.</p>
+
+    <form class="calculator-form" onsubmit="event.preventDefault(); computeFrac();">
+        <div class="fraction-group">
+            <label>First Fraction:</label>
+            <div class="fraction-input">
+                <input type="number" id="whole1" placeholder="Whole" value="0">
+                <input type="number" id="numerator1" placeholder="Numerator" value="1" required>
+                <span>/</span>
+                <input type="number" id="denominator1" placeholder="Denominator" value="2" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="operation">Operation:</label>
+            <select id="operation" name="operation">
+                <option value="add">Add (+)</option>
+                <option value="subtract">Subtract (-)</option>
+                <option value="multiply">Multiply (×)</option>
+                <option value="divide">Divide (÷)</option>
+            </select>
+        </div>
+
+        <div class="fraction-group">
+            <label>Second Fraction:</label>
+            <div class="fraction-input">
+                <input type="number" id="whole2" placeholder="Whole" value="0">
+                <input type="number" id="numerator2" placeholder="Numerator" value="1" required>
+                <span>/</span>
+                <input type="number" id="denominator2" placeholder="Denominator" value="2" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">Calculate</button>
+    </form>
+
+    <div id="fracResult" class="result-section" style="display:none;">
+        <h2>Result</h2>
+        <div class="result-item highlight">
+            <strong>Answer:</strong> <span id="fracAnswer"></span>
+        </div>
+    </div>
+</div>
+<script>
+function gcd(a, b) {
+  a = Math.abs(Math.round(a));
+  b = Math.abs(Math.round(b));
+  while (b !== 0) { var t = b; b = a % b; a = t; }
+  return a || 1;
+}
+function computeFrac() {
+  var w1 = parseInt(document.getElementById('whole1').value, 10) || 0;
+  var n1 = parseInt(document.getElementById('numerator1').value, 10) || 0;
+  var d1 = parseInt(document.getElementById('denominator1').value, 10) || 1;
+  var w2 = parseInt(document.getElementById('whole2').value, 10) || 0;
+  var n2 = parseInt(document.getElementById('numerator2').value, 10) || 0;
+  var d2 = parseInt(document.getElementById('denominator2').value, 10) || 1;
+  var op = document.getElementById('operation').value;
+  var f1 = w1 * d1 + (w1 < 0 ? -Math.abs(n1) : n1);
+  var f2 = w2 * d2 + (w2 < 0 ? -Math.abs(n2) : n2);
+  var rn = 0, rd = 1;
+  if (op === 'add') { rn = f1 * d2 + f2 * d1; rd = d1 * d2; }
+  else if (op === 'subtract') { rn = f1 * d2 - f2 * d1; rd = d1 * d2; }
+  else if (op === 'multiply') { rn = f1 * f2; rd = d1 * d2; }
+  else if (op === 'divide') { rn = f1 * d2; rd = d1 * f2; }
+  if (rd === 0) {
+    document.getElementById('fracAnswer').textContent = 'Undefined (division by zero)';
+    document.getElementById('fracResult').style.display = 'block';
+    return;
+  }
+  if (rd < 0) { rn = -rn; rd = -rd; }
+  var g = gcd(rn, rd);
+  rn /= g; rd /= g;
+  var sign = rn < 0 ? '-' : '';
+  var whole = Math.floor(Math.abs(rn) / rd);
+  var rem = Math.abs(rn) % rd;
+  var text = rem === 0 ? (sign + whole) : (whole === 0 ? (sign + rem + '/' + rd) : (sign + whole + ' ' + rem + '/' + rd));
+  document.getElementById('fracAnswer').textContent = text;
+  document.getElementById('fracResult').style.display = 'block';
+}
+</script>
+<%- include('../../partials/footer') %>

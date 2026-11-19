@@ -1,0 +1,559 @@
+<%- include('../../partials/header') %>
+<style>
+  body { background: #f5f7fa; }
+  .ac-shell { max-width: 1180px; margin: 0 auto; padding: 1.75rem 1.25rem 4rem; }
+  .ac-breadcrumb { font-size: 0.84rem; color: #64748b; margin-bottom: 0.85rem; }
+  .ac-breadcrumb a { color: #2563eb; text-decoration: none; font-weight: 500; }
+  .ac-breadcrumb a:hover { text-decoration: underline; }
+  .ac-hero { margin-bottom: 1.75rem; }
+  .ac-hero h1 { font-size: clamp(1.7rem, 3vw, 2.25rem); color: #0f172a; margin: 0 0 0.65rem; line-height: 1.2; font-weight: 800; }
+  .ac-lead { font-size: 1.03rem; color: #334155; line-height: 1.65; max-width: 860px; margin: 0; }
+  .ac-calc-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); overflow: hidden; margin-bottom: 2rem; }
+  .ac-tabs { display: flex; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+  .ac-tab { flex: 1; padding: 0.9rem 0.75rem; border: none; border-bottom: 3px solid transparent; background: transparent; font-size: 0.92rem; font-weight: 700; color: #475569; cursor: pointer; }
+  .ac-tab.active { background: #fff; color: #1d4ed8; border-bottom-color: #1d4ed8; }
+  .ac-calc-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .ac-inputs { padding: 1.75rem; border-right: 1px solid #e2e8f0; }
+  .ac-outputs { padding: 1.75rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; }
+  .ac-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.95rem; }
+  .ac-field { margin-bottom: 1rem; }
+  .ac-field label { display: block; font-size: 0.86rem; font-weight: 700; color: #1e293b; margin-bottom: 0.35rem; }
+  .ac-field input, .ac-field select { width: 100%; padding: 0.68rem 0.82rem; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 0.96rem; color: #0f172a; background: #fff; }
+  .ac-field input:focus, .ac-field select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
+  .ac-hint { font-size: 0.77rem; color: #64748b; margin-top: 0.25rem; }
+  .ac-mode-panel { display: none; }
+  .ac-mode-panel.active { display: block; }
+  .ac-btn-row { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+  .ac-btn-primary { flex: 1; background: #1d4ed8; color: #fff; border: none; border-radius: 8px; padding: 0.78rem 1rem; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+  .ac-btn-primary:hover { background: #1e40af; }
+  .ac-btn-reset { background: #e2e8f0; color: #1e293b; border: none; border-radius: 8px; padding: 0.78rem 1.15rem; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
+  .ac-btn-reset:hover { background: #cbd5e1; }
+  .ac-primary-kpi { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #fff; border-radius: 12px; padding: 1.25rem 1.35rem; }
+  .ac-kpi-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #bfdbfe; font-weight: 700; }
+  .ac-kpi-value { font-size: 2.25rem; font-weight: 800; margin: 0.25rem 0; line-height: 1.1; }
+  .ac-kpi-sub { font-size: 0.88rem; color: #dbeafe; }
+  .ac-bag-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; }
+  .ac-bag-card { background: #fff; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 0.85rem 0.65rem; text-align: center; }
+  .ac-bag-card.selected { border-color: #2563eb; background: #eff6ff; }
+  .ac-bag-card .sz { font-size: 0.76rem; font-weight: 700; color: #475569; text-transform: uppercase; }
+  .ac-bag-card .cnt { font-size: 1.55rem; font-weight: 800; color: #0f172a; margin: 0.2rem 0; }
+  .ac-bag-card .yd { font-size: 0.74rem; color: #64748b; }
+  .ac-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .ac-kpi-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.9rem 1rem; }
+  .ac-kpi-box .lbl { font-size: 0.76rem; font-weight: 700; color: #64748b; text-transform: uppercase; }
+  .ac-kpi-box .val { font-size: 1.28rem; font-weight: 800; color: #0f172a; margin-top: 0.2rem; }
+  .ac-kpi-box .note { font-size: 0.76rem; color: #64748b; margin-top: 0.15rem; }
+  .ac-alert { background: #fffbeb; border: 1px solid #fcd34d; border-left: 4px solid #d97706; border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.87rem; color: #78350f; line-height: 1.5; }
+  .ac-section { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.85rem; margin-bottom: 1.65rem; }
+  .ac-section h2 { font-size: 1.45rem; color: #0f172a; margin: 0 0 0.95rem; padding-bottom: 0.6rem; border-bottom: 2px solid #f1f5f9; font-weight: 800; }
+  .ac-section h3 { font-size: 1.1rem; color: #0f172a; margin: 1.25rem 0 0.45rem; font-weight: 700; }
+  .ac-section p, .ac-section li { color: #334155; line-height: 1.7; font-size: 0.97rem; }
+  .ac-formula { background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #2563eb; border-radius: 8px; padding: 1rem 1.2rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9rem; color: #0f172a; overflow-x: auto; margin: 1rem 0; line-height: 1.7; }
+  .ac-table-wrap { overflow-x: auto; margin-top: 0.75rem; }
+  .ac-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .ac-table th { background: #1e293b; color: #fff; text-align: left; padding: 0.72rem 0.85rem; font-weight: 700; white-space: nowrap; }
+  .ac-table td { padding: 0.68rem 0.85rem; border-bottom: 1px solid #e2e8f0; color: #1e293b; }
+  .ac-table tr:nth-child(even) td { background: #f8fafc; }
+  .ac-table tr.highlight td { background: #eff6ff; font-weight: 700; }
+  .ac-ex-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.15rem; margin-top: 0.85rem; }
+  .ac-ex-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.2rem; }
+  .ac-ex-card h3 { margin-top: 0; color: #1e3a8a; font-size: 1.04rem; }
+  .ac-faq-list { display: grid; gap: 0.95rem; }
+  .ac-faq-item { border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.1rem 1.25rem; background: #f8fafc; }
+  .ac-faq-item h3 { margin: 0 0 0.45rem; font-size: 1.02rem; color: #0f172a; }
+  .ac-faq-item p { margin: 0; font-size: 0.94rem; color: #334155; }
+  .ac-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+  .ac-rel-link { display: block; padding: 0.95rem 1.05rem; border: 1px solid #cbd5e1; border-radius: 10px; text-decoration: none; background: #f8fafc; }
+  .ac-rel-link:hover { border-color: #2563eb; background: #eff6ff; }
+  .ac-rel-link strong { display: block; color: #0f172a; font-size: 0.95rem; margin-bottom: 0.22rem; }
+  .ac-rel-link span { display: block; color: #475569; font-size: 0.82rem; line-height: 1.4; }
+  .ac-disclaimer { font-size: 0.82rem; color: #64748b; margin-top: 0.85rem; line-height: 1.55; }
+  @media (max-width: 900px) {
+    .ac-calc-grid, .ac-ex-grid, .ac-related-grid { grid-template-columns: 1fr; }
+    .ac-inputs { border-right: none; border-bottom: 1px solid #e2e8f0; }
+  }
+  @media (max-width: 560px) {
+    .ac-form-row, .ac-kpi-grid, .ac-bag-trio { grid-template-columns: 1fr; }
+  }
+</style>
+
+<main class="ac-shell">
+  <nav class="ac-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> &rsaquo; <a href="/construction/">Construction Calculators</a> &rsaquo; <span>Concrete Bag Calculator</span>
+  </nav>
+
+  <header class="ac-hero">
+    <h1>Concrete Bag Calculator — 40lb, 60lb &amp; 80lb Bags (US Imperial)</h1>
+    <p class="ac-lead">
+      Estimate exactly how many 40 lb, 60 lb, or 80 lb pre-mixed concrete bags (Quikrete, Sakrete, or house brand) you need for slabs, footings, or Sonotube post holes. Includes cubic yards, standard contractor waste factor, pallet counts, 2026 retail cost estimates, and a ready-mix truck crossover check.
+    </p>
+  </header>
+
+  <%- adAboveHero() %>
+
+  <section class="ac-calc-card" aria-label="Concrete Bag Calculator">
+    <div class="ac-tabs" role="tablist">
+      <button type="button" class="ac-tab active" data-mode="slab" role="tab" aria-selected="true">Slab / Patio / Sidewalk</button>
+      <button type="button" class="ac-tab" data-mode="footing" role="tab" aria-selected="false">Wall Footing</button>
+      <button type="button" class="ac-tab" data-mode="column" role="tab" aria-selected="false">Post Holes / Sonotubes</button>
+    </div>
+
+    <div class="ac-calc-grid">
+      <div class="ac-inputs">
+        <div class="ac-mode-panel active" id="panel-slab">
+          <div class="ac-form-row">
+            <div class="ac-field">
+              <label for="slab-len">Length (feet)</label>
+              <input type="number" id="slab-len" value="10" min="0.5" max="500" step="0.5">
+            </div>
+            <div class="ac-field">
+              <label for="slab-wid">Width (feet)</label>
+              <input type="number" id="slab-wid" value="12" min="0.5" max="500" step="0.5">
+            </div>
+          </div>
+          <div class="ac-field">
+            <label for="slab-depth">Slab Thickness (inches)</label>
+            <input type="number" id="slab-depth" value="4" min="1" max="36" step="0.5">
+            <div class="ac-hint">Standard walkway/patio: 4 in | Driveway/garage slab: 5–6 in</div>
+          </div>
+        </div>
+
+        <div class="ac-mode-panel" id="panel-footing">
+          <div class="ac-field">
+            <label for="foot-len">Total Footing Run (linear feet)</label>
+            <input type="number" id="foot-len" value="30" min="1" max="1000" step="1">
+          </div>
+          <div class="ac-form-row">
+            <div class="ac-field">
+              <label for="foot-wid">Footing Width (inches)</label>
+              <input type="number" id="foot-wid" value="16" min="6" max="72" step="1">
+            </div>
+            <div class="ac-field">
+              <label for="foot-depth">Footing Depth (inches)</label>
+              <input type="number" id="foot-depth" value="8" min="4" max="48" step="1">
+            </div>
+          </div>
+        </div>
+
+        <div class="ac-mode-panel" id="panel-column">
+          <div class="ac-form-row">
+            <div class="ac-field">
+              <label for="col-dia">Hole / Tube Diameter (inches)</label>
+              <input type="number" id="col-dia" value="12" min="4" max="48" step="1">
+              <div class="ac-hint">Common Sonotubes: 8", 10", 12"</div>
+            </div>
+            <div class="ac-field">
+              <label for="col-depth">Hole Depth (inches)</label>
+              <input type="number" id="col-depth" value="36" min="6" max="120" step="2">
+              <div class="ac-hint">Set below local frost line (30"–48" North)</div>
+            </div>
+          </div>
+          <div class="ac-field">
+            <label for="col-qty">Number of Holes / Piers</label>
+            <input type="number" id="col-qty" value="8" min="1" max="200" step="1">
+          </div>
+        </div>
+
+        <div class="ac-form-row">
+          <div class="ac-field">
+            <label for="bag-size">Primary Bag Size</label>
+            <select id="bag-size">
+              <option value="80" selected>80 lb Bag (0.60 cu ft)</option>
+              <option value="60">60 lb Bag (0.45 cu ft)</option>
+              <option value="40">40 lb Bag (0.30 cu ft)</option>
+            </select>
+          </div>
+          <div class="ac-field">
+            <label for="waste-pct">Subgrade &amp; Spill Waste (%)</label>
+            <select id="waste-pct">
+              <option value="0">0% (Exact geometric volume)</option>
+              <option value="5">5% (Clean framed forms)</option>
+              <option value="10" selected>10% (Standard contractor allowance)</option>
+              <option value="15">15% (Rough soil / uneven trench)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ac-field">
+          <label for="bag-price">Retail Price per Bag ($ USD)</label>
+          <input type="number" id="bag-price" value="6.47" min="1" max="30" step="0.05">
+          <div class="ac-hint">2026 typical retail: 40lb ~$4.10 | 60lb ~$5.15 | 80lb ~$6.47</div>
+        </div>
+
+        <div class="ac-btn-row">
+          <button type="button" id="cb-calc-btn" class="ac-btn-primary">Calculate Bags</button>
+          <button type="button" id="cb-reset-btn" class="ac-btn-reset">Reset Defaults</button>
+        </div>
+      </div>
+
+      <div class="ac-outputs" aria-live="polite">
+        <div class="ac-primary-kpi">
+          <div class="ac-kpi-label" id="out-primary-lbl">80 lb Concrete Bags Needed</div>
+          <div class="ac-kpi-value" id="out-primary-bags">74 Bags</div>
+          <div class="ac-kpi-sub" id="out-primary-sub">Includes 10% waste (67 exact + 7 extra)</div>
+        </div>
+
+        <div class="ac-bag-trio">
+          <div class="ac-bag-card" id="card-40">
+            <div class="sz">40 lb Bags</div>
+            <div class="cnt" id="out-40">147</div>
+            <div class="yd">90 bags / cu yd</div>
+          </div>
+          <div class="ac-bag-card" id="card-60">
+            <div class="sz">60 lb Bags</div>
+            <div class="cnt" id="out-60">98</div>
+            <div class="yd">60 bags / cu yd</div>
+          </div>
+          <div class="ac-bag-card selected" id="card-80">
+            <div class="sz">80 lb Bags</div>
+            <div class="cnt" id="out-80">74</div>
+            <div class="yd">45 bags / cu yd</div>
+          </div>
+        </div>
+
+        <div class="ac-kpi-grid">
+          <div class="ac-kpi-box">
+            <div class="lbl">Total Volume (w/ Waste)</div>
+            <div class="val" id="out-yd">1.63 cu yd</div>
+            <div class="note" id="out-ft">44.00 cu ft total</div>
+          </div>
+          <div class="ac-kpi-box">
+            <div class="lbl">Est. Bag Material Cost</div>
+            <div class="val" id="out-cost">$479</div>
+            <div class="note" id="out-weight">5,920 lbs total dry weight</div>
+          </div>
+        </div>
+
+        <div class="ac-kpi-grid">
+          <div class="ac-kpi-box">
+            <div class="lbl">Full Pallets Equivalent</div>
+            <div class="val" id="out-pallets">1.76 pallets</div>
+            <div class="note" id="out-pallet-note">42 bags per 80 lb pallet</div>
+          </div>
+          <div class="ac-kpi-box">
+            <div class="lbl">Mixing Water Needed</div>
+            <div class="val" id="out-water">~56 gal</div>
+            <div class="note">~0.75 gal per 80 lb bag (adjust for slump)</div>
+          </div>
+        </div>
+
+        <div class="ac-alert" id="out-truck-alert">
+          <strong>Jobsite Estimator Note:</strong> Your pour is <strong>1.63 cubic yards</strong>. Above 1.5 cu yd (~68+ 80 lb bags), calling a local ready-mix supplier for a short-load delivery ($150–$195/yd + short-load fee) usually saves 4–6 hours of backbreaking mixer labor and prevents cold joints.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- adMidContent1() %>
+
+  <section class="ac-section">
+    <h2>How Concrete Bags Are Calculated (Exact US Yields &amp; Formulas)</h2>
+    <p>
+      Standard 4,000 PSI pre-blended concrete mix (ASTM C387, such as Quikrete #1101 or Sakrete High Strength) yields <strong>0.0075 cubic feet per dry pound</strong> once mixed with clean potable water. That locks in the three jobsite yield constants used across the US:
+    </p>
+    <div class="ac-formula">
+Slab Volume (cu ft)    = Length (ft) × Width (ft) × (Thickness in inches ÷ 12)
+Footing Volume (cu ft) = Linear Feet × (Width in inches ÷ 12) × (Depth in inches ÷ 12)
+Cylinder Volume (cu ft)= π × ((Diameter in inches ÷ 2) ÷ 12)² × (Depth in inches ÷ 12) × Quantity
+
+Adjusted Volume (cu ft)= Raw Volume (cu ft) × (1 + Waste% ÷ 100)
+Cubic Yards (cu yd)    = Adjusted Volume (cu ft) ÷ 27
+
+40 lb Bags (0.30 cu ft/bag) = ceil(Adjusted cu ft ÷ 0.30)  →  90 bags per cubic yard
+60 lb Bags (0.45 cu ft/bag) = ceil(Adjusted cu ft ÷ 0.45)  →  60 bags per cubic yard
+80 lb Bags (0.60 cu ft/bag) = ceil(Adjusted cu ft ÷ 0.60)  →  45 bags per cubic yard
+    </div>
+    <h3>Practical Contractor Field Rules</h3>
+    <ul>
+      <li><strong>Why Add 10% Waste?</strong> Excavated gravel subbases are rarely laser-flat. Just a ½-inch dip across a 10×12 ft slab adds 5 cubic feet (~8 extra 80 lb bags). Running short mid-pour creates a weak cold joint and forces an emergency hardware run.</li>
+      <li><strong>Dry Weight vs. Pickup Payload:</strong> An 80 lb pallet has <strong>42 bags = 3,360 lbs</strong>, which exceeds the legal payload of most half-ton (1500/F-150) pickup trucks (~1,500–2,000 lbs). Split large bag runs into two trips or schedule flatbed delivery.</li>
+      <li><strong>Do Not Over-Water the Mix:</strong> Adding extra water beyond manufacturer limits (~3 quarts per 80 lb bag) makes concrete easier to screed, but cuts cured compressive strength by 25–40% and increases surface scaling in freeze-thaw climates.</li>
+    </ul>
+  </section>
+
+  <section class="ac-section">
+    <h2>Quick-Reference Table: 40lb, 60lb &amp; 80lb Concrete Bags per Yard &amp; Common Slabs</h2>
+    <p>
+      The table below shows exact geometric volumes (0% waste) alongside recommended bag counts including a <strong>10% contractor overage</strong> for the most common US patio, shed, and driveway dimensions:
+    </p>
+    <div class="ac-table-wrap">
+      <table class="ac-table">
+        <thead>
+          <tr>
+            <th>Project / Dimension</th>
+            <th>Thickness</th>
+            <th>Volume (cu ft)</th>
+            <th>Cubic Yards</th>
+            <th>40 lb Bags (Exact / +10%)</th>
+            <th>60 lb Bags (Exact / +10%)</th>
+            <th>80 lb Bags (Exact / +10%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight"><td><strong>1 Cubic Yard (Standard Benchmark)</strong></td><td>—</td><td>27.00</td><td>1.00 yd³</td><td>90 / 99</td><td>60 / 66</td><td>45 / 50</td></tr>
+          <tr><td>4 ft × 4 ft AC Pad</td><td>4 in</td><td>5.33</td><td>0.20 yd³</td><td>18 / 20</td><td>12 / 14</td><td>9 / 10</td></tr>
+          <tr><td>6 ft × 6 ft Grill / Generator Pad</td><td>4 in</td><td>12.00</td><td>0.44 yd³</td><td>40 / 44</td><td>27 / 30</td><td>20 / 22</td></tr>
+          <tr><td>8 ft × 10 ft Shed Pad</td><td>4 in</td><td>26.67</td><td>0.99 yd³</td><td>89 / 98</td><td>60 / 66</td><td>45 / 49</td></tr>
+          <tr><td>10 ft × 10 ft Patio Slab</td><td>4 in</td><td>33.33</td><td>1.23 yd³</td><td>112 / 123</td><td>75 / 82</td><td>56 / 62</td></tr>
+          <tr><td>10 ft × 12 ft Backyard Patio</td><td>4 in</td><td>40.00</td><td>1.48 yd³</td><td>134 / 147</td><td>89 / 98</td><td>67 / 74</td></tr>
+          <tr><td>12 ft × 12 ft Hot Tub / Patio</td><td>4 in</td><td>48.00</td><td>1.78 yd³</td><td>160 / 176</td><td>107 / 118</td><td>80 / 88</td></tr>
+          <tr><td>10 ft × 20 ft Single-Car Apron</td><td>4 in</td><td>66.67</td><td>2.47 yd³</td><td>223 / 245</td><td>149 / 163</td><td>112 / 123</td></tr>
+          <tr><td>12 ft × 24 ft Workshop Slab</td><td>6 in</td><td>144.00</td><td>5.33 yd³</td><td>480 / 528*</td><td>320 / 352*</td><td>240 / 264*</td></tr>
+          <tr><td>20 ft × 20 ft 2-Car Garage Slab</td><td>4 in</td><td>133.33</td><td>4.94 yd³</td><td>445 / 489*</td><td>297 / 326*</td><td>223 / 245*</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="ac-disclaimer">
+      *Slabs over 2.0 cubic yards should almost always be poured via ready-mix concrete truck rather than individual bags for uniform curing strength and lower total labor cost.
+    </p>
+  </section>
+
+  <%- adMidContent2() %>
+
+  <section class="ac-section">
+    <h2>Two Worked Jobsite Concrete Bag Examples</h2>
+    <div class="ac-ex-grid">
+      <article class="ac-ex-card">
+        <h3>Example 1: 10×12 ft Residential Patio Slab (4 Inches Thick)</h3>
+        <p>
+          You are pouring a 10 ft × 12 ft concrete patio over compacted #57 limestone gravel using <strong>60 lb bags</strong> (easier to lift into a portable drum mixer) with a <strong>10% subgrade waste allowance</strong>.
+        </p>
+        <ul>
+          <li><strong>Raw Volume:</strong> 10 ft × 12 ft × (4 ÷ 12) ft = <strong>40.00 cu ft</strong> (1.48 cu yd)</li>
+          <li><strong>With 10% Waste:</strong> 40.00 × 1.10 = <strong>44.00 cu ft</strong> (1.63 cu yd)</li>
+          <li><strong>60 lb Bags Needed:</strong> 44.00 ÷ 0.45 = 97.78 → round up to <strong>98 bags</strong></li>
+          <li><strong>Estimated Material Cost (at $5.15/bag):</strong> 98 × $5.15 = <strong>$504.70</strong> (plus tax, wire mesh/rebar, and form lumber)</li>
+        </ul>
+      </article>
+
+      <article class="ac-ex-card">
+        <h3>Example 2: 8 Deck Pier Footings (12-Inch Sonotubes, 36 Inches Deep)</h3>
+        <p>
+          You are setting 8 frost-line deck piers using 12-inch diameter cardboard Sonotube forms excavated 36 inches deep, buying <strong>80 lb bags</strong> with a <strong>10% waste factor</strong>.
+        </p>
+        <ul>
+          <li><strong>Radius in Feet:</strong> (12 ÷ 2) ÷ 12 = <strong>0.50 ft</strong>; Depth = 36 ÷ 12 = <strong>3.00 ft</strong></li>
+          <li><strong>Volume per Pier:</strong> 3.1416 × (0.50)² × 3.00 = <strong>2.356 cu ft</strong></li>
+          <li><strong>8 Piers + 10% Waste:</strong> 2.356 × 8 × 1.10 = <strong>20.73 cu ft</strong> (0.77 cu yd)</li>
+          <li><strong>80 lb Bags Needed:</strong> 20.73 ÷ 0.60 = 34.55 → buy <strong>35 bags</strong> (~$226 at $6.47/bag)</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="ac-section">
+    <h2>Frequently Asked Questions About Concrete Bags</h2>
+    <div class="ac-faq-list">
+      <div class="ac-faq-item">
+        <h3>1. How many 60 lb bags of concrete are in a cubic yard?</h3>
+        <p>It takes exactly <strong>60 bags of 60 lb concrete</strong> to make 1 cubic yard (27 cu ft ÷ 0.45 cu ft per bag = 60). Most contractors order <strong>66 bags</strong> per cubic yard to include a 10% buffer for uneven ground and mixer residue.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>2. How many 80 lb and 40 lb bags of concrete make a cubic yard?</h3>
+        <p>One cubic yard equals <strong>45 bags of 80 lb concrete</strong> (0.60 cu ft each) or <strong>90 bags of 40 lb concrete</strong> (0.30 cu ft each) before waste. With a 10% jobsite overage, plan on 50 eighty-pound bags or 99 forty-pound bags per yard.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>3. Should I buy 60 lb or 80 lb concrete bags?</h3>
+        <p>80 lb bags cost roughly 5%–10% less per cubic foot of concrete and require 25% fewer rips and pours than 60 lb bags, making them the standard choice for crews. However, for solo DIYers mixing by wheelbarrow or lifting into a waist-high electric mixer, 60 lb bags dramatically reduce back fatigue and speed up consistent pours.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>4. When is it cheaper to order a ready-mix concrete truck instead of bags?</h3>
+        <p>The break-even point is usually around <strong>1.5 to 2.0 cubic yards</strong> (about 68 to 90 eighty-pound bags). Above 2 yards, ready-mix concrete costs roughly $150–$195 per yard plus a $75–$150 short-load fee—often similar to or cheaper than bags while arriving uniformly mixed in 20 minutes.</p>
+      </div>
+      <div class="ac-faq-item">
+        <h3>5. How many bags of concrete come on a full pallet?</h3>
+        <p>Standard US lumberyard and home-center pallets hold <strong>42 bags of 80 lb concrete</strong> (3,360 lbs), <strong>56 bags of 60 lb concrete</strong> (3,360 lbs), or <strong>80 bags of 40 lb concrete</strong> (3,200 lbs). Many stores offer a 10%–15% bulk pallet discount when buying full skids.</p>
+      </div>
+    </div>
+    <p class="ac-disclaimer">
+      Disclaimer: Bag counts and costs are material planning estimates based on standard ASTM C387 dry-mix yields. Verify footing depths, rebar schedules, and compressive strength (PSI) requirements against local US building codes before pouring structural slabs or piers.
+    </p>
+  </section>
+
+  <%- adAfterFAQ() %>
+
+  <section class="ac-section">
+    <h2>Related Concrete &amp; Construction Calculators</h2>
+    <nav class="ac-related-grid" aria-label="Related Calculators">
+      <a class="ac-rel-link" href="/construction/concrete-slab-calculator">
+        <strong>Concrete Slab Calculator</strong>
+        <span>Estimate ready-mix cubic yards, rebar, and poured slab costs.</span>
+      </a>
+      <a class="ac-rel-link" href="/construction/concrete-footing-calculator">
+        <strong>Concrete Footing Calculator</strong>
+        <span>Size continuous strip footings and stem walls in cubic yards.</span>
+      </a>
+      <a class="ac-rel-link" href="/construction/concrete-yardage-calculator">
+        <strong>Concrete Yardage Calculator</strong>
+        <span>Convert square feet and inches directly into ready-mix yards.</span>
+      </a>
+      <a class="ac-rel-link" href="/construction/cubic-yard-calculator">
+        <strong>Cubic Yard Calculator</strong>
+        <span>Calculate bulk volume for gravel base, sand, mulch, and fill dirt.</span>
+      </a>
+      <a class="ac-rel-link" href="/construction/asphalt-calculator">
+        <strong>Asphalt Tonnage Calculator</strong>
+        <span>Estimate hot-mix asphalt short tons with compaction allowance.</span>
+      </a>
+      <a class="ac-rel-link" href="/construction/stair-calculator">
+        <strong>Stair Stringer Calculator</strong>
+        <span>Calculate IRC-compliant step rise, run, and stringer cuts.</span>
+      </a>
+    </nav>
+  </section>
+</main>
+
+<script>
+(function () {
+  var currentMode = 'slab';
+  var BAG_YIELD = { 40: 0.30, 60: 0.45, 80: 0.60 };
+  var PALLET_QTY = { 40: 80, 60: 56, 80: 42 };
+  var WATER_GAL = { 40: 0.38, 60: 0.56, 80: 0.75 };
+  var DEFAULT_PRICE = { 40: 4.10, 60: 5.15, 80: 6.47 };
+
+  var tabs = document.querySelectorAll('.ac-tab');
+  var panels = {
+    slab: document.getElementById('panel-slab'),
+    footing: document.getElementById('panel-footing'),
+    column: document.getElementById('panel-column')
+  };
+
+  var inputs = [
+    'slab-len', 'slab-wid', 'slab-depth',
+    'foot-len', 'foot-wid', 'foot-depth',
+    'col-dia', 'col-depth', 'col-qty',
+    'bag-size', 'waste-pct', 'bag-price'
+  ];
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      currentMode = tab.getAttribute('data-mode');
+      tabs.forEach(function (t) {
+        var active = t === tab;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-selected', String(active));
+      });
+      Object.keys(panels).forEach(function (m) {
+        panels[m].classList.toggle('active', m === currentMode);
+      });
+      calculate();
+    });
+  });
+
+  document.getElementById('bag-size').addEventListener('change', function (e) {
+    var sz = parseInt(e.target.value, 10);
+    if (DEFAULT_PRICE[sz]) {
+      document.getElementById('bag-price').value = DEFAULT_PRICE[sz].toFixed(2);
+    }
+    calculate();
+  });
+
+  function num(id) { return Math.max(0, parseFloat(document.getElementById(id).value) || 0); }
+
+  function calculate() {
+    var rawCuFt = 0;
+    if (currentMode === 'slab') {
+      rawCuFt = num('slab-len') * num('slab-wid') * (num('slab-depth') / 12);
+    } else if (currentMode === 'footing') {
+      rawCuFt = num('foot-len') * (num('foot-wid') / 12) * (num('foot-depth') / 12);
+    } else {
+      var rFt = (num('col-dia') / 2) / 12;
+      var dFt = num('col-depth') / 12;
+      rawCuFt = Math.PI * rFt * rFt * dFt * num('col-qty');
+    }
+
+    var wastePct = num('waste-pct');
+    var totalCuFt = rawCuFt * (1 + wastePct / 100);
+    var totalCuYd = totalCuFt / 27;
+
+    var bags40 = Math.ceil(totalCuFt / BAG_YIELD[40]);
+    var bags60 = Math.ceil(totalCuFt / BAG_YIELD[60]);
+    var bags80 = Math.ceil(totalCuFt / BAG_YIELD[80]);
+
+    var selectedSize = parseInt(document.getElementById('bag-size').value, 10) || 80;
+    var exactSelected = Math.ceil(rawCuFt / BAG_YIELD[selectedSize]);
+    var totalSelected = selectedSize === 40 ? bags40 : (selectedSize === 60 ? bags60 : bags80);
+    var extraBags = Math.max(0, totalSelected - exactSelected);
+    var bagPrice = num('bag-price');
+    var estCost = totalSelected * bagPrice;
+    var totalWeight = totalSelected * selectedSize;
+    var pallets = totalSelected / PALLET_QTY[selectedSize];
+    var waterGal = Math.round(totalSelected * WATER_GAL[selectedSize]);
+
+    document.getElementById('out-primary-lbl').textContent = selectedSize + ' lb Concrete Bags Needed';
+    document.getElementById('out-primary-bags').textContent = totalSelected.toLocaleString('en-US') + ' Bags';
+    document.getElementById('out-primary-sub').textContent =
+      wastePct > 0
+        ? 'Includes ' + wastePct + '% waste (' + exactSelected + ' exact + ' + extraBags + ' extra)'
+        : 'Exact geometric volume (0% waste buffer)';
+
+    document.getElementById('out-40').textContent = bags40.toLocaleString('en-US');
+    document.getElementById('out-60').textContent = bags60.toLocaleString('en-US');
+    document.getElementById('out-80').textContent = bags80.toLocaleString('en-US');
+
+    [40, 60, 80].forEach(function (sz) {
+      document.getElementById('card-' + sz).classList.toggle('selected', sz === selectedSize);
+    });
+
+    document.getElementById('out-yd').textContent = totalCuYd.toFixed(2) + ' cu yd';
+    document.getElementById('out-ft').textContent = totalCuFt.toFixed(2) + ' cu ft total';
+    document.getElementById('out-cost').textContent = '$' + Math.round(estCost).toLocaleString('en-US');
+    document.getElementById('out-weight').textContent = totalWeight.toLocaleString('en-US') + ' lbs dry weight';
+    document.getElementById('out-pallets').textContent = pallets.toFixed(2) + ' pallets';
+    document.getElementById('out-pallet-note').textContent = PALLET_QTY[selectedSize] + ' bags per ' + selectedSize + ' lb pallet';
+    document.getElementById('out-water').textContent = '~' + waterGal.toLocaleString('en-US') + ' gal';
+
+    var alertBox = document.getElementById('out-truck-alert');
+    if (totalCuYd >= 1.5) {
+      alertBox.style.background = '#fffbeb';
+      alertBox.style.borderColor = '#fcd34d';
+      alertBox.style.borderLeftColor = '#d97706';
+      alertBox.style.color = '#78350f';
+      alertBox.innerHTML = '<strong>Ready-Mix Truck Crossover (' + totalCuYd.toFixed(2) + ' cu yd):</strong> Above 1.5 cubic yards (~68+ eighty-pound bags), ordering a ready-mix concrete truck ($150–$195/yd + short-load fee) usually beats hand-mixing on both labor time and slab consistency.';
+    } else {
+      alertBox.style.background = '#f0fdf4';
+      alertBox.style.borderColor = '#bbf7d0';
+      alertBox.style.borderLeftColor = '#16a34a';
+      alertBox.style.color = '#14532d';
+      alertBox.innerHTML = '<strong>Bag-Mix Sweet Spot (' + totalCuYd.toFixed(2) + ' cu yd):</strong> Under 1.5 cubic yards, bagged concrete avoids ready-mix short-load delivery minimums ($100–$175) and lets you pour at your own pace.';
+    }
+  }
+
+  inputs.forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', calculate);
+      el.addEventListener('change', calculate);
+    }
+  });
+  document.getElementById('cb-calc-btn').addEventListener('click', calculate);
+  document.getElementById('cb-reset-btn').addEventListener('click', function () {
+    document.getElementById('slab-len').value = 10;
+    document.getElementById('slab-wid').value = 12;
+    document.getElementById('slab-depth').value = 4;
+    document.getElementById('foot-len').value = 30;
+    document.getElementById('foot-wid').value = 16;
+    document.getElementById('foot-depth').value = 8;
+    document.getElementById('col-dia').value = 12;
+    document.getElementById('col-depth').value = 36;
+    document.getElementById('col-qty').value = 8;
+    document.getElementById('bag-size').value = '80';
+    document.getElementById('waste-pct').value = '10';
+    document.getElementById('bag-price').value = '6.47';
+    currentMode = 'slab';
+    tabs.forEach(function (t) {
+      var active = t.getAttribute('data-mode') === 'slab';
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', String(active));
+    });
+    Object.keys(panels).forEach(function (m) {
+      panels[m].classList.toggle('active', m === 'slab');
+    });
+    calculate();
+  });
+
+  calculate();
+})();
+</script>
+
+<%- include('../../partials/footer') %>
